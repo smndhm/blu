@@ -1,0 +1,42 @@
+{
+  "name": "@blu/linting",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "keywords": [
+    "linting",
+    "stylelint"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "exports": {
+    ".": {
+      "import": "./src/index.js"
+    },
+    "./stylelint": {
+      "import": "./src/stylelint.config.mjs"
+    },
+    "./prettier": {
+      "import": "./src/prettier.config.mjs"
+    },
+    "./eslint": {
+      "import": "./src/eslint.config.mjs"
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "9.28.0",
+    "@eslint/json": "0.12.0",
+    "@eslint/markdown": "6.5.0",
+    "eslint": "9.28.0",
+    "eslint-config-prettier": "10.1.5",
+    "eslint-config-turbo": "2.5.4",
+    "globals": "16.2.0",
+    "prettier": "3.5.3",
+    "stylelint": "16.19.1",
+    "stylelint-config-idiomatic-order": "10.0.0",
+    "stylelint-config-standard-scss": "15.0.0",
+    "stylelint-prettier": "5.0.3",
+    "typescript-eslint": "8.34.0"
+  }
+}
