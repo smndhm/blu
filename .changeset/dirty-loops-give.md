@@ -1,0 +1,5 @@
+---
+'@blu/linting': major
+---
+
+Release

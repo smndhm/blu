@@ -9,11 +9,14 @@
     "build": "turbo build",
     "manypkg:check": "manypkg check",
     "manypkg:fix": "manypkg fix",
-    "lint": "pnpm lint:style && pnpm lint:prettier && pnpm lint:eslint",
     "lint:style": "stylelint '**/*.{scss,css}' --ignore-path .gitignore --allow-empty-input",
     "lint:prettier": "prettier . --check",
     "lint:eslint": "eslint .",
+    "lint": "pnpm lint:style && pnpm lint:prettier && pnpm lint:eslint",
     "lint:fix": "pnpm lint:style --fix && pnpm lint:prettier --write && pnpm lint:eslint --fix",
+    "changeset:add": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -25,6 +28,7 @@
   },
   "devDependencies": {
     "@blu/linting": "workspace:*",
+    "@changesets/cli": "2.29.4",
     "@eslint/compat": "1.3.0",
     "@manypkg/cli": "0.24.0",
     "eslint": "9.28.0",
