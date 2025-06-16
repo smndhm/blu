@@ -8,7 +8,7 @@ importers:
 
   .:
     devDependencies:
-      '@smndhm/linting':
+      '@dume/linting':
         specifier: workspace:*
         version: link:packages/linting
       '@changesets/cli':

@@ -1,3 +1,3 @@
-import prettierConfig from '@smndhm/linting/prettier';
+import prettierConfig from '@dume/linting/prettier';
 
 export default prettierConfig;
