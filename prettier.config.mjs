@@ -1,3 +1,3 @@
-import prettierConfig from '@blu/linting/prettier';
+import prettierConfig from '@smndhm/linting/prettier';
 
 export default prettierConfig;

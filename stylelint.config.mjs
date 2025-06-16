@@ -1,3 +1,3 @@
 export default {
-  extends: '@blu/linting/stylelint',
+  extends: '@smndhm/linting/stylelint',
 };
