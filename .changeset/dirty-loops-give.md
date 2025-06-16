@@ -1,5 +1,5 @@
 ---
-'@smndhm/linting': major
+'@dume/linting': major
 ---
 
 Release

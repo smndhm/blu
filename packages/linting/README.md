@@ -34,7 +34,7 @@ Create a `stylelint.config.mjs` file in your project root:
 
 ```js
 export default {
-  extends: '@smndhm/linting/stylelint',
+  extends: '@dume/linting/stylelint',
 };
 ```
 
