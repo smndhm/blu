@@ -1,5 +1,0 @@
----
-'@dume/linting': major
----
-
-Release
