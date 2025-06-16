@@ -1,5 +1,5 @@
 ---
-'@blu/linting': major
+'@smndhm/linting': major
 ---
 
 Release

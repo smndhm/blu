@@ -27,7 +27,7 @@
     "**/*.{scss,css}": "pnpm lint:style"
   },
   "devDependencies": {
-    "@blu/linting": "workspace:*",
+    "@smndhm/linting": "workspace:*",
     "@changesets/cli": "2.29.4",
     "@eslint/compat": "1.3.0",
     "@manypkg/cli": "0.24.0",
