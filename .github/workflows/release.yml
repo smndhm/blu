@@ -1,0 +1,39 @@
+name: Release
+# from https://github.com/changesets/action?tab=readme-ov-file#with-publishing
+
+on:
+  release:
+    types: [created]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  npmjs-publish:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@d648c2dd069001a242c621c8306af467f150e99d
+        with:
+          version: 10.12.1
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm changeset:release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
