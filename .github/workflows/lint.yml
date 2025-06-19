@@ -8,6 +8,7 @@ jobs:
   setup:
     uses: ./.github/workflows/common.yml
   lint:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Run linting
