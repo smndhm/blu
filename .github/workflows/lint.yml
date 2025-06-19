@@ -5,10 +5,9 @@ on:
     branches: [main]
 
 jobs:
-  setup:
-    uses: ./.github/workflows/common.yml
   lint:
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/workflows/common.yml
       - name: Run linting
         run: pnpm lint
