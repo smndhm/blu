@@ -13,12 +13,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: '24'
+          node-version: 24
 
       - name: Install pnpm
         uses: pnpm/action-setup@d648c2dd069001a242c621c8306af467f150e99d
         with:
-          version: '10.12.1'
+          version: 10.12.1
 
       - name: Install dependencies
         run: pnpm i
