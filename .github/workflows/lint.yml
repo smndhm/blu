@@ -8,8 +8,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
+
       - name: Setup environment
         uses: ./.github/actions/setup-env
 
-      - name: Run lint
+      - name: Lint
         run: pnpm lint
