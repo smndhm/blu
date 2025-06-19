@@ -1,12 +1,6 @@
 name: Common Setup
 
-on:
-  workflow_call:
-    secrets:
-      GITHUB_TOKEN:
-        required: false
-      NPM_TOKEN:
-        required: false
+on: workflow_call
 
 jobs:
   setup:
