@@ -5,11 +5,11 @@ on:
     branches: [main]
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup.yml
-
   lint:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
-      - run: pnpm lint
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      - name: Run lint
+        run: pnpm lint
