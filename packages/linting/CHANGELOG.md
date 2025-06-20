@@ -1,5 +1,11 @@
 # @dume/linting
 
+## 1.0.3
+
+### Patch Changes
+
+- 6cfbb2d: test new workflow
+
 ## 1.0.2
 
 ### Patch Changes
