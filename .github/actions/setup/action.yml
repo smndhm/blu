@@ -1,8 +1,5 @@
 name: Setup
 
-on:
-  workflow_call:
-
 runs:
   using: 'composite'
   steps:
