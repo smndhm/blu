@@ -12,7 +12,7 @@ runs:
         node-version: 24
 
     - name: Install pnpm
-      uses: pnpm/action-setup@d648c2dd069001a242c621c8306af467f150e99d
+      uses: pnpm/action-setup@77504a59bc222656ff0605f120aea22f630873cb
       with:
         version: 10.12.1
 
