@@ -4,7 +4,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout code
-      uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
+      uses: actions/checkout@8edcb1bdb4e267140fa742c62e395cd74f332709
 
     - name: Setup Node.js
       uses: actions/setup-node@7e24a656e1c7a0d6f3eaef8d8e84ae379a5b035b
