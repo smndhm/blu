@@ -7,7 +7,7 @@ runs:
       uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
 
     - name: Setup Node.js
-      uses: actions/setup-node@5e2628c959b9ade56971c0afcebbe5332d44b398
+      uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903
       with:
         node-version-file: '.nvmrc'
 
