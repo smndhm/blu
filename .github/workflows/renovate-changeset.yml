@@ -1,0 +1,27 @@
+name: Renovate Changesets
+on:
+  pull_request:
+    branches: ['renovate/**']
+
+jobs:
+  changesets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
+
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      - name: Generate changesets for Renovate
+        run: pnpm changeset:renovate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit changesets
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "chore: update changesets for Renovate" || echo "No changes to commit"
+          git push

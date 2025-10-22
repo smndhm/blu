@@ -17,6 +17,7 @@
     "changeset:add": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
+    "changeset:renovate": "changesets-renovate",
     "prepare": "husky"
   },
   "lint-staged": {
