@@ -17,12 +17,13 @@
     "changeset:add": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
+    "changeset:renovate": "changesets-renovate",
     "prepare": "husky"
   },
   "lint-staged": {
-    "**/*": [
-      "pnpm lint:prettier",
-      "pnpm lint:eslint"
+    "**/*.{js,json,md,mjs}": [
+      "prettier **/*.{js,json,md,mjs} --check",
+      "eslint **/*.{js,json,md,mjs}"
     ],
     "**/*.{scss,css}": "pnpm lint:style"
   },
@@ -31,6 +32,7 @@
     "@dume/linting": "workspace:*",
     "@eslint/compat": "1.4.0",
     "@manypkg/cli": "0.25.1",
+    "@scaleway/changesets-renovate": "2.2.1",
     "eslint": "9.38.0",
     "husky": "9.1.7",
     "lint-staged": "16.2.5",
