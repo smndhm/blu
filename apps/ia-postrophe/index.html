@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="css/pico.min.css" />
+    <title>IApostrophe</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1>IApostrophe</h1>
+      <p>Un bookmarklet pour surligner les caractères typographiques insérés par les IA.</p>
+
+      <h2>Le bookmarklet</h2>
+      <p>Glissez ce lien dans votre barre de favoris : <a href="">IApostrophe</a></p>
+      <p>Puis cliquez dessus sur n'importe quelle page pour surligner les caractères typographiques IA et leurs équivalents naturels.</p>
+
+      <h2>L'histoire</h2>
+      <p>
+        En préparant mes slides pour la conférence
+        <a href="https://www.paris-web.fr/2025/conference/les-web-components-et-laccessibilite">Les Web Components et l'accessibilité</a> à Paris Web, j'ai utilisé ChatGPT pour
+        corriger mes textes.
+      </p>
+      <p>
+        En recopiant ses corrections, j'ai remarqué des caractères un peu “étranges”, que je ne taperais pas normalement au clavier : des tirets longs (—), des guillemets
+        différents (« »), et surtout ces apostrophes penchées (’). J'ai corrigé mes slides sans y prêter plus d'attention.
+      </p>
+      <p>Puis, je les ai vus partout : sites web, emails, entretiens annuels, messages Teams...</p>
+
+      <h2>Exemples</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Exemple IA</th>
+            <th>Saisi au clavier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Apostrophes</td>
+            <td>c’est (’)</td>
+            <td>c'est (')</td>
+          </tr>
+          <tr>
+            <td>Tirets</td>
+            <td>un tiret long (—)</td>
+            <td>un tiret court (-)</td>
+          </tr>
+          <tr>
+            <td>Guillemets</td>
+            <td>« Bonjour »</td>
+            <td>"Hello"</td>
+          </tr>
+          <tr>
+            <td>Points de suspension</td>
+            <td>vraiment…</td>
+            <td>vraiment...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <blockquote>Maintenant, vous aussi, vous les verrez partout.</blockquote>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
