@@ -3,7 +3,7 @@ import '@picocss/pico/css/pico.min.css';
 const IApostrophe = () => {
   const IAcharacters = {
     color: 'yellow',
-    characters: ['’', '‘', '—', '«', '»', '…'],
+    characters: ['’', '‘', '—', '«', '»', '“', '”', '…'],
   };
   const humanCharacters = {
     color: 'limegreen',
