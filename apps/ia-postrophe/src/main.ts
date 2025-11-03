@@ -12,11 +12,9 @@ const IApostrophe = () => {
 
   const allChars = [...IAcharacters.characters, ...humanCharacters.characters];
 
-  // Fonction d'échappement des caractères spéciaux pour les regex
   const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp('(' + allChars.map(escapeRegExp).join('|') + ')', 'g');
 
-  // Si déjà actif → désactive en retirant les surlignages
   if (document.querySelector('[data-iapostrophe]')) {
     document.querySelectorAll('[data-iapostrophe]').forEach(elm => {
       elm.replaceWith(document.createTextNode(elm.textContent || ''));
@@ -24,10 +22,8 @@ const IApostrophe = () => {
     return;
   }
 
-  // Balises à ignorer (code, script, style, pre)
   const forbidden = ['SCRIPT', 'STYLE', 'CODE', 'PRE'];
 
-  // Parcourt tous les nœuds texte du body
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const nodes: Text[] = [];
 
@@ -40,7 +36,6 @@ const IApostrophe = () => {
     nodes.push(node as Text);
   }
 
-  // Pour chaque nœud texte, on insère les spans
   nodes.forEach(textNode => {
     const text = textNode.textContent ?? '';
     const parts: (Text | HTMLElement)[] = [];
@@ -74,7 +69,6 @@ const IApostrophe = () => {
   });
 };
 
-// Génère le lien du bookmarklet automatiquement
 const bookmarkletLink = document.querySelector('a[href=""]') as HTMLAnchorElement | null;
 if (bookmarkletLink) {
   bookmarkletLink.href = `javascript:${encodeURIComponent(`(${IApostrophe.toString()})()`)};`;
