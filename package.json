@@ -33,7 +33,7 @@
     "@eslint/compat": "1.4.1",
     "@manypkg/cli": "0.25.1",
     "@scaleway/changesets-renovate": "2.2.1",
-    "eslint": "9.39.0",
+    "eslint": "9.39.1",
     "husky": "9.1.7",
     "lint-staged": "16.2.6",
     "prettier": "3.6.2",
