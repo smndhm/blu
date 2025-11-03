@@ -7,7 +7,7 @@ const IApostrophe = () => {
   };
   const humanCharacters = {
     color: 'limegreen',
-    characters: ["'", '-', '"', '...'],
+    characters: ["'", '"', '...'],
   };
 
   const allChars = [...IAcharacters.characters, ...humanCharacters.characters];
