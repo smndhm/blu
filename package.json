@@ -38,6 +38,6 @@
     "lint-staged": "16.2.6",
     "prettier": "3.6.2",
     "stylelint": "16.25.0",
-    "turbo": "2.6.0"
+    "turbo": "2.6.1"
   }
 }
