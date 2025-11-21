@@ -1,5 +1,7 @@
 name: Renovate Changesets
 on:
+  push:
+    branches: ['renovate/**']
   pull_request:
     branches: ['renovate/**']
 
@@ -14,7 +16,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Generate changesets for Renovate
-        run: pnpm changeset:renovate
+        run: SKIP_COMMIT=TRUE pnpm changeset:renovate
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
