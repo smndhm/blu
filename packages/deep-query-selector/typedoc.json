@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "githubPages": false,
+  "out": "docs",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none"
+}
