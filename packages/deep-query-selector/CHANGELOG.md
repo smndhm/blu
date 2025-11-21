@@ -4,4 +4,10 @@
 
 ### Major Changes
 
+- 6c0fa50: Release
+
+## 1.0.0
+
+### Major Changes
+
 - 64b81bb: Release
