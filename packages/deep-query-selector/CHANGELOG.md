@@ -1,5 +1,11 @@
 # @smndhm/deep-query-selector
 
+## 1.0.2
+
+### Patch Changes
+
+- 1c77fba: prepublishOnly
+
 ## 1.0.1
 
 ### Patch Changes
