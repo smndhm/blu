@@ -30,7 +30,8 @@
     "build": "vite build",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "doc": "typedoc --plugin typedoc-plugin-markdown && mv docs/README.md ./README.md"
+    "doc": "typedoc --plugin typedoc-plugin-markdown && mv docs/README.md ./README.md",
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^4.0.13",
