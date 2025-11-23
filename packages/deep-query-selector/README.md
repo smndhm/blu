@@ -1,6 +1,6 @@
-@smndhm/deep-query-selector
+@dume/deep-query-selector
 
-# @smndhm/deep-query-selector
+# @dume/deep-query-selector
 
 DeepQuerySelector Library
 
@@ -17,11 +17,85 @@ Features:
 
 ### Functions
 
+- [deepQuerySelector](README.md#deepqueryselector)
+- [deepQuerySelectorAll](README.md#deepqueryselectorall)
 - [findCustomElements](README.md#findcustomelements)
-- [querySelectorAllDeep](README.md#queryselectoralldeep)
-- [querySelectorDeep](README.md#queryselectordeep)
 
 ## Functions
+
+### deepQuerySelector
+
+▸ **deepQuerySelector**(`selector`, `root?`): `Element` \| `null`
+
+Deep selector: querySelector for the DOM and all accessible Shadow DOMs.
+Returns the first matching element found, or null if none.
+
+#### Parameters
+
+| Name       | Type         | Default value | Description                                 |
+| :--------- | :----------- | :------------ | :------------------------------------------ |
+| `selector` | `string`     | `undefined`   | CSS selector to match                       |
+| `root`     | `ParentNode` | `document`    | The root node to search (default: document) |
+
+#### Returns
+
+`Element` \| `null`
+
+The first matching element, or null
+
+**`Example`**
+
+```ts
+// Finds the first <input> element anywhere
+const firstInput = deepQuerySelector('input');
+```
+
+**`Remarks`**
+
+Returns null if nothing is found. Traverses open shadow roots recursively.
+
+#### Defined in
+
+[index.ts:73](https://github.com/smndhm/blu/blob/1c77fba7ade4898945d5a290b12643be9fb9e5e8/packages/deep-query-selector/src/index.ts#L73)
+
+---
+
+### deepQuerySelectorAll
+
+▸ **deepQuerySelectorAll**(`selector`, `root?`): `Element`[]
+
+Deep selector: querySelectorAll for the DOM and all accessible Shadow DOMs.
+Recursively finds all elements matching the selector, including inside open shadow roots.
+
+#### Parameters
+
+| Name       | Type         | Default value | Description                                 |
+| :--------- | :----------- | :------------ | :------------------------------------------ |
+| `selector` | `string`     | `undefined`   | CSS selector to match                       |
+| `root`     | `ParentNode` | `document`    | The root node to search (default: document) |
+
+#### Returns
+
+`Element`[]
+
+Array of matching elements
+
+**`Example`**
+
+```ts
+// Finds all <input> elements in DOM and shadow roots
+const allInputs = deepQuerySelectorAll('input');
+```
+
+**`Remarks`**
+
+Only open shadow roots are traversed. Useful for tests and automation.
+
+#### Defined in
+
+[index.ts:47](https://github.com/smndhm/blu/blob/1c77fba7ade4898945d5a290b12643be9fb9e5e8/packages/deep-query-selector/src/index.ts#L47)
+
+---
 
 ### findCustomElements
 
@@ -55,78 +129,4 @@ Useful for debugging, testing, or tooling around Web Components.
 
 #### Defined in
 
-[index.ts:28](https://github.com/smndhm/blu/blob/8975cd193d408babfd225aa8a4130a07735c1e47/packages/deep-query-selector/src/index.ts#L28)
-
----
-
-### querySelectorAllDeep
-
-▸ **querySelectorAllDeep**(`selector`, `root?`): `Element`[]
-
-Deep selector: querySelectorAll for the DOM and all accessible Shadow DOMs.
-Recursively finds all elements matching the selector, including inside open shadow roots.
-
-#### Parameters
-
-| Name       | Type         | Default value | Description                                 |
-| :--------- | :----------- | :------------ | :------------------------------------------ |
-| `selector` | `string`     | `undefined`   | CSS selector to match                       |
-| `root`     | `ParentNode` | `document`    | The root node to search (default: document) |
-
-#### Returns
-
-`Element`[]
-
-Array of matching elements
-
-**`Example`**
-
-```ts
-// Finds all <input> elements in DOM and shadow roots
-const allInputs = querySelectorAllDeep('input');
-```
-
-**`Remarks`**
-
-Only open shadow roots are traversed. Useful for tests and automation.
-
-#### Defined in
-
-[index.ts:47](https://github.com/smndhm/blu/blob/8975cd193d408babfd225aa8a4130a07735c1e47/packages/deep-query-selector/src/index.ts#L47)
-
----
-
-### querySelectorDeep
-
-▸ **querySelectorDeep**(`selector`, `root?`): `Element` \| `null`
-
-Deep selector: querySelector for the DOM and all accessible Shadow DOMs.
-Returns the first matching element found, or null if none.
-
-#### Parameters
-
-| Name       | Type         | Default value | Description                                 |
-| :--------- | :----------- | :------------ | :------------------------------------------ |
-| `selector` | `string`     | `undefined`   | CSS selector to match                       |
-| `root`     | `ParentNode` | `document`    | The root node to search (default: document) |
-
-#### Returns
-
-`Element` \| `null`
-
-The first matching element, or null
-
-**`Example`**
-
-```ts
-// Finds the first <input> element anywhere
-const firstInput = querySelectorDeep('input');
-```
-
-**`Remarks`**
-
-Returns null if nothing is found. Traverses open shadow roots recursively.
-
-#### Defined in
-
-[index.ts:73](https://github.com/smndhm/blu/blob/8975cd193d408babfd225aa8a4130a07735c1e47/packages/deep-query-selector/src/index.ts#L73)
+[index.ts:28](https://github.com/smndhm/blu/blob/1c77fba7ade4898945d5a290b12643be9fb9e5e8/packages/deep-query-selector/src/index.ts#L28)

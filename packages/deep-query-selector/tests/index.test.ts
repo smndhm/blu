@@ -1,5 +1,5 @@
+import { deepQuerySelector, deepQuerySelectorAll, findCustomElements } from '../src/index';
 import { describe, it, expect } from 'vitest';
-import { querySelectorDeep, querySelectorAllDeep, findCustomElements } from '../src/index';
 
 // Define and register custom elements once for all tests
 class MyComp extends HTMLElement {
@@ -36,13 +36,13 @@ describe('deep-query-selector', () => {
     document.body.appendChild(el);
     customElements.upgrade(el);
     // Should not throw or add anything extra
-    const results = querySelectorAllDeep('input');
+    const results = deepQuerySelectorAll('input');
     expect(Array.isArray(results)).toBe(true);
   });
 
   it('should return null if selector not found', () => {
     document.body.innerHTML = `<div></div>`;
-    const result = querySelectorDeep('.not-found');
+    const result = deepQuerySelector('.not-found');
     expect(result).toBeNull();
   });
   it('should find custom elements in the DOM', () => {
@@ -54,7 +54,7 @@ describe('deep-query-selector', () => {
   });
   it('should find elements in the main DOM', () => {
     document.body.innerHTML = `<input id="main" />`;
-    const input = querySelectorDeep('#main');
+    const input = deepQuerySelector('#main');
     expect(input).not.toBeNull();
     expect(input?.id).toBe('main');
   });
@@ -78,7 +78,7 @@ describe('deep-query-selector', () => {
     document.body.appendChild(el);
     customElements.upgrade(el);
     // Ensure shadowRoot is present
-    const input = querySelectorDeep('#shadow-input');
+    const input = deepQuerySelector('#shadow-input');
     expect(input).not.toBeNull();
     expect(input?.id).toBe('shadow-input');
   });
@@ -102,7 +102,7 @@ describe('deep-query-selector', () => {
     document.body.appendChild(el);
     customElements.upgrade(el);
     // Ensure shadowRoot is present
-    const inputs = querySelectorAllDeep('input');
+    const inputs = deepQuerySelectorAll('input');
     expect(inputs.length).toBe(2);
     expect(inputs.some(i => i.id === 'main')).toBe(true);
     expect(inputs.some(i => i.id === 'shadow-input')).toBe(true);
