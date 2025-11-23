@@ -39,17 +39,17 @@ export function findCustomElements(root: ParentNode = document): Element[] {
  *
  * @example
  * // Finds all <input> elements in DOM and shadow roots
- * const allInputs = querySelectorAllDeep('input');
+ * const allInputs = deepQuerySelectorAll('input');
  *
  * @remarks
  * Only open shadow roots are traversed. Useful for tests and automation.
  */
-export function querySelectorAllDeep(selector: string, root: ParentNode = document): Element[] {
+export function deepQuerySelectorAll(selector: string, root: ParentNode = document): Element[] {
   const results = Array.from(root.querySelectorAll(selector));
   const customElements = findCustomElements(root);
   for (const el of customElements) {
     if ('shadowRoot' in el && el.shadowRoot) {
-      results.push(...querySelectorAllDeep(selector, el.shadowRoot));
+      results.push(...deepQuerySelectorAll(selector, el.shadowRoot));
     }
   }
   return results;
@@ -65,12 +65,12 @@ export function querySelectorAllDeep(selector: string, root: ParentNode = docume
  *
  * @example
  * // Finds the first <input> element anywhere
- * const firstInput = querySelectorDeep('input');
+ * const firstInput = deepQuerySelector('input');
  *
  * @remarks
  * Returns null if nothing is found. Traverses open shadow roots recursively.
  */
-export function querySelectorDeep(selector: string, root: ParentNode = document): Element | null {
-  const all = querySelectorAllDeep(selector, root);
+export function deepQuerySelector(selector: string, root: ParentNode = document): Element | null {
+  const all = deepQuerySelectorAll(selector, root);
   return all.length ? all[0] : null;
 }
