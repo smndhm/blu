@@ -10,6 +10,9 @@
     }
   },
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "description": "Deep DOM and Shadow DOM selectors for Web Components. Traverse all open shadow roots with standard CSS selectors.",
   "author": "Simon Duhem",
   "keywords": [
