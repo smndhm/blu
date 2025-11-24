@@ -19,7 +19,7 @@ if (!customElements.get('your-widget')) {
   customElements.define('your-widget', YourWidget);
 }
 
-describe('deep-query-selector', () => {
+describe('webcomp-utils', () => {
   it('should return empty array if no custom elements', () => {
     document.body.innerHTML = `<div></div><span></span>`;
     const found = findCustomElements(document);
