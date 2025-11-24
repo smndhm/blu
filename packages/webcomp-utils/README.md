@@ -1,6 +1,6 @@
-@dume/deep-query-selector
+@dume/webcomp-utils
 
-# @dume/deep-query-selector
+# @dume/webcomp-utils
 
 DeepQuerySelector Library
 
@@ -30,6 +30,17 @@ Features:
 Deep selector: querySelector for the DOM and all accessible Shadow DOMs.
 Returns the first matching element found, or null if none.
 
+**`Example`**
+
+```ts
+// Finds the first <input> element anywhere
+const firstInput = deepQuerySelector('input');
+```
+
+**`Remarks`**
+
+Returns null if nothing is found. Traverses open shadow roots recursively.
+
 #### Parameters
 
 | Name       | Type         | Default value | Description                                 |
@@ -43,20 +54,9 @@ Returns the first matching element found, or null if none.
 
 The first matching element, or null
 
-**`Example`**
-
-```ts
-// Finds the first <input> element anywhere
-const firstInput = deepQuerySelector('input');
-```
-
-**`Remarks`**
-
-Returns null if nothing is found. Traverses open shadow roots recursively.
-
 #### Defined in
 
-[index.ts:73](https://github.com/smndhm/blu/blob/1c77fba7ade4898945d5a290b12643be9fb9e5e8/packages/deep-query-selector/src/index.ts#L73)
+index.ts:73
 
 ---
 
@@ -66,6 +66,17 @@ Returns null if nothing is found. Traverses open shadow roots recursively.
 
 Deep selector: querySelectorAll for the DOM and all accessible Shadow DOMs.
 Recursively finds all elements matching the selector, including inside open shadow roots.
+
+**`Example`**
+
+```ts
+// Finds all <input> elements in DOM and shadow roots
+const allInputs = deepQuerySelectorAll('input');
+```
+
+**`Remarks`**
+
+Only open shadow roots are traversed. Useful for tests and automation.
 
 #### Parameters
 
@@ -80,20 +91,9 @@ Recursively finds all elements matching the selector, including inside open shad
 
 Array of matching elements
 
-**`Example`**
-
-```ts
-// Finds all <input> elements in DOM and shadow roots
-const allInputs = deepQuerySelectorAll('input');
-```
-
-**`Remarks`**
-
-Only open shadow roots are traversed. Useful for tests and automation.
-
 #### Defined in
 
-[index.ts:47](https://github.com/smndhm/blu/blob/1c77fba7ade4898945d5a290b12643be9fb9e5e8/packages/deep-query-selector/src/index.ts#L47)
+index.ts:47
 
 ---
 
@@ -103,6 +103,17 @@ Only open shadow roots are traversed. Useful for tests and automation.
 
 Detects Custom Elements in a given root.
 Custom Elements always have a dash in their tag name (standard Web Components).
+
+**`Example`**
+
+```ts
+// Finds all custom elements in the document
+const customEls = findCustomElements();
+```
+
+**`Remarks`**
+
+Useful for debugging, testing, or tooling around Web Components.
 
 #### Parameters
 
@@ -116,17 +127,6 @@ Custom Elements always have a dash in their tag name (standard Web Components).
 
 Array of custom elements found
 
-**`Example`**
-
-```ts
-// Finds all custom elements in the document
-const customEls = findCustomElements();
-```
-
-**`Remarks`**
-
-Useful for debugging, testing, or tooling around Web Components.
-
 #### Defined in
 
-[index.ts:28](https://github.com/smndhm/blu/blob/1c77fba7ade4898945d5a290b12643be9fb9e5e8/packages/deep-query-selector/src/index.ts#L28)
+index.ts:28
