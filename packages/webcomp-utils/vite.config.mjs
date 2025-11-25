@@ -5,15 +5,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'DeepQuerySelector',
-      fileName: 'index',
-      formats: ['es', 'cjs'],
+      name: 'webcompUtils', // Nom exporté dans window.webcompUtils
+      fileName: format => `webcomp-utils.${format}.js`,
     },
-    minify: true,
-    sourcemap: true,
-    outDir: 'dist',
     rollupOptions: {
-      external: [],
+      output: {
+        globals: {}, // pas de dépendances externes
+      },
     },
   },
   plugins: [dts()],
