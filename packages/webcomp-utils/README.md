@@ -2,16 +2,30 @@
 
 # @dume/webcomp-utils
 
-DeepQuerySelector Library
+Utilities for deep DOM and Web Components manipulation.
+Allows selecting elements in both regular DOM and all open shadow roots.
 
-This library provides deep DOM and Shadow DOM selectors for Web Components.
-Use it to test, debug, or manipulate custom elements and shadow roots in modern web applications.
+Main features:
 
-Features:
+- Select elements with CSS selectors, including inside shadow DOMs
+- Detect custom elements (Web Components) in any DOM tree
+- Designed for testing, automation, and debugging Web Components
 
-- Query any element, even inside open shadow roots, using standard CSS selectors
-- Detect custom elements in any DOM tree
-- Designed for testing, automation, and advanced DOM traversal
+You can import the library in any ESM-compatible environment (Node.js, Vite, Webpack, etc.):
+
+```ts
+import { deepQuerySelector, deepQuerySelectorAll, findCustomElements } from '@dume/webcomp-utils';
+```
+
+You can also import the library in any HTML page using jsdelivr CDN.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@dume/webcomp-utils/dist/webcomp-utils.umd.min.js"></script>
+
+<script>
+  const inputs = window.webcompUtils.deepQuerySelectorAll('input');
+</script>
+```
 
 ## Table of contents
 
@@ -27,19 +41,19 @@ Features:
 
 ▸ **deepQuerySelector**(`selector`, `root?`): `Element` \| `null`
 
-Deep selector: querySelector for the DOM and all accessible Shadow DOMs.
-Returns the first matching element found, or null if none.
+Selects the first element matching the CSS selector in the DOM and all open shadow roots.
+Returns the first found element or null if none matches.
 
 **`Example`**
 
 ```ts
-// Finds the first <input> element anywhere
+// Find the first <input> element in DOM or shadow roots
 const firstInput = deepQuerySelector('input');
 ```
 
 **`Remarks`**
 
-Returns null if nothing is found. Traverses open shadow roots recursively.
+Returns null if no element matches. Recursively explores open shadow roots.
 
 #### Parameters
 
@@ -52,11 +66,11 @@ Returns null if nothing is found. Traverses open shadow roots recursively.
 
 `Element` \| `null`
 
-The first matching element, or null
+The first found element, or null
 
 #### Defined in
 
-index.ts:73
+[index.ts:89](https://github.com/smndhm/blu/blob/2659c11/packages/webcomp-utils/src/index.ts#L89)
 
 ---
 
@@ -64,19 +78,19 @@ index.ts:73
 
 ▸ **deepQuerySelectorAll**(`selector`, `root?`): `Element`[]
 
-Deep selector: querySelectorAll for the DOM and all accessible Shadow DOMs.
-Recursively finds all elements matching the selector, including inside open shadow roots.
+Selects all elements matching the CSS selector in the DOM and all open shadow roots.
+Recursively traverses Web Components to find elements, even in nested shadow DOMs.
 
 **`Example`**
 
 ```ts
-// Finds all <input> elements in DOM and shadow roots
+// Find all <input> elements in DOM and shadow roots
 const allInputs = deepQuerySelectorAll('input');
 ```
 
 **`Remarks`**
 
-Only open shadow roots are traversed. Useful for tests and automation.
+Only open shadow roots are traversed. Ideal for tests and automation.
 
 #### Parameters
 
@@ -89,11 +103,11 @@ Only open shadow roots are traversed. Useful for tests and automation.
 
 `Element`[]
 
-Array of matching elements
+Array of found elements
 
 #### Defined in
 
-index.ts:47
+[index.ts:63](https://github.com/smndhm/blu/blob/2659c11/packages/webcomp-utils/src/index.ts#L63)
 
 ---
 
@@ -101,19 +115,19 @@ index.ts:47
 
 ▸ **findCustomElements**(`root?`): `Element`[]
 
-Detects Custom Elements in a given root.
-Custom Elements always have a dash in their tag name (standard Web Components).
+Finds all custom elements (Web Components) in a given DOM tree.
+Custom elements are identified by a dash in their tag name.
 
 **`Example`**
 
 ```ts
-// Finds all custom elements in the document
+// Find all custom elements in the page
 const customEls = findCustomElements();
 ```
 
 **`Remarks`**
 
-Useful for debugging, testing, or tooling around Web Components.
+Useful for debugging, testing, or analyzing Web Components.
 
 #### Parameters
 
@@ -125,8 +139,8 @@ Useful for debugging, testing, or tooling around Web Components.
 
 `Element`[]
 
-Array of custom elements found
+Array of found custom elements
 
 #### Defined in
 
-index.ts:28
+[index.ts:44](https://github.com/smndhm/blu/blob/2659c11/packages/webcomp-utils/src/index.ts#L44)
