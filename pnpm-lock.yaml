@@ -57,8 +57,8 @@ importers:
   apps/webcomp-utils:
     dependencies:
       '@dume/webcomp-utils':
-        specifier: ^0.0.1
-        version: 0.0.1
+        specifier: workspace:*
+        version: link:../../packages/webcomp-utils
     devDependencies:
       typescript:
         specifier: 5.9.3
@@ -253,9 +253,6 @@ packages:
 
   '@dual-bundle/import-meta-resolve@4.2.1':
     resolution: {integrity: sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==}
-
-  '@dume/webcomp-utils@0.0.1':
-    resolution: {integrity: sha512-Jw4uxJbOv3Nz0EmKLXg0SAG8KG7SzGXrnFrTxQpHiERm6MXeFZWcHYVeOT6Qiwy+AauL+NEmaKgNpnWqvUy/ow==}
 
   '@esbuild/aix-ppc64@0.25.12':
     resolution: {integrity: sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==}
@@ -3042,8 +3039,6 @@ snapshots:
       postcss-selector-parser: 7.1.0
 
   '@dual-bundle/import-meta-resolve@4.2.1': {}
-
-  '@dume/webcomp-utils@0.0.1': {}
 
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
