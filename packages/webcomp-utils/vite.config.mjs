@@ -5,12 +5,12 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'webcompUtils', // Nom exporté dans window.webcompUtils
+      name: 'webcompUtils',
       fileName: format => `webcomp-utils.${format}.js`,
     },
     rollupOptions: {
       output: {
-        globals: {}, // pas de dépendances externes
+        globals: {},
       },
     },
   },
