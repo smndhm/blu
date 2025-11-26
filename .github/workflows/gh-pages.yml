@@ -59,7 +59,7 @@ jobs:
         run: |
           mkdir -p public/ia-postrophe
           mkdir -p public/slides
-          cp -r apps/ia-postrophe/dist/* public/ia-postrophe/
+          cp -r apps/ia-postrophe/dist/ia-postrophe/* public/ia-postrophe/
           cp -r apps/slides/dist/* public/slides/
 
       - name: Setup Pages
