@@ -1,0 +1,25 @@
+{
+  "name": "slides",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [
+    "slides",
+    "marp"
+  ],
+  "author": "Simon Duhem",
+  "license": "ISC",
+  "scripts": {
+    "copy-assets": "mkdir -p dist/assets && cp -r src/assets/* dist/assets",
+    "build": "pnpm copy-assets && pnpm /^build:.*/",
+    "build:html": "marp -I src -o dist",
+    "build:pdf": "pnpm build:html --pdf --allow-local-files",
+    "build:pptx": "pnpm build:html --pptx --allow-local-files",
+    "build:txt": "pnpm build:html --notes",
+    "export-to-images": "pnpm marp -I src -o dist/img --images png --allow-local-files",
+    "clean": "rm -rf dist",
+    "watch": "pnpm copy-assets && marp -I src -o dist --watch"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "4.2.3"
+  }
+}
