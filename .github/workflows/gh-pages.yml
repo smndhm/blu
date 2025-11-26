@@ -58,8 +58,9 @@ jobs:
       - name: Prepare public folder
         run: |
           mkdir -p public/ia-postrophe
-          mkdir -p public/slides
+          mkdir -p public/slides/assets
           cp -r apps/ia-postrophe/dist/ia-postrophe/* public/ia-postrophe/
+          cp -r apps/slides/src/assets/* public/slides/assets/
           cp -r apps/slides/dist/* public/slides/
 
       - name: Setup Pages
