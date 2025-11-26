@@ -1,0 +1,17 @@
+{
+  "name": "simon.duhem.fr",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "normalize.css": "^8.0.1",
+    "sass": "^1.58.0",
+    "typescript": "5.9.3",
+    "vite": "7.2.4"
+  }
+}
