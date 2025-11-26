@@ -1,0 +1,254 @@
+/*
+ * Theme for Paris Web presentation
+ *
+ * @theme paris-web
+ * @author Simon Duhem
+ *
+ * @auto-scaling true
+ * @size 16:9 1280px 720px
+ * @size 4:3 960px 720px
+ */
+
+@import 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap';
+
+:root {
+  --color-primary: #4b0195;
+  --color-primary-soft: color-mix(in srgb, var(--color-primary), #fff 80%);
+  --color-neutral: color-mix(in srgb, var(--color-primary), #fff 95%);
+  --color-white: color-mix(in srgb, var(--color-primary), #fff 99%);
+  --color-black: color-mix(in srgb, var(--color-primary), #000 90%);
+
+  background: var(--color-white);
+  color: var(--color-black);
+  font-family: Montserrat, sans-serif;
+  font-size: 2rem; /* 32px */
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5em;
+  font-weight: 500;
+}
+
+p {
+  margin: 0 0 0.5em;
+}
+
+strong {
+  font-weight: 600;
+}
+
+ul {
+  margin-top: 0;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+blockquote {
+  padding-left: 0.5em;
+  border-left: 0.2em solid var(--color-primary-soft);
+  margin: 0 0 0.5em;
+  font-style: italic;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+  background: var(--color-neutral);
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.85em;
+}
+
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+  font-size: 0.85em;
+}
+
+marp-pre {
+  margin: 0 0 1em;
+  font-size: 0.75em;
+  line-height: 1.2;
+
+  code {
+    display: block;
+  }
+}
+
+section {
+  padding: 2.5em;
+
+  &.title {
+    padding: 3.5em;
+    background: var(--color-primary);
+    color: var(--color-white);
+    place-content: safe center center;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      width: 75%;
+      margin: 0;
+      color: var(--color-white);
+      line-height: 1.25;
+    }
+
+    p {
+      position: absolute;
+      bottom: 6em;
+      margin: 0;
+      font-size: 0.5em;
+      font-weight: 500;
+
+      strong {
+        font-size: 2em;
+        font-weight: 600;
+      }
+    }
+  }
+
+  &.list-h {
+    ul {
+      display: flex;
+      padding: 0;
+      margin: 0;
+      margin-top: 2em;
+      gap: 2em;
+      list-style: none;
+      text-align: center;
+
+      li {
+        flex: 1;
+      }
+    }
+  }
+
+  &.profils {
+    ul {
+      li {
+        & > img {
+          border: 1px solid var(--color-primary-soft);
+          border-radius: 50%;
+          background: white;
+        }
+      }
+    }
+  }
+
+  &.company {
+    ul {
+      li {
+        font-size: 0.75em;
+        font-weight: 500;
+
+        & > img:first-of-type {
+          padding: 2em;
+          border-radius: 50%;
+          margin-bottom: 1em;
+          background: var(--color-primary-soft);
+          color: var(--color-primary);
+        }
+      }
+    }
+  }
+
+  &.code {
+    ul {
+      font-size: 0.85em;
+    }
+
+    p:has(code),
+    marp-pre {
+      width: calc(50% - 2em);
+      height: -webkit-fill-available;
+      margin: 0;
+      margin-right: 2em;
+      margin-bottom: 4em;
+      float: left;
+
+      /* stylelint-disable-next-line no-descending-specificity -- in concurence with itself */
+      & + ul {
+        width: 50%;
+        padding: 0;
+        margin: 0;
+        float: right;
+      }
+    }
+  }
+
+  &.code--right {
+    /* stylelint-disable-next-line no-descending-specificity -- wont fix by moving */
+    ul {
+      float: left;
+
+      & + marp-pre {
+        width: 50%;
+        float: right;
+      }
+    }
+  }
+
+  &.center {
+    place-content: safe center center;
+    text-align: center;
+  }
+}
+
+header {
+  margin-bottom: 0;
+  color: var(--color-primary);
+  font-size: 0.75em;
+  line-height: 1;
+}
+
+footer,
+section::after {
+  position: fixed;
+  bottom: 2.5em;
+  padding: 0;
+  font-size: 0.5em;
+  line-height: 1;
+}
+
+footer {
+  left: 5em;
+}
+
+section::after {
+  right: 5em;
+}
+
+/* stylelint-disable selector-class-pattern -- class are from marp */
+.hljs-name,
+.hljs-attr,
+.hljs-variable.language_ {
+  color: #0550ae;
+}
+
+.hljs-keyword {
+  color: #cf222e;
+}
+
+.hljs-title {
+  &.class_,
+  &.function_ {
+    color: #6639ba;
+  }
+}
+
+/* a:has(img) {
+  display: none;
+} */
