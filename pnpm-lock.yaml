@@ -108,8 +108,8 @@ importers:
         specifier: 0.28.14
         version: 0.28.14(typescript@5.9.3)
       typedoc-plugin-markdown:
-        specifier: 3.15.0
-        version: 3.15.0(typedoc@0.28.14(typescript@5.9.3))
+        specifier: 3.17.1
+        version: 3.17.1(typedoc@0.28.14(typescript@5.9.3))
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2551,10 +2551,10 @@ packages:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
 
-  typedoc-plugin-markdown@3.15.0:
-    resolution: {integrity: sha512-q/zULWrdpCxHVUAICBvVbzIysZ70P7ZvwPzjGcfh9WokeozZWVOsw3RGerg6Yt8A0ajqEhNFJshcQvBo27vHXg==}
+  typedoc-plugin-markdown@3.17.1:
+    resolution: {integrity: sha512-QzdU3fj0Kzw2XSdoL15ExLASt2WPqD7FbLeaqwT70+XjKyTshBnUlQA5nNREO1C2P8Uen0CDjsBLMsCQ+zd0lw==}
     peerDependencies:
-      typedoc: '>=0.23.0'
+      typedoc: '>=0.24.0'
 
   typedoc@0.28.14:
     resolution: {integrity: sha512-ftJYPvpVfQvFzpkoSfHLkJybdA/geDJ8BGQt/ZnkkhnBYoYW6lBgPQXu6vqLxO4X75dA55hX8Af847H5KXlEFA==}
@@ -5506,7 +5506,7 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
 
-  typedoc-plugin-markdown@3.15.0(typedoc@0.28.14(typescript@5.9.3)):
+  typedoc-plugin-markdown@3.17.1(typedoc@0.28.14(typescript@5.9.3)):
     dependencies:
       handlebars: 4.7.8
       typedoc: 0.28.14(typescript@5.9.3)
