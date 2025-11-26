@@ -1,0 +1,3 @@
+{
+  "markdown.marp.themes": ["./apps/slides/src/themes/paris-web.css"]
+}
