@@ -30,7 +30,7 @@
   "devDependencies": {
     "@vitest/coverage-v8": "4.0.13",
     "jsdom": "21.1.2",
-    "typedoc": "0.25.0",
+    "typedoc": "0.28.14",
     "typedoc-plugin-markdown": "3.15.0",
     "typescript": "5.9.3",
     "vite": "7.2.4",
