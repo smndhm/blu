@@ -60,7 +60,7 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1
       sass:
-        specifier: ^1.95.0
+        specifier: ^1.96.0
         version: 1.96.0
       typescript:
         specifier: 5.9.3
