@@ -55,7 +55,7 @@ importers:
         version: 5.0.2
     devDependencies:
       '@11ty/eleventy':
-        specifier: ^3.1.2
+        specifier: 3.1.2
         version: 3.1.2
 
   apps/ia-postrophe:
@@ -73,10 +73,10 @@ importers:
   apps/simon.duhem.fr:
     devDependencies:
       normalize.css:
-        specifier: ^8.0.1
+        specifier: 8.0.1
         version: 8.0.1
       sass:
-        specifier: ^1.96.0
+        specifier: 1.96.0
         version: 1.96.0
       typescript:
         specifier: 5.9.3
