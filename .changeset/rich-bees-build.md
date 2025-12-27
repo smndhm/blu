@@ -1,0 +1,5 @@
+---
+'articles': major
+---
+
+Add articles

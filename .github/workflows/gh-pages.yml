@@ -58,12 +58,17 @@ jobs:
         env:
           MARP_USER: root:root
 
+      - name: Build articles site
+        run: pnpm --filter articles build
+
       - name: Prepare public folder
         run: |
           mkdir -p public/ia-postrophe
+          mkdir -p public/articles
           mkdir -p public/slides/assets
           cp -r apps/simon.duhem.fr/dist/* public/
           cp -r apps/ia-postrophe/dist/ia-postrophe/* public/ia-postrophe/
+          cp -r apps/articles/_site/* public/articles/
           cp -r apps/slides/src/assets/* public/slides/assets/
           cp -r apps/slides/dist/* public/slides/
 
