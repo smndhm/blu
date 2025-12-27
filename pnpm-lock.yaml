@@ -21,8 +21,8 @@ importers:
         specifier: 0.25.1
         version: 0.25.1
       '@scaleway/changesets-renovate':
-        specifier: 2.2.1
-        version: 2.2.1
+        specifier: 2.2.2
+        version: 2.2.2
       eslint:
         specifier: 9.39.2
         version: 9.39.2
@@ -879,8 +879,8 @@ packages:
   '@rushstack/ts-command-line@5.1.4':
     resolution: {integrity: sha512-H0I6VdJ6sOUbktDFpP2VW5N29w8v4hRoNZOQz02vtEi6ZTYL1Ju8u+TcFiFawUDrUsx/5MQTUhd79uwZZVwVlA==}
 
-  '@scaleway/changesets-renovate@2.2.1':
-    resolution: {integrity: sha512-OKdC9dKKXlIWho3lLDSozbLW+fkINTRbV8zgWBBOsbL6LN7Ym9NsdFevkcMfSWLEhCAYWQXYmpsMsQemZBRItQ==}
+  '@scaleway/changesets-renovate@2.2.2':
+    resolution: {integrity: sha512-S1NOtNIAidN3NyfE/a0WLhYSfMn59/b6vWJBC9lf1vYr1rPOfWPSuImOZKHWwkgLYd9o7RLgYPLqy2nwl22QWA==}
     engines: {node: '>=20.x'}
     hasBin: true
 
@@ -2766,8 +2766,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  simple-git@3.28.0:
-    resolution: {integrity: sha512-Rs/vQRwsn1ILH1oBUy8NucJlXmnnLeLCfcvbSehkPzbv3wwoFWIdtfd6Ndo6ZPhlPsCZ60CPI4rxurnwAa+a2w==}
+  simple-git@3.30.0:
+    resolution: {integrity: sha512-q6lxyDsCmEal/MEGhP1aVyQ3oxnagGlBDOVSIB4XUVLl1iZh0Pah6ebC9V4xBap/RfgP2WlI8EKs0WS0rMEJHg==}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -4084,9 +4084,9 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@scaleway/changesets-renovate@2.2.1':
+  '@scaleway/changesets-renovate@2.2.2':
     dependencies:
-      simple-git: 3.28.0
+      simple-git: 3.30.0
     transitivePeerDependencies:
       - supports-color
 
@@ -6215,7 +6215,7 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simple-git@3.28.0:
+  simple-git@3.30.0:
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
