@@ -68,7 +68,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 7.3.0
-        version: 7.3.0(sass@1.96.0)(yaml@2.8.1)
+        version: 7.3.0(sass@1.97.1)(yaml@2.8.1)
 
   apps/simon.duhem.fr:
     devDependencies:
@@ -76,14 +76,14 @@ importers:
         specifier: 8.0.1
         version: 8.0.1
       sass:
-        specifier: 1.96.0
-        version: 1.96.0
+        specifier: 1.97.1
+        version: 1.97.1
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
         specifier: 7.3.0
-        version: 7.3.0(sass@1.96.0)(yaml@2.8.1)
+        version: 7.3.0(sass@1.97.1)(yaml@2.8.1)
 
   apps/slides:
     devDependencies:
@@ -137,7 +137,7 @@ importers:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: 4.0.16
-        version: 4.0.16(vitest@4.0.16(jsdom@27.3.0)(sass@1.96.0)(yaml@2.8.1))
+        version: 4.0.16(vitest@4.0.16(jsdom@27.3.0)(sass@1.97.1)(yaml@2.8.1))
       jsdom:
         specifier: 27.3.0
         version: 27.3.0
@@ -152,13 +152,13 @@ importers:
         version: 5.9.3
       vite:
         specifier: 7.3.0
-        version: 7.3.0(sass@1.96.0)(yaml@2.8.1)
+        version: 7.3.0(sass@1.97.1)(yaml@2.8.1)
       vite-plugin-dts:
         specifier: 4.5.4
-        version: 4.5.4(rollup@4.53.3)(typescript@5.9.3)(vite@7.3.0(sass@1.96.0)(yaml@2.8.1))
+        version: 4.5.4(rollup@4.53.3)(typescript@5.9.3)(vite@7.3.0(sass@1.97.1)(yaml@2.8.1))
       vitest:
         specifier: 4.0.16
-        version: 4.0.16(jsdom@27.3.0)(sass@1.96.0)(yaml@2.8.1)
+        version: 4.0.16(jsdom@27.3.0)(sass@1.97.1)(yaml@2.8.1)
 
 packages:
 
@@ -3141,8 +3141,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.96.0:
-    resolution: {integrity: sha512-8u4xqqUeugGNCYwr9ARNtQKTOj4KmYiJAVKXf2CTIivTCR51j96htbMKWDru8H5SaQWpyVgTfOF8Ylyf5pun1Q==}
+  sass@1.97.1:
+    resolution: {integrity: sha512-uf6HoO8fy6ClsrShvMgaKUn14f2EHQLQRtpsZZLeU/Mv0Q1K5P0+x2uvH6Cub39TVVbWNSrraUhDAoFph6vh0A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -4962,7 +4962,7 @@ snapshots:
       '@typescript-eslint/types': 8.50.1
       eslint-visitor-keys: 4.2.1
 
-  '@vitest/coverage-v8@4.0.16(vitest@4.0.16(jsdom@27.3.0)(sass@1.96.0)(yaml@2.8.1))':
+  '@vitest/coverage-v8@4.0.16(vitest@4.0.16(jsdom@27.3.0)(sass@1.97.1)(yaml@2.8.1))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.16
@@ -4975,7 +4975,7 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.16(jsdom@27.3.0)(sass@1.96.0)(yaml@2.8.1)
+      vitest: 4.0.16(jsdom@27.3.0)(sass@1.97.1)(yaml@2.8.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -4988,13 +4988,13 @@ snapshots:
       chai: 6.2.1
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.16(vite@7.3.0(sass@1.96.0)(yaml@2.8.1))':
+  '@vitest/mocker@4.0.16(vite@7.3.0(sass@1.97.1)(yaml@2.8.1))':
     dependencies:
       '@vitest/spy': 4.0.16
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.0(sass@1.96.0)(yaml@2.8.1)
+      vite: 7.3.0(sass@1.97.1)(yaml@2.8.1)
 
   '@vitest/pretty-format@4.0.16':
     dependencies:
@@ -7046,7 +7046,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.96.0:
+  sass@1.97.1:
     dependencies:
       chokidar: 4.0.3
       immutable: 5.1.4
@@ -7553,7 +7553,7 @@ snapshots:
 
   validate-npm-package-name@6.0.2: {}
 
-  vite-plugin-dts@4.5.4(rollup@4.53.3)(typescript@5.9.3)(vite@7.3.0(sass@1.96.0)(yaml@2.8.1)):
+  vite-plugin-dts@4.5.4(rollup@4.53.3)(typescript@5.9.3)(vite@7.3.0(sass@1.97.1)(yaml@2.8.1)):
     dependencies:
       '@microsoft/api-extractor': 7.55.1
       '@rollup/pluginutils': 5.3.0(rollup@4.53.3)
@@ -7566,13 +7566,13 @@ snapshots:
       magic-string: 0.30.21
       typescript: 5.9.3
     optionalDependencies:
-      vite: 7.3.0(sass@1.96.0)(yaml@2.8.1)
+      vite: 7.3.0(sass@1.97.1)(yaml@2.8.1)
     transitivePeerDependencies:
       - '@types/node'
       - rollup
       - supports-color
 
-  vite@7.3.0(sass@1.96.0)(yaml@2.8.1):
+  vite@7.3.0(sass@1.97.1)(yaml@2.8.1):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -7582,13 +7582,13 @@ snapshots:
       tinyglobby: 0.2.15
     optionalDependencies:
       fsevents: 2.3.3
-      sass: 1.96.0
+      sass: 1.97.1
       yaml: 2.8.1
 
-  vitest@4.0.16(jsdom@27.3.0)(sass@1.96.0)(yaml@2.8.1):
+  vitest@4.0.16(jsdom@27.3.0)(sass@1.97.1)(yaml@2.8.1):
     dependencies:
       '@vitest/expect': 4.0.16
-      '@vitest/mocker': 4.0.16(vite@7.3.0(sass@1.96.0)(yaml@2.8.1))
+      '@vitest/mocker': 4.0.16(vite@7.3.0(sass@1.97.1)(yaml@2.8.1))
       '@vitest/pretty-format': 4.0.16
       '@vitest/runner': 4.0.16
       '@vitest/snapshot': 4.0.16
@@ -7605,7 +7605,7 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.0(sass@1.96.0)(yaml@2.8.1)
+      vite: 7.3.0(sass@1.97.1)(yaml@2.8.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       jsdom: 27.3.0
