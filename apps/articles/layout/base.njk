@@ -8,6 +8,7 @@ title: Articles
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
+  <base href="{{ site.base | absUrl(page.url) }}">
   <link rel="stylesheet" href="https://www.w3.org/assets/website-2021/styles/core.min.css" media="screen">
   <link rel="stylesheet" href="https://unpkg.com/prismjs@latest/themes/prism-okaidia.css" media="screen">
   <meta property="og:title" content="{{ title }}" />
@@ -16,9 +17,9 @@ title: Articles
   {%- else -%}
   <meta property="og:type" content="website" />
   {%- endif -%}
-  <meta property="og:url" content="{{ page.url }}" />
+  <meta property="og:url" content="{{ site.base | absUrl(page.url) }}" />
   {%- if ogImage -%}
-  <meta property="og:image" content="{{ page.url }}{{ ogImage }}" />
+  <meta property="og:image" content="{{ site.base | absUrl(page.url + ogImage) }}" />
   {%- endif -%}
 </head>
 
