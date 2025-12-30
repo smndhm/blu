@@ -1,9 +1,10 @@
 ---
-tags: articles
+tags: posts
 title: Ajout de l'auto-complétion sur les Web Components avec Stencil
 date: 2024-03-14
 origin: { href: https://dev.to/mgdis/ajout-de-lauto-completion-sur-les-web-components-avec-stencil-8o8, title: dev.to }
 ogImage: og.webp
+layout: 'layouts/post.njk'
 ---
 
 ## Introduction

@@ -1,9 +1,10 @@
 ---
-tags: articles
+tags: posts
 title: "Simplifier l'intégration des icônes depuis Figma : De la conception au design system"
 date: 2024-02-19
 origin: { href: https://dev.to/mgdis/simplifier-lintegration-des-icones-depuis-figma-de-la-conception-au-design-system-f9j, title: dev.to }
 ogImage: og.webp
+layout: 'layouts/post.njk'
 ---
 
 ## Introduction

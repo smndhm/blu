@@ -1,9 +1,10 @@
 ---
-tags: articles
+tags: posts
 title: Prendre en compte les Web Components dans vos scripts
 date: 2025-12-09
 origin: { title: 24 jours de web, href: https://www.24joursdeweb.fr/2025/prendre-en-compte-les-web-components-dans-vos-scripts }
 ogImage: og.png
+layout: 'layouts/post.njk'
 ---
 
 Les <span lang="en">Web Components</span> sont de plus en plus présents dans nos interfaces. Des <span lang="en">design systems</span> populaires comme <span lang="en">Carbon</span> d’IBM, <span lang="en">Spectrum</span> d’Adobe ou encore Polaris de <span lang="en">Shopify</span> ont aussi pris le parti de les utiliser pour leurs composants. Ce choix répond souvent à une volonté d’être agnostique, c’est-à-dire de proposer des éléments réutilisables quel que soit l’écosystème utilisé&nbsp;: React, Vue, Angular, ou même sans <span lang="en">framework</span>.
