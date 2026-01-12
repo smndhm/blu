@@ -30,7 +30,7 @@
   "devDependencies": {
     "@changesets/cli": "2.29.8",
     "@dume/linting": "workspace:*",
-    "@eslint/compat": "2.0.0",
+    "@eslint/compat": "2.0.1",
     "@manypkg/cli": "0.25.1",
     "@scaleway/changesets-renovate": "2.2.2",
     "eslint": "9.39.2",
