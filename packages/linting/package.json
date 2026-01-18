@@ -44,7 +44,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-config-turbo": "2.7.4",
     "globals": "16.5.0",
-    "prettier": "3.7.4",
+    "prettier": "3.8.0",
     "stylelint": "16.26.1",
     "stylelint-config-idiomatic-order": "10.0.0",
     "stylelint-config-standard-scss": "16.0.0",
