@@ -15,16 +15,16 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.2",
-    "@11ty/eleventy-img": "^6.0.4",
-    "@11ty/eleventy-navigation": "^1.0.5",
-    "@11ty/eleventy-plugin-rss": "^2.0.4",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
-    "cross-env": "^7.0.3",
-    "luxon": "^3.7.2",
-    "prismjs": "^1.30.0",
-    "zod": "^3.25.76",
-    "zod-validation-error": "^3.5.4"
+    "@11ty/eleventy": "3.1.2",
+    "@11ty/eleventy-img": "6.0.4",
+    "@11ty/eleventy-navigation": "1.0.5",
+    "@11ty/eleventy-plugin-rss": "2.0.4",
+    "@11ty/eleventy-plugin-syntaxhighlight": "5.0.2",
+    "cross-env": "7.0.3",
+    "luxon": "3.7.2",
+    "prismjs": "1.30.0",
+    "zod": "3.25.76",
+    "zod-validation-error": "3.5.4"
   },
   "dependencies": {
     "@zachleat/heading-anchors": "^1.0.5"

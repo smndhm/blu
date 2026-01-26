@@ -49,34 +49,34 @@ importers:
         version: 1.0.5
     devDependencies:
       '@11ty/eleventy':
-        specifier: ^3.1.2
+        specifier: 3.1.2
         version: 3.1.2
       '@11ty/eleventy-img':
-        specifier: ^6.0.4
+        specifier: 6.0.4
         version: 6.0.4
       '@11ty/eleventy-navigation':
-        specifier: ^1.0.5
+        specifier: 1.0.5
         version: 1.0.5
       '@11ty/eleventy-plugin-rss':
-        specifier: ^2.0.4
+        specifier: 2.0.4
         version: 2.0.4
       '@11ty/eleventy-plugin-syntaxhighlight':
-        specifier: ^5.0.2
+        specifier: 5.0.2
         version: 5.0.2
       cross-env:
-        specifier: ^7.0.3
+        specifier: 7.0.3
         version: 7.0.3
       luxon:
-        specifier: ^3.7.2
+        specifier: 3.7.2
         version: 3.7.2
       prismjs:
-        specifier: ^1.30.0
+        specifier: 1.30.0
         version: 1.30.0
       zod:
-        specifier: ^3.25.76
+        specifier: 3.25.76
         version: 3.25.76
       zod-validation-error:
-        specifier: ^3.5.4
+        specifier: 3.5.4
         version: 3.5.4(zod@3.25.76)
 
   apps/ia-postrophe:
