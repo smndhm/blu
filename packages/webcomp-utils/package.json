@@ -1,6 +1,10 @@
 {
   "name": "@dume/webcomp-utils",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smndhm/blu"
+  },
   "main": "dist/webcomp-utils.umd.js",
   "module": "dist/webcomp-utils.es.js",
   "types": "dist/index.d.ts",
