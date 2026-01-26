@@ -1,6 +1,6 @@
 {
   "name": "@dume/webcomp-utils",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "main": "dist/webcomp-utils.umd.js",
   "module": "dist/webcomp-utils.es.js",
   "types": "dist/index.d.ts",

@@ -1,5 +1,0 @@
----
-'slides': major
----
-
-Import
