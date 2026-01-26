@@ -1,0 +1,40 @@
+name: Renovate → Changesets
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - 'renovate/**'
+  pull_request:
+    branches:
+      - 'renovate/**'
+
+jobs:
+  changesets:
+    # only run on Renovate branches (push or PR)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      - name: Run changesets-renovate
+        run: pnpm exec changesets-renovate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit changesets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .changeset || true
+          git add .changeset/*.md || true
+          git commit -m "chore(changesets): add changeset for renovate" || echo "no changes to commit"
+          git push
