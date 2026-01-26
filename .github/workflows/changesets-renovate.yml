@@ -1,0 +1,45 @@
+name: Renovate → Changesets
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - 'renovate/**'
+  pull_request:
+    branches:
+      - 'renovate/**'
+
+jobs:
+  changesets:
+    # only run on Renovate branches (push or PR)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      - name: Run changesets-renovate
+        run: pnpm exec changesets-renovate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit changesets
+        run: |
+          # Make the commit appear authored by Renovate so Renovate can rebase automatically
+          git config user.name "renovate[bot]"
+          git config user.email "renovate[bot]@users.noreply.github.com"
+          export GIT_AUTHOR_NAME="renovate[bot]"
+          export GIT_AUTHOR_EMAIL="renovate[bot]@users.noreply.github.com"
+          export GIT_COMMITTER_NAME="renovate[bot]"
+          export GIT_COMMITTER_EMAIL="renovate[bot]@users.noreply.github.com"
+          git add .changeset || true
+          git add .changeset/*.md || true
+          git commit -m "chore(changesets): add changeset for renovate" || echo "no changes to commit"
+          git push
