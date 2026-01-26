@@ -22,8 +22,8 @@
   },
   "lint-staged": {
     "**/*.{js,json,md,mjs}": [
-      "prettier **/*.{js,json,md,mjs} --check",
-      "eslint **/*.{js,json,md,mjs}"
+      "prettier **/*.{js,json,md,mjs} --write",
+      "eslint **/*.{js,json,md,mjs} --fix"
     ],
     "**/*.{scss,css}": "pnpm lint:style"
   },
