@@ -73,11 +73,11 @@ importers:
         specifier: 1.30.0
         version: 1.30.0
       zod:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.3.6
+        version: 4.3.6
       zod-validation-error:
         specifier: 5.0.0
-        version: 5.0.0(zod@4.0.0)
+        version: 5.0.0(zod@4.3.6)
 
   apps/ia-postrophe:
     devDependencies:
@@ -3886,8 +3886,8 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.0.0:
-    resolution: {integrity: sha512-9diLdTPc/L7w/5jI4C3gHYNiGHDV9IZYxo1e5LSD8cabi65WVTWWb+g2BGPEpUUCOxR4D+6O5B0AzyMdUAXwrw==}
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -7884,12 +7884,12 @@ snapshots:
 
   yocto-queue@1.2.2: {}
 
-  zod-validation-error@5.0.0(zod@4.0.0):
+  zod-validation-error@5.0.0(zod@4.3.6):
     dependencies:
-      zod: 4.0.0
+      zod: 4.3.6
 
   zod@3.25.76: {}
 
-  zod@4.0.0: {}
+  zod@4.3.6: {}
 
   zwitch@2.0.4: {}
