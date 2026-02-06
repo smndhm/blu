@@ -42,7 +42,7 @@
     "@eslint/markdown": "7.5.1",
     "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
-    "eslint-config-turbo": "2.8.1",
+    "eslint-config-turbo": "2.8.2",
     "globals": "17.2.0",
     "prettier": "3.8.1",
     "stylelint": "17.1.0",
