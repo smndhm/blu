@@ -21,8 +21,8 @@ importers:
         specifier: 0.25.1
         version: 0.25.1
       '@scaleway/changesets-renovate':
-        specifier: 2.2.3
-        version: 2.2.3
+        specifier: 2.2.4
+        version: 2.2.4
       eslint:
         specifier: 10.0.2
         version: 10.0.2
@@ -1179,8 +1179,8 @@ packages:
   '@rushstack/ts-command-line@5.3.3':
     resolution: {integrity: sha512-c+ltdcvC7ym+10lhwR/vWiOhsrm/bP3By2VsFcs5qTKv+6tTmxgbVrtJ5NdNjANiV5TcmOZgUN+5KYQ4llsvEw==}
 
-  '@scaleway/changesets-renovate@2.2.3':
-    resolution: {integrity: sha512-wRip2jZPBWS4kgjPkUFx2gZ0rv3E/THq/+5IYfR5CsgJSZSlCrr4OR1LiZrBQj7m4UtHhBRdcFh7lO1YWCCqlg==}
+  '@scaleway/changesets-renovate@2.2.4':
+    resolution: {integrity: sha512-OjlNDHxh5ByvZjVblEbRRJi5iwnWe2f1hGAr2jrKSLUzrYKi8MYfwnftLPYCMewgWe661wCUY69ykBGtiMXHPQ==}
     engines: {node: '>=20.x'}
     hasBin: true
 
@@ -4950,7 +4950,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@scaleway/changesets-renovate@2.2.3':
+  '@scaleway/changesets-renovate@2.2.4':
     dependencies:
       '@types/js-yaml': 4.0.9
       fast-glob: 3.3.3
