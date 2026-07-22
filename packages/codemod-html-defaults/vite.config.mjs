@@ -7,6 +7,7 @@ export default defineConfig({
       entry: {
         index: 'src/index.ts',
         cli: 'src/cli.ts',
+        codemod: 'src/codemod.ts',
       },
       formats: ['es'],
       fileName: (format, entryName) => `${entryName}.js`,

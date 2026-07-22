@@ -25,6 +25,17 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./codemod": {
+      "types": "./dist/codemod.d.ts",
+      "import": "./dist/codemod.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "codemod-html-defaults": "bin/codemod-html-defaults.mjs"
   },

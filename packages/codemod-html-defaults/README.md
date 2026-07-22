@@ -28,6 +28,19 @@ const { output, findings, changed } = transformHtml('<input type="text">');
 // output === '<input>'
 ```
 
+### Codemod CLI workflow entry
+
+For rollouts driven by the [Codemod CLI](https://docs.codemod.com/) (`codemod:ast-grep`-style workflow scripts), the package also exposes a ready-made step with the usual `transform(root) → string | null` contract — drop it into a workflow alongside other transforms:
+
+```js
+// workflow script
+import transform from '@dume/codemod-html-defaults/codemod';
+
+export default transform;
+```
+
+It returns `null` when the file is untouched, logs one `file - Removing N …` line per changed file, and reports conditional skips (`button[type]`, `target` with `<base>`, dynamic values) as `ℹ️` lines so they surface in the rollout output.
+
 ## Where the defaults come from (never from memory)
 
 - **Primary source**: the [`html-enumerated-attributes`](https://github.com/wooorm/html-enumerated-attributes) package (MIT, unified collective), which encodes the WHATWG _missing value default_ of every enumerated attribute as equivalence classes of states. An attribute is removable only when its case-folded value belongs to the same state group as the missing value default.
