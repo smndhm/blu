@@ -1,0 +1,11 @@
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  <form action="{{ searchUrl }}">
+    <input name="q" value="{{ query }}" placeholder="{% if fr %}Rechercher{% else %}Search{% endif %}">
+    <input type="{{ dynamicType }}" name="x">
+    <button type="submit">{{ label }}</button>
+  </form>
+  <a target="_self" href="{{ home }}">stays: fragment may be included under a layout with base</a>
+{% endblock %}
