@@ -1,1 +1,3 @@
 pnpm-lock.yaml
+# Codemod test fixtures are byte-exact input/expected pairs — formatting them would break the tests
+packages/codemod-html-defaults/tests/fixtures/

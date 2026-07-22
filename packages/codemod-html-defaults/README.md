@@ -34,6 +34,10 @@ const { output, findings, changed } = transformHtml('<input type="text">');
 - **Supplementary table** (`src/defaults.ts`): the few non-enumerated attributes with a spec-defined default (`script[type]`, `style[type]`, `link[type]`), each entry carrying a link to its normative definition and cross-checked with `html-minifier-terser`'s redundant-attribute handling.
 - **Empirical verification**: the test suite asserts the defaults against jsdom's implementation of the WHATWG reflection rules (`input.type === 'text'`, `form.method === 'get'`, …), and proves on a real form that submission-related behavior is identical before and after the transform.
 
+## Tests
+
+Following the usual codemod convention, the main coverage lives in golden fixtures: each `tests/fixtures/<name>.input.<ext>` file is transformed and compared byte for byte to its `<name>.expected.<ext>` sibling (plus an idempotence check: transforming an expected file must change nothing). To add a case, drop a new input/expected pair in that directory — the harness picks it up automatically. Finer-grained unit specs cover the report contract (findings, skip reasons, line/column) and the assumptions made about the upstream defaults data.
+
 ## What gets removed (unconditionally)
 
 | Example                                                                      | Why it is a no-op                                                                                                                                                                  |
