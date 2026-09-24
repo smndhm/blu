@@ -10,10 +10,24 @@ layout: 'layouts/post.njk'
 
 Alors je ne sais pas vous, mais moi j'ai toujours mis `aria-hidden="true"` sans trop réfléchir.
 
-- `<span class="fa fa-blu" aria-hidden="true"></span>`
-- `aria-hidden="true"`
-- `aria-hidden="true"`
-- ...
+```html
+<!-- Une icône en police d'icônes -->
+<span class="fa fa-blu" aria-hidden="true"></span>
+
+<!-- Une icône SVG décorative dans un bouton -->
+<button>
+  <svg aria-hidden="true" focusable="false">...</svg>
+  Supprimer
+</button>
+
+<!-- Un séparateur dans un fil d'Ariane -->
+<a href="/">Accueil</a> <span aria-hidden="true">/</span> <a href="/articles/">Articles</a>
+
+<!-- Un emoji purement décoratif -->
+<h2><span aria-hidden="true">🍕</span> Recettes</h2>
+```
+
+Et j'en passe...
 
 Pour faire simple, cet attribut permet de définir si le contenu d'un élément doit être retiré de l'API d'accessibilité, ce qui aura pour conséquence qu'il ne sera pas restitué par les technologies d'assistance.
 Je ne vais pas détailler plus que ça. Ce n'est pas le but ici et, vu mon public, je ne pense pas que ce soit nécessaire.
@@ -95,6 +109,18 @@ Comme `"true"` et `"false"` finalement. Soit `aria-hidden="undefined"` !
 
 Okay...
 
+Si je reprends la définition, l'agent utilisateur décide seul, selon que l'élément est rendu ou non :
+
+```html
+<!-- Rendu : restitué -->
+<span aria-hidden="undefined">Blu</span>
+
+<!-- Non rendu : non restitué -->
+<span aria-hidden="undefined" style="display: none;">Blu</span>
+```
+
+Autrement dit, exactement ce qu'il se passe quand on ne met pas d'attribut du tout. Écrire `aria-hidden="undefined"`, c'est écrire explicitement… la valeur par défaut.
+
 Bon, sinon, dans les exemples de `ariaHidden`, on y voit un cas où l'on passe de `"true"` à `"false"`. Pourquoi pas, mais autant retirer l'attribut, non ?
 
 ## « Comme s'il était rendu »
@@ -167,9 +193,20 @@ Mais on va se rassurer en se disant qu'on était sur un cas isolé...
 
 Première chose : il n'y a pas d'autre utilisation de `aria-hidden` que `aria-hidden="true"`.
 
-Si l'on mettait juste `aria-hidden`, cela reviendrait à `aria-hidden="undefined"`, qui est la valeur par défaut, ce qui reviendrait aussi à `aria-hidden="false"`, qui n'est plus supporté. Déprécié ?
+Toutes les autres écritures reviennent au même, c'est-à-dire à ne rien mettre du tout :
 
-Du coup, première réflexion : est-ce que la doc du MDN ne devrait pas aussi le préciser ? La force des standards, c'est qu'ils ne bougent pas trop, mais ils évoluent quand même, et c'est le cas ici. Je pense que l'on pourrait marquer ces valeurs comme `deprecated` sur le MDN pour refléter ce que dit la spec du W3C.
+```html
+<span>Blu</span>
+<span aria-hidden>Blu</span>
+<span aria-hidden="undefined">Blu</span>
+<span aria-hidden="false">Blu</span>
+```
+
+- `aria-hidden` sans valeur n'est pas une valeur reconnue, donc on retombe sur la valeur par défaut : `"undefined"` ;
+- `"undefined"`, c'est justement la valeur par défaut ;
+- et depuis ARIA 1.3, `"false"` est synonyme de `"undefined"`.
+
+Du coup, première réflexion : est-ce que la doc du MDN ne devrait pas aussi le préciser ? La force des standards, c'est qu'ils ne bougent pas trop, mais ils évoluent quand même, et c'est le cas ici. La spec ne parle pas de dépréciation : `"false"` reste une valeur valide, elle n'a simplement plus d'effet particulier. Je pense que le MDN devrait au moins l'indiquer, voire déconseiller explicitement `"false"` et `"undefined"`, pour refléter ce que dit la spec du W3C.
 
 <!-- TODO : faire la PR sur le MDN et en parler ici (« en tout cas, on a fait la PR, à voir ») -->
 
@@ -181,8 +218,3 @@ Du coup, ceux qui ont utilisé `aria-hidden="false"` (on ne sait pas trop pourqu
 Il faudrait peut-être proposer un autre attribut ? Mais `aria-hidden` est le candidat parfait, l'équivalent de l'attribut `hidden`.
 
 Je pense que l'on va rester avec `aria-hidden="true"`.
-
-Merci
-<span aria-hidden="true">Des questions ?</span>
-
-<!-- pas le temps, c'est un lightning -->
