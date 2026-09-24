@@ -21,7 +21,7 @@ Alors je ne sais pas vous, mais moi j'ai toujours mis `aria-hidden="true"` sans 
 <label for="nom">Nom <span aria-hidden="true">*</span></label>
 <input id="nom" type="text" required />
 
-<!-- Une modale fermée -->
+<!-- Une ancienne modale -->
 <div class="modal" tabindex="-1" aria-hidden="true">...</div>
 ```
 
