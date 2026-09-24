@@ -14,20 +14,15 @@ Alors je ne sais pas vous, mais moi j'ai toujours mis `aria-hidden="true"` sans 
 <!-- Une icône -->
 <span class="fa fa-blu" aria-hidden="true"></span>
 
+<!-- Les flèches d'une pagination -->
+<a href="#" aria-label="Précédent"><span aria-hidden="true">&laquo;</span></a>
+
 <!-- L'astérisque d'un champ obligatoire -->
 <label for="nom">Nom <span aria-hidden="true">*</span></label>
 <input id="nom" type="text" required />
 
-<!-- Un séparateur dans un fil d'Ariane -->
-<a href="/">Accueil</a> <span aria-hidden="true">/</span> <a href="/articles/">Articles</a>
-
-<!-- Un lien en doublon dans une carte -->
-<a href="/article/" aria-hidden="true" tabindex="-1"><img src="vignette.jpg" alt="" /></a>
-<h3><a href="/article/">Titre de l'article</a></h3>
-
-<!-- Le contenu de la page derrière une modale ouverte -->
-<main aria-hidden="true">...</main>
-<div role="dialog" aria-modal="true">...</div>
+<!-- Une modale fermée -->
+<div class="modal" tabindex="-1" aria-hidden="true">...</div>
 ```
 
 Et j'en passe...
