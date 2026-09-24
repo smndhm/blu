@@ -205,7 +205,7 @@ Toutes les autres écritures reviennent au même, c'est-à-dire à ne rien mettr
 <span aria-hidden="false">Blu</span>
 ```
 
-- `aria-hidden` sans valeur n'est pas une valeur reconnue, donc on retombe sur la valeur par défaut : `"undefined"` ;
+- `aria-hidden` sans valeur, c'est une valeur vide, que [la spec traite comme `"undefined"`](https://w3c.github.io/aria/#state_property_processing) ;
 - `"undefined"`, c'est justement la valeur par défaut ;
 - et depuis ARIA 1.3, `"false"` est synonyme de `"undefined"`.
 
