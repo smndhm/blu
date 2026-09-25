@@ -7,8 +7,6 @@ ogImage: og.png
 layout: 'layouts/post.njk'
 ---
 
-## `aria-hidden="true"`
-
 Alors je ne sais pas vous, mais moi j'ai toujours mis `aria-hidden="true"` sans trop réfléchir.
 
 ```html
