@@ -34,7 +34,7 @@ Je ne vais pas détailler plus que ça. Ce n'est pas le but ici et, vu mon publi
 
 Et puis un jour, on m'a partagé ça :
 
-<!-- TODO : capture du message Teams de Nico -->
+![Message de Nico contenant le code <header aria-hidden="false"><img src="./blu/blu.png" alt="blu blu" /></header>, suivi du commentaire : « Visiblement ils veulent vraiment que ce soit restitué. »](./1.png)
 
 C'est effectivement marrant.
 
