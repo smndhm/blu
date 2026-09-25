@@ -179,6 +179,8 @@ Donc, pour répondre à la question initiale, qui est de savoir quand utiliser `
 
 Mais comment en suis-je arrivé à me poser ces questions déjà ? Ah oui, le message de Nico.
 
+![Message de Nico contenant le code <header aria-hidden="false"><img src="./blu/blu.png" alt="blu blu" /></header>, suivi du commentaire : « Visiblement ils veulent vraiment que ce soit restitué. »](./1.png)
+
 Mais on va se rassurer en se disant qu'on était sur un cas isolé...
 
 ![Recherche dans l'éditeur de code : « aria-hidden="false" », en excluant les fichiers .snap, donne 9 résultats dans 9 fichiers.](./2.png)
