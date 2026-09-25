@@ -2,7 +2,7 @@
 tags: posts
 title: 'aria-hidden="false"'
 date: 2026-02-28
-ogImage: og.webp
+ogImage: og.png
 layout: 'layouts/post.njk'
 ---
 
