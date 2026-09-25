@@ -62,7 +62,7 @@ Première idée : avoir un `aria-hidden="false"` dans un `aria-hidden="true"` ?
 </span>
 ```
 
-Franchement, je n'y crois pas, ça n'a pas trop de sens, mais j'ai testé et... ce n'est pas ça.
+Franchement, je n'y crois pas, ça n'a pas trop de sens, mais j'ai testé (dans Chrome, puis dans Firefox avec VoiceOver) et... ce n'est pas ça.
 
 ## MDN
 
@@ -136,7 +136,7 @@ Mon « Blu » sera restitué sans être visible ?
 Un peu comme si on utilisait une classe `.sr-only` ou `.visually-hidden` ? Mais pourquoi utilise-t-on ces classes, du coup ?
 Oui, je lis dans vos pensées ! :D
 
-Eh bien j'ai testé et... ça ne fonctionne pas ! C'est sûrement pour ça que ces classes sont utiles finalement.
+Eh bien j'ai testé et... ça ne fonctionne pas ! Ni dans Chrome, ni dans Firefox avec VoiceOver. C'est sûrement pour ça que ces classes sont utiles finalement.
 
 Bon, du coup, je ne sais toujours pas quand utiliser `aria-hidden="false"`, et encore moins `aria-hidden="undefined"`.
 
@@ -206,17 +206,20 @@ Les autres valeurs prévues par la spec reviennent au même, c'est-à-dire à ne
 - `"undefined"`, c'est justement la valeur par défaut ;
 - et depuis ARIA 1.3, `"false"` est synonyme de `"undefined"`.
 
-Mais attention, cela ne veut pas dire que n'importe quelle valeur fait l'affaire. Pour une valeur inconnue, [la spec](https://w3c.github.io/aria/#document-handling_author-errors_states-properties) demande de la traiter comme `true`. J'ai testé dans Chromium :
+Mais attention, cela ne veut pas dire que n'importe quelle valeur fait l'affaire. Pour une valeur inconnue, [la spec](https://w3c.github.io/aria/#document-handling_author-errors_states-properties) demande de la traiter comme `true`. Et là, les navigateurs ne sont pas d'accord :
 
 ```html
-<!-- Tous masqués -->
 <span aria-hidden="no">Blu</span>
 <span aria-hidden="0">Blu</span>
 <span aria-hidden="null">Blu</span>
 <span aria-hidden="false ">Blu</span>
+<span aria-hidden="blu">Blu</span>
 ```
 
-Oui, `aria-hidden="no"` masque le contenu. Et même `"false "`, à cause de l'espace en trop. 😅
+- dans Chrome (Chromium 141), tous ces contenus sont masqués, comme le demande la spec ;
+- dans Firefox avec VoiceOver, ils sont tous lus.
+
+Oui, dans Chrome, `aria-hidden="no"` masque le contenu. Et même `"false "`, à cause d'une espace en trop. Mais pas dans Firefox. On retrouve bien le « support incohérent » dont parle la spec. 😅
 
 Du coup, première réflexion : est-ce que la doc du MDN ne devrait pas aussi le préciser ? La force des standards, c'est qu'ils ne bougent pas trop, mais ils évoluent quand même, et c'est le cas ici. La spec ne parle pas de dépréciation : `"false"` reste une valeur valide, elle n'a simplement plus d'effet particulier. Je pense que le MDN devrait au moins l'indiquer, voire déconseiller explicitement `"false"` et `"undefined"`, pour refléter ce que dit la spec du W3C.
 
