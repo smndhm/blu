@@ -59,7 +59,7 @@ Première idée : avoir un `aria-hidden="false"` dans un `aria-hidden="true"` ?
 </span>
 ```
 
-Franchement, je n'y crois pas, ça n'a pas trop de sens, mais j'ai testé (dans Chrome, puis dans Firefox avec VoiceOver) et... ce n'est pas ça.
+Franchement, je n'y crois pas, ça n'a pas trop de sens, mais j'ai testé (dans Chrome et Firefox, avec VoiceOver) et... ce n'est pas ça.
 
 ## MDN
 
@@ -133,7 +133,7 @@ Mon « Blu » sera restitué sans être visible ?
 Un peu comme si on utilisait une classe `.sr-only` ou `.visually-hidden` ? Mais pourquoi utilise-t-on ces classes, du coup ?
 Oui, je lis dans vos pensées ! <span role="img" aria-label="grand sourire">😄</span>
 
-Eh bien j'ai testé et... ça ne fonctionne pas ! Ni dans Chrome, ni dans Firefox avec VoiceOver. C'est sûrement pour ça que ces classes sont utiles finalement.
+Eh bien j'ai testé et... ça ne fonctionne pas ! Ni dans Chrome, ni dans Firefox, avec VoiceOver. C'est sûrement pour ça que ces classes sont utiles finalement.
 
 Bon, du coup, je ne sais toujours pas quand utiliser `aria-hidden="false"`, et encore moins `aria-hidden="undefined"`.
 
@@ -213,8 +213,10 @@ Mais attention, cela ne veut pas dire que n'importe quelle valeur fait l'affaire
 <span aria-hidden="blu">Blu</span>
 ```
 
-- dans Chrome (Chromium 141), tous ces contenus sont masqués, comme le demande la spec ;
-- dans Firefox avec VoiceOver, ils sont tous lus.
+- dans Chrome, tous ces contenus sont masqués, comme le demande la spec ;
+- dans Firefox, ils sont tous lus.
+
+Même Mac, même VoiceOver : c'est bien le navigateur qui fait la différence.
 
 Oui, dans Chrome, `aria-hidden="no"` masque le contenu. Et même `"false "`, à cause d'une espace en trop. Mais pas dans Firefox. On retrouve bien le « support incohérent » dont parle la spec. <span role="img" aria-label="sourire gêné">😅</span>
 
