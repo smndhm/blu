@@ -46,12 +46,12 @@ Alors ma première réflexion a été de me demander pourquoi `aria-hidden="true
 On est sur une notion booléenne : oui ou non, on cache ou l'on restitue l'information. La présence ou non de l'attribut devrait suffire. Là, si l'on veut vraiment indiquer le `false`, c'est qu'il doit y avoir une raison.
 
 Un peu comme le `aria-expanded="false"`.
-Je sais que vous l'avez tous en tête là ;)
+Je sais que vous l'avez tous en tête là <span role="img" aria-label="clin d'œil">😉</span>
 
 ## « Je ne veux pas que ce contenu soit masqué »
 
 Alors, dans quel cas cela peut-il sembler utile de dire « je ne veux pas que ce contenu soit masqué », sachant que c'est le comportement par défaut de tous les éléments ?
-Sauf le `<dialog>`, ok, je vous vois venir :)
+Sauf le `<dialog>`, ok, je vous vois venir <span role="img" aria-label="sourire">🙂</span>
 
 Première idée : avoir un `aria-hidden="false"` dans un `aria-hidden="true"` ?
 
@@ -68,7 +68,7 @@ Franchement, je n'y crois pas, ça n'a pas trop de sens, mais j'ai testé (dans 
 
 Bon, à un moment, il faut aller voir la doc. Que dit le MDN sur l'utilisation de la valeur `"false"` ? Est-ce qu'elle existe d'ailleurs ?
 
-Alors oui ! Vous avez douté aussi ? :)
+Alors oui ! Vous avez douté aussi ? <span role="img" aria-label="sourire">🙂</span>
 
 Sur [la page du MDN de `aria-hidden`](https://developer.mozilla.org/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-hidden), on ne retrouve que deux fois la mention du `false`.
 
@@ -78,7 +78,7 @@ La première :
 
 Traduction : « Utiliser `aria-hidden="false"` ne réexpose pas l'élément aux technologies d'assistance si l'un de ses parents définit `aria-hidden="true"`. »
 
-Oh bah tiens, j'aurais dû commencer par là ! 😅
+Oh bah tiens, j'aurais dû commencer par là ! <span role="img" aria-label="sourire gêné">😅</span>
 
 La seconde, dans les valeurs possibles :
 
@@ -98,7 +98,7 @@ Mais qu'est-ce que cela veut dire, ce `undefined` ? Est-ce que l'on définit un 
 
 Traduction : « L'état masqué de l'élément est déterminé par l'agent utilisateur selon qu'il est rendu ou non. »
 
-Alors je ne sais pas vous, mais perso, à ce moment-là, je ne comprends plus grand-chose. Moi qui pensais trouver un exemple clair d'utilisation du `aria-hidden="false"`. :)
+Alors je ne sais pas vous, mais perso, à ce moment-là, je ne comprends plus grand-chose. Moi qui pensais trouver un exemple clair d'utilisation du `aria-hidden="false"`. <span role="img" aria-label="visage à l'envers">🙃</span>
 
 ## `aria-hidden="undefined"`
 
@@ -134,7 +134,7 @@ Donc si je fais :
 Mon « Blu » sera restitué sans être visible ?
 
 Un peu comme si on utilisait une classe `.sr-only` ou `.visually-hidden` ? Mais pourquoi utilise-t-on ces classes, du coup ?
-Oui, je lis dans vos pensées ! :D
+Oui, je lis dans vos pensées ! <span role="img" aria-label="grand sourire">😄</span>
 
 Eh bien j'ai testé et... ça ne fonctionne pas ! Ni dans Chrome, ni dans Firefox avec VoiceOver. C'est sûrement pour ça que ces classes sont utiles finalement.
 
@@ -219,7 +219,7 @@ Mais attention, cela ne veut pas dire que n'importe quelle valeur fait l'affaire
 - dans Chrome (Chromium 141), tous ces contenus sont masqués, comme le demande la spec ;
 - dans Firefox avec VoiceOver, ils sont tous lus.
 
-Oui, dans Chrome, `aria-hidden="no"` masque le contenu. Et même `"false "`, à cause d'une espace en trop. Mais pas dans Firefox. On retrouve bien le « support incohérent » dont parle la spec. 😅
+Oui, dans Chrome, `aria-hidden="no"` masque le contenu. Et même `"false "`, à cause d'une espace en trop. Mais pas dans Firefox. On retrouve bien le « support incohérent » dont parle la spec. <span role="img" aria-label="sourire gêné">😅</span>
 
 Du coup, première réflexion : est-ce que la doc du MDN ne devrait pas aussi le préciser ? La force des standards, c'est qu'ils ne bougent pas trop, mais ils évoluent quand même, et c'est le cas ici. La spec ne parle pas de dépréciation : `"false"` reste une valeur valide, elle n'a simplement plus d'effet particulier. Je pense que le MDN devrait au moins l'indiquer, voire déconseiller explicitement `"false"` et `"undefined"`, pour refléter ce que dit la spec du W3C.
 
