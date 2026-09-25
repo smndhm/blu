@@ -2,6 +2,7 @@
 tags: posts
 title: 'aria-hidden="false"'
 date: 2026-02-28
+description: 'J''ai toujours mis aria-hidden="true" sans réfléchir. Un jour, on m''a montré aria-hidden="false". Alors, quand faut-il l''utiliser ? Spoiler : jamais.'
 ogImage: og.png
 layout: 'layouts/post.njk'
 ---
