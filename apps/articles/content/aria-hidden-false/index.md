@@ -24,7 +24,7 @@ Alors je ne sais pas vous, mais moi j'ai toujours mis `aria-hidden="true"` sans 
 Et j'en passe...
 
 Pour faire simple, cet attribut permet de définir si le contenu d'un élément doit être retiré de l'API d'accessibilité, ce qui aura pour conséquence qu'il ne sera pas restitué par les technologies d'assistance.
-Je ne vais pas détailler plus que ça. Ce n'est pas le but ici et, vu mon public, je ne pense pas que ce soit nécessaire.
+Je ne vais pas détailler plus que ça, ce n'est pas le but ici. Si besoin, [la page du MDN](https://developer.mozilla.org/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-hidden) l'explique très bien.
 
 ## `aria-hidden="false"`
 
