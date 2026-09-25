@@ -183,7 +183,7 @@ Mais comment en suis-je arrivé à me poser ces questions déjà ? Ah oui, la ca
 
 Mais on va se rassurer en se disant qu'on était sur un cas isolé...
 
-<!-- TODO : capture avec les 9 résultats -->
+![Recherche dans l'éditeur de code : « aria-hidden="false" », en excluant les fichiers .snap, donne 9 résultats dans 9 fichiers.](./2.png)
 
 Ça a été corrigé depuis !
 
