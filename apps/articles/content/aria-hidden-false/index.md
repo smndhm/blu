@@ -193,7 +193,7 @@ Rassurez-vous : les 9 ont été corrigés depuis ! Il n'y a plus aucun `aria-hid
 
 Première chose : il n'y a pas d'autre utilisation de `aria-hidden` que `aria-hidden="true"`.
 
-Toutes les autres écritures reviennent au même, c'est-à-dire à ne rien mettre du tout :
+Les autres valeurs prévues par la spec reviennent au même, c'est-à-dire à ne rien mettre du tout :
 
 ```html
 <span>Blu</span>
@@ -202,9 +202,21 @@ Toutes les autres écritures reviennent au même, c'est-à-dire à ne rien mettr
 <span aria-hidden="false">Blu</span>
 ```
 
-- `aria-hidden` sans valeur, c'est une valeur vide, que [la spec traite comme `"undefined"`](https://w3c.github.io/aria/#state_property_processing) ;
+- `aria-hidden` sans valeur, c'est une valeur vide, que [la spec traite comme `"undefined"`](https://w3c.github.io/aria/#document-handling_author-errors_states-properties) ;
 - `"undefined"`, c'est justement la valeur par défaut ;
 - et depuis ARIA 1.3, `"false"` est synonyme de `"undefined"`.
+
+Mais attention, cela ne veut pas dire que n'importe quelle valeur fait l'affaire. Pour une valeur inconnue, [la spec](https://w3c.github.io/aria/#document-handling_author-errors_states-properties) demande de la traiter comme `true`. J'ai testé dans Chromium :
+
+```html
+<!-- Tous masqués -->
+<span aria-hidden="no">Blu</span>
+<span aria-hidden="0">Blu</span>
+<span aria-hidden="null">Blu</span>
+<span aria-hidden="false ">Blu</span>
+```
+
+Oui, `aria-hidden="no"` masque le contenu. Et même `"false "`, à cause de l'espace en trop. 😅
 
 Du coup, première réflexion : est-ce que la doc du MDN ne devrait pas aussi le préciser ? La force des standards, c'est qu'ils ne bougent pas trop, mais ils évoluent quand même, et c'est le cas ici. La spec ne parle pas de dépréciation : `"false"` reste une valeur valide, elle n'a simplement plus d'effet particulier. Je pense que le MDN devrait au moins l'indiquer, voire déconseiller explicitement `"false"` et `"undefined"`, pour refléter ce que dit la spec du W3C.
 
