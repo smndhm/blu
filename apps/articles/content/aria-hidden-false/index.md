@@ -36,7 +36,7 @@ Et puis un jour, on m'a partagé ça :
 
 ![Message de Nico contenant le code <header aria-hidden="false"><img src="./blu/blu.png" alt="blu blu" /></header>, suivi du commentaire : « Visiblement ils veulent vraiment que ce soit restitué. »](./1.png)
 
-C'est effectivement marrant.
+Effectivement, on ne pourrait pas être plus clair.
 
 Mais comme, au final, cela ne me semblait avoir aucun sens, je me suis renseigné pour savoir dans quels cas on pouvait en avoir besoin.
 
