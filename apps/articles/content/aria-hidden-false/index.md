@@ -14,9 +14,6 @@ Alors je ne sais pas vous, mais moi j'ai toujours mis `aria-hidden="true"` sans 
 <!-- Une icône -->
 <span class="fa fa-blu" aria-hidden="true"></span>
 
-<!-- Les flèches d'une pagination -->
-<a href="#" aria-label="Précédent"><span aria-hidden="true">&laquo;</span></a>
-
 <!-- L'astérisque d'un champ obligatoire -->
 <label for="nom">Nom <span aria-hidden="true">*</span></label>
 <input id="nom" type="text" required />
