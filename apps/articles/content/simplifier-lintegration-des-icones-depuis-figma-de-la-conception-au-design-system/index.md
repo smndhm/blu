@@ -2,6 +2,7 @@
 tags: posts
 title: "Simplifier l'intégration des icônes depuis Figma : De la conception au design system"
 date: 2024-02-19
+description: "Comment nous avons automatisé l'intégration des icônes de notre design system, de Figma jusqu'au code, grâce à l'API REST de Figma."
 origin: { href: https://dev.to/mgdis/simplifier-lintegration-des-icones-depuis-figma-de-la-conception-au-design-system-f9j, title: dev.to }
 ogImage: og.webp
 layout: 'layouts/post.njk'

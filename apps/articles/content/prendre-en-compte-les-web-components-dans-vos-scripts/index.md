@@ -2,6 +2,7 @@
 tags: posts
 title: Prendre en compte les Web Components dans vos scripts
 date: 2025-12-09
+description: 'Le shadow DOM isole le contenu des Web Components, au point que certains scripts ne le voient plus. Voici comment adapter vos scripts pour le parcourir.'
 origin: { title: 24 jours de web, href: https://www.24joursdeweb.fr/2025/prendre-en-compte-les-web-components-dans-vos-scripts }
 ogImage: og.png
 layout: 'layouts/post.njk'
@@ -163,4 +164,4 @@ Maintenant que vous avez toutes les clés pour parcourir les <span lang="en">Web
 
 L’isolation apportée par le <span lang="en">shadow DOM</span> est volontaire, elle protège le composant et garantit qu’il ne sera pas perturbé par des styles ou scripts externes. Les fonctions que nous avons vues permettent d’accéder au contenu encapsulé, mais elles ne sont pas destinées à le modifier. Utilisez-les avec précaution.
 
-Avec ces outils en main, vous pouvez désormais aller mettre à jour vos scripts et interagir avec vos <span lang="en">Web Components</span> comme si l’encapsulation n’existait pas. <span role="img" arial-label="clin d’œil">😉</span>
+Avec ces outils en main, vous pouvez désormais aller mettre à jour vos scripts et interagir avec vos <span lang="en">Web Components</span> comme si l’encapsulation n’existait pas. <span role="img" aria-label="clin d’œil">😉</span>

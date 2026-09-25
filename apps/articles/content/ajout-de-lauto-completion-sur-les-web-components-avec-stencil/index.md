@@ -2,6 +2,7 @@
 tags: posts
 title: Ajout de l'auto-complétion sur les Web Components avec Stencil
 date: 2024-03-14
+description: "Comment nous avons ajouté l'auto-complétion des Web Components de mg-components dans VS Code et WebStorm, grâce aux custom data et aux web types générés avec Stencil."
 origin: { href: https://dev.to/mgdis/ajout-de-lauto-completion-sur-les-web-components-avec-stencil-8o8, title: dev.to }
 ogImage: og.webp
 layout: 'layouts/post.njk'
