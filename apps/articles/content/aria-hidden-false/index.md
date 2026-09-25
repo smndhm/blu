@@ -177,15 +177,15 @@ Donc, pour répondre à la question initiale, qui est de savoir quand utiliser `
 
 ## Oops
 
-Mais comment en suis-je arrivé à me poser ces questions déjà ? Ah oui, la capture d'écran de Nico.
-
-<!-- TODO : capture -->
+Mais comment en suis-je arrivé à me poser ces questions déjà ? Ah oui, le message de Nico.
 
 Mais on va se rassurer en se disant qu'on était sur un cas isolé...
 
 ![Recherche dans l'éditeur de code : « aria-hidden="false" », en excluant les fichiers .snap, donne 9 résultats dans 9 fichiers.](./2.png)
 
-Ça a été corrigé depuis !
+Bon, pas si isolé que ça...
+
+Rassurez-vous : les 9 ont été corrigés depuis ! Il n'y a plus aucun `aria-hidden="false"` dans le code.
 
 ## Conclusion
 
