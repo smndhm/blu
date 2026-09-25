@@ -2,6 +2,7 @@
 tags: posts
 title: LSLT Pebble Watchface
 date: 2025-12-30
+description: "Une police variable créée avec Fontra, une Pebble Time ressortie du tiroir : l'histoire de LSLT, une watchface dont les chiffres grossissent au fil du temps."
 layout: 'layouts/post.njk'
 ---
 
