@@ -35,10 +35,16 @@
 
       <h2>Tester un texte</h2>
       <p>Pas envie d'installer le bookmarklet ? Collez votre texte ci-dessous pour y surligner les caractères typographiques IA.</p>
-      <label for="tester-input">Texte à analyser</label>
-      <textarea id="tester-input" rows="6" placeholder="Collez votre texte ici..."></textarea>
+      <p id="tester-label">Texte à analyser</p>
+      <div
+        id="tester-input"
+        contenteditable="plaintext-only"
+        role="textbox"
+        aria-multiline="true"
+        aria-labelledby="tester-label"
+        data-placeholder="Collez votre texte ici..."
+      ></div>
       <p id="tester-summary" aria-live="polite"></p>
-      <article id="tester-output" style="white-space: pre-wrap" hidden></article>
 
       <h2>L'histoire</h2>
       <p>

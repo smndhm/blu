@@ -1,0 +1,37 @@
+#tester-label {
+  margin-bottom: calc(var(--pico-spacing) * 0.375);
+}
+
+#tester-input {
+  min-height: 9rem;
+  padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal);
+  border: var(--pico-border-width) solid var(--pico-form-element-border-color);
+  border-radius: var(--pico-border-radius);
+  margin-bottom: var(--pico-spacing);
+  background-color: var(--pico-form-element-background-color);
+  color: var(--pico-form-element-color);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+#tester-input:focus {
+  border-color: var(--pico-form-element-focus-color);
+  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-form-element-focus-color);
+  outline: none;
+}
+
+#tester-input:empty::before {
+  color: var(--pico-form-element-placeholder-color);
+  content: attr(data-placeholder);
+}
+
+/* Same colors as config.ts */
+::highlight(iapostrophe-ia) {
+  background-color: yellow;
+  color: black;
+}
+
+::highlight(iapostrophe-human) {
+  background-color: limegreen;
+  color: black;
+}

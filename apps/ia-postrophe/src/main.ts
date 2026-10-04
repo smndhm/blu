@@ -1,7 +1,9 @@
 import '@picocss/pico/css/pico.min.css';
+import './style.css';
 import { analyzeText, formatSummary } from './analyze';
 import { IApostrophe } from './bookmarklet';
 import { config } from './config';
+import { findHighlightRanges } from './highlight';
 
 const bookmarkletLink = document.querySelector('a[href=""]') as HTMLAnchorElement | null;
 if (bookmarkletLink) {
@@ -9,33 +11,26 @@ if (bookmarkletLink) {
 }
 
 // Text tester
-const testerInput = document.querySelector<HTMLTextAreaElement>('#tester-input');
+const testerInput = document.querySelector<HTMLElement>('#tester-input');
 const testerSummary = document.querySelector<HTMLElement>('#tester-summary');
-const testerOutput = document.querySelector<HTMLElement>('#tester-output');
 
-if (testerInput && testerSummary && testerOutput) {
-  const createMark = (text: string, color: string) => {
-    const mark = document.createElement('mark');
-    mark.textContent = text;
-    mark.style.background = color;
-    mark.style.color = 'black';
-    mark.style.borderRadius = '2px';
-    mark.style.padding = '0 1px';
-    return mark;
-  };
-
+if (testerInput && testerSummary) {
   const update = () => {
-    const text = testerInput.value;
-    const isEmpty = !text.trim();
-    const analysis = analyzeText(text, config);
+    const text = testerInput.textContent ?? '';
 
-    testerOutput.replaceChildren(
-      ...analysis.parts.map(({ text, group }) =>
-        group ? createMark(text, group === 'ia' ? config.IAcharacters.color : config.humanCharacters.color) : document.createTextNode(text),
-      ),
-    );
-    testerOutput.hidden = isEmpty;
-    testerSummary.textContent = isEmpty ? '' : formatSummary(analysis);
+    // Keep the placeholder visible once the text is cleared
+    if (!text && testerInput.childNodes.length) {
+      testerInput.replaceChildren();
+    }
+
+    testerSummary.textContent = text.trim() ? formatSummary(analyzeText(text, config)) : '';
+
+    // CSS Custom Highlight API: highlights text without touching the DOM, so the caret stays in place
+    if ('highlights' in CSS) {
+      const { ia, human } = findHighlightRanges(testerInput, config);
+      CSS.highlights.set('iapostrophe-ia', new Highlight(...ia));
+      CSS.highlights.set('iapostrophe-human', new Highlight(...human));
+    }
   };
 
   testerInput.addEventListener('input', update);
