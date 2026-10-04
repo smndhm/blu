@@ -84,12 +84,18 @@ importers:
       '@picocss/pico':
         specifier: 2.1.1
         version: 2.1.1
+      jsdom:
+        specifier: 28.1.0
+        version: 28.1.0
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
         specifier: 7.3.1
         version: 7.3.1(@types/node@25.3.5)(sass@1.97.3)(yaml@2.8.2)
+      vitest:
+        specifier: 4.0.18
+        version: 4.0.18(@types/node@25.3.5)(jsdom@28.1.0)(sass@1.97.3)(yaml@2.8.2)
 
   apps/simon.duhem.fr:
     devDependencies:
