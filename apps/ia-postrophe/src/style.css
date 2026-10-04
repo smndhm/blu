@@ -26,12 +26,12 @@
 }
 
 /* Same colors as config.ts */
-::highlight(iapostrophe-ia) {
+::highlight(iapostrophe-tester-ia) {
   background-color: yellow;
   color: black;
 }
 
-::highlight(iapostrophe-human) {
+::highlight(iapostrophe-tester-human) {
   background-color: limegreen;
   color: black;
 }

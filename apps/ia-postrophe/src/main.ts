@@ -28,8 +28,8 @@ if (testerInput && testerSummary) {
     // CSS Custom Highlight API: highlights text without touching the DOM, so the caret stays in place
     if ('highlights' in CSS) {
       const { ia, human } = findHighlightRanges(testerInput, config);
-      CSS.highlights.set('iapostrophe-ia', new Highlight(...ia));
-      CSS.highlights.set('iapostrophe-human', new Highlight(...human));
+      CSS.highlights.set('iapostrophe-tester-ia', new Highlight(...ia));
+      CSS.highlights.set('iapostrophe-tester-human', new Highlight(...human));
     }
   };
 
