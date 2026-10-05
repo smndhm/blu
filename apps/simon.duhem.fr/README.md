@@ -1,6 +1,6 @@
 # simon.duhem.fr
 
-Site personnel construit avec [Eleventy](https://www.11ty.dev/) : page de présentation, articles et liste des slides de conférences.
+Site personnel construit avec [Eleventy](https://www.11ty.dev/) : page de présentation et liste des articles et des conférences.
 
 ## Développement
 
@@ -12,7 +12,8 @@ pnpm --filter simon.duhem.fr start
 
 - `content/index.njk` : page d'accueil.
 - `content/articles/` : un dossier par article (`index.md` + images).
-- `content/slides/index.njk` : liste des conférences, générée à partir du front matter des présentations de `apps/slides/src` (voir `_data/talks.js`).
+- `content/articles/index.njk` : liste des articles et des conférences ; les conférences sont lues depuis le front matter des présentations de `apps/slides/src` (voir `_data/talks.js`).
+- `content/slides/index.njk` : redirige `/slides/` vers `/articles/`.
 
 Les slides elles-mêmes sont générées par [Marp](https://marp.app/) au déploiement et copiées dans `/slides/`.
 Pour qu'une présentation apparaisse dans la liste, son front matter doit contenir un champ `event` :

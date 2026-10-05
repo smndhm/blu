@@ -38,7 +38,7 @@
 			<a href="/" class="home-link"{% if page.url == "/" %} aria-current="page"{% endif %}>{{ metadata.title }}</a>
 			<nav aria-label="Principale">
 				<ul class="nav">
-					{%- for entry in [{ url: "/articles/", title: "Articles" }, { url: "/slides/", title: "Slides" }] %}
+					{%- for entry in [{ url: "/articles/", title: "Articles" }] %}
 					<li><a href="{{ entry.url }}"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
 					{%- endfor %}
 				</ul>

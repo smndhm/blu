@@ -1,11 +1,21 @@
 <ul class="list" role="list">
-{%- for post in posts %}
+{%- for item in items %}
 	<li class="list-item">
-		<h{{ headingLevel }} class="list-title"><a href="{{ post.url }}">{{ post.data.title }}</a></h{{ headingLevel }}>
+		<h2 class="list-title"><a href="{{ item.url }}">{{ item.title }}</a></h2>
 		<p class="meta">
-			<time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>
-			{%- for topic in post.data.tags | topics %} · {{ topic }}{% endfor %}
+			{%- if item.date %}<time datetime="{{ item.date | isoDate }}">{{ item.date | readableDate }}</time> · {% endif %}
+			{%- if item.isTalk %}
+			Conférence à {% if item.eventUrl %}<a href="{{ item.eventUrl }}">{{ item.event }}</a>{% else %}{{ item.event }}{% endif %}
+			{%- else %}
+			Article{% for topic in item.topics | topics %} · {{ topic }}{% endfor %}
+			{%- endif %}
 		</p>
+		{%- if item.isTalk %}
+		<p class="meta">
+			Slides à télécharger&nbsp;:
+			{%- for file in item.downloads %} <a href="{{ file.url }}" download>{{ file.format | upper }}<span class="visually-hidden"> — {{ item.title }}, {{ item.event }}</span></a>{% if not loop.last %},{% endif %}{% endfor %}
+		</p>
+		{%- endif %}
 	</li>
 {%- endfor %}
 </ul>

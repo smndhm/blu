@@ -1,9 +1,9 @@
 ---
 layout: layouts/base.njk
 title: Articles
-description: Articles de Simon Duhem sur l'accessibilité, les Web Components et le développement front-end.
+description: Articles et conférences de Simon Duhem sur l'accessibilité, les Web Components et le développement front-end.
 ---
 <h1>Articles</h1>
-{%- set headingLevel = 2 %}
-{%- set posts = collections.posts | reverse %}
+<p>Mes articles et les slides de mes conférences.</p>
+{%- set items = collections.posts | withTalks(talks) %}
 {% include "partials/postlist.njk" %}

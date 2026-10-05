@@ -185,12 +185,6 @@ a[href]:hover {
   list-style: none;
 }
 
-.home-secondary {
-  margin: 1rem 0 0;
-  color: var(--text-color-muted);
-  font-size: 0.9375rem;
-}
-
 /* Decorative canvas (home page), kept faint so text contrast stays sufficient */
 #lcs-cnvs {
   position: fixed;

@@ -13,6 +13,13 @@ export default function (eleventyConfig) {
   // `datetime` attribute value, e.g. 2025-09-26
   eleventyConfig.addFilter('isoDate', date => date.toISOString().slice(0, 10));
 
+  // Articles and talks in a single list, most recent first
+  eleventyConfig.addFilter('withTalks', (posts, talks) =>
+    [...posts.map(post => ({ url: post.url, title: post.data.title, date: post.date, topics: post.data.tags })), ...talks.map(talk => ({ ...talk, isTalk: true }))].sort(
+      (a, b) => (b.date ?? 0) - (a.date ?? 0),
+    ),
+  );
+
   // Displayable topics of a page, from its `tags` (internal collection tags are ignored)
   eleventyConfig.addFilter('topics', (tags = []) => tags.filter(tag => tag in topics).map(tag => topics[tag]));
 }
