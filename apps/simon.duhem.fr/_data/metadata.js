@@ -1,6 +1,8 @@
 export default {
   title: 'Simon Duhem',
   tagline: 'Architecte front-end · Accessibilité & Web Components',
+  // Phrase de présentation affichée sur la page d'accueil
+  intro: 'Phrase de présentation à venir.',
   url: 'https://simon.duhem.fr/',
   language: 'fr',
   description:

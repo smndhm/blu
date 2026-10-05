@@ -33,6 +33,7 @@
 	<body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
 		<a href="#main" id="skip-link" class="visually-hidden">Aller au contenu</a>
 
+		{%- if page.url != "/" %}
 		<header class="site-header">
 			<a href="/" class="home-link"{% if page.url == "/" %} aria-current="page"{% endif %}>{{ metadata.title }}</a>
 			<nav aria-label="Principale">
@@ -43,6 +44,7 @@
 				</ul>
 			</nav>
 		</header>
+		{%- endif %}
 
 		<main id="main" tabindex="-1">
 			{{ content | safe }}
