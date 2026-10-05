@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+bodyClass: home
+---
+<section class="intro" aria-labelledby="intro-title">
+	<h1 id="intro-title">{{ metadata.title }}</h1>
+	<p class="tagline">{{ metadata.tagline }}</p>
+	<p>
+		Architecte front-end chez <a href="https://www.mgdis.fr/">MGDIS</a>, je conçois notre design system et sa bibliothèque de <span lang="en">Web Components</span>,
+		<a href="https://github.com/MGDIS/core-ui">mg-components</a>, utilisée par une cinquantaine de développeurs.
+	</p>
+	<p>
+		Mon sujet de prédilection&nbsp;: rendre les composants accessibles, y compris lorsque le <span lang="en">Shadow DOM</span> complique les choses.
+		J'en parle en conférence et dans mes articles.
+	</p>
+</section>
+
+<section aria-labelledby="talks-title">
+	<h2 id="talks-title">Conférences</h2>
+	{%- set headingLevel = 3 %}
+	{%- set talks = talks | head(2) %}
+	{% include "partials/talklist.njk" %}
+	<p class="more"><a href="/slides/">Toutes les slides</a></p>
+</section>
+
+<section aria-labelledby="posts-title">
+	<h2 id="posts-title">Articles</h2>
+	{%- set headingLevel = 3 %}
+	{#- Featured: latest articles about accessibility or Web Components #}
+	{%- set posts = collections.posts | featured | reverse | head(3) %}
+	{% include "partials/postlist.njk" %}
+	<p class="more"><a href="/articles/">Tous les articles</a></p>
+</section>
+
+<script type="module" src="/js/lcs-cnvs.js" eleventy:ignore></script>

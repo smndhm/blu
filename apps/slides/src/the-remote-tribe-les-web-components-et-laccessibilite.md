@@ -7,6 +7,7 @@ author: Simon Duhem & Nicolas Jouanno Daniel
 keywords: web Components, composants web, accessibility, accessibilité, a11y
 image: https://www.paris-web.fr/media/pages/2025/les-web-components-et-laccessibilite/4734750850-1747341738/ogimage.png
 url: https://www.theremotetribe.co/event/meetup-chez-locservice-sujet-webcomponents-et-l-accessibilite-37
+event: The Remote Tribe — meetup chez Locservice
 ---
 
 # Les Web Components et l’accessibilité

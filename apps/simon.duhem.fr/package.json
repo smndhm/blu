@@ -2,16 +2,28 @@
   "name": "simon.duhem.fr",
   "private": true,
   "version": "1.0.0",
+  "description": "Site personnel : présentation, articles et slides de conférences.",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "eleventy",
+    "start": "eleventy --serve --quiet",
+    "debug": "cross-env DEBUG=Eleventy* eleventy",
+    "benchmark": "cross-env DEBUG=Eleventy:Benchmark* eleventy"
   },
+  "license": "MIT",
   "devDependencies": {
-    "normalize.css": "8.0.1",
-    "sass": "1.97.3",
-    "typescript": "5.9.3",
-    "vite": "7.3.1"
+    "@11ty/eleventy": "3.1.2",
+    "@11ty/eleventy-img": "6.0.4",
+    "@11ty/eleventy-plugin-rss": "2.0.4",
+    "@11ty/eleventy-plugin-syntaxhighlight": "5.0.2",
+    "cross-env": "10.1.0",
+    "gray-matter": "4.0.3",
+    "luxon": "3.7.2",
+    "prismjs": "1.30.0",
+    "zod": "4.3.6",
+    "zod-validation-error": "5.0.0"
+  },
+  "dependencies": {
+    "@zachleat/heading-anchors": "1.0.5"
   }
 }
