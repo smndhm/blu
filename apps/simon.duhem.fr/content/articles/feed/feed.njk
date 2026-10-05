@@ -1,0 +1,43 @@
+---
+permalink: /articles/feed/feed.xml
+layout: false
+eleventyExcludeFromCollections: true
+feed:
+  title: Simon Duhem — Articles
+  subtitle: Articles et conférences sur l’accessibilité, les Web Components et le développement front-end.
+  base: https://simon.duhem.fr/articles/
+---
+{%- set items = collections.posts | withTalks(talks) | head(10) -%}
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="pretty-atom-feed.xsl" type="text/xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ metadata.language }}">
+  <title>{{ feed.title }}</title>
+  <subtitle>{{ feed.subtitle }}</subtitle>
+  <link href="{{ permalink | htmlBaseUrl(feed.base) }}" rel="self" />
+  <link href="{{ feed.base }}" />
+  <updated>{{ items[0].date | dateToRfc3339 }}</updated>
+  <id>{{ feed.base }}</id>
+  <author>
+    <name>{{ metadata.author.name }}</name>
+    <email>{{ metadata.author.email }}</email>
+  </author>
+  {%- for item in items %}
+  {%- set absoluteUrl %}{{ item.url | htmlBaseUrl(feed.base) }}{% endset %}
+  <entry>
+    <title>{{ ("Conférence : " if item.isTalk) + item.title }}</title>
+    <link href="{{ absoluteUrl }}" />
+    <updated>{{ item.date | dateToRfc3339 }}</updated>
+    <id>{{ absoluteUrl }}</id>
+    {%- if item.isTalk %}
+    {%- set talkContent %}
+    <p>Conférence à {% if item.eventUrl %}<a href="{{ item.eventUrl }}">{{ item.event }}</a>{% else %}{{ item.event }}{% endif %}, le {{ item.date | readableDate }}.</p>
+    {%- if item.description %}<p>{{ item.description }}</p>{% endif %}
+    <p><a href="{{ absoluteUrl }}">Voir les slides</a> ({% for file in item.downloads %}<a href="{{ file.url | htmlBaseUrl(feed.base) }}">{{ file.format | upper }}</a>{% if not loop.last %}, {% endif %}{% endfor %}).</p>
+    {%- endset %}
+    <content type="html">{{ talkContent }}</content>
+    {%- else %}
+    <content type="html">{{ item.post.content | renderTransforms(item.post.data.page, feed.base) }}</content>
+    {%- endif %}
+  </entry>
+  {%- endfor %}
+</feed>

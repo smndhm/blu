@@ -1,5 +1,5 @@
 import { IdAttributePlugin, InputPathToUrlTransformPlugin, HtmlBasePlugin } from '@11ty/eleventy';
-import { feedPlugin } from '@11ty/eleventy-plugin-rss';
+import pluginRss from '@11ty/eleventy-plugin-rss';
 import pluginSyntaxHighlight from '@11ty/eleventy-plugin-syntaxhighlight';
 import { eleventyImageTransformPlugin } from '@11ty/eleventy-img';
 
@@ -51,24 +51,8 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPlugin(HtmlBasePlugin);
   eleventyConfig.addPlugin(InputPathToUrlTransformPlugin);
 
-  eleventyConfig.addPlugin(feedPlugin, {
-    type: 'atom', // or "rss", "json"
-    outputPath: '/articles/feed/feed.xml',
-    stylesheet: 'pretty-atom-feed.xsl',
-    collection: {
-      name: 'posts',
-      limit: 10,
-    },
-    metadata: {
-      language: 'fr',
-      title: 'Simon Duhem — Articles',
-      subtitle: 'Articles sur l’accessibilité, les Web Components et le développement front-end.',
-      base: 'https://simon.duhem.fr/articles/',
-      author: {
-        name: 'Simon Duhem',
-      },
-    },
-  });
+  // Feed filters, the Atom feed itself is content/articles/feed/feed.njk (articles and talks)
+  eleventyConfig.addPlugin(pluginRss);
 
   // Image optimization: https://www.11ty.dev/docs/plugins/image/#eleventy-transform
   eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
