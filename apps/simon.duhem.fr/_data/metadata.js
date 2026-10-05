@@ -2,7 +2,8 @@ export default {
   title: 'Simon Duhem',
   tagline: 'Architecte front-end · Accessibilité & Web Components',
   // Phrase de présentation affichée sur la page d'accueil
-  intro: 'Phrase de présentation à venir.',
+  intro:
+    "Architecte front-end spécialisé en accessibilité et en Web Components, je conçois un design system qui en fait sa base. Je m'appuie sur les standards du web pour construire des interfaces robustes, interopérables et utilisables par tous.",
   url: 'https://simon.duhem.fr/',
   language: 'fr',
   description:
