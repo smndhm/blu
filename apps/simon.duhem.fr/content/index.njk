@@ -5,11 +5,14 @@ bodyClass: home
 <h1>{{ metadata.title }}</h1>
 <p class="tagline">{{ metadata.tagline }}</p>
 <p>{{ metadata.intro }}</p>
-<nav aria-label="Contenus">
+<nav aria-label="Liens">
 	<ul class="home-links">
 		<li><a href="/articles/">Articles</a></li>
-		<li><a href="/slides/">Slides</a></li>
+		{%- for link in metadata.social %}
+		<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+		{%- endfor %}
 	</ul>
+	<p class="home-secondary"><a href="/slides/">Slides de conférences</a></p>
 </nav>
 
 <script type="module" src="/js/lcs-cnvs.js" eleventy:ignore></script>

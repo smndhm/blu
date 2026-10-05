@@ -50,6 +50,7 @@
 			{{ content | safe }}
 		</main>
 
+		{%- if page.url != "/" %}
 		<footer class="site-footer">
 			<ul class="footer-links">
 				{%- for link in metadata.social %}
@@ -58,6 +59,7 @@
 				<li><a href="/articles/feed/feed.xml">Flux RSS</a></li>
 			</ul>
 		</footer>
+		{%- endif %}
 
 		<script type="module" src="{% getBundleFileUrl "js" %}"></script>
 	</body>
