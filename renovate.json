@@ -11,6 +11,11 @@
     {
       "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
       "automerge": true
+    },
+    {
+      "description": "typescript-eslint et vite-plugin-dts ne supportent pas encore TypeScript 7",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
     }
   ]
 }
