@@ -103,8 +103,8 @@ importers:
   apps/slides:
     devDependencies:
       '@marp-team/marp-cli':
-        specifier: 4.2.3
-        version: 4.2.3(typescript@5.9.3)
+        specifier: 4.5.1
+        version: 4.5.1(typescript@5.9.3)
 
   packages/linting:
     devDependencies:
@@ -855,8 +855,8 @@ packages:
     resolution: {integrity: sha512-6QEf6yqFbETdwGITKq57aYoPfX/3K8XFNwsAlx0C1M7o8cb79sv1M3w+tWuWvIcSbNqrLF7OD7YpZMVVz335hQ==}
     engines: {node: '>=20.0.0'}
 
-  '@marp-team/marp-cli@4.2.3':
-    resolution: {integrity: sha512-yfEIkF7mlumg8CVV5m/UkLEDkW/ayM/SD6Bo8fbAvdscBQ/l9D44/aNFJsiqgNtjfktzpvRqjcBXNhWD0YTq5Q==}
+  '@marp-team/marp-cli@4.5.1':
+    resolution: {integrity: sha512-KwjfXZpABRjSivsHOD0pIsOmODxgQFwc3AHjlnFUKCsSZX5U4erHmm4GWd1K7l2NATLvtrGw29At89Tar/cS4g==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4564,7 +4564,7 @@ snapshots:
       tinyglobby: 0.2.17
       yaml: 2.9.1
 
-  '@marp-team/marp-cli@4.2.3(typescript@5.9.3)':
+  '@marp-team/marp-cli@4.5.1(typescript@5.9.3)':
     dependencies:
       '@marp-team/marp-core': 4.4.0
       '@marp-team/marpit': 3.2.3
@@ -4574,7 +4574,6 @@ snapshots:
       serve-index: 1.9.2
       tmp: 0.2.7
       ws: 8.22.0
-      yargs: 17.7.3
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
