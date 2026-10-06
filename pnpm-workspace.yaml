@@ -4,3 +4,6 @@ packages:
   # all apps in direct subdirs of apps/
   - 'apps/*'
 savePrefix: ''
+# Ne résout que des versions publiées depuis au moins 1 jour (minutes), y compris les dépendances transitives.
+# C'est le défaut de pnpm 12 : le lockfile reste valide lors du passage à pnpm 12.
+minimumReleaseAge: 1440
