@@ -193,7 +193,7 @@ code {
   display: flex;
   max-width: 44rem;
   min-height: 100vh;
-  min-height: 100dvh; /* Mobile: visible viewport, without the browser UI */
+  min-height: 100svh; /* Mobile: viewport with the browser UI shown, never overflows */
   flex-direction: column;
   padding: 0 1rem;
   margin: 0 auto;
