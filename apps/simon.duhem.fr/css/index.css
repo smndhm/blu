@@ -67,7 +67,9 @@ html {
   color: var(--text-color);
   font-family: var(--font-family);
   line-height: 1.6;
-  overflow-y: scroll;
+
+  /* Reserve the scrollbar space without forcing a scrollbar on short pages */
+  scrollbar-gutter: stable;
 }
 
 h1,
@@ -191,6 +193,7 @@ code {
   display: flex;
   max-width: 44rem;
   min-height: 100vh;
+  min-height: 100dvh; /* Mobile: visible viewport, without the browser UI */
   flex-direction: column;
   padding: 0 1rem;
   margin: 0 auto;
