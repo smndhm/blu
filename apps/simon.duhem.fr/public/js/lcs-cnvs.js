@@ -24,7 +24,7 @@ class LcsCnvs {
     const { document } = window;
 
     this.#canvas = document.createElement('canvas');
-    this.#canvas.id = 'lcs-cnvs';
+    this.#canvas.className = 'lcs-cnvs';
     this.#canvas.setAttribute('aria-hidden', 'true');
     this.#canvas.width = window.innerWidth;
     this.#canvas.height = window.innerHeight;
