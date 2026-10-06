@@ -19,13 +19,19 @@ export default async function (eleventyConfig) {
       'node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin{,-ext}-wght-normal.woff2': 'fonts',
     })
     // Social sharing images, referenced by `ogImage` front matter
-    .addPassthroughCopy('./content/articles/*/og.{png,jpg,webp}');
+    .addPassthroughCopy('./content/{articles/*,ia-postrophe}/og.{png,jpg,webp}')
+    // IApostrophe script (bookmarklet and text tester), built by apps/ia-postrophe
+    .addPassthroughCopy({
+      'node_modules/ia-postrophe/dist/ia-postrophe.js': 'js/ia-postrophe.js',
+    });
 
   // Run Eleventy when these files change:
   // https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
 
   // Watch the slides front matter, used to list talks
   eleventyConfig.addWatchTarget('../slides/src/*.md');
+  // Watch the IApostrophe script, rebuilt by `pnpm --filter ia-postrophe dev`
+  eleventyConfig.addWatchTarget('node_modules/ia-postrophe/dist/ia-postrophe.js');
   // Watch CSS files
   eleventyConfig.addWatchTarget('css/**/*.css');
   // Watch images for the image pipeline.

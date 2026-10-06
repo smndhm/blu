@@ -1,0 +1,81 @@
+/* IApostrophe page, see content/ia-postrophe/index.njk */
+
+/* Bookmarklet link, styled as a button to invite dragging it */
+.bookmarklet {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 999px;
+  font-family: var(--font-family-title);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Text tester */
+.tester__label {
+  margin-bottom: 0.375rem;
+  font-weight: 700;
+}
+
+.tester__input {
+  min-height: 9rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--text-color-muted);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.tester__input:empty::before {
+  color: var(--text-color-muted);
+  content: attr(data-placeholder);
+}
+
+.tester__summary {
+  min-height: 1.6em;
+}
+
+/* Same colors as apps/ia-postrophe/src/config.ts */
+::highlight(iapostrophe-tester-ia) {
+  background-color: yellow;
+  color: black;
+}
+
+::highlight(iapostrophe-tester-human) {
+  background-color: limegreen;
+  color: black;
+}
+
+/* Examples */
+.examples {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.examples th,
+.examples td {
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+  vertical-align: top;
+}
+
+.examples thead th {
+  font-family: var(--font-family-title);
+}
+
+.examples tbody th {
+  font-weight: 400;
+}
+
+/* Closing quote */
+.quote {
+  padding-left: 1rem;
+  border-left: 4px solid var(--accent-color);
+  margin: 2.5rem 0 0;
+  font-family: var(--font-family-title);
+  font-size: 1.25rem;
+  font-weight: 700;
+}

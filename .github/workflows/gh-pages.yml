@@ -39,11 +39,9 @@ jobs:
       - name: Install dependencies
         run: pnpm i
 
+      # Also builds its workspace dependencies first (ia-postrophe script)
       - name: Build simon.duhem.fr
-        run: pnpm --filter simon.duhem.fr build
-
-      - name: Build ia-postrophe
-        run: pnpm --filter ia-postrophe build
+        run: pnpm --filter "simon.duhem.fr..." build
 
       - name: Build slides (HTML)
         uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
@@ -61,10 +59,8 @@ jobs:
 
       - name: Prepare public folder
         run: |
-          mkdir -p public/ia-postrophe
           mkdir -p public/slides/assets
           cp -r apps/simon.duhem.fr/_site/* public/
-          cp -r apps/ia-postrophe/dist/ia-postrophe/* public/ia-postrophe/
           cp -r apps/slides/src/assets/* public/slides/assets/
           cp -r apps/slides/dist/* public/slides/
 
