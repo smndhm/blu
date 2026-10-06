@@ -1,0 +1,16 @@
+---
+layout: layouts/base.njk
+bodyClass: home
+---
+<h1>{{ metadata.title }}</h1>
+<p>{{ metadata.description }}</p>
+<nav aria-label="Liens">
+	<ul class="home-links">
+		<li><a href="/articles/">Articles</a></li>
+		{%- for link in metadata.social %}
+		<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+		{%- endfor %}
+	</ul>
+</nav>
+
+<script type="module" src="/js/lcs-cnvs.js" eleventy:ignore></script>

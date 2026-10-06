@@ -51,24 +51,12 @@ jobs:
         env:
           MARP_USER: root:root
 
-      - name: Build slides (PPTX)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
-        with:
-          args: -I apps/slides/src -o apps/slides/dist --pptx --allow-local-files
-        env:
-          MARP_USER: root:root
-
-      - name: Build articles site
-        run: pnpm --filter articles build
-
       - name: Prepare public folder
         run: |
           mkdir -p public/ia-postrophe
-          mkdir -p public/articles
           mkdir -p public/slides/assets
-          cp -r apps/simon.duhem.fr/dist/* public/
+          cp -r apps/simon.duhem.fr/_site/* public/
           cp -r apps/ia-postrophe/dist/ia-postrophe/* public/ia-postrophe/
-          cp -r apps/articles/_site/* public/articles/
           cp -r apps/slides/src/assets/* public/slides/assets/
           cp -r apps/slides/dist/* public/slides/
 
