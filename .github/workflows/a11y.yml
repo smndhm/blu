@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'apps/simon.duhem.fr/**'
+      - 'apps/ia-postrophe/**'
       - 'apps/slides/src/**'
       - '.github/workflows/a11y.yml'
 
@@ -25,7 +26,7 @@ jobs:
         run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
 
       - name: Build site
-        run: pnpm --filter simon.duhem.fr build
+        run: pnpm --filter "simon.duhem.fr..." build
 
       - name: Run axe on every page
         run: pnpm --filter simon.duhem.fr test:a11y

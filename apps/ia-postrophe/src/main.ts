@@ -1,11 +1,9 @@
-import '@picocss/pico/css/pico.min.css';
-import './style.css';
 import { analyzeText, formatSummary } from './analyze';
 import { IApostrophe } from './bookmarklet';
 import { config } from './config';
 import { findHighlightRanges } from './highlight';
 
-const bookmarkletLink = document.querySelector('a[href=""]') as HTMLAnchorElement | null;
+const bookmarkletLink = document.querySelector<HTMLAnchorElement>('#bookmarklet');
 if (bookmarkletLink) {
   bookmarkletLink.href = `javascript:${encodeURIComponent(`(${IApostrophe.toString()})(${JSON.stringify(config)})`)};`;
 }
