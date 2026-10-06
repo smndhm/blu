@@ -1,5 +1,12 @@
 # @dume/webcomp-utils
 
+## 1.0.1
+
+### Patch Changes
+
+- f041b9c: Updated dependency `typedoc-plugin-markdown` to `4.10.0`.
+- 75fc8de: Updated dependency `jsdom` to `28.1.0`.
+
 ## 1.0.0
 
 ### Major Changes

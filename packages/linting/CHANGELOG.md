@@ -1,5 +1,23 @@
 # @dume/linting
 
+## 1.0.5
+
+### Patch Changes
+
+- 8c377a4: Updated dependency `turbo` to `2.8.2`.
+  Updated dependency `eslint-config-turbo` to `2.8.2`.
+- d55ee94: Updated dependency `packageManager` to `pnpm@10.29.1`.
+- c2b30d1: Updated dependency `@eslint/json` to `1.0.1`.
+- bb4611d: Updated dependency `stylelint` to `17.1.1`.
+- 9240c58: Updated dependency `turbo` to `2.8.1`.
+  Updated dependency `eslint-config-turbo` to `2.8.1`.
+- 9aca852: Updated dependency `stylelint` to `17.1.0`.
+- ea809db: Updated dependency `eslint` to `10.0.2`.
+  Updated dependency `@eslint/js` to `10.0.1`.
+- 6477777: Updated dependency `globals` to `17.2.0`.
+- 0d1dbbe: Updated dependency `globals` to `17.3.0`.
+- 52a4c7a: Updated dependency `@eslint/json` to `1.0.0`.
+
 ## 1.0.4
 
 ### Patch Changes
