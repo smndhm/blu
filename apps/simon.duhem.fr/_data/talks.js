@@ -7,7 +7,7 @@ const slidesDir = new URL('../../slides/src/', import.meta.url);
 /**
  * Talks listed on the site, read from the Marp presentations front matter.
  * Only presentations with an `event` field are listed.
- * Marp builds `<name>.html`, `<name>.pdf` and `<name>.pptx` into `/slides/`.
+ * Marp builds `<name>.html` and `<name>.pdf` into `/slides/`.
  */
 export default async function () {
   const files = (await readdir(slidesDir)).filter(file => file.endsWith('.md'));
@@ -25,7 +25,7 @@ export default async function () {
         eventUrl: data.url,
         date: data.date ? new Date(data.date) : undefined,
         url: `/slides/${slug}.html`,
-        downloads: ['pdf', 'pptx'].map(format => ({ format, url: `/slides/${slug}.${format}` })),
+        pdf: `/slides/${slug}.pdf`,
       };
     }),
   );

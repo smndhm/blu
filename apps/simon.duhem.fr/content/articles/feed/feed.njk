@@ -32,7 +32,7 @@ feed:
     {%- set talkContent %}
     <p>Conférence à {% if item.eventUrl %}<a href="{{ item.eventUrl }}">{{ item.event }}</a>{% else %}{{ item.event }}{% endif %}, le {{ item.date | readableDate }}.</p>
     {%- if item.description %}<p>{{ item.description }}</p>{% endif %}
-    <p><a href="{{ absoluteUrl }}">Voir les slides</a> ({% for file in item.downloads %}<a href="{{ file.url | htmlBaseUrl(feed.base) }}">{{ file.format | upper }}</a>{% if not loop.last %}, {% endif %}{% endfor %}).</p>
+    <p><a href="{{ absoluteUrl }}">Voir les slides</a> (<a href="{{ item.pdf | htmlBaseUrl(feed.base) }}">PDF</a>).</p>
     {%- endset %}
     <content type="html">{{ talkContent }}</content>
     {%- else %}

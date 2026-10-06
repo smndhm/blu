@@ -11,10 +11,7 @@
 			{%- endif %}
 		</p>
 		{%- if item.isTalk %}
-		<p class="meta">
-			Slides à télécharger&nbsp;:
-			{%- for file in item.downloads %} <a href="{{ file.url }}" download>{{ file.format | upper }}<span class="visually-hidden"> — {{ item.title }}, {{ item.event }}</span></a>{% if not loop.last %},{% endif %}{% endfor %}
-		</p>
+		<p class="meta"><a href="{{ item.pdf }}" download>Télécharger les slides en PDF<span class="visually-hidden"> — {{ item.title }}, {{ item.event }}</span></a></p>
 		{%- endif %}
 	</li>
 {%- endfor %}
