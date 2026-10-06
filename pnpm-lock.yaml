@@ -30,8 +30,8 @@ importers:
         specifier: 9.1.7
         version: 9.1.7
       lint-staged:
-        specifier: 16.3.2
-        version: 16.3.2
+        specifier: 16.4.0
+        version: 16.4.0
       prettier:
         specifier: 3.8.1
         version: 3.8.1
@@ -2464,8 +2464,8 @@ packages:
   linkify-it@5.0.2:
     resolution: {integrity: sha512-ONTm2jCMAVZjgQa/Fy1kScXsuOoF5NPTsoFBdE1KVIZ2vAh/r9+Bqo+0jINCBYnavTPQZz38QzFTme79ENoN3Q==}
 
-  lint-staged@16.3.2:
-    resolution: {integrity: sha512-xKqhC2AeXLwiAHXguxBjuChoTTWFC6Pees0SHPwOpwlvI3BH7ZADFPddAdN3pgo3aiKgPUx/bxE78JfUnxQnlg==}
+  lint-staged@16.4.0:
+    resolution: {integrity: sha512-lBWt8hujh/Cjysw5GYVmZpFHXDCgZzhrOm8vbcUdobADZNOK/bRshr2kM3DfgrrtR1DQhfupW9gnIXOfiFi+bw==}
     engines: {node: '>=20.17'}
     hasBin: true
 
@@ -6165,11 +6165,11 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  lint-staged@16.3.2:
+  lint-staged@16.4.0:
     dependencies:
       commander: 14.0.3
       listr2: 9.0.5
-      micromatch: 4.0.8
+      picomatch: 4.0.7
       string-argv: 0.3.2
       tinyexec: 1.3.1
       yaml: 2.9.1
