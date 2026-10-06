@@ -7,7 +7,7 @@ export default {
     "Architecte front-end spécialisé en accessibilité et en Web Components, je conçois un design system. Je m'appuie sur les standards du web pour construire des interfaces réutilisables et utilisables par tous.",
   author: {
     name: 'Simon Duhem',
-    email: 'simon.duhem@gmail.com',
+    email: 'simon@duhem.fr',
     url: 'https://simon.duhem.fr/',
   },
   social: [
