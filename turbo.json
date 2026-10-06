@@ -4,5 +4,6 @@
     "build": {
       "dependsOn": ["^build"]
     }
-  }
+  },
+  "globalPassThroughEnv": ["CHROMIUM_PATH"]
 }

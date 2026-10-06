@@ -8,6 +8,15 @@ Site personnel construit avec [Eleventy](https://www.11ty.dev/) : page de prése
 pnpm --filter simon.duhem.fr start
 ```
 
+## Accessibilité
+
+```sh
+pnpm --filter simon.duhem.fr build
+pnpm --filter simon.duhem.fr test:a11y
+```
+
+`tests/a11y.js` audite avec [axe-core](https://github.com/dequelabs/axe-core) toutes les pages du `sitemap.xml` (plus la page 404), en thème clair et sombre, selon les critères WCAG 2.2 A et AA. Le workflow « Accessibility » le lance sur chaque PR qui touche le site.
+
 ## Structure
 
 - `content/index.njk` : page d'accueil.
