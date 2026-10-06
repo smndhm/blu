@@ -20,6 +20,6 @@
     "watch": "pnpm copy-assets && marp -I src -o dist --watch"
   },
   "devDependencies": {
-    "@marp-team/marp-cli": "4.2.3"
+    "@marp-team/marp-cli": "4.5.1"
   }
 }
