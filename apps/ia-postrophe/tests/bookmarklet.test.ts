@@ -12,6 +12,13 @@ const ignoredHTML = `
   <svg><text>c’est</text></svg>
 `;
 
+// Open shadow root on the element matching `selector`, filled with `html`
+const attachShadow = (selector: string, html: string, root: ParentNode = document) => {
+  const shadowRoot = (root.querySelector(selector) as HTMLElement).attachShadow({ mode: 'open' });
+  shadowRoot.innerHTML = html;
+  return shadowRoot;
+};
+
 class FakeHighlight extends Set<Range> {
   constructor(...ranges: Range[]) {
     super(ranges);
@@ -26,7 +33,19 @@ describe('IApostrophe bookmarklet with the CSS Custom Highlight API', () => {
     highlights.clear();
     vi.stubGlobal('CSS', { highlights });
     vi.stubGlobal('Highlight', FakeHighlight);
-    Object.defineProperty(document, 'adoptedStyleSheets', { value: [], writable: true, configurable: true });
+    // jsdom does not support adopted style sheets
+    const adoptedStyleSheets = new WeakMap<Document | ShadowRoot, CSSStyleSheet[]>();
+    for (const prototype of [Document.prototype, ShadowRoot.prototype]) {
+      Object.defineProperty(prototype, 'adoptedStyleSheets', {
+        get() {
+          return adoptedStyleSheets.get(this) ?? [];
+        },
+        set(sheets: CSSStyleSheet[]) {
+          adoptedStyleSheets.set(this, sheets);
+        },
+        configurable: true,
+      });
+    }
     document.body.innerHTML = '';
   });
 
@@ -80,6 +99,53 @@ describe('IApostrophe bookmarklet with the CSS Custom Highlight API', () => {
     expect(rangesOf('iapostrophe-ia')).toEqual([]);
     expect(rangesOf('iapostrophe-human')).toEqual([]);
   });
+
+  it('should highlight characters in open shadow roots, even nested', () => {
+    document.body.innerHTML = `<p>c’est</p><my-comp></my-comp>`;
+    const shadowRoot = attachShadow('my-comp', `<p>« shadow »</p><nested-comp></nested-comp>`);
+    attachShadow('nested-comp', `<p>nested — c'est</p>`, shadowRoot);
+    IApostrophe(config);
+
+    expect(rangesOf('iapostrophe-ia')).toEqual(['’', '«', '»', '—']);
+    expect(rangesOf('iapostrophe-human')).toEqual(["'"]);
+  });
+
+  it('should ignore script, style, noscript, code, pre, textarea and svg elements in shadow roots', () => {
+    document.body.innerHTML = `<my-comp></my-comp>`;
+    attachShadow('my-comp', ignoredHTML);
+    IApostrophe(config);
+    expect(rangesOf('iapostrophe-ia')).toEqual([]);
+  });
+
+  it('should not walk shadow roots inside ignored elements', () => {
+    document.body.innerHTML = `<pre><my-comp></my-comp></pre>`;
+    attachShadow('my-comp', `<p>c’est</p>`);
+    IApostrophe(config);
+    expect(rangesOf('iapostrophe-ia')).toEqual([]);
+  });
+
+  it('should add and remove the style sheet in shadow roots', () => {
+    document.body.innerHTML = `<my-comp></my-comp>`;
+    const shadowRoot = attachShadow('my-comp', `<p>c’est</p>`);
+    const otherSheet = new CSSStyleSheet();
+    shadowRoot.adoptedStyleSheets = [otherSheet];
+
+    IApostrophe(config);
+    expect(shadowRoot.adoptedStyleSheets).toHaveLength(2);
+    expect(shadowRoot.adoptedStyleSheets[1]).toBe(document.adoptedStyleSheets[0]);
+
+    IApostrophe(config);
+    expect(shadowRoot.adoptedStyleSheets).toEqual([otherSheet]);
+    expect(document.adoptedStyleSheets).toEqual([]);
+  });
+
+  it('should ignore closed shadow roots', () => {
+    document.body.innerHTML = `<my-comp></my-comp>`;
+    const host = document.querySelector('my-comp') as HTMLElement;
+    host.attachShadow({ mode: 'closed' }).innerHTML = `<p>c’est</p>`;
+    IApostrophe(config);
+    expect(rangesOf('iapostrophe-ia')).toEqual([]);
+  });
 });
 
 describe('IApostrophe bookmarklet fallback without the CSS Custom Highlight API', () => {
@@ -131,6 +197,20 @@ describe('IApostrophe bookmarklet fallback without the CSS Custom Highlight API'
     document.body.innerHTML = ignoredHTML;
     IApostrophe(config);
     expect(highlighted()).toHaveLength(0);
+  });
+
+  it('should highlight characters in open shadow roots and restore them on the second run', () => {
+    document.body.innerHTML = `<my-comp></my-comp>`;
+    const shadowRoot = attachShadow('my-comp', `<p>« shadow »</p>`);
+    IApostrophe(config);
+
+    expect([...shadowRoot.querySelectorAll('[data-iapostrophe]')].map(span => span.textContent)).toEqual(['«', '»']);
+
+    IApostrophe(config);
+    const paragraph = shadowRoot.querySelector('p');
+    expect(shadowRoot.querySelectorAll('[data-iapostrophe]')).toHaveLength(0);
+    expect(paragraph?.childNodes).toHaveLength(1);
+    expect(paragraph?.textContent).toBe('« shadow »');
   });
 
   it('should work once serialized as a bookmarklet', () => {
