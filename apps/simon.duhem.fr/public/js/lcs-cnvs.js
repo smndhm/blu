@@ -16,24 +16,28 @@ class LcsCnvs {
   #polygons = [];
   /** @type {DOMRect | undefined} */
   #notHover;
+  /** @type {Vertex | undefined} Last pointer position, where new vertices are added */
+  #pointer;
+  #frame = 0;
+  #window;
   #canvas;
   #ctx;
 
   /** @param {Window} window */
   constructor(window) {
     const { document } = window;
+    this.#window = window;
 
     this.#canvas = document.createElement('canvas');
     this.#canvas.className = 'lcs-cnvs';
     this.#canvas.setAttribute('aria-hidden', 'true');
-    this.#canvas.width = window.innerWidth;
-    this.#canvas.height = window.innerHeight;
     this.#ctx = this.#canvas.getContext('2d');
+    this.#resize();
     document.body.append(this.#canvas);
 
     window.addEventListener('resize', () => {
-      this.#canvas.width = window.innerWidth;
-      this.#canvas.height = window.innerHeight;
+      this.#resize();
+      this.#draw();
     });
 
     // Keep links readable: no vertex is drawn over the hovered link
@@ -46,25 +50,48 @@ class LcsCnvs {
       });
     });
 
-    let interval;
     ['mousemove', 'touchmove'].forEach(eventType => {
       window.addEventListener(
         eventType,
         event => {
-          clearInterval(interval);
           const point = event.touches ? event.touches[0] : event;
-          const vertex = { x: point.clientX || 0, y: point.clientY || 0 };
-          this.#addVertex(vertex);
-          interval = setInterval(() => this.#addVertex(vertex), 10);
+          this.#pointer = { x: point.clientX || 0, y: point.clientY || 0 };
+          this.#start();
         },
         { passive: true },
       );
     });
+
+    // Pause when the mouse leaves the page or the tab is hidden; resume on the next move
+    document.documentElement.addEventListener('mouseleave', () => this.#stop());
+    document.addEventListener('visibilitychange', () => document.hidden && this.#stop());
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', ({ matches }) => {
+      if (!matches) return;
+      this.#stop();
+      this.#canvas.remove();
+    });
   }
 
-  #getRandomNumberBetween = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+  #resize() {
+    this.#canvas.width = this.#window.innerWidth;
+    this.#canvas.height = this.#window.innerHeight;
+  }
 
-  #getVerticesDistance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  // One vertex and one redraw per animation frame, instead of a 10 ms interval that never stopped
+  #start() {
+    if (this.#frame) return;
+    const tick = () => {
+      this.#addVertex(this.#pointer);
+      this.#draw();
+      this.#frame = this.#window.requestAnimationFrame(tick);
+    };
+    this.#frame = this.#window.requestAnimationFrame(tick);
+  }
+
+  #stop() {
+    this.#window.cancelAnimationFrame(this.#frame);
+    this.#frame = 0;
+  }
 
   #isHover = vertex =>
     this.#notHover !== undefined &&
@@ -73,20 +100,32 @@ class LcsCnvs {
     vertex.y > this.#notHover.y &&
     vertex.y < this.#notHover.y + this.#notHover.height;
 
+  // Uniform random point in the disc around the position (no rejection loop), outside the hovered link
   #getRandomVertex = (position, distance) => {
-    let vertex;
-    let attempts = 0;
-    do {
-      vertex = {
-        x: this.#getRandomNumberBetween(position.x - distance, position.x + distance),
-        y: this.#getRandomNumberBetween(position.y - distance, position.y + distance),
-      };
-      attempts++;
-    } while ((this.#getVerticesDistance(position, vertex) > distance || this.#isHover(vertex)) && attempts < 100);
-    return attempts < 100 ? vertex : undefined;
+    for (let attempts = 0; attempts < 10; attempts++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const radius = distance * Math.sqrt(Math.random());
+      const vertex = { x: Math.round(position.x + radius * Math.cos(angle)), y: Math.round(position.y + radius * Math.sin(angle)) };
+      if (!this.#isHover(vertex)) return vertex;
+    }
   };
 
-  #getClosestVertices = (vertices, vertex, count) => vertices.sort((a, b) => this.#getVerticesDistance(a, vertex) - this.#getVerticesDistance(b, vertex)).slice(0, count);
+  // The two closest vertices, in a single pass with squared distances (no copy, no sort)
+  #getTwoClosestVertices = vertex => {
+    let first, second;
+    let firstDistance = Infinity;
+    let secondDistance = Infinity;
+    for (const candidate of this.#vertices) {
+      const distance = (candidate.x - vertex.x) ** 2 + (candidate.y - vertex.y) ** 2;
+      if (distance < firstDistance) {
+        [second, secondDistance] = [first, firstDistance];
+        [first, firstDistance] = [candidate, distance];
+      } else if (distance < secondDistance) {
+        [second, secondDistance] = [candidate, distance];
+      }
+    }
+    return [first, second];
+  };
 
   #addVertex = position => {
     const vertex = this.#getRandomVertex(position, this.#around);
@@ -94,31 +133,33 @@ class LcsCnvs {
 
     if (this.#vertices.length >= 2) {
       this.#polygons.push({
-        vertices: [vertex, ...this.#getClosestVertices([...this.#vertices], vertex, 2)],
+        vertices: [vertex, ...this.#getTwoClosestVertices(vertex)],
         color: this.#colors[Math.floor(Math.random() * this.#colors.length)],
       });
     }
 
     this.#vertices.push(vertex);
-    this.#vertices = this.#vertices.slice(-this.#limit);
+    if (this.#vertices.length > this.#limit) this.#vertices.shift();
+    // A polygon lives as long as its newest vertex (the one it was created with): keep the last ones
+    if (this.#polygons.length > this.#limit) this.#polygons.shift();
+  };
 
-    this.#polygons = this.#polygons.filter(polygon => polygon.vertices.some(pVertex => this.#vertices.some(vVertex => pVertex.x === vVertex.x && pVertex.y === vVertex.y)));
-
-    this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
+  #draw() {
+    const ctx = this.#ctx;
+    ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
 
     for (const { vertices, color } of this.#polygons) {
-      this.#ctx.beginPath();
-      this.#ctx.moveTo(vertices[0].x, vertices[0].y);
-      for (let i = 1; i < vertices.length; i++) {
-        this.#ctx.lineTo(vertices[i].x, vertices[i].y);
-      }
-      this.#ctx.closePath();
-      this.#ctx.fillStyle = color;
-      this.#ctx.strokeStyle = color;
-      this.#ctx.fill();
-      this.#ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(vertices[0].x, vertices[0].y);
+      ctx.lineTo(vertices[1].x, vertices[1].y);
+      ctx.lineTo(vertices[2].x, vertices[2].y);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.strokeStyle = color;
+      ctx.fill();
+      ctx.stroke();
     }
-  };
+  }
 }
 
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) new LcsCnvs(window);
