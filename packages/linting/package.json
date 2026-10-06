@@ -12,6 +12,11 @@
   "bugs": {
     "url": "https://github.com/smndhm/blu/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smndhm/blu.git",
+    "directory": "packages/linting"
+  },
   "license": "ISC",
   "author": {
     "name": "Simon Duhem",
