@@ -1,5 +1,12 @@
 # simon.duhem.fr
 
+## 2.0.1
+
+### Patch Changes
+
+- adf3dbc: Contraste suffisant pour la coloration syntaxique des blocs de code (propriétés et balises) et audit axe automatique de toutes les pages en CI.
+- a882df5: Plus de barre de défilement inutile sur la page d'accueil.
+
 ## 2.0.0
 
 ### Major Changes

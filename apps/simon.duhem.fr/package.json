@@ -1,7 +1,7 @@
 {
   "name": "simon.duhem.fr",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Site personnel : présentation, articles et slides de conférences.",
   "type": "module",
   "scripts": {
