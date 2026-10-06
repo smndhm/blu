@@ -1,8 +1,8 @@
-<ul class="list" role="list">
+<ul class="post-list" role="list">
 {%- for item in items %}
-	<li class="list-item">
-		<h2 class="list-title"><a href="{{ item.url }}">{{ item.title }}</a></h2>
-		<p class="meta">
+	<li class="post-list__item">
+		<h2 class="post-list__title"><a href="{{ item.url }}">{{ item.title }}</a></h2>
+		<p class="post-list__meta">
 			{%- if item.date %}<time datetime="{{ item.date | isoDate }}">{{ item.date | readableDate }}</time> · {% endif %}
 			{%- if item.isTalk %}
 			Conférence à {% if item.eventUrl %}<a href="{{ item.eventUrl }}">{{ item.event }}</a>{% else %}{{ item.event }}{% endif %}
@@ -11,7 +11,7 @@
 			{%- endif %}
 		</p>
 		{%- if item.isTalk %}
-		<p class="meta"><a href="{{ item.pdf }}" download>Télécharger les slides en PDF<span class="visually-hidden"> — {{ item.title }}, {{ item.event }}</span></a></p>
+		<p class="post-list__meta"><a href="{{ item.pdf }}" download>Télécharger les slides en PDF<span class="visually-hidden"> — {{ item.title }}, {{ item.event }}</span></a></p>
 		{%- endif %}
 	</li>
 {%- endfor %}
