@@ -1,18 +1,9 @@
 ---
-layout: false
-eleventyExcludeFromCollections: true
+layout: layouts/base.njk
+title: Slides
+description: Slides des conférences de Simon Duhem sur l'accessibilité et les Web Components.
 ---
-<!doctype html>
-<html lang="{{ metadata.language }}">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Slides — {{ metadata.title }}</title>
-		{#- The slides are now listed with the articles #}
-		<meta http-equiv="refresh" content="0; url=/articles/">
-		<link rel="canonical" href="{{ '/articles/' | htmlBaseUrl(metadata.url) }}">
-	</head>
-	<body>
-		<p>Les slides sont désormais listées avec <a href="/articles/">les articles</a>.</p>
-	</body>
-</html>
+<h1>Slides</h1>
+<p>Les supports de mes conférences. Ils sont aussi listés avec <a href="/articles/">les articles</a>.</p>
+{%- set items = [] | withTalks(talks) %}
+{% include "partials/postlist.njk" %}

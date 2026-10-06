@@ -13,7 +13,7 @@ pnpm --filter simon.duhem.fr start
 - `content/index.njk` : page d'accueil.
 - `content/articles/` : un dossier par article (`index.md` + images).
 - `content/articles/index.njk` : liste des articles et des conférences ; les conférences sont lues depuis le front matter des présentations de `apps/slides/src` (voir `_data/talks.js`).
-- `content/slides/index.njk` : redirige `/slides/` vers `/articles/`.
+- `content/slides/index.njk` : liste des conférences uniquement.
 
 Les slides elles-mêmes sont générées par [Marp](https://marp.app/) au déploiement et copiées dans `/slides/`.
 Pour qu'une présentation apparaisse dans la liste, son front matter doit contenir un champ `event` :
