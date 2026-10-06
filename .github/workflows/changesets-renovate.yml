@@ -61,7 +61,7 @@ jobs:
       - name: Build site
         id: build
         if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
-        run: pnpm --filter simon.duhem.fr build
+        run: pnpm --filter "simon.duhem.fr..." build
 
       - name: Install Chromium
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}

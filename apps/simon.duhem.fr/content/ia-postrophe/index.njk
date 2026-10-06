@@ -1,0 +1,80 @@
+---
+layout: layouts/base.njk
+title: IApostrophe
+description: Un bookmarklet pour vérifier si un texte a été écrit avec l'aide d'une IA ou saisi au clavier, en mettant en évidence les caractères typographiques des IA.
+ogImage: og.png
+---
+<style>{% include "css/ia-postrophe.css" %}</style>
+
+<h1>IApostrophe</h1>
+<p>
+	Ce bookmarklet est un moyen simple et rapide de vérifier si un texte a été écrit avec l'aide d'une IA ou saisi au clavier en mettant en évidence les caractères
+	typographiques des IA.
+</p>
+
+<h2>Le bookmarklet</h2>
+<p>Glissez ce lien dans votre barre de favoris : <a href="#" id="bookmarklet" class="bookmarklet">IApostrophe</a></p>
+<p>Puis cliquez dessus sur n'importe quelle page pour surligner les caractères typographiques IA et leurs équivalents naturels. Cliquez une seconde fois pour retirer le surlignage.</p>
+
+<h2>Tester un texte</h2>
+<p>Pas envie d'installer le bookmarklet ? Collez votre texte ci-dessous pour y surligner les caractères typographiques IA.</p>
+<p id="tester-label" class="tester__label">Texte à analyser</p>
+<div
+	id="tester-input"
+	class="tester__input"
+	contenteditable="plaintext-only"
+	role="textbox"
+	aria-multiline="true"
+	aria-labelledby="tester-label"
+	data-placeholder="Collez votre texte ici..."
+></div>
+<p id="tester-summary" class="tester__summary" aria-live="polite"></p>
+
+<h2>L'histoire</h2>
+<p>
+	En préparant mes slides pour la conférence
+	<a href="https://www.paris-web.fr/2025/conference/les-web-components-et-laccessibilite">Les Web Components et l'accessibilité</a> à Paris Web, j'ai utilisé ChatGPT pour
+	corriger mes textes.
+</p>
+<p>
+	En recopiant ses corrections, j'ai remarqué des caractères un peu "étranges", que je ne taperais pas normalement au clavier : des tirets longs (—), des guillemets
+	différents (« », “ ”), et surtout ces apostrophes penchées (’). J'ai corrigé mes slides sans y prêter plus d'attention.
+</p>
+<p>Puis, je les ai vus partout : sites web, emails, entretiens annuels, messages Teams...</p>
+
+<h2>Exemples</h2>
+<table class="examples">
+	<thead>
+		<tr>
+			<th scope="col">Type</th>
+			<th scope="col">Exemple IA</th>
+			<th scope="col">Saisi au clavier</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="row">Apostrophes</th>
+			<td>c’est (’)</td>
+			<td>c'est (')</td>
+		</tr>
+		<tr>
+			<th scope="row">Tirets</th>
+			<td>un tiret long (—)</td>
+			<td>un tiret court (-)</td>
+		</tr>
+		<tr>
+			<th scope="row">Guillemets</th>
+			<td>« Bonjour »<br>“Bonjour”</td>
+			<td>"Bonjour"</td>
+		</tr>
+		<tr>
+			<th scope="row">Points de suspension</th>
+			<td>vraiment…</td>
+			<td>vraiment...</td>
+		</tr>
+	</tbody>
+</table>
+
+<blockquote class="quote"><p>Maintenant, vous aussi, vous les verrez partout.</p></blockquote>
+
+<script type="module" src="/js/ia-postrophe.js" eleventy:ignore></script>

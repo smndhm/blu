@@ -5,13 +5,14 @@ Site personnel construit avec [Eleventy](https://www.11ty.dev/) : page de prése
 ## Développement
 
 ```sh
+pnpm --filter "simon.duhem.fr^..." build # compile les dépendances du site (script d'IApostrophe)
 pnpm --filter simon.duhem.fr start
 ```
 
 ## Accessibilité
 
 ```sh
-pnpm --filter simon.duhem.fr build
+pnpm --filter "simon.duhem.fr..." build
 pnpm --filter simon.duhem.fr test:a11y
 ```
 
@@ -23,6 +24,7 @@ pnpm --filter simon.duhem.fr test:a11y
 - `content/articles/` : un dossier par article (`index.md` + images).
 - `content/articles/index.njk` : liste des articles et des conférences ; les conférences sont lues depuis le front matter des présentations de `apps/slides/src` (voir `_data/talks.js`).
 - `content/slides/index.njk` : liste des conférences uniquement.
+- `content/ia-postrophe/` : page de l'outil [IApostrophe](../ia-postrophe). Son script est compilé par `apps/ia-postrophe` et copié dans `/js/ia-postrophe.js`.
 
 Les slides elles-mêmes sont générées par [Marp](https://marp.app/) au déploiement et copiées dans `/slides/`.
 Pour qu'une présentation apparaisse dans la liste, son front matter doit contenir un champ `event` :
