@@ -14,6 +14,10 @@ export default async function (eleventyConfig) {
       './public/': '/',
     })
     .addPassthroughCopy('./content/articles/feed/pretty-atom-feed.xsl')
+    // Title font (latin subsets only), see css/index.css
+    .addPassthroughCopy({
+      'node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin{,-ext}-wght-normal.woff2': 'fonts',
+    })
     // Social sharing images, referenced by `ogImage` front matter
     .addPassthroughCopy('./content/articles/*/og.{png,jpg,webp}');
 
