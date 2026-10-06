@@ -3,17 +3,12 @@ name: Test
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'packages/webcomp-utils/**'
-      - 'apps/ia-postrophe/**'
-      - 'pnpm-lock.yaml'
-      - '.github/workflows/test.yml'
 
 permissions:
   contents: read
 
 jobs:
-  webcomp-utils:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,24 +17,7 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup
 
+      # Runs the `test` script of every package, after the package build
+      # when its turbo.json asks for it (see packages/webcomp-utils and apps/ia-postrophe)
       - name: Run tests
-        run: pnpm --filter @dume/webcomp-utils exec vitest run
-
-      - name: Build
-        run: pnpm --filter @dume/webcomp-utils build
-
-  ia-postrophe:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - name: Setup environment
-        uses: ./.github/actions/setup
-
-      - name: Run tests
-        run: pnpm --filter ia-postrophe exec vitest run
-
-      # Also type-checks the tests
-      - name: Build
-        run: pnpm --filter ia-postrophe build
+        run: pnpm test

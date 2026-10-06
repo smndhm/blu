@@ -75,11 +75,7 @@ jobs:
       - name: Test packages
         id: test
         if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
-        run: |
-          pnpm --filter @dume/webcomp-utils exec vitest run
-          pnpm --filter @dume/webcomp-utils build
-          pnpm --filter ia-postrophe exec vitest run
-          pnpm --filter ia-postrophe build
+        run: pnpm test
 
       - name: Report statuses
         if: ${{ always() && steps.commit.outputs.pushed == 'true' }}
@@ -92,6 +88,6 @@ jobs:
           report lint "${{ steps.lint.outcome == 'success' && 'success' || 'failure' }}" "Lint"
           report build "${{ steps.build.outcome == 'success' && 'success' || 'failure' }}" "Site build"
           report axe "${{ steps.axe.outcome == 'success' && 'success' || 'failure' }}" "Accessibility audit"
-          report test "${{ steps.test.outcome == 'success' && 'success' || 'failure' }}" "webcomp-utils and ia-postrophe tests and build"
+          report test "${{ steps.test.outcome == 'success' && 'success' || 'failure' }}" "Package tests"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
