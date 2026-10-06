@@ -6,6 +6,8 @@ on:
       - main
 
 permissions:
+  contents: write # Push the changeset-release/main branch and create releases
+  pull-requests: write # Open the "Version Packages" pull request
   id-token: write # Required for OIDC
 
 jobs:

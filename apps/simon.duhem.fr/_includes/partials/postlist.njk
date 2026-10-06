@@ -1,0 +1,18 @@
+<ul class="post-list" role="list">
+{%- for item in items %}
+	<li class="post-list__item">
+		<h2 class="post-list__title"><a href="{{ item.url }}">{{ item.title }}</a></h2>
+		<p class="post-list__meta">
+			{%- if item.date %}<time datetime="{{ item.date | isoDate }}">{{ item.date | readableDate }}</time> · {% endif %}
+			{%- if item.isTalk %}
+			Conférence à {% if item.eventUrl %}<a href="{{ item.eventUrl }}">{{ item.event }}</a>{% else %}{{ item.event }}{% endif %}
+			{%- else %}
+			Article{% for topic in item.topics | topics %} · {{ topic }}{% endfor %}
+			{%- endif %}
+		</p>
+		{%- if item.isTalk %}
+		<p class="post-list__meta"><a href="{{ item.pdf }}" download>Télécharger les slides en PDF<span class="visually-hidden"> — {{ item.title }}, {{ item.event }}</span></a></p>
+		{%- endif %}
+	</li>
+{%- endfor %}
+</ul>

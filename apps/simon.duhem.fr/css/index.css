@@ -1,0 +1,373 @@
+/* Title font: Bricolage Grotesque (SIL Open Font License), self-hosted */
+@font-face {
+  font-display: swap;
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 200 800;
+  src: url('/fonts/bricolage-grotesque-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 200 800;
+  src: url('/fonts/bricolage-grotesque-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ==========================================================================
+   Settings
+   ========================================================================== */
+
+:root {
+  --color-dark: #222;
+  --color-light: #fafafa;
+  --font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-family-title: 'Bricolage Grotesque', var(--font-family);
+  --font-family-monospace: ui-monospace, consolas, menlo, monaco, 'Liberation Mono', 'Courier New', monospace;
+  --background-color: var(--color-light);
+  --text-color: var(--color-dark);
+  --text-color-muted: #555;
+  --accent-color: #4b0195;
+  --border-color: #ccc;
+  --syntax-tab-size: 2;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--color-dark);
+    --text-color: var(--color-light);
+    --text-color-muted: #bbb;
+    --accent-color: #c9a2ff;
+    --border-color: #555;
+  }
+}
+
+/* ==========================================================================
+   Base: HTML elements, also used by the Markdown content of articles
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+html {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  line-height: 1.6;
+
+  /* Reserve the scrollbar space without forcing a scrollbar on short pages */
+  scrollbar-gutter: stable;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-title);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+h2 {
+  margin: 2.5rem 0 1rem;
+  font-size: 1.5rem;
+}
+
+a[href] {
+  color: inherit;
+  text-decoration-color: var(--accent-color);
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+}
+
+a[href]:hover {
+  color: var(--accent-color);
+}
+
+:focus-visible {
+  border-radius: 2px;
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+}
+
+img[width][height] {
+  height: auto;
+}
+
+img[src$='.svg'] {
+  width: 100%;
+  max-width: none;
+  height: auto;
+}
+
+video,
+iframe {
+  width: 100%;
+  height: auto;
+}
+
+iframe {
+  aspect-ratio: 16/9;
+}
+
+table {
+  margin: 1em 0;
+}
+
+td,
+th {
+  padding-right: 1em;
+}
+
+pre,
+code {
+  font-family: var(--font-family-monospace);
+}
+
+pre:not([class*='language-']) {
+  margin: 0.5em 0;
+  direction: ltr;
+  hyphens: none;
+  line-height: 1.375;
+  overflow-x: auto;
+  tab-size: var(--syntax-tab-size);
+  text-align: left;
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
+}
+
+code {
+  word-break: break-all;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Blocks
+   ========================================================================== */
+
+/* Page layout */
+.page {
+  display: flex;
+  max-width: 44rem;
+  min-height: 100vh;
+  min-height: 100svh; /* Mobile: viewport with the browser UI shown, never overflows */
+  flex-direction: column;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+.page__main {
+  flex-grow: 1;
+  padding: 2rem 0;
+}
+
+.page__main:focus {
+  outline: none;
+}
+
+/* Home: centered, minimal */
+.page--home .page__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Skip link, only visible when focused */
+.skip-link {
+  position: absolute;
+  z-index: 999;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--text-color);
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.skip-link:not(:focus) {
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+  gap: 0.5rem 1.5rem;
+}
+
+.site-header__brand {
+  font-family: var(--font-family-title);
+  font-weight: 700;
+}
+
+.site-header__nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+}
+
+.site-header__brand,
+.site-header__nav-link {
+  text-decoration: none;
+}
+
+.site-header__brand:hover,
+.site-header__nav-link:hover,
+.site-header__nav-link[aria-current] {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+}
+
+/* Footer */
+.site-footer {
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.site-footer__list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+}
+
+/* Home introduction */
+.intro {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro__title {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 1;
+}
+
+.intro__links {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+}
+
+/* Decorative canvas (home page), kept faint so text contrast stays sufficient */
+.lcs-cnvs {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* List of articles and talks */
+.post-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.post-list__item + .post-list__item {
+  margin-top: 1.5rem;
+}
+
+.post-list__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.post-list__meta {
+  margin: 0.25rem 0 0;
+  color: var(--text-color-muted);
+  font-size: 0.9375rem;
+}
+
+/* Article */
+.post__header {
+  margin-bottom: 2rem;
+}
+
+.post__meta {
+  margin: 0.25rem 0 0;
+  color: var(--text-color-muted);
+  font-size: 0.9375rem;
+}
+
+/* Previous / next article */
+.post-nav__list {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--border-color);
+  margin: 3rem 0 0;
+  gap: 0.5rem 1rem;
+  list-style: none;
+}
+
+.post-nav__item {
+  flex: 1 1 0;
+}
+
+.post-nav__item--next {
+  text-align: right;
+}

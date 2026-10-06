@@ -2,6 +2,7 @@ name: Renovate → Changesets
 
 permissions:
   contents: write
+  statuses: write # Report the lint result on the changeset commit
 
 on:
   push:
@@ -17,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: true
           fetch-depth: 0
@@ -31,6 +32,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit changesets
+        id: commit
         run: |
           # Make the commit appear authored by Renovate so Renovate can rebase automatically
           git config user.name "renovate[bot]"
@@ -41,5 +43,28 @@ jobs:
           export GIT_COMMITTER_EMAIL="renovate[bot]@users.noreply.github.com"
           git add .changeset || true
           git add .changeset/*.md || true
-          git commit -m "chore(changesets): add changeset for renovate" || echo "no changes to commit"
-          git push
+          if git commit -m "chore(changesets): add changeset for renovate"; then
+            git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "no changes to commit"
+          fi
+
+      # A commit pushed with GITHUB_TOKEN does not trigger other workflows, so the
+      # Lint workflow never runs on it and Renovate waits forever before automerging.
+      # Lint it here and report the result as a commit status instead.
+      - name: Lint changeset commit
+        id: lint
+        if: steps.commit.outputs.pushed == 'true'
+        run: pnpm lint
+
+      - name: Report lint status
+        if: always() && steps.commit.outputs.pushed == 'true'
+        run: |
+          gh api "repos/${{ github.repository }}/statuses/$(git rev-parse HEAD)" \
+            -f state="${{ steps.lint.outcome == 'success' && 'success' || 'failure' }}" \
+            -f context="lint" \
+            -f description="Lint on the changeset commit" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

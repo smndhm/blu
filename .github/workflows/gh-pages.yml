@@ -1,6 +1,14 @@
 name: Deploy all apps to GitHub Pages
 
 on:
+  # Releases created by the Changeset workflow use GITHUB_TOKEN and do not trigger
+  # other workflows, so the site is deployed on every push to main touching it.
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/**'
+      - '.github/workflows/gh-pages.yml'
   release:
     types: [published]
   workflow_dispatch:
@@ -22,12 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Set up Node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: lts/*
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
       - name: Install dependencies
         run: pnpm i
 
@@ -38,37 +46,25 @@ jobs:
         run: pnpm --filter ia-postrophe build
 
       - name: Build slides (HTML)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
+        uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
         with:
           args: -I apps/slides/src -o apps/slides/dist
         env:
           MARP_USER: root:root
 
       - name: Build slides (PDF)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
+        uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
         with:
           args: -I apps/slides/src -o apps/slides/dist --pdf --allow-local-files
         env:
           MARP_USER: root:root
 
-      - name: Build slides (PPTX)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
-        with:
-          args: -I apps/slides/src -o apps/slides/dist --pptx --allow-local-files
-        env:
-          MARP_USER: root:root
-
-      - name: Build articles site
-        run: pnpm --filter articles build
-
       - name: Prepare public folder
         run: |
           mkdir -p public/ia-postrophe
-          mkdir -p public/articles
           mkdir -p public/slides/assets
-          cp -r apps/simon.duhem.fr/dist/* public/
+          cp -r apps/simon.duhem.fr/_site/* public/
           cp -r apps/ia-postrophe/dist/ia-postrophe/* public/ia-postrophe/
-          cp -r apps/articles/_site/* public/articles/
           cp -r apps/slides/src/assets/* public/slides/assets/
           cp -r apps/slides/dist/* public/slides/
 

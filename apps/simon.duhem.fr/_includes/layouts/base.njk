@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="{{ metadata.language }}">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% if title %}{{ title }} — {% endif %}{{ metadata.title }}</title>
+		<meta name="description" content="{{ description or metadata.description }}">
+		<meta name="author" content="{{ metadata.author.name }}">
+		<meta name="theme-color" content="#222">
+		<link rel="icon" href="/favicon.ico" sizes="any">
+		<link rel="icon" href="/icon.svg" type="image/svg+xml">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="manifest" href="/manifest.webmanifest">
+		<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="alternate" href="/articles/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }} — Articles">
+
+		<meta property="og:type" content="{{ 'article' if layout == 'layouts/post.njk' else 'website' }}">
+		<meta property="og:title" content="{{ title or metadata.title }}">
+		<meta property="og:description" content="{{ description or metadata.description }}">
+		<meta property="og:url" content="{{ page.url | htmlBaseUrl(metadata.url) }}">
+		{%- if ogImage %}
+		<meta property="og:image" content="{{ (page.url + ogImage) | htmlBaseUrl(metadata.url) }}">
+		{%- endif %}
+
+		{#- Add the contents of a file to the bundle #}
+		<style>{% include "css/index.css" %}</style>
+
+		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
+		<style>{% getBundle "css" %}</style>
+
+		{#- Add the heading-anchors web component to the JavaScript bundle #}
+		<script type="module">{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}</script>
+	</head>
+	<body class="page{% if bodyClass %} {{ bodyClass }}{% endif %}">
+		<a href="#main" class="skip-link">Aller au contenu</a>
+
+		{%- if page.url != "/" %}
+		<header class="site-header">
+			<a href="/" class="site-header__brand">{{ metadata.title }}</a>
+			<nav class="site-header__nav" aria-label="Principale">
+				<ul class="site-header__nav-list">
+					{%- for entry in [{ url: "/articles/", title: "Articles" }] %}
+					<li><a href="{{ entry.url }}" class="site-header__nav-link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
+					{%- endfor %}
+				</ul>
+			</nav>
+		</header>
+		{%- endif %}
+
+		<main id="main" class="page__main" tabindex="-1">
+			{{ content | safe }}
+		</main>
+
+		{%- if page.url != "/" %}
+		<footer class="site-footer">
+			<ul class="site-footer__list">
+				{%- for link in metadata.social %}
+				<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+				{%- endfor %}
+				<li><a href="/articles/feed/feed.xml">Flux RSS</a></li>
+			</ul>
+		</footer>
+		{%- endif %}
+
+		<script type="module" src="{% getBundleFileUrl "js" %}"></script>
+	</body>
+</html>

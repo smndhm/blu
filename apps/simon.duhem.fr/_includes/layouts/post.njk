@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+---
+{# Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle #}
+<style>{% include "node_modules/prismjs/themes/prism-okaidia.css" %}</style>
+<style>{% include "css/prism-diff.css" %}</style>
+<style>{% include "css/prism-a11y.css" %}</style>
+
+<article class="post">
+	<header class="post__header">
+		<h1 class="post__title">{{ title }}</h1>
+		<p class="post__meta">
+			<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
+			{%- for topic in tags | topics %} · {{ topic }}{% endfor %}
+		</p>
+		{%- if origin %}
+		<p class="post__meta">Publié initialement sur <a href="{{ origin.href }}">{{ origin.title }}</a>.</p>
+		{%- endif %}
+	</header>
+
+	<heading-anchors class="post__content">
+		{{ content | safe }}
+	</heading-anchors>
+</article>
+
+{%- if collections.posts %}
+{%- set previousPost = collections.posts | getPreviousCollectionItem %}
+{%- set nextPost = collections.posts | getNextCollectionItem %}
+{%- if nextPost or previousPost %}
+<nav class="post-nav" aria-label="Autres articles">
+	<ul class="post-nav__list">
+		{%- if previousPost %}<li class="post-nav__item post-nav__item--prev">← Précédent<br> <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></li>{% endif %}
+		{%- if nextPost %}<li class="post-nav__item post-nav__item--next">Suivant →<br><a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></li>{% endif %}
+	</ul>
+</nav>
+{%- endif %}
+{%- endif %}
