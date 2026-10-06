@@ -62,9 +62,8 @@ class LcsCnvs {
       );
     });
 
-    // Pause when the pointer leaves the page, the finger is lifted or the tab is hidden; resume on the next move
+    // Pause when the mouse leaves the page or the tab is hidden; resume on the next move
     document.documentElement.addEventListener('mouseleave', () => this.#stop());
-    window.addEventListener('touchend', () => this.#stop(), { passive: true });
     document.addEventListener('visibilitychange', () => document.hidden && this.#stop());
     window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', ({ matches }) => {
       if (!matches) return;
