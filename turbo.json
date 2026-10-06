@@ -1,9 +1,11 @@
 {
   "$schema": "https://turborepo.com/schema.json",
+  "agentGuidance": false,
   "tasks": {
     "build": {
       "dependsOn": ["^build"]
-    }
+    },
+    "test": {}
   },
   "globalPassThroughEnv": ["CHROMIUM_PATH"]
 }

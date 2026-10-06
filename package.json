@@ -8,6 +8,7 @@
   "scripts": {
     "postinstall": "manypkg check",
     "build": "turbo build",
+    "test": "turbo run test",
     "manypkg:fix": "manypkg fix",
     "lint:style": "stylelint '**/*.{scss,css}' --ignore-path .gitignore --allow-empty-input",
     "lint:prettier": "prettier . --check",

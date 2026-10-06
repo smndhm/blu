@@ -27,7 +27,8 @@
   },
   "scripts": {
     "build": "vite build",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:coverage": "vitest --coverage",
     "doc": "typedoc --plugin typedoc-plugin-markdown && mv docs/README.md ./README.md",
     "prepublishOnly": "pnpm doc && pnpm build"
