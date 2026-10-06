@@ -23,6 +23,5 @@ jobs:
       - name: Publish packages
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: pnpm changeset:publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish-script: pnpm changeset:publish
+          github-token: ${{ secrets.GITHUB_TOKEN }}
