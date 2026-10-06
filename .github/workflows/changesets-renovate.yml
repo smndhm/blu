@@ -50,21 +50,38 @@ jobs:
             echo "no changes to commit"
           fi
 
-      # A commit pushed with GITHUB_TOKEN does not trigger other workflows, so the
-      # Lint workflow never runs on it and Renovate waits forever before automerging.
-      # Lint it here and report the result as a commit status instead.
+      # A commit pushed with GITHUB_TOKEN does not trigger other workflows, so Lint and
+      # Accessibility never run on it and Renovate would automerge without them.
+      # Run the same checks here and report each result as a commit status instead.
       - name: Lint changeset commit
         id: lint
-        if: steps.commit.outputs.pushed == 'true'
+        if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
         run: pnpm lint
 
-      - name: Report lint status
-        if: always() && steps.commit.outputs.pushed == 'true'
+      - name: Build site
+        id: build
+        if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
+        run: pnpm --filter simon.duhem.fr build
+
+      - name: Install Chromium
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
+
+      - name: Accessibility audit
+        id: axe
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: pnpm --filter simon.duhem.fr test:a11y
+
+      - name: Report statuses
+        if: ${{ always() && steps.commit.outputs.pushed == 'true' }}
         run: |
-          gh api "repos/${{ github.repository }}/statuses/$(git rev-parse HEAD)" \
-            -f state="${{ steps.lint.outcome == 'success' && 'success' || 'failure' }}" \
-            -f context="lint" \
-            -f description="Lint on the changeset commit" \
-            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          report() {
+            gh api "repos/${{ github.repository }}/statuses/$(git rev-parse HEAD)" \
+              -f state="$2" -f context="$1" -f description="$3 on the changeset commit" \
+              -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }
+          report lint "${{ steps.lint.outcome == 'success' && 'success' || 'failure' }}" "Lint"
+          report build "${{ steps.build.outcome == 'success' && 'success' || 'failure' }}" "Site build"
+          report axe "${{ steps.axe.outcome == 'success' && 'success' || 'failure' }}" "Accessibility audit"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
