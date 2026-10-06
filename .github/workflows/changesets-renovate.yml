@@ -50,8 +50,8 @@ jobs:
             echo "no changes to commit"
           fi
 
-      # A commit pushed with GITHUB_TOKEN does not trigger other workflows, so Lint and
-      # Accessibility never run on it and Renovate would automerge without them.
+      # A commit pushed with GITHUB_TOKEN does not trigger other workflows, so Lint,
+      # Accessibility and Test never run on it and Renovate would automerge without them.
       # Run the same checks here and report each result as a commit status instead.
       - name: Lint changeset commit
         id: lint
@@ -72,6 +72,13 @@ jobs:
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: pnpm --filter simon.duhem.fr test:a11y
 
+      - name: Test webcomp-utils
+        id: test
+        if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
+        run: |
+          pnpm --filter @dume/webcomp-utils exec vitest run
+          pnpm --filter @dume/webcomp-utils build
+
       - name: Report statuses
         if: ${{ always() && steps.commit.outputs.pushed == 'true' }}
         run: |
@@ -83,5 +90,6 @@ jobs:
           report lint "${{ steps.lint.outcome == 'success' && 'success' || 'failure' }}" "Lint"
           report build "${{ steps.build.outcome == 'success' && 'success' || 'failure' }}" "Site build"
           report axe "${{ steps.axe.outcome == 'success' && 'success' || 'failure' }}" "Accessibility audit"
+          report test "${{ steps.test.outcome == 'success' && 'success' || 'failure' }}" "webcomp-utils tests and build"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

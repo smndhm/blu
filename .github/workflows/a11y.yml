@@ -7,6 +7,7 @@ on:
       - 'apps/simon.duhem.fr/**'
       - 'apps/ia-postrophe/**'
       - 'apps/slides/src/**'
+      - 'pnpm-lock.yaml'
       - '.github/workflows/a11y.yml'
 
 permissions:

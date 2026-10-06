@@ -1,0 +1,28 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/webcomp-utils/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/test.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  webcomp-utils:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      - name: Run tests
+        run: pnpm --filter @dume/webcomp-utils exec vitest run
+
+      - name: Build
+        run: pnpm --filter @dume/webcomp-utils build
