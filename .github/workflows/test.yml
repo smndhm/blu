@@ -3,16 +3,12 @@ name: Test
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'packages/webcomp-utils/**'
-      - 'pnpm-lock.yaml'
-      - '.github/workflows/test.yml'
 
 permissions:
   contents: read
 
 jobs:
-  webcomp-utils:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,8 +17,7 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup
 
+      # Runs the `test` script of every package, after the package build
+      # when its turbo.json asks for it (see packages/webcomp-utils and apps/ia-postrophe)
       - name: Run tests
-        run: pnpm --filter @dume/webcomp-utils exec vitest run
-
-      - name: Build
-        run: pnpm --filter @dume/webcomp-utils build
+        run: pnpm test
