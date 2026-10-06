@@ -46,14 +46,14 @@ jobs:
         run: pnpm --filter ia-postrophe build
 
       - name: Build slides (HTML)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
+        uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
         with:
           args: -I apps/slides/src -o apps/slides/dist
         env:
           MARP_USER: root:root
 
       - name: Build slides (PDF)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
+        uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
         with:
           args: -I apps/slides/src -o apps/slides/dist --pdf --allow-local-files
         env:
