@@ -42,43 +42,6 @@ importers:
         specifier: 2.8.2
         version: 2.8.2
 
-  apps/articles:
-    dependencies:
-      '@zachleat/heading-anchors':
-        specifier: 1.0.5
-        version: 1.0.5
-    devDependencies:
-      '@11ty/eleventy':
-        specifier: 3.1.2
-        version: 3.1.2
-      '@11ty/eleventy-img':
-        specifier: 6.0.4
-        version: 6.0.4
-      '@11ty/eleventy-navigation':
-        specifier: 1.0.5
-        version: 1.0.5
-      '@11ty/eleventy-plugin-rss':
-        specifier: 2.0.4
-        version: 2.0.4
-      '@11ty/eleventy-plugin-syntaxhighlight':
-        specifier: 5.0.2
-        version: 5.0.2
-      cross-env:
-        specifier: 10.1.0
-        version: 10.1.0
-      luxon:
-        specifier: 3.7.2
-        version: 3.7.2
-      prismjs:
-        specifier: 1.30.0
-        version: 1.30.0
-      zod:
-        specifier: 4.3.6
-        version: 4.3.6
-      zod-validation-error:
-        specifier: 5.0.0
-        version: 5.0.0(zod@4.3.6)
-
   apps/ia-postrophe:
     devDependencies:
       '@picocss/pico':
@@ -92,19 +55,44 @@ importers:
         version: 7.3.1(@types/node@25.3.5)(sass@1.97.3)(yaml@2.8.2)
 
   apps/simon.duhem.fr:
+    dependencies:
+      '@zachleat/heading-anchors':
+        specifier: 1.0.5
+        version: 1.0.5
     devDependencies:
-      normalize.css:
-        specifier: 8.0.1
-        version: 8.0.1
-      sass:
-        specifier: 1.97.3
-        version: 1.97.3
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vite:
-        specifier: 7.3.1
-        version: 7.3.1(@types/node@25.3.5)(sass@1.97.3)(yaml@2.8.2)
+      '@11ty/eleventy':
+        specifier: 3.1.2
+        version: 3.1.2
+      '@11ty/eleventy-img':
+        specifier: 6.0.4
+        version: 6.0.4
+      '@11ty/eleventy-plugin-rss':
+        specifier: 2.0.4
+        version: 2.0.4
+      '@11ty/eleventy-plugin-syntaxhighlight':
+        specifier: 5.0.2
+        version: 5.0.2
+      '@fontsource-variable/bricolage-grotesque':
+        specifier: 5.3.0
+        version: 5.3.0
+      cross-env:
+        specifier: 10.1.0
+        version: 10.1.0
+      gray-matter:
+        specifier: 4.0.3
+        version: 4.0.3
+      luxon:
+        specifier: 3.7.2
+        version: 3.7.2
+      prismjs:
+        specifier: 1.30.0
+        version: 1.30.0
+      zod:
+        specifier: 4.3.6
+        version: 4.3.6
+      zod-validation-error:
+        specifier: 5.0.0
+        version: 5.0.0(zod@4.3.6)
 
   apps/slides:
     devDependencies:
@@ -201,9 +189,6 @@ packages:
   '@11ty/eleventy-img@6.0.4':
     resolution: {integrity: sha512-jSy9BmubVs0mN76dcXWfSYDgRU+1+/rq/SxUR3MgIvTUAJRDop5pFW+Z1f56CDcOlEHaiPqHgnfOlqRmJvXl7g==}
     engines: {node: '>=18'}
-
-  '@11ty/eleventy-navigation@1.0.5':
-    resolution: {integrity: sha512-zb6xe29cM9viSdYtZywKIkJw2HIROyBINdBcFWC9uD0c/jYOTAex5nwy3HNEuh5t6/Ld/S9V4gEizfmeYuYpCQ==}
 
   '@11ty/eleventy-plugin-bundle@3.0.7':
     resolution: {integrity: sha512-QK1tRFBhQdZASnYU8GMzpTdsMMFLVAkuU0gVVILqNyp09xJJZb81kAS3AFrNrwBCsgLxTdWHJ8N64+OTTsoKkA==}
@@ -645,6 +630,9 @@ packages:
     peerDependenciesMeta:
       '@noble/hashes':
         optional: true
+
+  '@fontsource-variable/bricolage-grotesque@5.3.0':
+    resolution: {integrity: sha512-TLi9Q4hJjS2UvoTMRSS2nHu6c4R56lAw60NR9QYtVRCHn0XtsFpiEhNffZ8Glsoxu6wEEwLKBP8lb94J52PNBA==}
 
   '@gerrit0/mini-shiki@3.23.0':
     resolution: {integrity: sha512-bEMORlG0cqdjVyCEuU0cDQbORWX+kYCeo0kV1lbxF5bt4r7SID2l9bqsxJEM0zndaxpOUT7riCyIVEuqq/Ynxg==}
@@ -2874,9 +2862,6 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
-  normalize.css@8.0.1:
-    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
-
   nunjucks@3.2.4:
     resolution: {integrity: sha512-26XRV6BhkgK0VOxfbU5cQI+ICFUtMLixv1noZn1tGU38kQH5A5nmmbk/O45xdyBhD1esk47nKrY0mvQpZIhRjQ==}
     engines: {node: '>= 6.9.0'}
@@ -3963,10 +3948,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@11ty/eleventy-navigation@1.0.5':
-    dependencies:
-      dependency-graph: 1.0.0
-
   '@11ty/eleventy-plugin-bundle@3.0.7(posthtml@0.16.7)':
     dependencies:
       '@11ty/eleventy-utils': 2.0.7
@@ -4454,6 +4435,8 @@ snapshots:
       levn: 0.4.1
 
   '@exodus/bytes@1.15.0': {}
+
+  '@fontsource-variable/bricolage-grotesque@5.3.0': {}
 
   '@gerrit0/mini-shiki@3.23.0':
     dependencies:
@@ -6109,7 +6092,8 @@ snapshots:
     dependencies:
       queue: 6.0.2
 
-  immutable@5.1.5: {}
+  immutable@5.1.5:
+    optional: true
 
   import-fresh@3.3.1:
     dependencies:
@@ -6808,8 +6792,6 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-  normalize.css@8.0.1: {}
-
   nunjucks@3.2.4(chokidar@3.6.0):
     dependencies:
       a-sync-waterfall: 1.0.1
@@ -7191,6 +7173,7 @@ snapshots:
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.5.6
+    optional: true
 
   saxes@6.0.0:
     dependencies:
