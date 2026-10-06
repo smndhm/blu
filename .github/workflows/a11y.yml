@@ -6,6 +6,7 @@ on:
     paths:
       - 'apps/simon.duhem.fr/**'
       - 'apps/slides/src/**'
+      - 'pnpm-lock.yaml'
       - '.github/workflows/a11y.yml'
 
 permissions:
