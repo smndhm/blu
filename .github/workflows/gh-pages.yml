@@ -1,6 +1,14 @@
 name: Deploy all apps to GitHub Pages
 
 on:
+  # Releases created by the Changeset workflow use GITHUB_TOKEN and do not trigger
+  # other workflows, so the site is deployed on every push to main touching it.
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/**'
+      - '.github/workflows/gh-pages.yml'
   release:
     types: [published]
   workflow_dispatch:
