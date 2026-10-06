@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'packages/webcomp-utils/**'
+      - 'apps/ia-postrophe/**'
       - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'
 
@@ -26,3 +27,19 @@ jobs:
 
       - name: Build
         run: pnpm --filter @dume/webcomp-utils build
+
+  ia-postrophe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      - name: Run tests
+        run: pnpm --filter ia-postrophe exec vitest run
+
+      # Also type-checks the tests
+      - name: Build
+        run: pnpm --filter ia-postrophe build
