@@ -20,6 +20,10 @@
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* ==========================================================================
+   Settings
+   ========================================================================== */
+
 :root {
   --color-dark: #222;
   --color-light: #fafafa;
@@ -46,7 +50,10 @@
   }
 }
 
-/* Global */
+/* ==========================================================================
+   Base: HTML elements, also used by the Markdown content of articles
+   ========================================================================== */
+
 * {
   box-sizing: border-box;
 }
@@ -63,31 +70,12 @@ html {
   overflow-y: scroll;
 }
 
-body {
-  display: flex;
-  max-width: 44rem;
-  min-height: 100vh;
-  flex-direction: column;
-  padding: 0 1rem;
-  margin: 0 auto;
-}
-
-main {
-  flex-grow: 1;
-  padding: 2rem 0;
-}
-
-main:focus {
-  outline: none;
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-.home-link {
+h6 {
   font-family: var(--font-family-title);
 }
 
@@ -125,142 +113,6 @@ a[href]:hover {
   outline-offset: 2px;
 }
 
-/* https://www.a11yproject.com/posts/how-to-hide-content/ */
-.visually-hidden:not(:focus, :active) {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-#skip-link {
-  padding: 0.5rem 1rem;
-  border: 2px solid var(--text-color);
-  background: var(--background-color);
-  color: var(--text-color);
-}
-
-/* Prevent visually-hidden skip link fom pushing content around when focused */
-#skip-link.visually-hidden:focus {
-  position: absolute;
-  z-index: 999;
-  top: 1rem;
-  left: 1rem;
-}
-
-/* Header & footer */
-.site-header,
-.site-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-  gap: 0.5rem 1.5rem;
-}
-
-.site-header {
-  border-bottom: 1px solid var(--border-color);
-}
-
-.site-footer {
-  border-top: 1px solid var(--border-color);
-}
-
-.home-link {
-  font-weight: 700;
-}
-
-.home-link,
-.nav a {
-  text-decoration: none;
-}
-
-.nav,
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 0;
-  gap: 0.5rem 1.5rem;
-  list-style: none;
-}
-
-.nav a[aria-current],
-.home-link:hover,
-.nav a:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--accent-color);
-}
-
-/* Home: centered, minimal */
-.home main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.home h1 {
-  font-size: clamp(2.5rem, 8vw, 4rem);
-  line-height: 1;
-}
-
-.home-links {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 1.5rem 0 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  gap: 0.5rem 1.5rem;
-  list-style: none;
-}
-
-/* Decorative canvas (home page), kept faint so text contrast stays sufficient */
-#lcs-cnvs {
-  position: fixed;
-  z-index: -1;
-  inset: 0;
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-/* Lists (articles, talks) */
-.list {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.list-item + .list-item {
-  margin-top: 1.5rem;
-}
-
-.list-title {
-  margin: 0 0 0.25rem;
-  font-size: 1.25rem;
-}
-
-.list-item p {
-  margin: 0.25rem 0 0;
-}
-
-.meta {
-  color: var(--text-color-muted);
-  font-size: 0.9375rem;
-}
-
-/* Post */
-.post-header {
-  margin-bottom: 2rem;
-}
-
-.post-header .meta {
-  margin: 0.25rem 0 0;
-}
-
 img {
   max-width: 100%;
 }
@@ -285,30 +137,12 @@ iframe {
   aspect-ratio: 16/9;
 }
 
-.links-nextprev {
-  display: flex;
-  justify-content: space-between;
-  padding: 1.5rem 0 0;
-  border-top: 1px solid var(--border-color);
-  margin: 3rem 0 0;
-  gap: 0.5rem 1rem;
-  list-style: none;
-}
-
-.links-nextprev > * {
-  flex: 1 1 0;
-}
-
-.links-nextprev-next {
-  text-align: right;
-}
-
 table {
   margin: 1em 0;
 }
 
-table td,
-table th {
+td,
+th {
   padding-right: 1em;
 }
 
@@ -332,4 +166,205 @@ pre:not([class*='language-']) {
 
 code {
   word-break: break-all;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Blocks
+   ========================================================================== */
+
+/* Page layout */
+.page {
+  display: flex;
+  max-width: 44rem;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+.page__main {
+  flex-grow: 1;
+  padding: 2rem 0;
+}
+
+.page__main:focus {
+  outline: none;
+}
+
+/* Home: centered, minimal */
+.page--home .page__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Skip link, only visible when focused */
+.skip-link {
+  position: absolute;
+  z-index: 999;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--text-color);
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.skip-link:not(:focus) {
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+  gap: 0.5rem 1.5rem;
+}
+
+.site-header__brand {
+  font-family: var(--font-family-title);
+  font-weight: 700;
+}
+
+.site-header__nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+}
+
+.site-header__brand,
+.site-header__nav-link {
+  text-decoration: none;
+}
+
+.site-header__brand:hover,
+.site-header__nav-link:hover,
+.site-header__nav-link[aria-current] {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+}
+
+/* Footer */
+.site-footer {
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.site-footer__list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+}
+
+/* Home introduction */
+.intro {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro__title {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 1;
+}
+
+.intro__links {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+}
+
+/* Decorative canvas (home page), kept faint so text contrast stays sufficient */
+.lcs-cnvs {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* List of articles and talks */
+.post-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.post-list__item + .post-list__item {
+  margin-top: 1.5rem;
+}
+
+.post-list__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.post-list__meta {
+  margin: 0.25rem 0 0;
+  color: var(--text-color-muted);
+  font-size: 0.9375rem;
+}
+
+/* Article */
+.post__header {
+  margin-bottom: 2rem;
+}
+
+.post__meta {
+  margin: 0.25rem 0 0;
+  color: var(--text-color-muted);
+  font-size: 0.9375rem;
+}
+
+/* Previous / next article */
+.post-nav__list {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--border-color);
+  margin: 3rem 0 0;
+  gap: 0.5rem 1rem;
+  list-style: none;
+}
+
+.post-nav__item {
+  flex: 1 1 0;
+}
+
+.post-nav__item--next {
+  text-align: right;
 }
