@@ -3,12 +3,14 @@
  * - Vertical along the right edge, rising, when it fits beside the text.
  * - Otherwise (narrow screens) horizontal along the top edge, moving to the left.
  * When the pointer comes close to the ribbon, new triangles grow around it.
+ * When the orientation changes (resize), the vertices glide from one ribbon to the other.
  * With reduced motion, the ribbon is drawn once and stays still.
  */
 
 /**
  * Coordinates in the ribbon frame: `a` along the ribbon (decreases as it moves), `u` across, from its axis.
- * @typedef {{ a: number, u: number, phase: number, fed?: boolean }} Vertex `fed`: added by the pointer
+ * @typedef {{ a: number, u: number, phase: number, fed?: boolean, from?: number[] }} Vertex
+ *   `fed`: added by the pointer, `from`: screen position when the orientation changed
  */
 /** @typedef {{ vertices: Vertex[], color: string }} Triangle */
 
@@ -23,6 +25,8 @@ class LcsCnvs {
   #margin = 150; // vertices are created and removed out of the viewport
   #gap = 24; // min space between the text and the vertical ribbon
   #vertical = true;
+  #morphDuration = 1200; // ms for the vertices to glide when the orientation changes
+  #morphStart = 0;
   // The ribbon wanders around its axis, and its thickness varies, as a smoothed random walk
   #path = { offset: 0, drift: 0, thickness: 0, growth: 0 };
   /** @type {Vertex[]} All the vertices */
@@ -105,6 +109,8 @@ class LcsCnvs {
   }
 
   #resize() {
+    const previous = { length: this.#length, shape: this.#shape };
+
     const ratio = this.#window.devicePixelRatio || 1;
     // Without the scrollbar gutter (`scrollbar-gutter: stable`), like the fixed canvas
     const { clientWidth, clientHeight } = this.#window.document.documentElement;
@@ -118,12 +124,14 @@ class LcsCnvs {
     const text = this.#text?.getBoundingClientRect();
     const usualHalfWidth = Math.min(130, this.#width * 0.1) * 0.5 + 60;
     const vertical = !text || this.#axisFor(true) - usualHalfWidth > text.right + this.#gap;
-    if (vertical !== this.#vertical || !this.#vertices.length) {
+    if (!this.#vertices.length) {
       this.#vertical = vertical;
-      this.#vertices = [];
-      this.#tail = [];
-      this.#triangles = [];
       this.#path = { offset: 0, drift: 0, thickness: this.#shape.thickness[1] * 0.6, growth: 0 };
+    } else if (vertical !== this.#vertical) {
+      // Where the vertices are drawn now (in the new viewport, still in the previous orientation)
+      const before = new Map(this.#vertices.map(vertex => [vertex, this.#point(vertex)]));
+      this.#vertical = vertical;
+      this.#morph(before, previous);
     }
     this.#fill();
 
@@ -132,11 +140,54 @@ class LcsCnvs {
     this.#canvas.style.opacity = overlaps ? '0.35' : '0.6';
   }
 
+  // Same ribbon in the new orientation, as if it turned around the top right corner: the end of the
+  // vertical ribbon at the top becomes the right end of the horizontal one, and the other way around.
+  // It is stretched along the viewport, thinner or thicker across. Each vertex glides from where it was drawn.
+  #morph(before, previous) {
+    const margin = this.#margin;
+    const scaleAlong = (this.#length + 2 * margin) / (previous.length + 2 * margin);
+    const scaleAcross = this.#shape.thickness[1] / previous.shape.thickness[1];
+    const animate = !this.#reducedMotion.matches;
+    for (const vertex of this.#vertices) {
+      // Distance from the corner along the ribbon
+      const distance = (this.#vertical ? previous.length + margin - vertex.a : vertex.a + margin) * scaleAlong;
+      vertex.a = this.#vertical ? distance - margin : this.#length + margin - distance;
+      vertex.u *= scaleAcross;
+      vertex.from = animate ? before.get(vertex) : undefined;
+    }
+    // The ribbon keeps growing at its far end (largest `a`)
+    this.#tail = this.#vertices
+      .filter(vertex => !vertex.fed)
+      .sort((a, b) => a.a - b.a)
+      .slice(-this.#neighbours);
+    this.#path.offset *= scaleAcross;
+    this.#path.thickness *= scaleAcross;
+    this.#morphStart = this.#window.performance.now();
+  }
+
   // Screen position of a vertex; each vertex also floats a few pixels around its position
-  #point({ a, u, phase }) {
+  #point(vertex) {
+    const { a, u, phase, from } = vertex;
     const along = a + Math.cos(this.#clock * 0.3 + phase) * 4;
     const across = this.#axis + u + Math.sin(this.#clock * 0.4 + phase) * 4;
-    return this.#vertical ? [across, along] : [along, across];
+    const point = this.#vertical ? [across, along] : [along, across];
+    if (!from) return point;
+
+    // Gliding after an orientation change (ease in out), turning around the top right corner
+    const progress = Math.min(1, (this.#window.performance.now() - this.#morphStart) / this.#morphDuration);
+    if (progress === 1) {
+      delete vertex.from;
+      return point;
+    }
+    const eased = progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
+    const polar = ([x, y]) => [Math.hypot(x - this.#width, y), Math.atan2(y, x - this.#width)];
+    const [startRadius, startAngle] = polar(from);
+    const [endRadius, endAngle] = polar(point);
+    const radius = startRadius + (endRadius - startRadius) * eased;
+    // Shortest way around
+    const turn = ((endAngle - startAngle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
+    const angle = startAngle + turn * eased;
+    return [this.#width + radius * Math.cos(angle), radius * Math.sin(angle)];
   }
 
   // Next point of the path: velocities change a little at each step, pulled back toward the axis

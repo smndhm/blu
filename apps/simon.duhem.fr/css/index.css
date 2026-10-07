@@ -320,6 +320,7 @@ code {
   inset: 0;
   opacity: 0.35;
   pointer-events: none;
+  transition: opacity 1s;
 }
 
 /* List of articles and talks */
