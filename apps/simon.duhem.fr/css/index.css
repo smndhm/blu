@@ -311,13 +311,22 @@ code {
   list-style: none;
 }
 
-/* Decorative canvas (home page), kept faint so text contrast stays sufficient */
+/* Decorative canvas (home page): a ribbon along the right edge, kept faint where it can be under the text */
 .lcs-cnvs {
   position: fixed;
   z-index: -1;
+  width: 100%;
+  height: 100%;
   inset: 0;
   opacity: 0.35;
   pointer-events: none;
+}
+
+/* Wide screens: the ribbon is beside the text column */
+@media (width >= 72rem) {
+  .lcs-cnvs {
+    opacity: 0.6;
+  }
 }
 
 /* List of articles and talks */
