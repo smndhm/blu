@@ -1,26 +1,33 @@
 /**
- * Decorative background of the home page: a ribbon of colored triangles along the right edge,
- * rising very slowly. When the pointer comes close to the ribbon, new triangles grow around it.
+ * Decorative background of the home page: a ribbon of colored triangles, slowly moving.
+ * - Vertical along the right edge, rising, when it fits beside the text.
+ * - Otherwise (narrow screens) horizontal along the bottom edge, moving to the left.
+ * When the pointer comes close to the ribbon, new triangles grow around it.
  * With reduced motion, the ribbon is drawn once and stays still.
  */
 
-/** @typedef {{ u: number, y: number, phase: number, fed?: boolean }} Vertex `u`: horizontal offset from the base axis, `y`: position in the viewport, `fed`: added by the pointer */
+/**
+ * Coordinates in the ribbon frame: `a` along the ribbon (decreases as it moves), `u` across, from its axis.
+ * @typedef {{ a: number, u: number, phase: number, fed?: boolean }} Vertex `fed`: added by the pointer
+ */
 /** @typedef {{ vertices: Vertex[], color: string }} Triangle */
 
 class LcsCnvs {
   #colors = ['#25CE7B', '#DA38B5', '#FDC741', '#01B3E3', '#FF6B01'];
   #speed = 8; // px per second
-  #step = 13; // average vertical distance between two new vertices of the ribbon
   #neighbours = 30; // a new triangle of the ribbon uses the two closest of its last vertices
   #reach = 120; // the pointer feeds the ribbon when it is this close to one of its vertices
   #around = 40; // vertices added by the pointer are this close to it
   #delay = 120; // ms between two vertices added by the pointer
   #maxFed = 80; // max vertices added by the pointer at the same time, they leave with the ribbon
-  // The ribbon wanders around the base axis, and its thickness varies, as a smoothed random walk
-  #path = { offset: 0, drift: 0, thickness: 60, growth: 0 };
+  #margin = 150; // vertices are created and removed out of the viewport
+  #gap = 24; // min space between the text and the vertical ribbon
+  #vertical = true;
+  // The ribbon wanders around its axis, and its thickness varies, as a smoothed random walk
+  #path = { offset: 0, drift: 0, thickness: 0, growth: 0 };
   /** @type {Vertex[]} All the vertices */
   #vertices = [];
-  /** @type {Vertex[]} Last vertices of the ribbon, where it keeps growing at the bottom */
+  /** @type {Vertex[]} Last vertices of the ribbon, where it keeps growing */
   #tail = [];
   /** @type {Triangle[]} */
   #triangles = [];
@@ -35,6 +42,7 @@ class LcsCnvs {
   #window;
   #canvas;
   #ctx;
+  #text;
   #reducedMotion;
 
   /** @param {Window} window */
@@ -42,6 +50,7 @@ class LcsCnvs {
     const { document } = window;
     this.#window = window;
     this.#reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this.#text = document.querySelector('.intro');
 
     this.#canvas = document.createElement('canvas');
     this.#canvas.className = 'lcs-cnvs';
@@ -50,13 +59,11 @@ class LcsCnvs {
     document.body.append(this.#canvas);
 
     this.#resize();
-    this.#fill();
     this.#draw();
     this.#start();
 
     window.addEventListener('resize', () => {
       this.#resize();
-      this.#fill();
       this.#draw();
     });
     ['mousemove', 'touchmove', 'touchstart'].forEach(type =>
@@ -76,56 +83,89 @@ class LcsCnvs {
     this.#reducedMotion.addEventListener('change', () => (this.#reducedMotion.matches ? this.#stop() : this.#start()));
   }
 
-  // Vertices are created and removed out of the viewport
-  get #margin() {
-    return 150;
+  // Shape of the ribbon in each orientation
+  get #shape() {
+    return this.#vertical
+      ? { amplitude: Math.min(130, this.#width * 0.1), thickness: [20, 95], step: 13 }
+      : { amplitude: Math.min(60, this.#width * 0.1), thickness: [10, 45], step: 10 };
   }
 
-  // How far the ribbon can wander from its base axis
-  get #amplitude() {
-    return Math.min(130, this.#width * 0.1);
+  // Position of the axis across the viewport: close to the right edge, or to the bottom edge
+  #axisFor(vertical) {
+    return vertical ? this.#width - Math.min(170, this.#width * 0.13) : this.#height - Math.min(100, this.#height * 0.12);
   }
 
-  // Base axis of the ribbon, close to the right edge
   get #axis() {
-    return this.#width - Math.min(170, this.#width * 0.13);
+    return this.#axisFor(this.#vertical);
+  }
+
+  // Length of the viewport along the ribbon
+  get #length() {
+    return this.#vertical ? this.#height : this.#width;
   }
 
   #resize() {
     const ratio = this.#window.devicePixelRatio || 1;
-    this.#width = this.#window.innerWidth;
-    this.#height = this.#window.innerHeight;
+    // Without the scrollbar gutter (`scrollbar-gutter: stable`), like the fixed canvas
+    const { clientWidth, clientHeight } = this.#window.document.documentElement;
+    this.#width = clientWidth;
+    this.#height = clientHeight;
     this.#canvas.width = this.#width * ratio;
     this.#canvas.height = this.#height * ratio;
     this.#ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    // Vertical when the ribbon (its usual width) stays beside the text, else horizontal: start again
+    const text = this.#text?.getBoundingClientRect();
+    const usualHalfWidth = Math.min(130, this.#width * 0.1) * 0.5 + 60;
+    const vertical = !text || this.#axisFor(true) - usualHalfWidth > text.right + this.#gap;
+    if (vertical !== this.#vertical || !this.#vertices.length) {
+      this.#vertical = vertical;
+      this.#vertices = [];
+      this.#tail = [];
+      this.#triangles = [];
+      this.#path = { offset: 0, drift: 0, thickness: this.#shape.thickness[1] * 0.6, growth: 0 };
+    }
+    this.#fill();
+
+    // Fainter when the horizontal ribbon can be under the text (short viewports), so it stays readable
+    const overlaps = !this.#vertical && text && this.#axis - this.#shape.amplitude - this.#shape.thickness[1] < text.bottom;
+    this.#canvas.style.opacity = overlaps ? '0.35' : '0.6';
   }
 
-  // Next point of the path: velocities change a little at each step, pulled back toward the base axis
+  // Screen position of a vertex; each vertex also floats a few pixels around its position
+  #point({ a, u, phase }) {
+    const along = a + Math.cos(this.#clock * 0.3 + phase) * 4;
+    const across = this.#axis + u + Math.sin(this.#clock * 0.4 + phase) * 4;
+    return this.#vertical ? [across, along] : [along, across];
+  }
+
+  // Next point of the path: velocities change a little at each step, pulled back toward the axis
   #walk() {
     const path = this.#path;
-    const amplitude = this.#amplitude;
+    const { amplitude, thickness } = this.#shape;
     path.drift = path.drift * 0.92 + (Math.random() - 0.5) * 6 - (path.offset / amplitude) * 1.5;
     path.offset = Math.max(-amplitude, Math.min(amplitude * 0.6, path.offset + path.drift));
-    path.growth = path.growth * 0.9 + (Math.random() - 0.5) * 6;
-    path.thickness = Math.max(20, Math.min(95, path.thickness + path.growth));
+    path.growth = path.growth * 0.9 + (Math.random() - 0.5) * thickness[1] * 0.06;
+    path.thickness = Math.max(thickness[0], Math.min(thickness[1], path.thickness + path.growth));
   }
 
   // Adds a vertex, and a triangle with its two closest `candidates`
   #add(vertex, candidates) {
     if (candidates.length >= 2) {
-      const distance = other => (other.u - vertex.u) ** 2 + (other.y - vertex.y) ** 2;
+      const distance = other => (other.a - vertex.a) ** 2 + (other.u - vertex.u) ** 2;
       const [first, second] = [...candidates].sort((a, b) => distance(a) - distance(b));
       this.#triangles.push({ vertices: [vertex, first, second], color: this.#colors[Math.floor(Math.random() * this.#colors.length)] });
     }
     this.#vertices.push(vertex);
   }
 
-  // Grows the ribbon at the bottom, until below the viewport
+  // Grows the ribbon at its end, until out of the viewport
   #fill() {
-    for (let y = (this.#tail.at(-1)?.y ?? -this.#margin) + this.#step; y < this.#height + this.#margin; y += this.#step) {
+    const { step } = this.#shape;
+    for (let a = (this.#tail.at(-1)?.a ?? -this.#margin) + step; a < this.#length + this.#margin; a += step) {
       this.#walk();
       const { offset, thickness } = this.#path;
-      const vertex = { u: offset + (Math.random() - 0.5) * 2 * thickness, y: y + (Math.random() - 0.5) * thickness, phase: Math.random() * Math.PI * 2 };
+      const vertex = { a: a + (Math.random() - 0.5) * thickness, u: offset + (Math.random() - 0.5) * 2 * thickness, phase: Math.random() * Math.PI * 2 };
       this.#add(vertex, this.#tail);
       this.#tail = [...this.#tail, vertex].slice(-this.#neighbours);
     }
@@ -134,8 +174,9 @@ class LcsCnvs {
   // Adds a vertex around the pointer when it is close to the ribbon
   #feed(time) {
     if (!this.#pointer || time - this.#lastPointerVertex < this.#delay) return;
-    const pointer = { u: this.#pointer.x - this.#axis, y: this.#pointer.y };
-    const distance = other => Math.hypot(other.u - pointer.u, other.y - pointer.y);
+    const { x, y } = this.#pointer;
+    const pointer = this.#vertical ? { a: y, u: x - this.#axis } : { a: x, u: y - this.#axis };
+    const distance = other => Math.hypot(other.a - pointer.a, other.u - pointer.u);
     // Close to the ribbon itself (not to what the pointer added: no endless trail over the text)
     if (!this.#vertices.some(vertex => !vertex.fed && distance(vertex) < this.#reach)) return;
     if (this.#vertices.filter(vertex => vertex.fed).length >= this.#maxFed) return;
@@ -143,7 +184,7 @@ class LcsCnvs {
     // Uniform random point in a disc around the pointer
     const angle = Math.random() * Math.PI * 2;
     const radius = this.#around * Math.sqrt(Math.random());
-    const vertex = { u: pointer.u + radius * Math.cos(angle), y: pointer.y + radius * Math.sin(angle), phase: Math.random() * Math.PI * 2, fed: true };
+    const vertex = { a: pointer.a + radius * Math.cos(angle), u: pointer.u + radius * Math.sin(angle), phase: Math.random() * Math.PI * 2, fed: true };
     this.#add(vertex, this.#vertices);
     this.#lastPointerVertex = time;
   }
@@ -168,19 +209,14 @@ class LcsCnvs {
     this.#frame = 0;
   }
 
-  // Moves everything up, drops what left the viewport, grows the ribbon at the bottom
+  // Moves everything along the ribbon, drops what left the viewport, grows the ribbon at its end
   #move(distance) {
-    for (const vertex of this.#vertices) vertex.y -= distance;
-    const top = -this.#margin;
-    this.#triangles = this.#triangles.filter(({ vertices }) => vertices.some(vertex => vertex.y > top));
+    for (const vertex of this.#vertices) vertex.a -= distance;
+    const start = -this.#margin;
+    this.#triangles = this.#triangles.filter(({ vertices }) => vertices.some(vertex => vertex.a > start));
     const used = new Set(this.#triangles.flatMap(({ vertices }) => vertices));
-    this.#vertices = this.#vertices.filter(vertex => vertex.y > top || used.has(vertex));
+    this.#vertices = this.#vertices.filter(vertex => vertex.a > start || used.has(vertex));
     this.#fill();
-  }
-
-  // Each vertex also floats a few pixels around its position
-  #point({ u, y, phase }) {
-    return [this.#axis + u + Math.sin(this.#clock * 0.4 + phase) * 4, y + Math.cos(this.#clock * 0.3 + phase) * 4];
   }
 
   #draw() {
