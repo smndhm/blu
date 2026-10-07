@@ -32,9 +32,10 @@
 		<script type="module">{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}</script>
 	</head>
 	<body class="page{% if bodyClass %} {{ bodyClass }}{% endif %}">
+		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
+		{%- if page.url != "/" %}
 		<a href="#main" class="skip-link">Aller au contenu</a>
 
-		{%- if page.url != "/" %}
 		<header class="site-header">
 			<a href="/" class="site-header__brand">{{ metadata.title }}</a>
 			<nav class="site-header__nav" aria-label="Principale">
