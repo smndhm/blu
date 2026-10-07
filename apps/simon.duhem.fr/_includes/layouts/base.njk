@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{% if documentTitle %}{{ documentTitle }}{% elif title %}{{ title }} | {{ metadata.title }}{% else %}{{ metadata.title }}{% endif %}</title>
+		<title>{% if documentTitle %}{{ documentTitle }}{% elif title %}{{ title }} - {{ metadata.title }}{% else %}{{ metadata.title }}{% endif %}</title>
 		<meta name="description" content="{{ description or metadata.description }}">
 		<link rel="canonical" href="{{ page.url | htmlBaseUrl(metadata.url) }}">
 		<meta name="author" content="{{ metadata.author.name }}">
@@ -13,7 +13,7 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="manifest" href="/manifest.webmanifest">
 		<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-		<link rel="alternate" href="/articles/feed/feed.xml" type="application/atom+xml" title="Articles de {{ metadata.title }}">
+		<link rel="alternate" href="/articles/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }} - Articles">
 
 		<meta property="og:type" content="{{ 'article' if layout == 'layouts/post.njk' else 'website' }}">
 		<meta property="og:title" content="{{ title or metadata.title }}">
