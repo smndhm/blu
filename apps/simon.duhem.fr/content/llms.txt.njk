@@ -1,0 +1,27 @@
+---
+permalink: /llms.txt
+layout: false
+eleventyExcludeFromCollections: true
+---
+{#- Résumé du site pour les IA (https://llmstxt.org), en Markdown : `safe` partout, pas d'échappement HTML -#}
+# {{ metadata.title | safe }}
+
+> {{ metadata.description | safe }}
+
+{{ metadata.author.jobTitle | safe }}, domaines d'expertise : {{ metadata.author.knowsAbout | join(", ") | safe }}.
+
+## Articles
+{% for post in collections.posts | reverse %}
+- [{{ post.data.title | safe }}]({{ post.url | htmlBaseUrl(metadata.url) }}) ({{ post.date | isoDate }}){% if post.data.description %} : {{ post.data.description | safe }}{% endif %}
+{%- endfor %}
+
+## Conférences
+{% for talk in talks %}
+- [{{ talk.title | safe }}]({{ talk.url | htmlBaseUrl(metadata.url) }}) ({{ talk.event | safe }}{% if talk.date %}, {{ talk.date | isoDate }}{% endif %}, [PDF]({{ talk.pdf | htmlBaseUrl(metadata.url) }})){% if talk.description %} : {{ talk.description | safe }}{% endif %}
+{%- endfor %}
+
+## Liens
+{% for link in metadata.social %}
+- [{{ link.name | safe }}]({{ link.url }})
+{%- endfor %}
+- [Flux Atom des articles et conférences]({{ "/articles/feed/feed.xml" | htmlBaseUrl(metadata.url) }})

@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{% if title %}{{ title }} — {% endif %}{{ metadata.title }}</title>
 		<meta name="description" content="{{ description or metadata.description }}">
+		<link rel="canonical" href="{{ page.url | htmlBaseUrl(metadata.url) }}">
 		<meta name="author" content="{{ metadata.author.name }}">
 		<meta name="theme-color" content="#222">
 		<link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,6 +22,8 @@
 		{%- if ogImage %}
 		<meta property="og:image" content="{{ (page.url + ogImage) | htmlBaseUrl(metadata.url) }}">
 		{%- endif %}
+
+		{%- include "partials/structured-data.njk" %}
 
 		{#- Add the contents of a file to the bundle #}
 		<style>{% include "css/index.css" %}</style>
