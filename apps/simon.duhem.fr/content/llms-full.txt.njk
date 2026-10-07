@@ -1,0 +1,29 @@
+---
+permalink: /llms-full.txt
+layout: false
+eleventyExcludeFromCollections: true
+---
+{#- Texte complet des articles en Markdown, pour les IA (https://llmstxt.org) : `safe` partout, pas d'échappement HTML -#}
+# {{ metadata.title | safe }}
+
+> {{ metadata.description | safe }}
+{%- for post in collections.posts | reverse %}
+{%- set postUrl = post.url | htmlBaseUrl(metadata.url) %}
+
+---
+
+# {{ post.data.title | safe }}
+
+URL : {{ postUrl }}
+Date : {{ post.date | isoDate }}
+{%- if post.data.origin %}
+Publié initialement sur : {{ post.data.origin.title | safe }} ({{ post.data.origin.href }})
+{%- endif %}
+{%- if post.data.description %}
+
+> {{ post.data.description | safe }}
+{%- endif %}
+
+{#- Les images locales sont renommées au build par eleventy-img : on garde leur texte alternatif #}
+{{ post.rawInput | replace(r/!\[([^\]]*)\]\(\.\/[^)]*\)/g, "(Image : $1)") | replace("](./", "](" + postUrl) | trim | safe }}
+{%- endfor %}

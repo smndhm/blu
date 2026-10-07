@@ -27,11 +27,13 @@ pnpm --filter simon.duhem.fr test:a11y
 - `content/ia-postrophe/` : page de l'outil [IApostrophe](../ia-postrophe). Son script est compilé par `apps/ia-postrophe` et copié dans `/js/ia-postrophe.js`.
 
 Les slides elles-mêmes sont générées par [Marp](https://marp.app/) au déploiement et copiées dans `/slides/`.
-Pour qu'une présentation apparaisse dans la liste, son front matter doit contenir un champ `event` :
+Pour qu'une présentation apparaisse dans la liste, son front matter doit contenir un champ `event`.
+`url` est l'adresse de la présentation sur ce site : Marp s'en sert pour la balise canonical et `og:url`. Le lien vers la page de l'événement va dans `eventUrl` :
 
 ```yaml
 title: Les Web Components et l'accessibilité
 event: Paris Web
 date: 2025-09-26
-url: https://www.paris-web.fr/2025/conference/les-web-components-et-laccessibilite
+url: https://simon.duhem.fr/slides/paris-web-les-web-components-et-laccessibilite.html
+eventUrl: https://www.paris-web.fr/2025/conference/les-web-components-et-laccessibilite
 ```

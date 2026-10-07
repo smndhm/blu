@@ -53,7 +53,11 @@ await new Promise(resolve => server.listen(0, resolve));
 const baseUrl = `http://localhost:${server.address().port}`;
 
 const sitemap = await readFile(join(siteDir, 'sitemap.xml'), 'utf8');
-const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => loc.replace(siteUrl, '')).concat('/404.html');
+// Marp presentations (`/slides/*.html`) are only built at deploy time, they are not part of `_site`
+const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
+  .map(([, loc]) => loc.replace(siteUrl, ''))
+  .filter(path => !/^\/slides\/.+\.html$/.test(path))
+  .concat('/404.html');
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let violationCount = 0;

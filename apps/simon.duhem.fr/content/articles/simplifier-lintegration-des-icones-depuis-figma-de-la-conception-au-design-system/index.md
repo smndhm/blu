@@ -3,6 +3,7 @@ tags:
   - posts
   - design-system
 title: "Simplifier l'intégration des icônes depuis Figma : De la conception au design system"
+description: "Automatiser l'import des icônes d'un design system depuis Figma : API REST de Figma, script d'export et nettoyage des SVG, de la maquette au code."
 date: 2024-02-19
 origin: { href: https://dev.to/mgdis/simplifier-lintegration-des-icones-depuis-figma-de-la-conception-au-design-system-f9j, title: dev.to }
 ogImage: og.webp
