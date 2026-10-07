@@ -9,6 +9,9 @@ export default {
     name: 'Simon Duhem',
     email: 'simon@duhem.fr',
     url: 'https://simon.duhem.fr/',
+    // Données structurées (JSON-LD) de la page d'accueil
+    jobTitle: 'Architecte front-end',
+    knowsAbout: ['Accessibilité numérique', 'Web Components', 'Design system', 'Standards du web'],
   },
   social: [
     { name: 'GitHub', url: 'https://github.com/smndhm' },

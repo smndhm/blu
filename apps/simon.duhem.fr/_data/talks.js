@@ -22,7 +22,7 @@ export default async function () {
         description: data.description,
         author: data.author,
         event: data.event,
-        eventUrl: data.url,
+        eventUrl: data.eventUrl,
         date: data.date ? new Date(data.date) : undefined,
         url: `/slides/${slug}.html`,
         pdf: `/slides/${slug}.pdf`,

@@ -1,0 +1,34 @@
+{#- Données structurées schema.org (JSON-LD) : la personne sur l'accueil, l'article sur chaque post.
+    `eleventy:ignore` : le bundle js ne doit pas les extraire #}
+{%- set person = {
+	"@type": "Person",
+	"name": metadata.author.name,
+	"url": metadata.author.url,
+	"jobTitle": metadata.author.jobTitle,
+	"knowsAbout": metadata.author.knowsAbout,
+	"sameAs": metadata.social | pluck("url")
+} %}
+{%- if page.url == "/" %}
+<script type="application/ld+json" eleventy:ignore>{{ {
+	"@context": "https://schema.org",
+	"@type": "ProfilePage",
+	"url": metadata.url,
+	"inLanguage": metadata.language,
+	"description": metadata.description,
+	"mainEntity": person
+} | jsonLd | safe }}</script>
+{%- elif layout == "layouts/post.njk" %}
+<script type="application/ld+json" eleventy:ignore>{{ {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	"headline": title,
+	"description": description,
+	"datePublished": page.date | isoDate,
+	"inLanguage": metadata.language,
+	"url": page.url | htmlBaseUrl(metadata.url),
+	"image": ogImageUrl | htmlBaseUrl(metadata.url) if ogImageUrl,
+	"keywords": tags | topics,
+	"isBasedOn": origin.href if origin,
+	"author": person
+} | jsonLd | safe }}</script>
+{%- endif %}

@@ -3,8 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{% if title %}{{ title }} — {% endif %}{{ metadata.title }}</title>
+		<title>{% if documentTitle %}{{ documentTitle }}{% elif title %}{{ title }} - {{ metadata.title }}{% else %}{{ metadata.title }}{% endif %}</title>
 		<meta name="description" content="{{ description or metadata.description }}">
+		<link rel="canonical" href="{{ page.url | htmlBaseUrl(metadata.url) }}">
 		<meta name="author" content="{{ metadata.author.name }}">
 		<meta name="theme-color" content="#222">
 		<link rel="icon" href="/favicon.ico" sizes="any">
@@ -12,15 +13,23 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="manifest" href="/manifest.webmanifest">
 		<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-		<link rel="alternate" href="/articles/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }} — Articles">
+		<link rel="alternate" href="/articles/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }} - Articles">
 
 		<meta property="og:type" content="{{ 'article' if layout == 'layouts/post.njk' else 'website' }}">
 		<meta property="og:title" content="{{ title or metadata.title }}">
 		<meta property="og:description" content="{{ description or metadata.description }}">
 		<meta property="og:url" content="{{ page.url | htmlBaseUrl(metadata.url) }}">
-		{%- if ogImage %}
-		<meta property="og:image" content="{{ (page.url + ogImage) | htmlBaseUrl(metadata.url) }}">
+		<meta property="og:site_name" content="{{ metadata.title }}">
+		<meta property="og:locale" content="fr_FR">
+		{%- if ogImageUrl %}
+		{#- `ogImage` du front matter, sinon la première image de l'article (_data/eleventyComputed.js) #}
+		<meta property="og:image" content="{{ ogImageUrl | htmlBaseUrl(metadata.url) }}">
+		<meta name="twitter:card" content="summary_large_image">
+		{%- else %}
+		<meta name="twitter:card" content="summary">
 		{%- endif %}
+
+		{%- include "partials/structured-data.njk" %}
 
 		{#- Add the contents of a file to the bundle #}
 		<style>{% include "css/index.css" %}</style>

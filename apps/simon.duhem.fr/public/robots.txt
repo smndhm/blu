@@ -1,0 +1,5 @@
+# Tous les robots sont les bienvenus, y compris ceux des moteurs de recherche et des IA
+User-agent: *
+Allow: /
+
+Sitemap: https://simon.duhem.fr/sitemap.xml

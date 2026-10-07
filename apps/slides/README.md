@@ -12,3 +12,7 @@ To enable preview in VS Code, begin your markdown file with:
 marp: true
 ---
 ```
+
+## Example
+
+`example.md` shows the Marp syntax. It is kept outside `src/` so it is not built nor published with the slides.
