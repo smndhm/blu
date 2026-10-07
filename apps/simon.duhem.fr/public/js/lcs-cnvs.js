@@ -2,16 +2,16 @@
  * Decorative background of the home page: a ribbon of colored triangles that slowly sways.
  * - Vertical along the right edge when it fits beside the text.
  * - Otherwise (narrow screens) horizontal along the bottom edge.
- * The pointer catches the vertices it comes close to and drags them out of the ribbon: the more it
- * catches, the further it can go. When the pointer stops, the vertices go back to their place.
+ * The ribbon is elastic: each vertex is tied to its place and to its neighbours by springs. The pointer
+ * attracts the vertices close to it, which pull their neighbours: playing with it stretches the ribbon
+ * beyond its zone. When the pointer stops, its pull fades and the vertices go back to their place.
  * With reduced motion, the ribbon is drawn once and stays still.
  */
 
 /**
  * `a` and `u`: home of the vertex, in the ribbon frame (`a` along the ribbon, `u` across, from its axis).
- * `x`, `y`, `vx`, `vy`: where it is drawn and its speed, it moves toward its home, or the pointer when caught.
- * `offset`: when caught, its position relative to the pointer.
- * @typedef {{ a: number, u: number, phase: number, x: number, y: number, vx: number, vy: number, offset?: number[] }} Vertex
+ * `x`, `y`, `vx`, `vy`: where it is drawn and its speed.
+ * @typedef {{ a: number, u: number, phase: number, x: number, y: number, vx: number, vy: number }} Vertex
  */
 /** @typedef {{ vertices: Vertex[], color: string }} Triangle */
 
@@ -23,14 +23,16 @@ class LcsCnvs {
   // Sway: a slow wave travels along the ribbon, and each vertex floats around its place
   #wave = { amplitude: 14, length: 700, period: 14 }; // px, px, s
   #float = 6; // px
-  // Pointer
-  #reach = 50; // the pointer catches the vertices this close to it
-  #idle = 1200; // ms without moving before the pointer lets the vertices go
-  #gather = 0.97; // caught vertices get a little closer to the pointer at each frame
-  #cluster = 30; // until this distance
-  // Springs (per frame at 60 fps): caught vertices follow the pointer quickly, free ones go home slowly
-  #stiffness = { caught: 0.12, free: 0.025 };
-  #damping = 0.82;
+  // Pointer: it attracts the vertices within `reach`, more strongly when closer, and its pull fades
+  // within `idle` ms once it stops moving
+  #reach = 90; // px
+  #pull = 0.3;
+  #idle = 800; // ms
+  // Springs, per frame at 60 fps: toward its place, toward the same position relative to its neighbours
+  #stiffness = { home: 0.008, neighbours: 0.02 };
+  #damping = 0.86;
+  /** @type {[Vertex, Vertex][]} Sides of the triangles */
+  #edges = [];
   #vertical = true;
   // The ribbon wanders around its axis, and its thickness varies, as a smoothed random walk
   #path = { offset: 0, drift: 0, thickness: 0, growth: 0 };
@@ -175,6 +177,7 @@ class LcsCnvs {
         const distance = other => (other.a - vertex.a) ** 2 + (other.u - vertex.u) ** 2;
         const [first, second] = [...this.#tail].sort((a, b) => distance(a) - distance(b));
         this.#triangles.push({ vertices: [vertex, first, second], color: this.#colors[Math.floor(Math.random() * this.#colors.length)] });
+        this.#edges.push([vertex, first], [vertex, second], [first, second]);
       }
       this.#vertices.push(vertex);
       this.#tail = [...this.#tail, vertex].slice(-this.#neighbours);
@@ -212,34 +215,51 @@ class LcsCnvs {
     for (const vertex of this.#vertices) {
       [vertex.x, vertex.y] = this.#home(vertex);
       vertex.vx = vertex.vy = 0;
-      delete vertex.offset;
     }
   }
 
-  // Catches the vertices close to the pointer, lets them all go when it stops or leaves
-  #catch() {
-    const pointer = this.#pointer;
-    if (!pointer || this.#now - this.#pointerMove > this.#idle) {
-      for (const vertex of this.#vertices) delete vertex.offset;
-      return;
-    }
-    for (const vertex of this.#vertices) {
-      const offset = [vertex.x - pointer.x, vertex.y - pointer.y];
-      // Caught vertices gather around the pointer, without collapsing on it
-      if (vertex.offset) {
-        if (Math.hypot(...vertex.offset) > this.#cluster) vertex.offset = vertex.offset.map(value => value * this.#gather);
-      } else if (Math.hypot(...offset) < this.#reach) vertex.offset = offset;
-    }
-  }
-
-  // Springs toward the target: the pointer (with its offset) for caught vertices, home for the others
+  // Moves the vertices: springs toward their place and their neighbours, and the pull of the pointer
   #step(frames) {
+    const homes = new Map(this.#vertices.map(vertex => [vertex, this.#home(vertex)]));
+    const forces = new Map(
+      this.#vertices.map(vertex => {
+        const [x, y] = homes.get(vertex);
+        return [vertex, [(x - vertex.x) * this.#stiffness.home, (y - vertex.y) * this.#stiffness.home]];
+      }),
+    );
+
+    // Each side of a triangle tries to keep the shape it has at home
+    for (const [first, second] of this.#edges) {
+      const [firstX, firstY] = homes.get(first);
+      const [secondX, secondY] = homes.get(second);
+      const dx = (second.x - first.x - (secondX - firstX)) * this.#stiffness.neighbours;
+      const dy = (second.y - first.y - (secondY - firstY)) * this.#stiffness.neighbours;
+      const firstForce = forces.get(first);
+      const secondForce = forces.get(second);
+      firstForce[0] += dx;
+      firstForce[1] += dy;
+      secondForce[0] -= dx;
+      secondForce[1] -= dy;
+    }
+
+    const pointer = this.#pointer;
+    const strength = pointer ? Math.max(0, 1 - (this.#now - this.#pointerMove) / this.#idle) : 0;
+    if (strength) {
+      for (const vertex of this.#vertices) {
+        const distance = Math.hypot(pointer.x - vertex.x, pointer.y - vertex.y);
+        if (distance > this.#reach) continue;
+        const pull = this.#pull * strength * (1 - distance / this.#reach);
+        const force = forces.get(vertex);
+        force[0] += (pointer.x - vertex.x) * pull;
+        force[1] += (pointer.y - vertex.y) * pull;
+      }
+    }
+
+    const damping = this.#damping ** frames;
     for (const vertex of this.#vertices) {
-      const [x, y] = vertex.offset ? [this.#pointer.x + vertex.offset[0], this.#pointer.y + vertex.offset[1]] : this.#home(vertex);
-      const stiffness = vertex.offset ? this.#stiffness.caught : this.#stiffness.free;
-      const damping = this.#damping ** frames;
-      vertex.vx = (vertex.vx + (x - vertex.x) * stiffness * frames) * damping;
-      vertex.vy = (vertex.vy + (y - vertex.y) * stiffness * frames) * damping;
+      const [fx, fy] = forces.get(vertex);
+      vertex.vx = (vertex.vx + fx * frames) * damping;
+      vertex.vy = (vertex.vy + fy * frames) * damping;
       vertex.x += vertex.vx * frames;
       vertex.y += vertex.vy * frames;
     }
@@ -252,7 +272,6 @@ class LcsCnvs {
       // Elapsed time in frames at 60 fps, limited after a pause
       const frames = this.#time ? Math.min((time - this.#time) / (1000 / 60), 3) : 1;
       this.#time = this.#now = time;
-      this.#catch();
       this.#step(frames);
       this.#draw();
       this.#frame = this.#window.requestAnimationFrame(tick);
