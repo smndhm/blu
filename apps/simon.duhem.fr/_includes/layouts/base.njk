@@ -21,16 +21,13 @@
 		<meta property="og:url" content="{{ page.url | htmlBaseUrl(metadata.url) }}">
 		<meta property="og:site_name" content="{{ metadata.title }}">
 		<meta property="og:locale" content="fr_FR">
-		{%- if ogImage %}
-		<meta property="og:image" content="{{ (page.url + ogImage) | htmlBaseUrl(metadata.url) }}">
-		{%- else %}
-		{#- Image par défaut, générée par scripts/og-image.js #}
-		<meta property="og:image" content="{{ '/og.png' | htmlBaseUrl(metadata.url) }}">
-		<meta property="og:image:width" content="1200">
-		<meta property="og:image:height" content="630">
-		<meta property="og:image:alt" content="{{ metadata.title }} : {{ metadata.description }}">
-		{%- endif %}
+		{%- if ogImageUrl %}
+		{#- `ogImage` du front matter, sinon la première image de l'article (_data/eleventyComputed.js) #}
+		<meta property="og:image" content="{{ ogImageUrl | htmlBaseUrl(metadata.url) }}">
 		<meta name="twitter:card" content="summary_large_image">
+		{%- else %}
+		<meta name="twitter:card" content="summary">
+		{%- endif %}
 
 		{%- include "partials/structured-data.njk" %}
 

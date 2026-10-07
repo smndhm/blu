@@ -9,8 +9,7 @@
     "start": "eleventy --serve --quiet",
     "debug": "cross-env DEBUG=Eleventy* eleventy",
     "benchmark": "cross-env DEBUG=Eleventy:Benchmark* eleventy",
-    "test:a11y": "node tests/a11y.js",
-    "og-image": "node scripts/og-image.js"
+    "test:a11y": "node tests/a11y.js"
   },
   "license": "MIT",
   "devDependencies": {
