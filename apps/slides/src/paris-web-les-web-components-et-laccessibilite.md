@@ -10,7 +10,7 @@ url: https://simon.duhem.fr/slides/paris-web-les-web-components-et-laccessibilit
 eventUrl: https://www.paris-web.fr/2025/conference/les-web-components-et-laccessibilite
 event: Paris Web
 date: 2025-09-26
-footer: Paris Web — Les Web Components et l'accessibilité
+footer: Paris Web · Les Web Components et l'accessibilité
 paginate: true
 theme: paris-web
 ---

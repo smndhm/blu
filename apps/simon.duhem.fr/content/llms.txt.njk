@@ -24,4 +24,5 @@ eleventyExcludeFromCollections: true
 {% for link in metadata.social %}
 - [{{ link.name | safe }}]({{ link.url }})
 {%- endfor %}
+- [Texte complet des articles]({{ "/llms-full.txt" | htmlBaseUrl(metadata.url) }})
 - [Flux Atom des articles et conférences]({{ "/articles/feed/feed.xml" | htmlBaseUrl(metadata.url) }})
