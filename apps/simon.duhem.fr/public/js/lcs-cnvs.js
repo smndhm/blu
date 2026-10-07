@@ -1,7 +1,7 @@
 /**
  * Decorative background of the home page: a ribbon of colored triangles, slowly moving.
  * - Vertical along the right edge, rising, when it fits beside the text.
- * - Otherwise (narrow screens) horizontal along the bottom edge, moving to the left.
+ * - Otherwise (narrow screens) horizontal along the top edge, moving to the left.
  * When the pointer comes close to the ribbon, new triangles grow around it.
  * With reduced motion, the ribbon is drawn once and stays still.
  */
@@ -90,9 +90,9 @@ class LcsCnvs {
       : { amplitude: Math.min(60, this.#width * 0.1), thickness: [10, 45], step: 10 };
   }
 
-  // Position of the axis across the viewport: close to the right edge, or to the bottom edge
+  // Position of the axis across the viewport: close to the right edge, or to the top edge
   #axisFor(vertical) {
-    return vertical ? this.#width - Math.min(170, this.#width * 0.13) : this.#height - Math.min(100, this.#height * 0.12);
+    return vertical ? this.#width - Math.min(170, this.#width * 0.13) : Math.min(100, this.#height * 0.12);
   }
 
   get #axis() {
@@ -127,8 +127,8 @@ class LcsCnvs {
     }
     this.#fill();
 
-    // Fainter when the horizontal ribbon can be under the text (short viewports), so it stays readable
-    const overlaps = !this.#vertical && text && this.#axis - this.#shape.amplitude - this.#shape.thickness[1] < text.bottom;
+    // Fainter when the horizontal ribbon can be over the text (short viewports), so it stays readable
+    const overlaps = !this.#vertical && text && this.#axis + this.#shape.amplitude + this.#shape.thickness[1] > text.top;
     this.#canvas.style.opacity = overlaps ? '0.35' : '0.6';
   }
 
