@@ -1,31 +1,32 @@
 /**
- * Decorative background of the home page: a ribbon of colored triangles that keeps renewing itself.
- * - Vertical along the right edge when it fits beside the text.
- * - Otherwise (narrow screens) horizontal along the top edge.
- * Its oldest triangles keep fading away while new ones appear at the same place: the number stays the same.
- * The pointer grows triangles around it when it comes close to a vertex, taken from the ribbon: playing with
- * it draws triangles out of the ribbon. When the pointer stops, they fade away and the ribbon grows back.
+ * Decorative background of the home page: a ribbon of colored triangles, drawn like the original animation:
+ * each new vertex makes a triangle with its two closest vertices, and the oldest ones go away.
+ * - An invisible pen goes slowly along the ribbon's path and keeps drawing it again: it starts over from the
+ *   other end, out of the viewport, and the oldest vertices it removes are just ahead of it.
+ * - When the pointer moves close to the ribbon, it takes the pen: new vertices are added around it, and the
+ *   ribbon loses as many in its zone. When the pointer stops, the pen draws the ribbon again where it was, and
+ *   each vertex it adds removes one of the pointer's.
+ * The ribbon is vertical along the right edge when it fits beside the text, else horizontal along the top edge.
  * When the orientation changes (resize), the vertices glide from one ribbon to the other.
  * With reduced motion, the ribbon is drawn once and stays still.
  */
 
 /**
  * Coordinates in the ribbon frame: `a` along the ribbon, `u` across, from its axis.
- * @typedef {{ a: number, u: number, phase: number, from?: number[] }} Vertex
- *   `from`: screen position when the orientation changed
+ * @typedef {{ a: number, u: number, phase: number, from?: number[], fed?: boolean }} Vertex
+ *   `from`: screen position when the orientation changed, `fed`: added around the pointer
  */
-/** @typedef {{ vertices: Vertex[], color: string, born: number, dying?: number, fed?: boolean }} Triangle `fed`: grown by the pointer */
+/** @typedef {{ vertices: Vertex[], color: string, born: number, dying?: number, fed?: boolean }} Triangle */
 
 class LcsCnvs {
   #colors = ['#25CE7B', '#DA38B5', '#FDC741', '#01B3E3', '#FF6B01'];
-  #neighbours = 30; // when the ribbon is built, a new triangle uses the two closest of the last vertices
-  #renewal = 40000; // ms to renew as many triangles as the ribbon has
-  #fade = 500; // ms for a triangle to appear or disappear
-  #reach = 100; // the pointer grows triangles when it is this close to a vertex
+  #pace = 40; // px per second of the pen along the ribbon
+  #catchUp = 4; // the pen goes this much faster while there are vertices added around the pointer
+  #reach = 100; // the pointer takes the pen when it moves this close to a vertex
   #around = 40; // vertices added by the pointer are this close to it
-  #delay = 100; // ms between two triangles added by the pointer
-  #idle = 1000; // ms without new triangle from the pointer before the ribbon grows back
-  #regrowth = 120; // ms between two triangles going back to the ribbon
+  #delay = 50; // ms between two vertices added by the pointer
+  #idle = 800; // ms without moving before the pointer gives the pen back
+  #fade = 400; // ms for a triangle to appear or disappear
   #margin = 150; // the ribbon goes this far beyond the viewport
   #gap = 24; // min space between the text and the vertical ribbon
   #vertical = true;
@@ -33,26 +34,21 @@ class LcsCnvs {
   #morphStart = 0;
   // The ribbon wanders around its axis, and its thickness varies, as a smoothed random walk
   #path = { offset: 0, drift: 0, thickness: 0, growth: 0 };
-  /** @type {Vertex[]} All the vertices */
-  #vertices = [];
-  /** @type {Vertex[]} Last vertices of the ribbon, where it grows when the viewport gets longer */
-  #tail = [];
   /** @type {{ offset: number, thickness: number }[]} Path of the ribbon, every `step` from `-margin` */
   #profile = [];
+  // The pen: where it is along the ribbon
+  #pen = { a: 0, travelled: 0 };
+  /** @type {Vertex[]} Oldest first */
+  #vertices = [];
   /** @type {Triangle[]} Oldest first */
   #triangles = [];
-  #size = 0; // number of triangles
-  #renewed = 0; // time of the last renewed triangle
-  /** @type {Vertex[][]} Vertices of the triangles the pointer took from the ribbon, to grow them back */
-  #holes = [];
-  #pointerMove = 0; // time of the last pointer move
-  #maxTaken = 0.5; // share of the ribbon the pointer can take
   /** @type {{ x: number, y: number } | undefined} */
   #pointer;
+  #pointerMove = 0;
   #lastPointerVertex = 0;
   #frame = 0;
   #time = 0;
-  #clock = 0;
+  #clock = 0; // animation time in ms, paused with the animation
   #width = 0;
   #height = 0;
   #window;
@@ -88,7 +84,7 @@ class LcsCnvs {
         event => {
           const point = event.touches ? event.touches[0] : event;
           this.#pointer = { x: point.clientX, y: point.clientY };
-          this.#pointerMove = this.#window.performance.now();
+          this.#pointerMove = this.#clock;
         },
         { passive: true },
       ),
@@ -121,6 +117,11 @@ class LcsCnvs {
     return this.#vertical ? this.#height : this.#width;
   }
 
+  // Number of vertices of the ribbon: one every `step` along it
+  get #size() {
+    return Math.ceil((this.#length + 2 * this.#margin) / this.#shape.step);
+  }
+
   #resize() {
     const previous = { length: this.#length, shape: this.#shape };
 
@@ -133,24 +134,31 @@ class LcsCnvs {
     this.#canvas.height = this.#height * ratio;
     this.#ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    // Vertical when the ribbon (its usual width) stays beside the text, else horizontal: start again
+    // Vertical when the ribbon (its usual width) stays beside the text, else horizontal
     const text = this.#text?.getBoundingClientRect();
     const usualHalfWidth = Math.min(130, this.#width * 0.1) * 0.5 + 60;
     const vertical = !text || this.#axisFor(true) - usualHalfWidth > text.right + this.#gap;
     if (!this.#vertices.length) {
       this.#vertical = vertical;
-      this.#path = { offset: 0, drift: 0, thickness: this.#shape.thickness[1] * 0.6, growth: 0 };
+      this.#draft();
     } else if (vertical !== this.#vertical) {
       // Where the vertices are drawn now (in the new viewport, still in the previous orientation)
       const before = new Map(this.#vertices.map(vertex => [vertex, this.#point(vertex)]));
       this.#vertical = vertical;
       this.#morph(before, previous);
     }
-    this.#fill();
 
     // Fainter when the horizontal ribbon can be over the text (short viewports), so it stays readable
     const overlaps = !this.#vertical && text && this.#axis + this.#shape.amplitude + this.#shape.thickness[1] > text.top;
     this.#canvas.style.opacity = overlaps ? '0.35' : '0.6';
+  }
+
+  // A new path, and the whole ribbon drawn at once by the pen, from one end to the other
+  #draft() {
+    this.#path = { offset: 0, drift: 0, thickness: this.#shape.thickness[1] * 0.6, growth: 0 };
+    this.#profile = [];
+    this.#pen = { a: -this.#margin, travelled: 0 };
+    this.#advance(this.#size * this.#shape.step, -Infinity);
   }
 
   // Same ribbon in the new orientation, as if it turned around the top right corner: the end of the
@@ -161,16 +169,18 @@ class LcsCnvs {
     const scaleAlong = (this.#length + 2 * margin) / (previous.length + 2 * margin);
     const scaleAcross = this.#shape.thickness[1] / previous.shape.thickness[1];
     const animate = !this.#reducedMotion.matches;
-    for (const vertex of this.#vertices) {
+    const turn = a => {
       // Distance from the corner along the ribbon
-      const distance = (this.#vertical ? previous.length + margin - vertex.a : vertex.a + margin) * scaleAlong;
-      vertex.a = this.#vertical ? distance - margin : this.#length + margin - distance;
+      const distance = (this.#vertical ? previous.length + margin - a : a + margin) * scaleAlong;
+      return this.#vertical ? distance - margin : this.#length + margin - distance;
+    };
+    for (const vertex of this.#vertices) {
+      vertex.a = turn(vertex.a);
       vertex.u *= scaleAcross;
       vertex.from = animate ? before.get(vertex) : undefined;
     }
-    // The ribbon keeps growing at its far end (largest `a`)
-    this.#tail = [...this.#vertices].sort((a, b) => a.a - b.a).slice(-this.#neighbours);
-    // New triangles follow a new path, in the new orientation
+    // The pen goes on along a new path, in the new orientation
+    this.#pen = { a: turn(this.#pen.a), travelled: 0 };
     this.#path = { offset: 0, drift: 0, thickness: this.#shape.thickness[1] * 0.6, growth: 0 };
     this.#profile = [];
     this.#morphStart = this.#clock;
@@ -222,115 +232,75 @@ class LcsCnvs {
     return this.#profile[index];
   }
 
-  // A random vertex of the ribbon around `a`
-  #vertexAt(a) {
-    const { offset, thickness } = this.#at(a);
-    return { a: a + (Math.random() - 0.5) * thickness, u: offset + (Math.random() - 0.5) * 2 * thickness, phase: Math.random() * Math.PI * 2 };
-  }
-
-  // Adds a vertex, and a triangle with its two closest `candidates`
-  #add(vertex, candidates, fed = false) {
-    if (candidates.length >= 2) {
+  // Adds a vertex and its triangle with the two closest vertices; the oldest go away to keep the size,
+  // the pointer's first when the pen draws the ribbon
+  #add(vertex, born = this.#clock) {
+    if (this.#vertices.length >= 2) {
       const distance = other => (other.a - vertex.a) ** 2 + (other.u - vertex.u) ** 2;
-      const [first, second] = [...candidates].sort((a, b) => distance(a) - distance(b));
-      this.#triangles.push({ vertices: [vertex, first, second], color: this.#colors[Math.floor(Math.random() * this.#colors.length)], born: this.#clock, fed });
+      const [first, second] = [...this.#vertices].sort((a, b) => distance(a) - distance(b));
+      this.#triangles.push({ vertices: [vertex, first, second], color: this.#colors[Math.floor(Math.random() * this.#colors.length)], born, fed: vertex.fed });
     }
     this.#vertices.push(vertex);
+    while (this.#vertices.length > this.#size) {
+      const index = vertex.fed
+        ? 0
+        : Math.max(
+            0,
+            this.#vertices.findIndex(other => other.fed),
+          );
+      this.#vertices.splice(index, 1);
+    }
+    const living = this.#triangles.filter(triangle => !triangle.dying);
+    const excess = living.length - this.#size;
+    if (excess <= 0) return;
+    const fed = vertex.fed ? [] : living.filter(triangle => triangle.fed);
+    for (const triangle of [...fed, ...living.filter(triangle => !triangle.fed)].slice(0, excess)) triangle.dying = this.#clock;
   }
 
-  // Builds the ribbon from its end, until it covers the viewport
-  #fill() {
+  // Moves the pen along the ribbon, adding a vertex around it every `step`; past the end, it starts over
+  #advance(distance, born) {
+    const pen = this.#pen;
     const { step } = this.#shape;
-    const count = this.#triangles.length;
-    for (let a = (this.#tail.at(-1)?.a ?? -this.#margin) + step; a < this.#length + this.#margin; a += step) {
-      const vertex = this.#vertexAt(a);
-      this.#add(vertex, this.#tail);
-      this.#tail = [...this.#tail, vertex].slice(-this.#neighbours);
+    const end = this.#length + this.#margin;
+    pen.travelled += distance;
+    while (pen.travelled >= step) {
+      pen.travelled -= step;
+      pen.a += step;
+      if (pen.a > end) pen.a -= end + this.#margin;
+      const { offset, thickness } = this.#at(pen.a);
+      this.#add({ a: pen.a + (Math.random() - 0.5) * thickness, u: offset + (Math.random() - 0.5) * 2 * thickness, phase: Math.random() * Math.PI * 2 }, born);
     }
-    const added = this.#triangles.splice(count);
-    // Already there (no fade in), in a random order of age: they will not all go away from the same end
-    for (const triangle of added) triangle.born = -Infinity;
-    for (let index = added.length - 1; index > 0; index--) {
-      const other = Math.floor(Math.random() * (index + 1));
-      [added[index], added[other]] = [added[other], added[index]];
-    }
-    this.#triangles.splice(0, 0, ...added);
-    this.#size += added.length;
   }
 
-  // Triangles not fading away, oldest first
-  #alive(fed) {
-    return this.#triangles.filter(triangle => !triangle.dying && !triangle.fed === !fed);
-  }
-
-  // A new triangle of the ribbon in place of a triangle that went away (its `vertices`): two of its vertices
-  // and a new one close to the third, drawn a little toward the ribbon's path so that it stays in its zone
-  #grow(vertices) {
-    const kept = vertices.filter(vertex => this.#vertices.includes(vertex));
-    if (kept.length < 3) return;
-    const index = Math.floor(Math.random() * 3);
-    const base = kept[index];
-    const { step } = this.#shape;
-    const path = this.#vertexAt(base.a);
-    const vertex = {
-      a: base.a + (Math.random() - 0.5) * step * 2,
-      u: base.u + (Math.random() - 0.5) * step * 2 + (path.u - base.u) * 0.3,
-      phase: Math.random() * Math.PI * 2,
-    };
-    this.#add(
-      vertex,
-      kept.filter((_, other) => other !== index),
-    );
-  }
-
-  // Renews the ribbon: when the pointer is idle, the triangles it grew go away and the ribbon grows back
-  // where they were taken; otherwise, now and then, the oldest triangle is replaced by a new one at its place
-  #renew() {
-    const fed = this.#alive(true);
-    if (fed.length && this.#clock - this.#lastPointerVertex > this.#idle) {
-      if (this.#clock - this.#renewed < this.#regrowth) return;
-      fed[0].dying = this.#clock;
-      if (this.#holes.length) this.#grow(this.#holes.shift());
-    } else {
-      if (this.#clock - this.#renewed < this.#renewal / Math.max(1, this.#size)) return;
-      const [oldest] = this.#alive(false);
-      if (!oldest) return;
-      oldest.dying = this.#clock;
-      this.#grow(oldest.vertices);
-    }
-    this.#renewed = this.#clock;
-  }
-
-  // Drops the triangles once faded away, and their vertices
-  #clean() {
-    const faded = this.#triangles.filter(triangle => triangle.dying && this.#clock - triangle.dying > this.#fade);
-    if (!faded.length) return;
-    this.#triangles = this.#triangles.filter(triangle => !faded.includes(triangle));
-    // Vertices of the holes are kept, the ribbon grows back from them
-    const used = new Set([...this.#triangles, { vertices: this.#holes.flat() }].flatMap(({ vertices }) => vertices));
-    this.#vertices = this.#vertices.filter(vertex => used.has(vertex));
-  }
-
-  // A new triangle around the pointer when it is close to a vertex (of the ribbon or grown by the pointer),
-  // taken from the ribbon: its oldest triangle fades away
-  #feed() {
-    // Only while the pointer moves, and as long as the ribbon keeps enough of its triangles
-    if (!this.#pointer || this.#window.performance.now() - this.#pointerMove > this.#delay) return;
-    if (this.#clock - this.#lastPointerVertex < this.#delay || this.#holes.length >= this.#size * this.#maxTaken) return;
+  // Where the pointer is, in the ribbon frame, when it has the pen: while it moves close to a vertex
+  get #pointerHasPen() {
+    if (!this.#pointer || this.#clock - this.#pointerMove > this.#idle) return false;
     const { x, y } = this.#pointer;
     const pointer = this.#vertical ? { a: y, u: x - this.#axis } : { a: x, u: y - this.#axis };
-    const candidates = [...new Set(this.#triangles.filter(triangle => !triangle.dying).flatMap(({ vertices }) => vertices))];
-    if (!candidates.some(vertex => Math.hypot(vertex.a - pointer.a, vertex.u - pointer.u) < this.#reach)) return;
-    const [taken] = this.#alive(false);
-    if (!taken) return;
+    return this.#vertices.some(vertex => Math.hypot(vertex.a - pointer.a, vertex.u - pointer.u) < this.#reach) ? pointer : false;
+  }
 
-    // Uniform random point in a disc around the pointer
-    const angle = Math.random() * Math.PI * 2;
-    const radius = this.#around * Math.sqrt(Math.random());
-    this.#add({ a: pointer.a + radius * Math.cos(angle), u: pointer.u + radius * Math.sin(angle), phase: Math.random() * Math.PI * 2 }, candidates, true);
-    taken.dying = this.#clock;
-    this.#holes.push(taken.vertices);
-    this.#lastPointerVertex = this.#clock;
+  // Draws: around the pointer when it has the pen, else along the ribbon
+  #write(elapsed) {
+    const pointer = this.#pointerHasPen;
+    if (pointer) {
+      if (this.#clock - this.#lastPointerVertex < this.#delay) return;
+      // Uniform random point in a disc around the pointer
+      const angle = Math.random() * Math.PI * 2;
+      const radius = this.#around * Math.sqrt(Math.random());
+      this.#add({ a: pointer.a + radius * Math.cos(angle), u: pointer.u + radius * Math.sin(angle), phase: Math.random() * Math.PI * 2, fed: true });
+      this.#lastPointerVertex = this.#clock;
+      return;
+    }
+    // Faster while what the pointer drew is still there
+    const catchUp = this.#vertices.some(vertex => vertex.fed) ? this.#catchUp : 1;
+    this.#advance((elapsed / 1000) * this.#pace * catchUp);
+  }
+
+  // Drops the triangles once faded away
+  #clean() {
+    if (!this.#triangles.some(triangle => triangle.dying && this.#clock - triangle.dying > this.#fade)) return;
+    this.#triangles = this.#triangles.filter(triangle => !triangle.dying || this.#clock - triangle.dying <= this.#fade);
   }
 
   // Opacity of a triangle, while appearing or disappearing
@@ -343,11 +313,10 @@ class LcsCnvs {
     if (this.#frame || this.#reducedMotion.matches || this.#window.document.hidden) return;
     this.#time = 0;
     const tick = time => {
-      // Animation time in ms, paused while the animation is
-      this.#clock += this.#time ? Math.min(time - this.#time, 100) : 0;
+      const elapsed = this.#time ? Math.min(time - this.#time, 100) : 0;
       this.#time = time;
-      this.#feed();
-      this.#renew();
+      this.#clock += elapsed;
+      this.#write(elapsed);
       this.#clean();
       this.#draw();
       this.#frame = this.#window.requestAnimationFrame(tick);
@@ -364,13 +333,12 @@ class LcsCnvs {
     const ctx = this.#ctx;
     ctx.clearRect(0, 0, this.#width, this.#height);
     for (const triangle of this.#triangles) {
-      const { vertices, color } = triangle;
       ctx.globalAlpha = this.#alpha(triangle);
       ctx.beginPath();
-      vertices.forEach((vertex, index) => ctx[index ? 'lineTo' : 'moveTo'](...this.#point(vertex)));
+      triangle.vertices.forEach((vertex, index) => ctx[index ? 'lineTo' : 'moveTo'](...this.#point(vertex)));
       ctx.closePath();
-      ctx.fillStyle = color;
-      ctx.strokeStyle = color;
+      ctx.fillStyle = triangle.color;
+      ctx.strokeStyle = triangle.color;
       ctx.fill();
       ctx.stroke();
     }
