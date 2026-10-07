@@ -2,37 +2,35 @@
  * Decorative background of the home page: a ribbon of colored triangles that slowly sways.
  * - Vertical along the right edge when it fits beside the text.
  * - Otherwise (narrow screens) horizontal along the bottom edge.
- * The pointer grows new triangles when it comes close to the ribbon, or to triangles it already grew:
- * playing with it draws branches beyond the ribbon, which fade away after a while.
- * When the orientation changes (resize), the ribbon turns around the bottom right corner.
+ * The pointer catches the vertices it comes close to and drags them out of the ribbon: the more it
+ * catches, the further it can go. When the pointer stops, the vertices go back to their place.
  * With reduced motion, the ribbon is drawn once and stays still.
  */
 
 /**
- * Coordinates in the ribbon frame: `a` along the ribbon, `u` across, from its axis.
- * @typedef {{ a: number, u: number, phase: number, born?: number, from?: number[] }} Vertex
- *   `born`: time it was added by the pointer, `from`: screen position when the orientation changed
+ * `a` and `u`: home of the vertex, in the ribbon frame (`a` along the ribbon, `u` across, from its axis).
+ * `x`, `y`, `vx`, `vy`: where it is drawn and its speed, it moves toward its home, or the pointer when caught.
+ * `offset`: when caught, its position relative to the pointer.
+ * @typedef {{ a: number, u: number, phase: number, x: number, y: number, vx: number, vy: number, offset?: number[] }} Vertex
  */
 /** @typedef {{ vertices: Vertex[], color: string }} Triangle */
 
 class LcsCnvs {
   #colors = ['#25CE7B', '#DA38B5', '#FDC741', '#01B3E3', '#FF6B01'];
-  #neighbours = 30; // a new triangle of the ribbon uses the two closest of its last vertices
+  #neighbours = 30; // a new triangle uses the two closest of the last vertices
   #margin = 150; // the ribbon goes this far beyond the viewport
   #gap = 24; // min space between the text and the vertical ribbon
-  // Sway: a slow wave travels along the ribbon, and each vertex floats around its position
+  // Sway: a slow wave travels along the ribbon, and each vertex floats around its place
   #wave = { amplitude: 14, length: 700, period: 14 }; // px, px, s
   #float = 6; // px
   // Pointer
-  #reach = 90; // the pointer grows triangles when it is this close to a vertex
-  #around = 35; // new vertices are this close to the pointer
-  #delay = 100; // ms between two new vertices
-  #life = 20000; // ms before a vertex added by the pointer fades away
-  #fadeIn = 300; // ms
-  #fadeOut = 2000; // ms, at the end of the life
-  #maxFed = 150; // max vertices added by the pointer at the same time
-  #morphDuration = 1200; // ms for the vertices to glide when the orientation changes
-  #morphStart = 0;
+  #reach = 50; // the pointer catches the vertices this close to it
+  #idle = 1200; // ms without moving before the pointer lets the vertices go
+  #gather = 0.97; // caught vertices get a little closer to the pointer at each frame
+  #cluster = 30; // until this distance
+  // Springs (per frame at 60 fps): caught vertices follow the pointer quickly, free ones go home slowly
+  #stiffness = { caught: 0.12, free: 0.025 };
+  #damping = 0.82;
   #vertical = true;
   // The ribbon wanders around its axis, and its thickness varies, as a smoothed random walk
   #path = { offset: 0, drift: 0, thickness: 0, growth: 0 };
@@ -44,8 +42,9 @@ class LcsCnvs {
   #triangles = [];
   /** @type {{ x: number, y: number } | undefined} */
   #pointer;
-  #lastPointerVertex = 0;
+  #pointerMove = 0;
   #frame = 0;
+  #time = 0;
   #now = 0;
   #width = 0;
   #height = 0;
@@ -82,15 +81,22 @@ class LcsCnvs {
         event => {
           const point = event.touches ? event.touches[0] : event;
           this.#pointer = { x: point.clientX, y: point.clientY };
+          this.#pointerMove = this.#window.performance.now();
         },
         { passive: true },
       ),
     );
-    document.documentElement.addEventListener('mouseleave', () => (this.#pointer = undefined));
-    window.addEventListener('touchend', () => (this.#pointer = undefined));
+    const release = () => (this.#pointer = undefined);
+    document.documentElement.addEventListener('mouseleave', release);
+    window.addEventListener('touchend', release);
     // Pause when the tab is hidden or the user asks for reduced motion
     document.addEventListener('visibilitychange', () => (document.hidden ? this.#stop() : this.#start()));
-    this.#reducedMotion.addEventListener('change', () => (this.#reducedMotion.matches ? this.#stop() : this.#start()));
+    this.#reducedMotion.addEventListener('change', () => {
+      if (!this.#reducedMotion.matches) return this.#start();
+      this.#stop();
+      this.#settle();
+      this.#draw();
+    });
   }
 
   // Shape of the ribbon in each orientation
@@ -135,12 +141,12 @@ class LcsCnvs {
       this.#vertical = vertical;
       this.#path = { offset: 0, drift: 0, thickness: this.#shape.thickness[1] * 0.6, growth: 0 };
     } else if (vertical !== this.#vertical) {
-      // Where the vertices are drawn now (in the new viewport, still in the previous orientation)
-      const before = new Map(this.#vertices.map(vertex => [vertex, this.#point(vertex)]));
       this.#vertical = vertical;
-      this.#morph(before, previous);
+      this.#turn(previous);
     }
     this.#fill();
+    // Without animation, the vertices are at home right away (they glide there otherwise)
+    if (this.#reducedMotion.matches) this.#settle();
 
     // Fainter when the horizontal ribbon can be under the text (short viewports), so it stays readable
     const overlaps = !this.#vertical && text && this.#axis - this.#shape.amplitude - this.#shape.thickness[1] < text.bottom;
@@ -157,119 +163,97 @@ class LcsCnvs {
     path.thickness = Math.max(thickness[0], Math.min(thickness[1], path.thickness + path.growth));
   }
 
-  // Adds a vertex, and a triangle with its two closest `candidates`
-  #add(vertex, candidates) {
-    if (candidates.length >= 2) {
-      const distance = other => (other.a - vertex.a) ** 2 + (other.u - vertex.u) ** 2;
-      const [first, second] = [...candidates].sort((a, b) => distance(a) - distance(b));
-      this.#triangles.push({ vertices: [vertex, first, second], color: this.#colors[Math.floor(Math.random() * this.#colors.length)] });
-    }
-    this.#vertices.push(vertex);
-  }
-
-  // Grows the ribbon until it covers the viewport
+  // Grows the ribbon until it covers the viewport: each new vertex makes a triangle with its two closest
   #fill() {
     const { step } = this.#shape;
     for (let a = (this.#tail.at(-1)?.a ?? -this.#margin) + step; a < this.#length + this.#margin; a += step) {
       this.#walk();
       const { offset, thickness } = this.#path;
-      const vertex = { a: a + (Math.random() - 0.5) * thickness, u: offset + (Math.random() - 0.5) * 2 * thickness, phase: Math.random() * Math.PI * 2 };
-      this.#add(vertex, this.#tail);
+      const vertex = { a: a + (Math.random() - 0.5) * thickness, u: offset + (Math.random() - 0.5) * 2 * thickness, phase: Math.random() * Math.PI * 2, vx: 0, vy: 0 };
+      [vertex.x, vertex.y] = this.#home(vertex);
+      if (this.#tail.length >= 2) {
+        const distance = other => (other.a - vertex.a) ** 2 + (other.u - vertex.u) ** 2;
+        const [first, second] = [...this.#tail].sort((a, b) => distance(a) - distance(b));
+        this.#triangles.push({ vertices: [vertex, first, second], color: this.#colors[Math.floor(Math.random() * this.#colors.length)] });
+      }
+      this.#vertices.push(vertex);
       this.#tail = [...this.#tail, vertex].slice(-this.#neighbours);
     }
   }
 
-  // Same ribbon in the new orientation, as if it turned around the bottom right corner: the bottom end of the
-  // vertical ribbon becomes the right end of the horizontal one, and the other way around.
-  // It is stretched along the viewport, thinner or thicker across. Each vertex glides from where it was drawn.
-  #morph(before, previous) {
+  // Same ribbon in the new orientation, as if it turned around the bottom right corner: the bottom end of
+  // the vertical ribbon becomes the right end of the horizontal one. Stretched along the viewport, thinner or
+  // thicker across. The vertices keep their position on screen and glide to their new home.
+  #turn(previous) {
     const margin = this.#margin;
     const scaleAlong = (this.#length + 2 * margin) / (previous.length + 2 * margin);
     const scaleAcross = this.#shape.thickness[1] / previous.shape.thickness[1];
-    const animate = !this.#reducedMotion.matches;
     for (const vertex of this.#vertices) {
-      // Distance from the corner along the ribbon: both ribbons end there with their largest `a`
       vertex.a = this.#length + margin - (previous.length + margin - vertex.a) * scaleAlong;
       vertex.u *= scaleAcross;
-      vertex.from = animate ? before.get(vertex) : undefined;
     }
-    this.#tail = this.#vertices
-      .filter(vertex => !vertex.born)
-      .sort((a, b) => a.a - b.a)
-      .slice(-this.#neighbours);
+    this.#tail = [...this.#vertices].sort((a, b) => a.a - b.a).slice(-this.#neighbours);
     this.#path.offset *= scaleAcross;
     this.#path.thickness *= scaleAcross;
-    this.#morphStart = this.#now;
   }
 
-  // Screen position of a vertex, with the sway
-  #point(vertex) {
-    const { a, u, phase, from } = vertex;
+  // Home of a vertex on screen, with the sway
+  #home({ a, u, phase }) {
     const time = this.#now / 1000;
     const { amplitude, length, period } = this.#wave;
     const wave = amplitude * Math.sin((2 * Math.PI * a) / length - (2 * Math.PI * time) / period);
     const along = a + Math.cos(time * 0.3 + phase) * this.#float;
     const across = this.#axis + u + wave + Math.sin(time * 0.4 + phase) * this.#float;
-    const point = this.#vertical ? [across, along] : [along, across];
-    if (!from) return point;
+    return this.#vertical ? [across, along] : [along, across];
+  }
 
-    // Gliding after an orientation change (ease in out), turning around the bottom right corner
-    const progress = Math.min(1, (this.#now - this.#morphStart) / this.#morphDuration);
-    if (progress === 1) {
-      delete vertex.from;
-      return point;
+  // Every vertex at home, still
+  #settle() {
+    for (const vertex of this.#vertices) {
+      [vertex.x, vertex.y] = this.#home(vertex);
+      vertex.vx = vertex.vy = 0;
+      delete vertex.offset;
     }
-    const eased = progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
-    const polar = ([x, y]) => [Math.hypot(x - this.#width, y - this.#height), Math.atan2(y - this.#height, x - this.#width)];
-    const [startRadius, startAngle] = polar(from);
-    const [endRadius, endAngle] = polar(point);
-    const radius = startRadius + (endRadius - startRadius) * eased;
-    // Shortest way around
-    const turn = ((endAngle - startAngle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
-    const angle = startAngle + turn * eased;
-    return [this.#width + radius * Math.cos(angle), this.#height + radius * Math.sin(angle)];
   }
 
-  // Opacity of a vertex added by the pointer: fades in, then out at the end of its life
-  #alpha({ born }) {
-    if (!born) return 1;
-    const age = this.#now - born;
-    return Math.max(0, Math.min(1, age / this.#fadeIn, (this.#life - age) / this.#fadeOut));
+  // Catches the vertices close to the pointer, lets them all go when it stops or leaves
+  #catch() {
+    const pointer = this.#pointer;
+    if (!pointer || this.#now - this.#pointerMove > this.#idle) {
+      for (const vertex of this.#vertices) delete vertex.offset;
+      return;
+    }
+    for (const vertex of this.#vertices) {
+      const offset = [vertex.x - pointer.x, vertex.y - pointer.y];
+      // Caught vertices gather around the pointer, without collapsing on it
+      if (vertex.offset) {
+        if (Math.hypot(...vertex.offset) > this.#cluster) vertex.offset = vertex.offset.map(value => value * this.#gather);
+      } else if (Math.hypot(...offset) < this.#reach) vertex.offset = offset;
+    }
   }
 
-  // Adds a vertex around the pointer when it is close to a vertex (of the ribbon or added by the pointer)
-  #feed() {
-    if (!this.#pointer || this.#now - this.#lastPointerVertex < this.#delay) return;
-    const { x, y } = this.#pointer;
-    const pointer = this.#vertical ? { a: y, u: x - this.#axis } : { a: x, u: y - this.#axis };
-    const distance = other => Math.hypot(other.a - pointer.a, other.u - pointer.u);
-    // Not to vertices fading away
-    const alive = vertex => !vertex.born || this.#now - vertex.born < this.#life - this.#fadeOut;
-    if (!this.#vertices.some(vertex => alive(vertex) && distance(vertex) < this.#reach)) return;
-    if (this.#vertices.filter(vertex => vertex.born).length >= this.#maxFed) return;
-
-    // Uniform random point in a disc around the pointer
-    const angle = Math.random() * Math.PI * 2;
-    const radius = this.#around * Math.sqrt(Math.random());
-    const vertex = { a: pointer.a + radius * Math.cos(angle), u: pointer.u + radius * Math.sin(angle), phase: Math.random() * Math.PI * 2, born: this.#now };
-    this.#add(vertex, this.#vertices);
-    this.#lastPointerVertex = this.#now;
-  }
-
-  // Drops the vertices added by the pointer at the end of their life, and their triangles
-  #prune() {
-    const expired = vertex => vertex.born && this.#now - vertex.born > this.#life;
-    if (!this.#vertices.some(expired)) return;
-    this.#triangles = this.#triangles.filter(({ vertices }) => !vertices.some(expired));
-    this.#vertices = this.#vertices.filter(vertex => !expired(vertex));
+  // Springs toward the target: the pointer (with its offset) for caught vertices, home for the others
+  #step(frames) {
+    for (const vertex of this.#vertices) {
+      const [x, y] = vertex.offset ? [this.#pointer.x + vertex.offset[0], this.#pointer.y + vertex.offset[1]] : this.#home(vertex);
+      const stiffness = vertex.offset ? this.#stiffness.caught : this.#stiffness.free;
+      const damping = this.#damping ** frames;
+      vertex.vx = (vertex.vx + (x - vertex.x) * stiffness * frames) * damping;
+      vertex.vy = (vertex.vy + (y - vertex.y) * stiffness * frames) * damping;
+      vertex.x += vertex.vx * frames;
+      vertex.y += vertex.vy * frames;
+    }
   }
 
   #start() {
     if (this.#frame || this.#reducedMotion.matches || this.#window.document.hidden) return;
+    this.#time = 0;
     const tick = time => {
-      this.#now = time;
-      this.#prune();
-      this.#feed();
+      // Elapsed time in frames at 60 fps, limited after a pause
+      const frames = this.#time ? Math.min((time - this.#time) / (1000 / 60), 3) : 1;
+      this.#time = this.#now = time;
+      this.#catch();
+      this.#step(frames);
       this.#draw();
       this.#frame = this.#window.requestAnimationFrame(tick);
     };
@@ -285,16 +269,14 @@ class LcsCnvs {
     const ctx = this.#ctx;
     ctx.clearRect(0, 0, this.#width, this.#height);
     for (const { vertices, color } of this.#triangles) {
-      ctx.globalAlpha = Math.min(...vertices.map(vertex => this.#alpha(vertex)));
       ctx.beginPath();
-      vertices.forEach((vertex, index) => ctx[index ? 'lineTo' : 'moveTo'](...this.#point(vertex)));
+      vertices.forEach(({ x, y }, index) => ctx[index ? 'lineTo' : 'moveTo'](x, y));
       ctx.closePath();
       ctx.fillStyle = color;
       ctx.strokeStyle = color;
       ctx.fill();
       ctx.stroke();
     }
-    ctx.globalAlpha = 1;
   }
 }
 
