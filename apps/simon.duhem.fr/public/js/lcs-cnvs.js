@@ -138,8 +138,13 @@ class LcsCnvs {
     const text = this.#text?.getBoundingClientRect();
     const usualHalfWidth = Math.min(130, this.#width * 0.1) * 0.5 + 60;
     const vertical = !text || this.#axisFor(true) - usualHalfWidth > text.right + this.#gap;
-    if (!this.#vertices.length) {
+    // Drawn again at once when there is no ribbon yet, when the viewport had no size (a page loaded in a
+    // frame not laid out yet), or when the viewport got longer than what the ribbon covers
+    const longer = vertical === this.#vertical && this.#length > previous.length + this.#margin;
+    if (!this.#vertices.length || !previous.length || longer) {
       this.#vertical = vertical;
+      this.#vertices = [];
+      this.#triangles = [];
       this.#draft();
     } else if (vertical !== this.#vertical) {
       // Where the vertices are drawn now (in the new viewport, still in the previous orientation)
