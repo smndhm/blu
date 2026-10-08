@@ -43,11 +43,11 @@ _class: profils list-h
 
 ## Qui sommes-nous ?
 
-- ![h:200](./assets/paris-web/profil-simon-duhem.jpg)
+- ![h:200 Photo de Simon Duhem](./assets/paris-web/profil-simon-duhem.jpg)
   **Simon Duhem**
   Architecte front-end
   [![w:24 LinkedIn](./assets/logos/linkedin.svg)](https://www.linkedin.com/in/simonduhem/) [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/smndhm)
-- ![h:200](./assets/paris-web/profil-nicolas-jouanno-daniel.svg)
+- ![h:200 Portrait de Nicolas Jouanno Daniel](./assets/paris-web/profil-nicolas-jouanno-daniel.svg)
   **Nicolas Jouanno Daniel**
   Lead front-end
   [![w:24 LinkedIn](./assets/logos/linkedin.svg)](https://www.linkedin.com/in/nicolasjouanno/) [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/jn-prod)
