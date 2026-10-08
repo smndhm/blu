@@ -1,7 +1,7 @@
 /**
  * Accessibility audit of the built site with axe-core.
  *
- * Serves `_site`, then checks every page listed in the sitemap (plus the 404 page)
+ * Serves `_site`, then checks every HTML page it contains, plus the presentations listed in the sitemap,
  * in light and dark color schemes against WCAG 2.2 A and AA rules, plus the rules axe maps to RGAA 4 and EN 301 549.
  * RGAA 5 is expected to be based on WCAG 2.2 and EN 301 549: these tags already cover it.
  * The Marp presentations (`/slides/*.html`), built at deploy time, are served from `apps/slides/dist/a11y`:
@@ -14,7 +14,7 @@
  * Set CHROMIUM_PATH to use an already installed Chromium instead of the Playwright one.
  */
 import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import process from 'node:process';
 import { chromium } from 'playwright';
@@ -59,8 +59,15 @@ const server = createServer(async (request, response) => {
 await new Promise(resolve => server.listen(0, resolve));
 const baseUrl = `http://localhost:${server.address().port}`;
 
+// Every page of `_site`: the sitemap leaves out the articles published elsewhere first
+const sitePaths = (await readdir(siteDir, { recursive: true }))
+  .filter(file => file.endsWith('.html'))
+  .map(file => `/${file}`.replace(/index\.html$/, ''))
+  .sort();
+// The presentations are not in `_site`: they are built at deploy time
 const sitemap = await readFile(join(siteDir, 'sitemap.xml'), 'utf8');
-const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => loc.replace(siteUrl, '')).concat('/404.html');
+const slidePaths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => loc.replace(siteUrl, '')).filter(path => path.startsWith('/slides/') && path.endsWith('.html'));
+const paths = [...sitePaths, ...slidePaths];
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let violationCount = 0;
