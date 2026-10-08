@@ -6,7 +6,8 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for page in collections.all %}
-	{%- if page.data.permalink != false %}
+	{#- Sans les articles publiés d'abord ailleurs : leur URL canonique est celle d'origine #}
+	{%- if page.data.permalink != false and not page.data.origin %}
 	<url>
 		<loc>{{ page.url | htmlBaseUrl(metadata.url) }}</loc>
 		<lastmod>{{ page.date | isoDate }}</lastmod>
