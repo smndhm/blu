@@ -16,7 +16,11 @@ pnpm --filter "simon.duhem.fr..." build
 pnpm --filter simon.duhem.fr test:a11y
 ```
 
-`tests/a11y.js` audite avec [axe-core](https://github.com/dequelabs/axe-core) toutes les pages du `sitemap.xml` (plus la page 404), en thème clair et sombre, selon les critères WCAG 2.2 A et AA. Les présentations Marp en font partie : `test:a11y` les génère d'abord dans `apps/slides/dist/a11y` avec le modèle `bare`, où toutes les diapositives sont visibles (`pnpm --filter slides a11y:html`). Le workflow « Accessibility » le lance sur chaque PR qui touche le site ou les slides.
+`tests/a11y.js` audite avec [axe-core](https://github.com/dequelabs/axe-core) toutes les pages du `sitemap.xml` (plus la page 404), en thème clair et sombre, selon les critères WCAG 2.2 A et AA. Les présentations Marp en font partie : `test:a11y` les génère d'abord dans `apps/slides/dist/a11y` avec le modèle `bare`, où toutes les diapositives sont visibles (`pnpm --filter slides a11y:html`).
+
+Il audite aussi deux états de la page IApostrophe qu'un simple chargement ne montre pas : la zone de test remplie, et la page surlignée par le bookmarklet. axe ne vérifie pas le contraste d'un caractère isolé, ni celui des styles `::highlight()` : le test calcule donc lui-même le contraste de chaque couleur de surlignage (4,5:1 au moins).
+
+Le workflow « Accessibility » le lance sur chaque PR qui touche le site, IApostrophe ou les slides.
 
 ## Structure
 
