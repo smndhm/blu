@@ -6,7 +6,7 @@ tags:
 title: Prendre en compte les Web Components dans vos scripts
 description: "Le shadow DOM cache le contenu des Web Components aux sélecteurs habituels. Comment parcourir les shadow roots dans vos scripts et outils d'accessibilité."
 date: 2025-12-09
-origin: { title: 24 jours de web, href: https://www.24joursdeweb.fr/2025/prendre-en-compte-les-web-components-dans-vos-scripts/ }
+origin: { title: 24 jours de web, href: https://www.24joursdeweb.fr/2025/prendre-en-compte-les-web-components-dans-vos-scripts }
 ogImage: og.png
 layout: 'layouts/post.njk'
 ---
