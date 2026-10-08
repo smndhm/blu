@@ -5,7 +5,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{% if documentTitle %}{{ documentTitle }}{% elif title %}{{ title }} - {{ metadata.title }}{% else %}{{ metadata.title }}{% endif %}</title>
 		<meta name="description" content="{{ description or metadata.description }}">
-		<link rel="canonical" href="{{ page.url | htmlBaseUrl(metadata.url) }}">
+		{#- Article publié d'abord ailleurs (`origin` du front matter) : la publication d'origine reste la référence #}
+		<link rel="canonical" href="{{ origin.href if origin else (page.url | htmlBaseUrl(metadata.url)) }}">
 		<meta name="author" content="{{ metadata.author.name }}">
 		<meta name="theme-color" content="#222">
 		<link rel="icon" href="/favicon.ico" sizes="any">
