@@ -66,14 +66,14 @@ _class: company list-h
 
 ## Que faisons-nous ?
 
-- ![''](./assets/pictos/building.svg)
+- ![Entreprise](./assets/pictos/building.svg)
   ![w:150 MGDIS](./assets/logos/mgdis.svg)
-  [![w:24](./assets/pictos/link.svg)](https://www.mgdis.fr/)
-- ![''](./assets/pictos/user-group.svg)
+  [![w:24 Site de MGDIS](./assets/pictos/link.svg)](https://www.mgdis.fr/)
+- ![Équipe](./assets/pictos/user-group.svg)
   Core UI
-- ![''](./assets/pictos/color-palette.svg)
+- ![Design](./assets/pictos/color-palette.svg)
   Design System
-- ![''](./assets/pictos/code-square-outline.svg)
+- ![Code](./assets/pictos/code-square-outline.svg)
   mg-components
   [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/MGDIS/core-ui/tree/master) [![w:24 Storybook](./assets/logos/storybook.svg)](https://mgdis.github.io/core-ui/)
 
@@ -332,8 +332,8 @@ _class: code--right
 
 #### Librairies
 
-- Lit [![w:24](./assets/pictos/link.svg)](https://lit.dev/)
-- Stencil [![w:24](./assets/pictos/link.svg)](https://stenciljs.com/)
+- Lit [![w:24 Site de Lit](./assets/pictos/link.svg)](https://lit.dev/)
+- Stencil [![w:24 Site de Stencil](./assets/pictos/link.svg)](https://stenciljs.com/)
 
 ```TSX
 import { Component, h } from '@stencil/core';
@@ -499,7 +499,7 @@ Nico (1m30)
 
 Le contenu est bien rendu visuellement
 
-![alt text](assets/paris-web/rendu-bouton-envoyer.png)
+![Rendu du bouton Envoyer](assets/paris-web/rendu-bouton-envoyer.png)
 
 <!--
 Nico:
@@ -865,13 +865,13 @@ Mais au final on a pu se rendre compte que certains des retours que nous avions 
 
 <!-- prettier-ignore -->
 * Ne prennent pas en compte le Shadow DOM
-  - Nu Html Checker [![w:24](./assets/pictos/link.svg)](https://validator.w3.org/nu/)
-  - Assistant RGAA [![w:24](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/assistant-rgaa/) [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/search?q=repo%3Aboscop-fr%2Fassistant-rgaa+shadowRoot&type=code)
-  - Web Developer [![w:24](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/web-developer/) [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/search?q=repo%3Achrispederick%2Fweb-developer+shadowRoot&type=code)
-  - detectAutocomplete [![w:24](./assets/logos/github.svg)](https://github.com/search?q=repo%3AMewenLeHo%2FdetectAutocomplete%20shadowRoot&type=code) [![w:24 LinkedIn](./assets/logos/linkedin.svg)](https://www.linkedin.com/posts/mewenleho_github-mewenlehodetectautocomplete-bookmarklet-activity-7313195631567622144-kBXw)
+  - Nu Html Checker [![w:24 Site de Nu Html Checker](./assets/pictos/link.svg)](https://validator.w3.org/nu/)
+  - Assistant RGAA [![w:24 Assistant RGAA sur Firefox Add-ons](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/assistant-rgaa/) [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/search?q=repo%3Aboscop-fr%2Fassistant-rgaa+shadowRoot&type=code)
+  - Web Developer [![w:24 Web Developer sur Firefox Add-ons](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/web-developer/) [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/search?q=repo%3Achrispederick%2Fweb-developer+shadowRoot&type=code)
+  - detectAutocomplete [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/search?q=repo%3AMewenLeHo%2FdetectAutocomplete%20shadowRoot&type=code) [![w:24 LinkedIn](./assets/logos/linkedin.svg)](https://www.linkedin.com/posts/mewenleho_github-mewenlehodetectautocomplete-bookmarklet-activity-7313195631567622144-kBXw)
 * Prennent en compte le Shadow DOM :
-  - HeadingsMap [![w:24](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/headingsmap/)
-  - WCAG Contrast checker [![w:24](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/wcag-contrast-checker/)
+  - HeadingsMap [![w:24 HeadingsMap sur Firefox Add-ons](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/headingsmap/)
+  - WCAG Contrast checker [![w:24 WCAG Contrast checker sur Firefox Add-ons](./assets/pictos/link.svg)](https://addons.mozilla.org/fr/firefox/addon/wcag-contrast-checker/)
 
 <!--
 Nous sommes tous les deux formés en accessibilité : développeur a11y, design a11y, et depuis un an nous avons aussi suivi une formation d'auditeur.
