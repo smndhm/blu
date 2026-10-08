@@ -10,6 +10,10 @@ url: https://simon.duhem.fr/slides/the-remote-tribe-les-web-components-et-lacces
 eventUrl: https://www.theremotetribe.co/event/meetup-chez-locservice-sujet-webcomponents-et-l-accessibilite-37
 event: The Remote Tribe - meetup chez Locservice
 date: 2025-08-26
+style: |
+  a {
+    text-decoration: underline;
+  }
 ---
 
 # Les Web Components et l’accessibilité

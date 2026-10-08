@@ -3,6 +3,8 @@
  *
  * Serves `_site`, then checks every page listed in the sitemap (plus the 404 page)
  * in light and dark color schemes against WCAG 2.2 A and AA rules.
+ * The Marp presentations (`/slides/*.html`), built at deploy time, are served from `apps/slides/dist/a11y`:
+ * `test:a11y` builds them first with the `bare` template, where every slide is visible.
  * Exits with code 1 when a violation is found.
  *
  * Usage: pnpm build && pnpm test:a11y
@@ -16,6 +18,7 @@ import { chromium } from 'playwright';
 import { AxeBuilder } from '@axe-core/playwright';
 
 const siteDir = new URL('../_site/', import.meta.url).pathname;
+const slidesDir = new URL('../../slides/dist/a11y/', import.meta.url).pathname;
 const siteUrl = 'https://simon.duhem.fr';
 const tags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 const colorSchemes = ['light', 'dark'];
@@ -36,10 +39,11 @@ const mimeTypes = {
   '.ico': 'image/x-icon',
 };
 
-// Minimal static server for `_site`, with `index.html` for directories
+// Minimal static server for `_site` (`index.html` for directories), and the presentations under `/slides/`
 const server = createServer(async (request, response) => {
   const pathname = normalize(decodeURIComponent(new URL(request.url, 'http://localhost').pathname));
-  const file = join(siteDir, pathname.endsWith('/') ? `${pathname}index.html` : pathname);
+  const presentation = /^\/slides\/(?:assets\/|[^/]+\.html$)/.test(pathname);
+  const file = presentation ? join(slidesDir, pathname.replace(/^\/slides\//, '')) : join(siteDir, pathname.endsWith('/') ? `${pathname}index.html` : pathname);
   try {
     const content = await readFile(file);
     response.writeHead(200, { 'Content-Type': mimeTypes[extname(file)] ?? 'application/octet-stream' });
@@ -53,11 +57,7 @@ await new Promise(resolve => server.listen(0, resolve));
 const baseUrl = `http://localhost:${server.address().port}`;
 
 const sitemap = await readFile(join(siteDir, 'sitemap.xml'), 'utf8');
-// Marp presentations (`/slides/*.html`) are only built at deploy time, they are not part of `_site`
-const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
-  .map(([, loc]) => loc.replace(siteUrl, ''))
-  .filter(path => !/^\/slides\/.+\.html$/.test(path))
-  .concat('/404.html');
+const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => loc.replace(siteUrl, '')).concat('/404.html');
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let violationCount = 0;
@@ -67,7 +67,12 @@ for (const colorScheme of colorSchemes) {
   const page = await context.newPage();
 
   for (const path of paths) {
-    await page.goto(baseUrl + path);
+    const response = await page.goto(baseUrl + path);
+    if (!response.ok()) {
+      violationCount++;
+      console.log(`✗ ${path} (${colorScheme}): HTTP ${response.status()}`);
+      continue;
+    }
     const { violations } = await new AxeBuilder({ page }).withTags(tags).analyze();
     const label = `${path} (${colorScheme})`;
 
