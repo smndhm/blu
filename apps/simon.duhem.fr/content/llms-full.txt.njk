@@ -6,7 +6,7 @@ eleventyExcludeFromCollections: true
 {#- Texte complet des articles en Markdown, pour les IA (https://llmstxt.org) : `safe` partout, pas d'échappement HTML -#}
 # {{ metadata.title | safe }}
 
-> {{ metadata.description | safe }}
+> {{ metadata.intro | safe }}
 {%- for post in collections.posts | reverse %}
 {%- set postUrl = post.url | htmlBaseUrl(metadata.url) %}
 

@@ -6,7 +6,7 @@ eleventyExcludeFromCollections: true
 {#- Résumé du site pour les IA (https://llmstxt.org), en Markdown : `safe` partout, pas d'échappement HTML -#}
 # {{ metadata.title | safe }}
 
-> {{ metadata.description | safe }}
+> {{ metadata.intro | safe }}
 
 {{ metadata.author.jobTitle | safe }}, domaines d'expertise : {{ metadata.author.knowsAbout | join(", ") | safe }}.
 
