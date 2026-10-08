@@ -160,15 +160,29 @@ const scenarios = [
 for (const colorScheme of colorSchemes) {
   const context = await browser.newContext({ colorScheme, reducedMotion: 'reduce' });
   const page = await context.newPage();
+  // Local resources that fail to load (a missing image has no visible content, whatever its alt)
+  let brokenResources = [];
+  page.on('response', response => {
+    if (response.url().startsWith(baseUrl) && response.status() >= 400) brokenResources.push(response.url().replace(baseUrl, ''));
+  });
+  const checkResources = label => {
+    for (const url of brokenResources) {
+      violationCount++;
+      console.log(`✗ ${label}: ${url} not found`);
+    }
+    brokenResources = [];
+  };
 
   for (const path of paths) {
     const response = await page.goto(baseUrl + path);
     if (!response.ok()) {
       violationCount++;
       console.log(`✗ ${path} (${colorScheme}): HTTP ${response.status()}`);
+      brokenResources = [];
       continue;
     }
     await audit(page, `${path} (${colorScheme})`);
+    checkResources(`${path} (${colorScheme})`);
   }
 
   for (const { name, path, setUp, check } of scenarios) {
@@ -183,6 +197,7 @@ for (const colorScheme of colorSchemes) {
       continue;
     }
     await audit(page, label);
+    checkResources(label);
   }
 
   await context.close();
