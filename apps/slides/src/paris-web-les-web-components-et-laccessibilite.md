@@ -2,7 +2,7 @@
 marp: true
 lang: fr
 title: Les Web Components et l'accessibilité
-description: Les Web Components (composants web) représentent une avancée dans le développement web moderne, permettant la création de composants réutilisables et encapsulés. Cependant, l'utilisation du Shadow DOM introduit des complexités pour garantir l'accessibilité.
+description: 'Le Shadow DOM des Web Components brise les liens ARIA. Deux façons de les rétablir, et comment auditer ces composants quand le RGAA reste flou.'
 author: Simon Duhem & Nicolas Jouanno Daniel
 keywords: web Components, composants web, accessibility, accessibilité, a11y
 image: https://www.paris-web.fr/media/pages/2025/les-web-components-et-laccessibilite/4734750850-1747341738/ogimage.png
