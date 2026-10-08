@@ -17,7 +17,8 @@
     "build:txt": "pnpm build:html --notes",
     "export-to-images": "pnpm marp -I src -o dist/img --images png --allow-local-files",
     "clean": "rm -rf dist",
-    "watch": "pnpm copy-assets && marp -I src -o dist --watch"
+    "watch": "pnpm copy-assets && marp -I src -o dist --watch",
+    "a11y:html": "rm -rf dist/a11y && marp -I src -o dist/a11y --template bare && mkdir -p dist/a11y/assets && cp -r src/assets/* dist/a11y/assets"
   },
   "devDependencies": {
     "@marp-team/marp-cli": "4.5.1"

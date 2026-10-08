@@ -2,9 +2,11 @@ export default {
   title: 'Simon Duhem',
   url: 'https://simon.duhem.fr/',
   language: 'fr',
-  // Description du site, aussi affichée comme présentation sur la page d'accueil
-  description:
+  // Présentation affichée sur la page d'accueil
+  intro:
     "Architecte front-end spécialisé en accessibilité et en Web Components, je conçois un design system. Je m'appuie sur les standards du web pour construire des interfaces réutilisables et utilisables par tous.",
+  // Description du site (balise meta, partage, données structurées) : 160 caractères au plus
+  description: 'Architecte front-end spécialisé en accessibilité et en Web Components, je conçois un design system fondé sur les standards du web.',
   author: {
     name: 'Simon Duhem',
     email: 'simon@duhem.fr',

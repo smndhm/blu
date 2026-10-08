@@ -2,7 +2,7 @@
 marp: true
 lang: fr
 title: Les Web Components et l’accessibilité
-description: Les Web Components (composants web) représentent une avancée dans le développement web moderne, permettant la création de composants réutilisables et encapsulés. Cependant, l’utilisation du Shadow DOM introduit des complexités pour garantir l’accessibilité.
+description: 'Shadow DOM et accessibilité : liens ARIA cassés, gestion des événements, outils d’audit qui ignorent les Web Components. Les limites et les solutions.'
 author: Simon Duhem & Nicolas Jouanno Daniel
 keywords: web Components, composants web, accessibility, accessibilité, a11y
 image: https://www.paris-web.fr/media/pages/2025/les-web-components-et-laccessibilite/4734750850-1747341738/ogimage.png
@@ -10,6 +10,10 @@ url: https://simon.duhem.fr/slides/the-remote-tribe-les-web-components-et-lacces
 eventUrl: https://www.theremotetribe.co/event/meetup-chez-locservice-sujet-webcomponents-et-l-accessibilite-37
 event: The Remote Tribe - meetup chez Locservice
 date: 2025-08-26
+style: |
+  a {
+    text-decoration: underline;
+  }
 ---
 
 # Les Web Components et l’accessibilité
@@ -21,7 +25,7 @@ date: 2025-08-26
 - Simon Duhem, Architecte front-end [![w:24 LinkedIn](./assets/logos/linkedin.svg)](https://www.linkedin.com/in/simonduhem/) [![w:24 GitHub](./assets/logos/github.svg)](https://github.com/smndhm)
 - Nicolas Jouanno Daniel, Lead front-end [![w:24 LinkedIn](./assets/logos/linkedin.svg)](https://www.linkedin.com/in/nicolasjouanno/) [![w:24 GitHub](./assets/logos/github.svg)](http://github.com/jn-prod)
 
-### MGDIS [![w:24](./assets/pictos/arrow-up-right-square.svg)](https://www.mgdis.fr/)
+### MGDIS [![w:24 Site de MGDIS](./assets/pictos/arrow-up-right-square.svg)](https://www.mgdis.fr/)
 
 - Core UI
   - Design System
@@ -272,7 +276,7 @@ Sémentiquement valide
 
 Le contenu est bien rendu visuellement
 
-![alt text](assets/paris-web/rendu-bouton-envoyer.png)
+![Rendu du bouton Envoyer](assets/paris-web/rendu-bouton-envoyer.png)
 
 ---
 
@@ -343,7 +347,7 @@ Sémentiquement invalide
 
 Le contenu est bien rendu visuellement
 
-![alt text](assets/paris-web/rendu-bouton-envoyer.png)
+![Rendu du bouton Envoyer](assets/paris-web/rendu-bouton-envoyer.png)
 
 ---
 
