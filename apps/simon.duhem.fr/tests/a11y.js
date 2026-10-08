@@ -2,7 +2,8 @@
  * Accessibility audit of the built site with axe-core.
  *
  * Serves `_site`, then checks every page listed in the sitemap (plus the 404 page)
- * in light and dark color schemes against WCAG 2.2 A and AA rules.
+ * in light and dark color schemes against WCAG 2.2 A and AA rules, plus the rules axe maps to RGAA 4 and EN 301 549.
+ * RGAA 5 is expected to be based on WCAG 2.2 and EN 301 549: these tags already cover it.
  * The Marp presentations (`/slides/*.html`), built at deploy time, are served from `apps/slides/dist/a11y`:
  * `test:a11y` builds them first with the `bare` template, where every slide is visible.
  * Interactive states that a page load does not show are audited too: the IApostrophe tester filled with text,
@@ -22,7 +23,7 @@ import { AxeBuilder } from '@axe-core/playwright';
 const siteDir = new URL('../_site/', import.meta.url).pathname;
 const slidesDir = new URL('../../slides/dist/a11y/', import.meta.url).pathname;
 const siteUrl = 'https://simon.duhem.fr';
-const tags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+const tags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'RGAAv4', 'EN-301-549'];
 const colorSchemes = ['light', 'dark'];
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -78,7 +79,8 @@ const audit = async (page, label) => {
   console.log(`✗ ${label}`);
   for (const violation of violations) {
     violationCount++;
-    console.log(`  [${violation.impact}] ${violation.id}: ${violation.help}`);
+    const rgaa = violation.tags.filter(tag => tag.startsWith('RGAA-')).map(tag => tag.replace('RGAA-', 'RGAA '));
+    console.log(`  [${violation.impact}] ${violation.id}${rgaa.length ? ` (${rgaa.join(', ')})` : ''}: ${violation.help}`);
     console.log(`    ${violation.helpUrl}`);
     for (const node of violation.nodes) console.log(`    - ${node.target.join(' ')}`);
   }
