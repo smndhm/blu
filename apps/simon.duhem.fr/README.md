@@ -24,6 +24,12 @@ Il audite aussi deux états de la page IApostrophe qu'un simple chargement ne mo
 
 Le workflow « Accessibility » le lance sur chaque PR qui touche le site, IApostrophe ou les slides.
 
+## IndexNow
+
+Après chaque déploiement, le workflow « Deploy all apps to GitHub Pages » envoie les URL du `sitemap.xml` à [IndexNow](https://www.indexnow.org/), qui prévient Bing, Yandex, Seznam, Naver et Yep. Google n'utilise pas IndexNow : il passe par Search Console.
+
+La clé n'est pas secrète : les moteurs la vérifient avec le fichier `public/<clé>.txt`, publié à la racine du site. Pour la changer, remplacer ce fichier et la variable `INDEXNOW_KEY` du workflow. Les URL reçues sont visibles dans Bing Webmaster Tools, section IndexNow.
+
 ## Structure
 
 - `content/index.njk` : page d'accueil.

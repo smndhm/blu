@@ -71,3 +71,19 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+
+      # IndexNow: notifies Bing, Yandex, Seznam, Naver and Yep of the sitemap URLs (Google does not use it).
+      # The key is not secret: the search engines check it against apps/simon.duhem.fr/public/<key>.txt.
+      # A failure here does not fail the deployment, which is already live.
+      - name: Notify search engines (IndexNow)
+        continue-on-error: true
+        env:
+          INDEXNOW_HOST: simon.duhem.fr
+          INDEXNOW_KEY: 7b7af4d4409057f56000e0c4326fdcbc
+        run: |
+          grep -o '<loc>[^<]*</loc>' public/sitemap.xml | sed -e 's/<loc>//' -e 's/<\/loc>//' \
+            | jq -R . | jq -s --arg host "$INDEXNOW_HOST" --arg key "$INDEXNOW_KEY" \
+              '{host: $host, key: $key, keyLocation: "https://\($host)/\($key).txt", urlList: .}' \
+            | tee /dev/stderr \
+            | curl --fail-with-body --silent --show-error -X POST https://api.indexnow.org/indexnow \
+                -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
