@@ -1,5 +1,22 @@
 # @dume/webcomp-utils
 
+## 1.0.2
+
+### Patch Changes
+
+- f763b1f: Updated dependency `vite` to `7.3.6`.
+- 3cb36d4: Updated dependency `jsdom` to `30.1.2`.
+- da8849b: Updated dependency `typedoc` to `0.28.20`.
+- 154643a: Updated dependency `jsdom` to `30.1.1`.
+- 1efbe6a: Updated dependency `vitest` to `5.0.3`.
+  Updated dependency `@vitest/coverage-v8` to `5.0.3`.
+- e357b5d: Updated dependency `vite-plugin-dts` to `5.1.2`.
+- 0c81471: Updated dependency `vite` to `8.3.2`.
+- bdf9126: Updated dependency `typedoc-plugin-markdown` to `4.13.1`.
+- da3b925: Updated dependency `@vitest/coverage-v8` to `4.1.11`.
+  Updated dependency `vitest` to `4.1.11`.
+- d47c193: Updated dependency `vite` to `8.3.3`.
+
 ## 1.0.1
 
 ### Patch Changes
