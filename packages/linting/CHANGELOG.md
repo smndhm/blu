@@ -1,5 +1,23 @@
 # @dume/linting
 
+## 1.0.6
+
+### Patch Changes
+
+- a86f41b: Updated dependency `stylelint` to `17.16.0`.
+- 7237b8a: Updated dependency `@eslint/markdown` to `8.0.3`.
+- d03ddd2: Updated dependency `prettier` to `3.9.9`.
+- ab15a51: Updated dependency `typescript-eslint` to `8.71.0`.
+- 63804bc: Updated dependency `typescript-eslint` to `8.71.1`.
+- 7340c01: Updated dependency `@eslint/json` to `2.1.0`.
+- 50bfff3: Updated dependency `@eslint/json` to `2.1.1`.
+- 08676e3: Updated dependency `@eslint/json` to `1.2.0`.
+- e3231a3: Updated dependency `turbo` to `2.11.7`.
+  Updated dependency `eslint-config-turbo` to `2.11.7`.
+- 12143b0: Updated dependency `packageManager` to `pnpm@10.34.6`.
+- 9d5d7f4: Updated dependency `eslint` to `10.12.0`.
+- b00eda6: Updated dependency `globals` to `17.13.0`.
+
 ## 1.0.5
 
 ### Patch Changes
