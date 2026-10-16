@@ -15,6 +15,8 @@ feed:
   <subtitle>{{ feed.subtitle }}</subtitle>
   <link href="{{ permalink | htmlBaseUrl(feed.base) }}" rel="self" />
   <link href="{{ feed.base }}" />
+  {#- WebSub: readers subscribe to the hub, which the deployment notifies (.github/workflows/gh-pages.yml) #}
+  <link href="https://pubsubhubbub.appspot.com/" rel="hub" />
   <updated>{{ items[0].date | dateToRfc3339 }}</updated>
   <id>{{ feed.base }}</id>
   {#- The avatar in high definition, readers would otherwise scale up the favicon (48 px at most) #}

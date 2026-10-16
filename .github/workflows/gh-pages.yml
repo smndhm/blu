@@ -87,3 +87,12 @@ jobs:
             | tee /dev/stderr \
             | curl --fail-with-body --silent --show-error -X POST https://api.indexnow.org/indexnow \
                 -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
+
+      # WebSub: tells the hub declared in the articles feed that the feed changed, the hub sends the new
+      # articles to the readers subscribed to it (Feedly, Inoreader...) instead of them waiting for their next read.
+      # A failure here does not fail the deployment, which is already live.
+      - name: Notify feed readers (WebSub)
+        continue-on-error: true
+        run: |
+          curl --fail-with-body --silent --show-error https://pubsubhubbub.appspot.com/ \
+            -d hub.mode=publish -d hub.url=https://simon.duhem.fr/articles/feed/feed.xml
