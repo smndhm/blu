@@ -3,7 +3,7 @@ tags:
   - posts
   - side-project
 title: Music Bridge
-description: "Une extension de navigateur qui ouvre n'importe quel lien de musique sur votre plateforme de streaming : Deezer, Spotify, Apple Music, YouTube Music... Un side project commencé fin 2022, que je viens de reprendre."
+description: "Une extension de navigateur qui ouvre n'importe quel lien de musique sur votre plateforme de streaming : Deezer, Spotify, Apple Music, YouTube Music... Un side project commencé fin 2022, enfin terminé."
 date: 2026-10-16
 layout: 'layouts/post.njk'
 ---
@@ -32,28 +32,26 @@ On peut aussi ouvrir la musique dans l'application de bureau de sa plateforme (D
 
 ## Comment ça marche
 
-Tout repose sur l'API d'[Odesli](https://odesli.co/), le service derrière song.link : à partir d'un lien, elle retrouve la même musique sur les autres plateformes.
+Tout repose sur l'API d'[Odesli](https://odesli.co/) (anciennement Songlink) : à partir d'un lien, elle retrouve la même musique sur les autres plateformes.
 
-Au tout début, j'avais demandé à Kurt, son fondateur, s'il était possible que la redirection d'Odesli ouvre directement l'application. Il m'avait expliqué que c'était trop compliqué à faire correctement : l'application n'est pas forcément installée, et les liens d'Apple Music changent selon le système et le navigateur.
+Je connais Odesli depuis un moment : quand je travaillais chez Deezer, j'avais été mis en contact avec Kurt, son fondateur, et je les avais aidés à intégrer Deezer dans leur service.
 
-J'ai donc fait mon propre service de redirection, qui interroge Odesli et choisit le bon lien. Il tourne aujourd'hui sur Cloudflare Workers.
+L'extension passe par mon propre service de redirection, qui interroge Odesli et renvoie vers le bon lien.
 
-## La reprise
+## Finir ses side projects
 
-Le projet était resté en sommeil depuis 2023, avec quelques retours restés sans réponse : un bug sur Firefox sous Linux, et pas d'explication sur ce que faisait l'extension une fois installée.
+Grâce à Claude, je me suis mis à finir tous mes side projects. Music Bridge en faisait partie.
 
-Je l'ai repris cette année, en regroupant mes extensions dans un seul dépôt et en les reconstruisant avec [WXT](https://wxt.dev/). Au passage :
+J'ai regroupé mes extensions dans un seul dépôt et je les ai reconstruites avec [WXT](https://wxt.dev/). Au passage :
 
 - Music Bridge est disponible sur Chrome, Edge et Firefox, y compris sur Android ;
 - la page d'options s'ouvre à l'installation et explique ce que fait l'extension ;
 - elle a été revue pour être simple et accessible ;
-- l'option d'application de bureau n'est plus proposée là où elle ne peut pas marcher (Linux, ChromeOS, Android, iOS) ;
-- quand Odesli ne trouve pas un titre récent sur Deezer, le service le cherche directement avec l'API de Deezer ;
-- le logo change de couleurs à chaque version.
+- l'option d'application de bureau n'est plus proposée là où elle ne peut pas marcher (Linux, ChromeOS, Android, iOS).
 
 ## Les limites
 
-Music Bridge ne gère que les titres et les albums : Odesli ne convertit ni les artistes ni les playlists.
+Comme Music Bridge utilise l'API d'Odesli, elle se limite elle aussi à rediriger les titres et les albums : pas les artistes ni les playlists.
 
 Sur Android, si l'application d'une autre plateforme est installée, ses liens s'ouvrent directement dedans, sans passer par le navigateur. L'extension ne peut donc pas les rediriger.
 
