@@ -34,7 +34,7 @@ On peut aussi ouvrir la musique dans l'application de bureau de sa plateforme (D
 
 Tout repose sur l'API d'[Odesli](https://odesli.co/) (anciennement Songlink) : à partir d'un lien, elle retrouve la même musique sur les autres plateformes.
 
-Je connais Odesli depuis un moment : quand je travaillais chez Deezer, j'avais été mis en contact avec Kurt, son fondateur, et je les avais aidés à intégrer Deezer dans leur service.
+Je connais Odesli depuis un moment : quand je travaillais chez Deezer, j'avais été mis en contact avec Kurt, son fondateur, et je les avais guidés pour utiliser l'API de Deezer.
 
 L'extension passe par mon propre service de redirection, qui interroge Odesli et renvoie vers le bon lien.
 
