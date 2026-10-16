@@ -12,10 +12,10 @@ layout: 'layouts/post.njk'
 ## Au départ, Deezer Link
 
 J'écoute ma musique sur Deezer, dans l'application de bureau.
-Quand on m'envoie un lien Deezer, il s'ouvre pourtant dans le navigateur. J'avais donc fait une petite extension, Deezer Link, qui ouvre ces liens directement dans l'application.
+Quand on m'envoie un lien Deezer, il s'ouvre pourtant dans le navigateur. J'avais donc fait une petite extension, [Deezer Link](https://github.com/smndhm/web-extensions/tree/main/extensions/dzr-link), qui ouvre ces liens directement dans l'application.
 
-Mais on m'envoie aussi beaucoup de liens d'autres plateformes, comme Spotify ou Apple Music.
-Et là, il faut copier le titre, ouvrir Deezer, le chercher... Je me suis dit qu'il devait y avoir moyen d'élargir l'idée.
+Mais on m'envoie aussi des liens Spotify.
+Et là, il faut copier le titre, ouvrir Deezer, le chercher... Je me suis dit qu'il devait y avoir un moyen d'élargir l'idée.
 
 ## Music Bridge
 
