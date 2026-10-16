@@ -5,17 +5,17 @@ import Image from '@11ty/eleventy-img';
 export default {
   /**
    * Social sharing image URL: the `ogImage` front matter (relative to the page),
-   * else the first local image of an article, resized to 1200px wide at most.
+   * else the first image of an article, local or remote, resized to 1200px wide at most.
    */
   ogImageUrl: async data => {
     if (data.ogImage) return data.page.url + data.ogImage;
     if (data.layout !== 'layouts/post.njk') return;
 
     const content = await readFile(data.page.inputPath, 'utf8');
-    const [, src] = content.match(/!\[[^\]]*\]\(\.\/([^)\s]+)\)/) ?? [];
+    const [, src] = content.match(/!\[[^\]]*\]\((\.\/[^)\s]+|https:\/\/[^)\s]+)\)/) ?? [];
     if (!src) return;
 
-    const images = await Image(join(dirname(data.page.inputPath), src), {
+    const images = await Image(src.startsWith('https://') ? src : join(dirname(data.page.inputPath), src), {
       widths: [1200],
       formats: ['auto'],
       outputDir: join(data.eleventy.directories.output, data.page.url),
