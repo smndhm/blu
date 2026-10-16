@@ -10,13 +10,17 @@ feed:
 {%- set items = collections.posts | withTalks(talks) | head(10) -%}
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="pretty-atom-feed.xsl" type="text/xsl"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ metadata.language }}">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:webfeeds="http://webfeeds.org/rss/1.0" xml:lang="{{ metadata.language }}">
   <title>{{ feed.title }}</title>
   <subtitle>{{ feed.subtitle }}</subtitle>
   <link href="{{ permalink | htmlBaseUrl(feed.base) }}" rel="self" />
   <link href="{{ feed.base }}" />
   <updated>{{ items[0].date | dateToRfc3339 }}</updated>
   <id>{{ feed.base }}</id>
+  {#- The avatar in high definition, readers would otherwise scale up the favicon (48 px at most) #}
+  <icon>{{ "/512.png" | htmlBaseUrl(metadata.url) }}</icon>
+  <logo>{{ "/512.png" | htmlBaseUrl(metadata.url) }}</logo>
+  <webfeeds:icon>{{ "/512.png" | htmlBaseUrl(metadata.url) }}</webfeeds:icon>
   <author>
     <name>{{ metadata.author.name }}</name>
     <email>{{ metadata.author.email }}</email>
