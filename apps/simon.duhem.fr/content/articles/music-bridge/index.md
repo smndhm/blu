@@ -3,7 +3,7 @@ tags:
   - posts
   - side-project
 title: Music Bridge
-description: "Une extension de navigateur qui ouvre n'importe quel lien Spotify, Apple Music, YouTube Music... sur votre plateforme de streaming. Un side project commencé fin 2022, que je viens de reprendre."
+description: "Une extension de navigateur qui ouvre n'importe quel lien de musique sur votre plateforme de streaming : Deezer, Spotify, Apple Music, YouTube Music... Un side project commencé fin 2022, que je viens de reprendre."
 date: 2026-10-16
 ogImage: og.png
 layout: 'layouts/post.njk'
@@ -14,7 +14,7 @@ layout: 'layouts/post.njk'
 J'écoute ma musique sur Deezer, dans l'application de bureau.
 Quand on m'envoie un lien Deezer, il s'ouvre pourtant dans le navigateur. J'avais donc fait une petite extension, Deezer Link, qui ouvre ces liens directement dans l'application.
 
-Mais on m'envoie aussi beaucoup de liens Spotify, Apple Music ou YouTube.
+Mais on m'envoie aussi beaucoup de liens d'autres plateformes, comme Spotify ou Apple Music.
 Et là, il faut copier le titre, ouvrir Deezer, le chercher... Je me suis dit qu'il devait y avoir moyen d'élargir l'idée.
 
 ## Music Bridge
@@ -29,7 +29,7 @@ Le principe est simple : on choisit sa plateforme une fois dans les options, et 
 
 ![Les plateformes prises en charge](./2.png)
 
-On peut aussi ouvrir la musique dans l'application de bureau de sa plateforme (Apple Music, Deezer ou Spotify, sur Windows et macOS), et fermer l'onglet resté ouvert.
+On peut aussi ouvrir la musique dans l'application de bureau de sa plateforme (Deezer, Spotify ou Apple Music, sur Windows et macOS), et fermer l'onglet resté ouvert.
 
 ## Comment ça marche
 
