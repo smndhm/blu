@@ -5,7 +5,6 @@ tags:
 title: Music Bridge
 description: "Une extension de navigateur qui ouvre n'importe quel lien de musique sur votre plateforme de streaming : Deezer, Spotify, Apple Music, YouTube Music... Un side project commencé fin 2022, que je viens de reprendre."
 date: 2026-10-16
-ogImage: og.png
 layout: 'layouts/post.njk'
 ---
 
@@ -23,11 +22,11 @@ C'est comme ça qu'est née Music Bridge, fin 2022.
 
 Le principe est simple : on choisit sa plateforme une fois dans les options, et chaque lien vers un titre ou un album d'une autre plateforme s'ouvre directement sur la sienne.
 
-![Un lien Spotify ? Ouvert sur Deezer.](./1.png)
+![Un lien Spotify ? Ouvert sur Deezer.](https://raw.githubusercontent.com/smndhm/web-extensions/music-bridge%401.8.0/extensions/music-bridge/store/screenshot-1280x800-fr-1.png)
 
 Ça marche dans tous les sens, entre Deezer, Spotify, Apple Music, YouTube Music, Amazon Music, YouTube, SoundCloud, Tidal et Pandora.
 
-![Les plateformes prises en charge](./2.png)
+![Les plateformes prises en charge](https://raw.githubusercontent.com/smndhm/web-extensions/music-bridge%401.8.0/extensions/music-bridge/store/screenshot-1280x800-fr-2.png)
 
 On peut aussi ouvrir la musique dans l'application de bureau de sa plateforme (Deezer, Spotify ou Apple Music, sur Windows et macOS), et fermer l'onglet resté ouvert.
 
