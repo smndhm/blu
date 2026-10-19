@@ -170,8 +170,8 @@ importers:
         specifier: 3.0.3
         version: 3.0.3
       '@dume/linting':
-        specifier: workspace:*
-        version: link:packages/linting
+        specifier: 1.1.1
+        version: 1.1.1(eslint@10.13.0(supports-color@10.2.2))(postcss@8.5.30)(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))(supports-color@10.2.2)(turbo@2.11.9)(typescript@5.9.3)
       '@eslint/compat':
         specifier: 2.1.1
         version: 2.1.1(eslint@10.13.0(supports-color@10.2.2))
@@ -269,48 +269,6 @@ importers:
       '@marp-team/marp-cli':
         specifier: 4.5.1
         version: 4.5.1(supports-color@10.2.2)(typescript@5.9.3)
-
-  packages/linting:
-    devDependencies:
-      '@eslint/js':
-        specifier: 10.0.1
-        version: 10.0.1(eslint@10.13.0(supports-color@10.2.2))
-      '@eslint/json':
-        specifier: 2.1.1
-        version: 2.1.1
-      '@eslint/markdown':
-        specifier: 8.0.3
-        version: 8.0.3(supports-color@10.2.2)
-      eslint:
-        specifier: 10.13.0
-        version: 10.13.0(supports-color@10.2.2)
-      eslint-config-prettier:
-        specifier: 10.1.8
-        version: 10.1.8(eslint@10.13.0(supports-color@10.2.2))
-      eslint-config-turbo:
-        specifier: 2.11.9
-        version: 2.11.9(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9)
-      globals:
-        specifier: 17.13.0
-        version: 17.13.0
-      prettier:
-        specifier: 3.9.10
-        version: 3.9.10
-      stylelint:
-        specifier: 17.16.0
-        version: 17.16.0(supports-color@10.2.2)(typescript@5.9.3)
-      stylelint-config-idiomatic-order:
-        specifier: 10.0.0
-        version: 10.0.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))
-      stylelint-config-standard-scss:
-        specifier: 17.0.0
-        version: 17.0.0(postcss@8.5.30)(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))
-      stylelint-prettier:
-        specifier: 5.0.3
-        version: 5.0.3(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))
-      typescript-eslint:
-        specifier: 8.71.2
-        version: 8.71.2(eslint@10.13.0(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3)
 
   packages/webcomp-utils:
     devDependencies:
@@ -598,6 +556,20 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       postcss-selector-parser: ^7.1.1
+
+  '@dume/linting@1.1.1':
+    resolution: {integrity: sha512-ZjOzMDTRE5lBP0pgX52xRkK1NahPSZGNK6vG4QOFwMnPGN6CL0bTdMIOxqi7phAcfEDufSoNVLhVjc+9YtGIrQ==}
+    peerDependencies:
+      eslint: '>=10'
+      prettier: '>=3'
+      stylelint: '>=17'
+    peerDependenciesMeta:
+      eslint:
+        optional: true
+      prettier:
+        optional: true
+      stylelint:
+        optional: true
 
   '@emnapi/runtime@1.11.3':
     resolution: {integrity: sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==}
@@ -1743,14 +1715,14 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.11.9:
-    resolution: {integrity: sha512-yoKkc09YZlmsXp3T+RgmDmWM+5wEEMSYCrKC4GJAm00StEQ2nt1IvBMMGbo9Ob7MVNpuZD+K67wSKWq7tYy6hA==}
+  eslint-config-turbo@2.11.8:
+    resolution: {integrity: sha512-KEVkzYTI8+gh+RVMH2pyHwIYOIbYWDA5O5/sMsmr/96Ywgs753Oj3kjmma/B5+JT7wZPHG4Yxqt5sfFYcPZOjg==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
 
-  eslint-plugin-turbo@2.11.9:
-    resolution: {integrity: sha512-nuaiyetSxQmAykZqeW1ywrZ4cEuW4X36ZSGzwxVIa6aq+AwRGMADI+H8kRtGodxaPKHGqztXLO91lkzKHA21jQ==}
+  eslint-plugin-turbo@2.11.8:
+    resolution: {integrity: sha512-nS0thH4YqMGZJYfmMKOg+zsglKYUICH7OhUvryfK/jZZoYZ48ulaKmXwtS2usdgVxtA1lICb/Yofvxuk1t/zGw==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -3908,6 +3880,28 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.1.6
 
+  '@dume/linting@1.1.1(eslint@10.13.0(supports-color@10.2.2))(postcss@8.5.30)(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))(supports-color@10.2.2)(turbo@2.11.9)(typescript@5.9.3)':
+    dependencies:
+      '@eslint/js': 10.0.1(eslint@10.13.0(supports-color@10.2.2))
+      '@eslint/json': 2.1.1
+      '@eslint/markdown': 8.0.3(supports-color@10.2.2)
+      eslint-config-prettier: 10.1.8(eslint@10.13.0(supports-color@10.2.2))
+      eslint-config-turbo: 2.11.8(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9)
+      globals: 17.13.0
+      stylelint-config-idiomatic-order: 10.0.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))
+      stylelint-config-standard-scss: 17.0.0(postcss@8.5.30)(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))
+      stylelint-prettier: 5.0.3(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@5.9.3))
+      typescript-eslint: 8.71.2(eslint@10.13.0(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3)
+    optionalDependencies:
+      eslint: 10.13.0(supports-color@10.2.2)
+      prettier: 3.9.10
+      stylelint: 17.16.0(supports-color@10.2.2)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - postcss
+      - supports-color
+      - turbo
+      - typescript
+
   '@emnapi/runtime@1.11.3':
     dependencies:
       tslib: 2.8.1
@@ -4933,13 +4927,13 @@ snapshots:
     dependencies:
       eslint: 10.13.0(supports-color@10.2.2)
 
-  eslint-config-turbo@2.11.9(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9):
+  eslint-config-turbo@2.11.8(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9):
     dependencies:
       eslint: 10.13.0(supports-color@10.2.2)
-      eslint-plugin-turbo: 2.11.9(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9)
+      eslint-plugin-turbo: 2.11.8(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9)
       turbo: 2.11.9
 
-  eslint-plugin-turbo@2.11.9(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9):
+  eslint-plugin-turbo@2.11.8(eslint@10.13.0(supports-color@10.2.2))(turbo@2.11.9):
     dependencies:
       dotenv: 16.0.3
       eslint: 10.13.0(supports-color@10.2.2)
