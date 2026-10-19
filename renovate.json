@@ -1,17 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices"],
-  "labels": ["dependencies"],
-  "gitIgnoredAuthors": ["renovate[bot]@users.noreply.github.com"],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true
-  },
+  "extends": ["local>smndhm/dev-config"],
   "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
-      "automerge": true
-    },
     {
       "description": "typescript-eslint et vite-plugin-dts ne supportent pas encore TypeScript 7",
       "matchPackageNames": ["typescript"],
