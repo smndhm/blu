@@ -1,93 +1,22 @@
 name: Renovate → Changesets
 
-permissions:
-  contents: write
-  statuses: write # Report the lint result on the changeset commit
-
 on:
   push:
     branches:
       - 'renovate/**'
-  pull_request:
-    branches:
-      - 'renovate/**'
 
 jobs:
+  # Adds the changesets of the updated dependencies, then runs the CI checks on that commit (see smndhm/dev-config)
   changesets:
-    # only run on Renovate branches (push or PR)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: true
-          fetch-depth: 0
-
-      - name: Setup environment
-        uses: ./.github/actions/setup
-
-      - name: Run changesets-renovate
-        run: pnpm exec changesets-renovate
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Commit changesets
-        id: commit
-        run: |
-          # Make the commit appear authored by Renovate so Renovate can rebase automatically
-          git config user.name "renovate[bot]"
-          git config user.email "renovate[bot]@users.noreply.github.com"
-          export GIT_AUTHOR_NAME="renovate[bot]"
-          export GIT_AUTHOR_EMAIL="renovate[bot]@users.noreply.github.com"
-          export GIT_COMMITTER_NAME="renovate[bot]"
-          export GIT_COMMITTER_EMAIL="renovate[bot]@users.noreply.github.com"
-          git add .changeset || true
-          git add .changeset/*.md || true
-          if git commit -m "chore(changesets): add changeset for renovate"; then
-            git push
-            echo "pushed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "no changes to commit"
-          fi
-
-      # A commit pushed with GITHUB_TOKEN does not trigger other workflows, so Lint,
-      # Accessibility and Test never run on it and Renovate would automerge without them.
-      # Run the same checks here and report each result as a commit status instead.
-      - name: Lint changeset commit
-        id: lint
-        if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
-        run: pnpm lint
-
-      - name: Build site
-        id: build
-        if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
-        run: pnpm --filter "simon.duhem.fr..." build
-
-      - name: Install Chromium
-        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
-        run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
-
-      - name: Accessibility audit
-        id: axe
-        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
-        run: pnpm --filter simon.duhem.fr test:a11y
-
-      - name: Test packages
-        id: test
-        if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
-        run: pnpm test
-
-      - name: Report statuses
-        if: ${{ always() && steps.commit.outputs.pushed == 'true' }}
-        run: |
-          report() {
-            gh api "repos/${{ github.repository }}/statuses/$(git rev-parse HEAD)" \
-              -f state="$2" -f context="$1" -f description="$3 on the changeset commit" \
-              -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          }
-          report lint "${{ steps.lint.outcome == 'success' && 'success' || 'failure' }}" "Lint"
-          report build "${{ steps.build.outcome == 'success' && 'success' || 'failure' }}" "Site build"
-          report axe "${{ steps.axe.outcome == 'success' && 'success' || 'failure' }}" "Accessibility audit"
-          report test "${{ steps.test.outcome == 'success' && 'success' || 'failure' }}" "Package tests"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    name: Add changeset
+    uses: smndhm/dev-config/.github/workflows/changesets-renovate.yml@53b9676b0670cba6a8c4a396fb20e8db4d933956 # main
+    permissions:
+      contents: write
+      statuses: write
+    with:
+      checks: |
+        pnpm lint
+        pnpm test
+        pnpm --filter "simon.duhem.fr..." build
+        pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
+        pnpm --filter simon.duhem.fr test:a11y
