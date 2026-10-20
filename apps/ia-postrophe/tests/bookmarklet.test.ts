@@ -148,9 +148,9 @@ describe('IApostrophe bookmarklet with the CSS Custom Highlight API', () => {
   });
 });
 
-describe('IApostrophe bookmarklet fallback without the CSS Custom Highlight API', () => {
-  const highlighted = () => [...document.querySelectorAll<HTMLElement>('[data-iapostrophe]')];
+const highlighted = () => [...document.querySelectorAll<HTMLElement>('[data-iapostrophe]')];
 
+describe('IApostrophe bookmarklet fallback without the CSS Custom Highlight API', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });

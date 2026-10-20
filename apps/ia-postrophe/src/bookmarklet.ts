@@ -10,6 +10,7 @@ export const IApostrophe = ({ IAcharacters, humanCharacters }: Config) => {
   const useHighlights = typeof CSS !== 'undefined' && 'highlights' in CSS;
   const isOwnSheet = (sheet: CSSStyleSheet) => [...sheet.cssRules].some(rule => rule.cssText.includes(groups[0].name));
 
+  // oxlint-disable-next-line unicorn/consistent-function-scoping -- the function must stay self-contained, see above
   const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(groups.flatMap(({ characters }) => characters.map(escapeRegExp)).join('|'), 'g');
   const ignored = 'script, style, noscript, code, pre, textarea, svg';
@@ -91,6 +92,7 @@ export const IApostrophe = ({ IAcharacters, humanCharacters }: Config) => {
   }
 
   // Fallback: wrap each character in a span, starting from the end so that earlier indexes stay valid
+  // oxlint-disable-next-line unicorn/no-array-reverse -- toReversed() is too recent for the pages the bookmarklet runs on
   matches.reverse().forEach(({ node, index, text, group }) => {
     const target = node.splitText(index);
     target.splitText(text.length);

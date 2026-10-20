@@ -1,3 +1,3 @@
 export default {
-  extends: '@dume/linting/stylelint',
+  extends: '@dume/dev-config/lint/stylelint',
 };

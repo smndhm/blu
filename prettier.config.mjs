@@ -1,3 +1,3 @@
-import prettierConfig from '@dume/linting/prettier';
+import prettierConfig from '@dume/dev-config/lint/prettier';
 
 export default prettierConfig;
