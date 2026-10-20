@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
-import Image from '@11ty/eleventy-img';
+import eleventyImage from '@11ty/eleventy-img';
 
 export default {
   /**
@@ -15,7 +15,7 @@ export default {
     const [, src] = content.match(/!\[[^\]]*\]\((\.\/[^)\s]+|https:\/\/[^)\s]+)\)/) ?? [];
     if (!src) return;
 
-    const images = await Image(src.startsWith('https://') ? src : join(dirname(data.page.inputPath), src), {
+    const images = await eleventyImage(src.startsWith('https://') ? src : join(dirname(data.page.inputPath), src), {
       widths: [1200],
       formats: ['auto'],
       outputDir: join(data.eleventy.directories.output, data.page.url),

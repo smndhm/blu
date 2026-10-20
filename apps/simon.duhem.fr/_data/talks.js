@@ -30,5 +30,5 @@ export default async function () {
     }),
   );
 
-  return talks.filter(talk => talk.event).sort((a, b) => (b.date ?? 0) - (a.date ?? 0));
+  return talks.filter(talk => talk.event).toSorted((a, b) => (b.date ?? 0) - (a.date ?? 0));
 }

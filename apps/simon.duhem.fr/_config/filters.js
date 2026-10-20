@@ -18,7 +18,7 @@ export default function (eleventyConfig) {
 
   // Articles and talks in a single list, most recent first
   eleventyConfig.addFilter('withTalks', (posts, talks) =>
-    [...posts.map(post => ({ url: post.url, title: post.data.title, date: post.date, topics: post.data.tags, post })), ...talks.map(talk => ({ ...talk, isTalk: true }))].sort(
+    [...posts.map(post => ({ url: post.url, title: post.data.title, date: post.date, topics: post.data.tags, post })), ...talks.map(talk => ({ ...talk, isTalk: true }))].toSorted(
       (a, b) => (b.date ?? 0) - (a.date ?? 0),
     ),
   );

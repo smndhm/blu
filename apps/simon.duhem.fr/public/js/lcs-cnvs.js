@@ -162,4 +162,5 @@ class LcsCnvs {
   }
 }
 
+// oxlint-disable-next-line no-new -- the constructor starts the animation
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) new LcsCnvs(window);

@@ -12,31 +12,35 @@
     "manypkg:fix": "manypkg fix",
     "lint:style": "stylelint '**/*.{scss,css}' --ignore-path .gitignore --allow-empty-input",
     "lint:prettier": "prettier . --check",
+    "lint:oxlint": "oxlint",
     "lint:eslint": "eslint .",
-    "lint": "pnpm lint:style && pnpm lint:prettier && pnpm lint:eslint",
-    "lint:fix": "pnpm lint:style --fix && pnpm lint:prettier --write && pnpm lint:eslint --fix",
+    "lint": "pnpm lint:style && pnpm lint:prettier && pnpm lint:oxlint && pnpm lint:eslint && pnpm lint:claude",
+    "lint:fix": "pnpm lint:style --fix && pnpm lint:prettier --write && pnpm lint:oxlint --fix && pnpm lint:eslint --fix && dev-config sync",
     "changeset:add": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
     "changeset:renovate": "changesets-renovate",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint:claude": "dev-config sync --check"
   },
   "lint-staged": {
-    "**/*.{js,json,md,mjs}": [
-      "prettier **/*.{js,json,md,mjs} --write",
-      "eslint **/*.{js,json,md,mjs} --fix"
+    "**/*.{js,json,md,mjs,ts}": [
+      "prettier --write"
     ],
+    "**/*.{js,mjs,ts}": "oxlint --fix",
+    "**/*.{json,md}": "eslint --fix",
     "**/*.{scss,css}": "pnpm lint:style"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",
-    "@dume/linting": "1.1.1",
+    "@dume/dev-config": "1.1.0",
     "@eslint/compat": "2.1.1",
     "@manypkg/cli": "0.25.1",
     "@scaleway/changesets-renovate": "4.0.5",
     "eslint": "10.13.0",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
+    "oxlint": "1.88.0",
     "prettier": "3.9.10",
     "stylelint": "17.16.0",
     "turbo": "2.11.9"
