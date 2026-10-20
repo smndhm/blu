@@ -5,6 +5,7 @@
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@12.14.0",
+  "prettier": "@dume/dev-config/lint/prettier",
   "scripts": {
     "postinstall": "manypkg check",
     "build": "turbo build",
@@ -20,26 +21,16 @@
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
     "changeset:renovate": "changesets-renovate",
-    "prepare": "husky",
+    "prepare": "dev-config hooks",
     "lint:claude": "dev-config sync --check"
-  },
-  "lint-staged": {
-    "**/*.{js,json,md,mjs,ts}": [
-      "prettier --write"
-    ],
-    "**/*.{js,mjs,ts}": "oxlint --fix",
-    "**/*.{json,md}": "eslint --fix",
-    "**/*.{scss,css}": "pnpm lint:style"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",
-    "@dume/dev-config": "1.1.0",
+    "@dume/dev-config": "1.3.0",
     "@eslint/compat": "2.1.1",
     "@manypkg/cli": "0.25.1",
     "@scaleway/changesets-renovate": "4.0.5",
     "eslint": "10.13.0",
-    "husky": "9.1.7",
-    "lint-staged": "17.6.0",
     "oxlint": "1.88.0",
     "prettier": "3.9.10",
     "stylelint": "17.16.0",
