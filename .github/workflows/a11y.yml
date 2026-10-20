@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup environment
-        uses: ./.github/actions/setup
+        uses: smndhm/dev-config/ci/setup@0f04653b9b2e4393b7906074055c9f8799aa7836 # main
 
       - name: Install Chromium
         run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
