@@ -55,6 +55,10 @@ Comme Music Bridge utilise l'API d'Odesli, elle se limite elle aussi à redirige
 
 Sur Android, si l'application d'une autre plateforme est installée, ses liens s'ouvrent directement dedans, sans passer par le navigateur. L'extension ne peut donc pas les rediriger.
 
+## On en parle
+
+Korben a présenté Music Bridge sur son blog : [Music Bridge - Pour que les liens musicaux s'ouvrent bien sur votre plateforme favorite](https://korben.info/music-bridge-extension-liens-musique.html).
+
 ## Essayer Music Bridge
 
 Music Bridge est disponible pour :
