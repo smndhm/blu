@@ -10,7 +10,8 @@ const dist = new URL('../dist/', import.meta.url);
 const css = new URL('../css/', import.meta.url);
 // The layers' order, at the top of each file: whichever a page loads first sets it, under any project's own CSS
 const order = '@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;';
-const write = (path, ...parts) => writeFile(new URL(path, dist), `/* @dume/ds, built by scripts/build.js */\n${order}\n\n${parts.join('\n')}`);
+const write = (path, ...parts) =>
+  writeFile(new URL(path, dist), `/* @dume/ds, my design system, built by scripts/build.js: for my projects' needs while in version 0 */\n${order}\n\n${parts.join('\n')}`);
 const read = path => readFile(new URL(path, css), 'utf8');
 const dependency = async (name, layer) => `@layer ds.${layer} {\n${(await readFile(require.resolve(name), 'utf8')).trim()}\n}\n`;
 

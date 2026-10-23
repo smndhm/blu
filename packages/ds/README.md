@@ -2,6 +2,8 @@
 
 My design system: the styles shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), its custom properties and classes prefixed with `ds-`. Only what the projects use: tokens, components and layouts come as they repeat from one project to another.
 
+While in version 0, it covers my projects' needs only, and a minor version may change what is there: use it elsewhere at your own pace, its version pinned.
+
 ## Naming
 
 Custom properties are named in lowercase words:
