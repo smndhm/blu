@@ -275,6 +275,10 @@ importers:
       prismjs:
         specifier: 1.30.0
         version: 1.30.0
+    devDependencies:
+      jsdom:
+        specifier: 30.1.3
+        version: 30.1.3
 
   packages/webcomp-utils:
     devDependencies:

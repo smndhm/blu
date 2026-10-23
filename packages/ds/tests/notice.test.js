@@ -1,0 +1,86 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { afterEach, beforeEach, mock, test } from 'node:test';
+import { JSDOM } from 'jsdom';
+import { ANNOUNCE_DELAY, showNotice } from '../web-components/notice.js';
+
+const { window } = new JSDOM('<!doctype html><html><body></body></html>');
+const { document } = window;
+
+beforeEach(() => {
+  mock.timers.enable({ apis: ['setTimeout'] });
+  document.querySelectorAll('ds-notice').forEach(notice => notice.remove());
+});
+afterEach(() => mock.timers.reset());
+
+test('shows the message in a status region, apart from the page styles', () => {
+  const host = showNotice(document, { text: 'Music Bridge could not find this music on Deezer.', lang: 'en', closeLabel: 'Close' });
+  assert.equal(host.localName, 'ds-notice');
+  assert.equal(host.isConnected, true);
+  assert.ok(host.shadowRoot.querySelector('style'));
+  mock.timers.tick(ANNOUNCE_DELAY);
+  assert.equal(host.shadowRoot.querySelector('[role="status"]').textContent, 'Music Bridge could not find this music on Deezer.');
+});
+
+test('adds the status region before its text, for screen readers to announce it', () => {
+  const host = showNotice(document, { text: 'Message', lang: 'en', closeLabel: 'Close' });
+  const text = host.shadowRoot.querySelector('span');
+  assert.equal(text.textContent, '');
+  mock.timers.tick(ANNOUNCE_DELAY);
+  assert.equal(text.textContent, 'Message');
+});
+
+test('says the language of its text', () => {
+  const host = showNotice(document, { text: 'Message', lang: 'fr', closeLabel: 'Fermer' });
+  assert.equal(host.shadowRoot.querySelector('[role="status"]').closest('[lang]').getAttribute('lang'), 'fr');
+});
+
+test('closes with its button, which has a label', () => {
+  const host = showNotice(document, { text: 'Message', lang: 'en', closeLabel: 'Close' });
+  const button = host.shadowRoot.querySelector('button');
+  assert.equal(button.getAttribute('aria-label'), 'Close');
+  button.click();
+  assert.equal(host.isConnected, false);
+});
+
+test('closes with Escape while the focus is in it', () => {
+  const host = showNotice(document, { text: 'Message', lang: 'en', closeLabel: 'Close' });
+  document.body.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  assert.equal(host.isConnected, true);
+  host.shadowRoot.querySelector('button').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  assert.equal(host.isConnected, false);
+});
+
+test('shows the logo, hidden from screen readers', () => {
+  const host = showNotice(document, { text: 'Message', lang: 'en', closeLabel: 'Close', iconUrl: 'data:image/png;base64,iVBORw0KGgo=' });
+  const icon = host.shadowRoot.querySelector('img');
+  assert.equal(icon.getAttribute('src'), 'data:image/png;base64,iVBORw0KGgo=');
+  assert.equal(icon.alt, '');
+});
+
+test('shows the text as text, not HTML', () => {
+  const host = showNotice(document, { text: '<b>bold</b>', lang: 'en', closeLabel: 'Close' });
+  mock.timers.tick(ANNOUNCE_DELAY);
+  const text = host.shadowRoot.querySelector('span');
+  assert.equal(text.children.length, 0);
+  assert.equal(text.textContent, '<b>bold</b>');
+});
+
+test('shows a link after the text, in the keyboard order before the close button', () => {
+  const href = 'https://www.deezer.com/search/Ella%20Langley%20Be%20Her';
+  const host = showNotice(document, { text: 'Message', lang: 'en', closeLabel: 'Close', link: { text: 'Search Deezer for "<b>Be Her</b>"', href } });
+  const link = host.shadowRoot.querySelector('a');
+  assert.equal(link.href, href);
+  assert.equal(link.textContent, 'Search Deezer for "<b>Be Her</b>"');
+  assert.ok(link.compareDocumentPosition(host.shadowRoot.querySelector('button')) & window.Node.DOCUMENT_POSITION_FOLLOWING);
+});
+
+test('has no link without one', () => {
+  const host = showNotice(document, { text: 'Message', lang: 'en', closeLabel: 'Close' });
+  assert.equal(host.shadowRoot.querySelector('a').hasAttribute('href'), false);
+});
+
+test("its styles in px, not rem: the page's root font size is not ours", () => {
+  const css = readFileSync(new URL('../web-components/notice.css', import.meta.url), 'utf8').replaceAll(/\/\*[\s\S]*?\*\//g, '');
+  assert.doesNotMatch(css, /\d(rem)\b/);
+});

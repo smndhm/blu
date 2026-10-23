@@ -25,6 +25,21 @@ for (const file of await readdir(new URL('components/', css))) {
   await write(`components/${file}`, ...(file === 'code.css' ? [okaidia] : []), await read(`components/${file}`));
 }
 
+// Web components: each module gets its styles, after the tokens set on :host, sizes in px, as the page's root font size
+// is not ours (16px a rem)
+const placeholder = "'/* @dume/ds: built by scripts/build.js */'";
+const hostTokens = (await read('tokens.css')).match(/:root \{([\s\S]*?)\n {2}\}/)[1].replaceAll(/(\d*\.?\d+)rem\b/g, (_, rem) => `${Number.parseFloat(rem) * 16}px`);
+const webComponents = new URL('../web-components/', import.meta.url);
+await mkdir(new URL('web-components/', dist), { recursive: true });
+for (const file of (await readdir(webComponents)).filter(name => name.endsWith('.js'))) {
+  const name = file.replace(/\.js$/, '');
+  const styles = `:host {${hostTokens}\n}\n\n${await readFile(new URL(`${name}.css`, webComponents), 'utf8')}`;
+  const module = await readFile(new URL(file, webComponents), 'utf8');
+  if (!module.includes(placeholder)) throw new Error(`web-components/${file}: no place for its styles`);
+  await writeFile(new URL(`web-components/${file}`, dist), module.replace(placeholder, JSON.stringify(styles)));
+  await copyFile(new URL(`${name}.d.ts`, webComponents), new URL(`web-components/${name}.d.ts`, dist));
+}
+
 // Bricolage Grotesque, the heading font (SIL Open Font License): its Latin subsets, as `fonts/` next to fonts.css,
 // under the family name of the heading token
 const fontsource = dirname(require.resolve('@fontsource-variable/bricolage-grotesque/wght.css'));
