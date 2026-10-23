@@ -5,8 +5,8 @@
   align-items: center;
   justify-content: space-between;
   border-block-end: 1px solid var(--ds-b-color-border);
-  gap: 0.5rem 1.5rem;
-  padding-block: 1rem;
+  gap: var(--ds-b-size-space-8) var(--ds-b-size-space-24);
+  padding-block: var(--ds-b-size-space-16);
 }
 
 .ds-c-header__brand {

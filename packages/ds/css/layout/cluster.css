@@ -4,6 +4,6 @@
   flex-wrap: wrap;
   padding: 0;
   margin: 0;
-  gap: 0.5rem 1.5rem;
+  gap: var(--ds-b-size-space-8) var(--ds-b-size-space-24);
   list-style: none;
 }

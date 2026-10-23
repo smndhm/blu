@@ -5,12 +5,12 @@
   margin-inline: auto;
   max-inline-size: 44rem;
   min-block-size: 100svh; /* Mobile: the viewport with the browser UI shown, never overflows */
-  padding-inline: 1rem;
+  padding-inline: var(--ds-b-size-space-16);
 }
 
 .ds-l-page__main {
   flex-grow: 1;
-  padding-block: 2rem;
+  padding-block: var(--ds-b-size-space-32);
 
   /* Focused by the skip link: no ring around the whole content */
   &:focus {

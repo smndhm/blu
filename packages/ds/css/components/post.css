@@ -1,10 +1,9 @@
 /* An article (`.ds-c-post`): its header, title, date and other details, and content */
 .ds-c-post__header {
-  margin-block-end: 2rem;
+  margin-block-end: var(--ds-b-size-space-32);
 }
 
 .ds-c-post__meta {
   color: var(--ds-b-color-text-muted);
-  font-size: 0.9375rem;
-  margin-block: 0.25rem 0;
+  margin-block: var(--ds-b-size-space-4) 0;
 }

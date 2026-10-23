@@ -6,7 +6,7 @@
   color: inherit;
   font-family: var(--ds-b-font-family);
   font-weight: 700;
-  padding-block: 0.25rem;
-  padding-inline: 0.75rem;
+  padding-block: var(--ds-b-size-space-4);
+  padding-inline: var(--ds-b-size-space-12);
   text-decoration: none;
 }

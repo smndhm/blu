@@ -38,7 +38,7 @@ pre[class*='language-diff-'] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding-block: 2px;
+  padding-block: 0.125em;
   user-select: none;
 }
 

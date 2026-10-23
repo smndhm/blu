@@ -27,12 +27,27 @@
   --ds-b-font-family-heading: 'Bricolage Grotesque', var(--ds-b-font-family);
   --ds-b-font-family-monospace: ui-monospace, consolas, menlo, monaco, 'Liberation Mono', 'Courier New', monospace;
 
-  /* In rem, on the base 4 (multiples of 0.25rem, 4px) */
+  /* Font sizes, in rem on the base 4, named after their px; the display one grows with the viewport (a home page's title) */
+  --ds-b-font-size-20: 1.25rem;
+  --ds-b-font-size-24: 1.5rem;
+  --ds-b-font-size-40: 2.5rem;
+  --ds-b-font-size-display: clamp(2.5rem, 8vw, 4rem);
+
+  /* Spacing, in rem on the base 4 (multiples of 0.25rem, 4px), named after their px */
+  --ds-b-size-space-4: 0.25rem;
+  --ds-b-size-space-8: 0.5rem;
+  --ds-b-size-space-12: 0.75rem;
+  --ds-b-size-space-16: 1rem;
+  --ds-b-size-space-24: 1.5rem;
+  --ds-b-size-space-32: 2rem;
+  --ds-b-size-space-40: 2.5rem;
+  --ds-b-size-space-48: 3rem;
   --ds-b-size-radius: 0.5rem;
 
   /* The keyboard focus ring, in px as a border: it stays visible whatever the zoom */
   --ds-b-outline-focus: 3px solid var(--ds-b-color-primary);
   --ds-b-outline-offset-focus: 2px;
+  --ds-b-outline-radius-focus: 2px;
 
   color-scheme: light dark;
 }

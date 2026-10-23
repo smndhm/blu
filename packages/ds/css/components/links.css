@@ -1,6 +1,6 @@
 /* A few prominent links, such as a home page's, under its introduction (with `.ds-l-cluster`) */
 .ds-c-links {
-  font-size: 1.25rem;
+  font-size: var(--ds-b-font-size-20);
   font-weight: 700;
-  margin-block-start: 1.5rem;
+  margin-block-start: var(--ds-b-size-space-24);
 }

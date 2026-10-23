@@ -6,20 +6,19 @@
 }
 
 .ds-c-post-list__item + .ds-c-post-list__item {
-  margin-block-start: 1.5rem;
+  margin-block-start: var(--ds-b-size-space-24);
 }
 
 .ds-c-post-list__title {
-  font-size: 1.25rem;
-  margin-block: 0 0.25rem;
+  font-size: var(--ds-b-font-size-20);
+  margin-block: 0 var(--ds-b-size-space-4);
 }
 
 .ds-c-post-list__meta {
   color: var(--ds-b-color-text-muted);
-  font-size: 0.9375rem;
-  margin-block: 0.25rem 0;
+  margin-block: var(--ds-b-size-space-4) 0;
 }
 
 .ds-c-post-list__description {
-  margin-block: 0.5rem 0;
+  margin-block: var(--ds-b-size-space-8) 0;
 }
