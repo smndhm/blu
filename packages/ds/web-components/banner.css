@@ -18,7 +18,6 @@
   --ds-c-banner-size-max-inline: 42.5rem;
   --ds-c-banner-size-icon: var(--ds-b-size-24);
   --ds-c-banner-size-button: var(--ds-b-size-32);
-  --ds-c-banner-color-hover: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 8%, transparent), color-mix(in srgb, var(--ds-b-color-primary) 12%, transparent));
 }
 
 div {
@@ -63,23 +62,17 @@ a {
   }
 }
 
+/* Its close button, a ghost button of the design system (`.ds-c-button--ghost`): square, its symbol centered */
 button {
+  display: grid;
   flex: none;
   padding: 0;
-  border: 0;
-  border-radius: var(--ds-b-size-4);
-  background-color: transparent;
   block-size: var(--ds-c-banner-size-button);
-  color: inherit;
   cursor: pointer;
-  font: inherit;
   font-size: var(--ds-b-size-20);
   inline-size: var(--ds-c-banner-size-button);
   line-height: 1;
-
-  &:hover {
-    background-color: var(--ds-c-banner-color-hover);
-  }
+  place-content: center;
 }
 
 :focus-visible {

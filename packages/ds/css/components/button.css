@@ -1,6 +1,7 @@
 /*
  * A button, or a link that looks like one: filled with the primary color (`--outline`: outlined with it, for a
- * secondary action, or a button within the text)
+ * secondary action or a button within the text; `--ghost`: neither filled nor outlined, tinted on hover, for an action
+ * that stays discreet, such as closing a message)
  */
 @layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
@@ -23,5 +24,17 @@
   .ds-c-button--outline {
     background-color: transparent;
     color: inherit;
+  }
+
+  .ds-c-button--ghost {
+    --ds-c-button-color-hover: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 8%, transparent), color-mix(in srgb, var(--ds-b-color-primary) 12%, transparent));
+
+    border-color: transparent;
+    background-color: transparent;
+    color: inherit;
+
+    &:hover {
+      background-color: var(--ds-c-button-color-hover);
+    }
   }
 }
