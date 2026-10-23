@@ -60,4 +60,4 @@ for (const folder of ['layout', 'components']) {
   for (const file of (await readdir(new URL(`${folder}/`, dist))).toSorted()) parts.push(`${folder}/${file}`);
 }
 const all = await Promise.all(parts.map(part => readFile(new URL(part, dist), 'utf8')));
-await writeFile(new URL('ds.css', dist), all.join('\n'));
+await writeFile(new URL('ds.css', dist), `/* @dume/ds, my design system, the whole of it: for my projects' needs while in version 0 */\n${all.join('\n')}`);
