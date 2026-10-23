@@ -1,4 +1,4 @@
-/* A site's header: its name, in the heading font, and its navigation */
+/* A site's header: its name, in the heading font, and its navigation, a list of links */
 .ds-c-header {
   display: flex;
   flex-wrap: wrap;

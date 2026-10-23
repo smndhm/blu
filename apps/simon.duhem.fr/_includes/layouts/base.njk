@@ -59,9 +59,9 @@
 		<header class="ds-c-header">
 			<a href="/" class="ds-c-header__brand">{{ metadata.title }}</a>
 			<nav class="ds-c-header__nav" aria-label="Principale">
-				<ul class="ds-l-cluster">
+				<ul class="ds-c-header__list ds-l-cluster">
 					{%- for entry in [{ url: "/articles/", title: "Articles" }] %}
-					<li><a href="{{ entry.url }}" class="ds-c-header__link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
+					<li class="ds-c-header__item"><a href="{{ entry.url }}" class="ds-c-header__link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
 					{%- endfor %}
 				</ul>
 			</nav>
@@ -74,11 +74,11 @@
 
 		{%- if page.url != "/" %}
 		<footer class="ds-c-footer">
-			<ul class="ds-l-cluster">
+			<ul class="ds-c-footer__list ds-l-cluster">
 				{%- for link in metadata.social %}
-				<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+				<li class="ds-c-footer__item"><a href="{{ link.url }}">{{ link.name }}</a></li>
 				{%- endfor %}
-				<li><a href="/articles/feed/feed.xml">Flux RSS</a></li>
+				<li class="ds-c-footer__item"><a href="/articles/feed/feed.xml">Flux RSS</a></li>
 			</ul>
 		</footer>
 		{%- endif %}

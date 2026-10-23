@@ -81,20 +81,20 @@ Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests 
 
 One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`.
 
-| Component                                 | Classes                                                        | For                                                                |
-| ----------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`                                    | A button, or a link that looks like one                            |
-| [Field](css/components/field.css)         | `.ds-c-field__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept        |
-| [Table](css/components/table.css)         | `.ds-c-table`                                                  | A data table                                                       |
-| [Quote](css/components/quote.css)         | `.ds-c-quote`                                                  | A quote set apart                                                  |
-| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                              | A link to the main content, shown when focused                     |
-| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__nav`, `__link`                   | A site's header: its name and navigation                           |
-| [Footer](css/components/footer.css)       | `.ds-c-footer`                                                 | A site's footer                                                    |
-| [Hero](css/components/hero.css)           | `.ds-c-hero`, `__title`, `__description`, `__nav`, `__links`   | The introduction of a home page                                    |
-| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`               | A list of articles or talks                                        |
-| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__title`, `__meta`, `__content`     | An article                                                         |
-| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                | Links to the previous and next articles                            |
-| [Code](css/components/code.css)           | Prism's classes                                                | Code examples highlighted by Prism (Okaidia theme, contrast fixed) |
+| Component                                 | Classes                                                               | For                                                                |
+| ----------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`                                           | A button, or a link that looks like one                            |
+| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message`    | A label, its control, a message under it whose line is kept        |
+| [Table](css/components/table.css)         | `.ds-c-table`                                                         | A data table                                                       |
+| [Quote](css/components/quote.css)         | `.ds-c-quote`                                                         | A quote set apart                                                  |
+| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                     | A link to the main content, shown when focused                     |
+| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__nav`, `__list`, `__item`, `__link`      | A site's header: its name and navigation                           |
+| [Footer](css/components/footer.css)       | `.ds-c-footer`, `__list`, `__item`                                    | A site's footer                                                    |
+| [Hero](css/components/hero.css)           | `.ds-c-hero`, `__title`, `__description`, `__nav`, `__list`, `__item` | The introduction of a home page                                    |
+| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`                      | A list of articles or talks                                        |
+| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__title`, `__meta`, `__content`            | An article                                                         |
+| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                       | Links to the previous and next articles                            |
+| [Code](css/components/code.css)           | Prism's classes                                                       | Code examples highlighted by Prism (Okaidia theme, contrast fixed) |
 
 ## Development
 

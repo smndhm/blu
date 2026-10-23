@@ -1,5 +1,5 @@
 /*
- * A form field: its label, its control (an input, a select, or an element with `contenteditable`, its placeholder in
+ * A form field (`.ds-c-field`): its label, its control (an input, a select, or an element with `contenteditable`, its placeholder in
  * `data-placeholder`; `--multiline` for a text on several lines), and a message under it whose line is kept, so that
  * nothing moves when it shows
  */

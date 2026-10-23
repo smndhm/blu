@@ -10,10 +10,10 @@ documentTitle: 'Simon Duhem, architecte front-end : accessibilité et Web Compon
 <h1 class="ds-c-hero__title">{{ metadata.title }}</h1>
 <p class="ds-c-hero__description">{{ metadata.intro }}</p>
 <nav class="ds-c-hero__nav" aria-label="Liens">
-	<ul class="ds-l-cluster ds-c-hero__links">
-		<li><a href="/articles/">Articles</a></li>
+	<ul class="ds-c-hero__list ds-l-cluster">
+		<li class="ds-c-hero__item"><a href="/articles/">Articles</a></li>
 		{%- for link in metadata.social %}
-		<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+		<li class="ds-c-hero__item"><a href="{{ link.url }}">{{ link.name }}</a></li>
 		{%- endfor %}
 	</ul>
 </nav>

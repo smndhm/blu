@@ -1,4 +1,4 @@
-/* The introduction of a home page: a large title, and its links */
+/* The introduction of a home page: a large title, its description, and the list of its links */
 .ds-c-hero {
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
   line-height: 1;
 }
 
-.ds-c-hero__links {
+.ds-c-hero__list {
   font-size: 1.25rem;
   font-weight: 700;
   margin-block-start: 1.5rem;
