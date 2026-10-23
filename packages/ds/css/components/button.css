@@ -11,7 +11,7 @@
     color: inherit;
     font-family: var(--ds-b-font-family);
     font-size: inherit;
-    font-weight: 700;
+    font-weight: inherit;
     line-height: inherit;
     padding-block: var(--ds-b-size-4);
     padding-inline: var(--ds-b-size-12);
