@@ -26,15 +26,16 @@ for (const file of await readdir(new URL('components/', css))) {
   await write(`components/${file}`, ...(file === 'code.css' ? [okaidia] : []), await read(`components/${file}`));
 }
 
-// Web components: each module gets its styles, after the tokens set on :host, sizes in px, as the page's root font size
-// is not ours (16px a rem)
+// Web components: each module gets its styles, after the tokens set on :host, their sizes in px (16px a rem), its own
+// too, as the page's root font size is not ours
 const placeholder = "'/* @dume/ds: built by scripts/build.js */'";
-const hostTokens = (await read('tokens.css')).match(/:root \{([\s\S]*?)\n {2}\}/)[1].replaceAll(/(\d*\.?\d+)rem\b/g, (_, rem) => `${Number.parseFloat(rem) * 16}px`);
+const inPx = styles => styles.replaceAll(/(\d*\.?\d+)rem\b/g, (_, rem) => `${Number.parseFloat(rem) * 16}px`);
+const hostTokens = inPx((await read('tokens.css')).match(/:root \{([\s\S]*?)\n {2}\}/)[1]);
 const webComponents = new URL('../web-components/', import.meta.url);
 await mkdir(new URL('web-components/', dist), { recursive: true });
 for (const file of (await readdir(webComponents)).filter(name => name.endsWith('.js'))) {
   const name = file.replace(/\.js$/, '');
-  const styles = `:host {${hostTokens}\n}\n\n${await readFile(new URL(`${name}.css`, webComponents), 'utf8')}`;
+  const styles = `:host {${hostTokens}\n}\n\n${inPx(await readFile(new URL(`${name}.css`, webComponents), 'utf8'))}`;
   const module = await readFile(new URL(file, webComponents), 'utf8');
   if (!module.includes(placeholder)) throw new Error(`web-components/${file}: no place for its styles`);
   await writeFile(new URL(`web-components/${file}`, dist), module.replace(placeholder, JSON.stringify(styles)));

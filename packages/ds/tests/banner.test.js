@@ -80,7 +80,8 @@ test('has no link without one', () => {
   assert.equal(host.shadowRoot.querySelector('a').hasAttribute('href'), false);
 });
 
-test("its styles in px, not rem: the page's root font size is not ours", () => {
+test('its sizes in rem on the base 4, from the tokens or its own, no px: the build turns them into px', () => {
   const css = readFileSync(new URL('../web-components/banner.css', import.meta.url), 'utf8').replaceAll(/\/\*[\s\S]*?\*\//g, '');
-  assert.doesNotMatch(css, /\d(rem)\b/);
+  assert.doesNotMatch(css, /\dpx\b/);
+  for (const [, rem] of css.matchAll(/(\d*\.?\d+)rem\b/g)) assert.equal((Number.parseFloat(rem) * 4) % 1, 0, `${rem}rem`);
 });
