@@ -1,6 +1,6 @@
 /*
- * A button, or a link that looks like one: outlined in the primary color (`--filled`: filled with it, for the one
- * action a page leads to)
+ * A button, or a link that looks like one: outlined in the primary color (`--filled`: filled with it, for a page's main
+ * actions)
  */
 @layer ds.components {
   .ds-c-button {
