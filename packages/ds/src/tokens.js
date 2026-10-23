@@ -36,7 +36,8 @@ export const colors = {
   },
 };
 
-const system = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'";
+// The system's own font: system-ui, then the names older browsers know it by, then emoji
+const system = "system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'";
 
 /** Font families: the system's for text, Bricolage Grotesque for headings where the page loads it (it falls back to the system's) */
 export const fonts = {

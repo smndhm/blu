@@ -49,11 +49,11 @@ The custom properties are set on `:root`, with `color-scheme: light dark` and th
 | `--ds-b-color-primary`            | `#4b0195` | `#c9a2ff` | Links, focus, buttons            |
 | `--ds-b-color-text-on-primary`    | `#fff`    | `#222`    | Text on the primary color        |
 
-| Custom property                                                                    | Value                                        |
-| ---------------------------------------------------------------------------------- | -------------------------------------------- |
-| `--ds-b-font-family`, `--ds-b-font-family-heading`, `--ds-b-font-family-monospace` | The system's, Bricolage Grotesque, monospace |
-| `--ds-b-size-radius`                                                               | `8px`                                        |
-| `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`                              | `3px solid var(--ds-b-color-primary)`, `2px` |
+| Custom property                                                                    | Value                                                         |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `--ds-b-font-family`, `--ds-b-font-family-heading`, `--ds-b-font-family-monospace` | system-ui (the system's font), Bricolage Grotesque, monospace |
+| `--ds-b-size-radius`                                                               | `8px`                                                         |
+| `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`                              | `3px solid var(--ds-b-color-primary)`, `2px`                  |
 
 Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is the page's to load (`@fontsource-variable/bricolage-grotesque`); without it, headings fall back to the system font.
 
