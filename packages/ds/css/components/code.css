@@ -1,7 +1,9 @@
 /*
- * Code examples, highlighted by Prism: its Okaidia theme comes first in the built stylesheet, in this same layer
- * (scripts/build.js), then these fixes
+ * Code examples, highlighted by Prism: its Okaidia theme first, in this same layer, then these fixes
  */
+@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
+@import 'prismjs/themes/prism-okaidia.css' layer(ds.components);
+
 @layer ds.components {
   /* #f92672 on #272822 is 3.9:1, below the WCAG AA 4.5:1 ratio: lighter pink at 4.9:1 */
   .token.property,

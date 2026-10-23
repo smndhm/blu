@@ -34,7 +34,7 @@ Not for a look alone (a button, a field: a class is enough), nor for what a nati
 
 Web components are named `ds-` too (`<ds-banner>`); third-party ones keep their name (`<heading-anchors>`).
 
-They live in `web-components/`, in JavaScript, each with its styles in its shadow root: the build puts them in the module, after the tokens set on `:host` in px, as a page that is not ours has its own root font size.
+They live in `web-components/`, in TypeScript, each with its styles in its shadow root: its module imports them, with the tokens set on `:host`, and turns their rem into px, as a page that is not ours has its own root font size.
 
 | Web component                      | Module                              | What it is                                                                                                                                                                                                                                                                                |
 | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -130,4 +130,4 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 
 ## Development
 
-Each file in `css/` declares its cascade layer (`@layer ds.components { … }`). `pnpm build` writes `dist/` from them: the layers' order on top of each file, `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), then `ds.css`, all of them in one stylesheet, and `web-components/`, their styles in their module. `pnpm test` checks the tokens' names, contrasts and sizes, and `<ds-banner>`.
+Built with [Vite+](https://viteplus.dev) (`vp pack`, its settings in `vite.config.ts`). Each file in `css/` starts with the layers' order and declares its own layer (`@layer ds.components { … }`); its imports are bundled into it, in their layer: modern-normalize before the base (`@import 'modern-normalize' layer(ds.normalize)`), Prism's Okaidia theme before the code component. `pnpm build` writes `dist/`: each stylesheet, `ds.css` (all of them, from `css/ds.css`), `fonts/` (Bricolage Grotesque's Latin subsets, from @fontsource-variable/bricolage-grotesque, which `css/fonts.css` declares), and `web-components/` with their types. Lightning CSS keeps the syntax as it is for the browsers aimed at (`light-dark()`, nesting). `pnpm test` (Vitest) checks the tokens' names, contrasts and sizes, and `<ds-banner>`.

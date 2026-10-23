@@ -1,4 +1,6 @@
 /* A list of articles or talks: titles, their details and descriptions */
+@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
+
 @layer ds.components {
   .ds-c-post-list {
     padding: 0;

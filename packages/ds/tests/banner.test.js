@@ -1,24 +1,21 @@
+// @vitest-environment jsdom
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { afterEach, beforeEach, mock, test } from 'node:test';
-import { JSDOM } from 'jsdom';
-import { ANNOUNCE_DELAY, showBanner } from '../web-components/banner.js';
-
-const { window } = new JSDOM('<!doctype html><html><body></body></html>');
-const { document } = window;
+import { afterEach, beforeEach, test, vi } from 'vite-plus/test';
+import { ANNOUNCE_DELAY, showBanner } from '../web-components/banner.ts';
 
 beforeEach(() => {
-  mock.timers.enable({ apis: ['setTimeout'] });
+  vi.useFakeTimers();
   document.querySelectorAll('ds-banner').forEach(banner => banner.remove());
 });
-afterEach(() => mock.timers.reset());
+afterEach(() => vi.useRealTimers());
 
 test('shows the message in a status region, apart from the page styles', () => {
   const host = showBanner(document, { text: 'Music Bridge could not find this music on Deezer.', lang: 'en', closeLabel: 'Close' });
   assert.equal(host.localName, 'ds-banner');
   assert.equal(host.isConnected, true);
   assert.ok(host.shadowRoot.querySelector('style'));
-  mock.timers.tick(ANNOUNCE_DELAY);
+  vi.advanceTimersByTime(ANNOUNCE_DELAY);
   assert.equal(host.shadowRoot.querySelector('[role="status"]').textContent, 'Music Bridge could not find this music on Deezer.');
 });
 
@@ -26,7 +23,7 @@ test('adds the status region before its text, for screen readers to announce it'
   const host = showBanner(document, { text: 'Message', lang: 'en', closeLabel: 'Close' });
   const text = host.shadowRoot.querySelector('span');
   assert.equal(text.textContent, '');
-  mock.timers.tick(ANNOUNCE_DELAY);
+  vi.advanceTimersByTime(ANNOUNCE_DELAY);
   assert.equal(text.textContent, 'Message');
 });
 
@@ -45,9 +42,9 @@ test('closes with its button, which has a label', () => {
 
 test('closes with Escape while the focus is in it', () => {
   const host = showBanner(document, { text: 'Message', lang: 'en', closeLabel: 'Close' });
-  document.body.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   assert.equal(host.isConnected, true);
-  host.shadowRoot.querySelector('button').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  host.shadowRoot.querySelector('button').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   assert.equal(host.isConnected, false);
 });
 
@@ -60,7 +57,7 @@ test('shows the logo, hidden from screen readers', () => {
 
 test('shows the text as text, not HTML', () => {
   const host = showBanner(document, { text: '<b>bold</b>', lang: 'en', closeLabel: 'Close' });
-  mock.timers.tick(ANNOUNCE_DELAY);
+  vi.advanceTimersByTime(ANNOUNCE_DELAY);
   const text = host.shadowRoot.querySelector('span');
   assert.equal(text.children.length, 0);
   assert.equal(text.textContent, '<b>bold</b>');
@@ -72,7 +69,7 @@ test('shows a link after the text, in the keyboard order before the close button
   const link = host.shadowRoot.querySelector('a');
   assert.equal(link.href, href);
   assert.equal(link.textContent, 'Search Deezer for "<b>Be Her</b>"');
-  assert.ok(link.compareDocumentPosition(host.shadowRoot.querySelector('button')) & window.Node.DOCUMENT_POSITION_FOLLOWING);
+  assert.ok(link.compareDocumentPosition(host.shadowRoot.querySelector('button')) & Node.DOCUMENT_POSITION_FOLLOWING);
 });
 
 test('has no link without one', () => {
@@ -81,7 +78,7 @@ test('has no link without one', () => {
 });
 
 test('its sizes in rem on the base 4, from the tokens or its own, no px: the build turns them into px', () => {
-  const css = readFileSync(new URL('../web-components/banner.css', import.meta.url), 'utf8').replaceAll(/\/\*[\s\S]*?\*\//g, '');
+  const css = readFileSync(`${import.meta.dirname}/../web-components/banner.css`, 'utf8').replaceAll(/\/\*[\s\S]*?\*\//g, '');
   assert.doesNotMatch(css, /\dpx\b/);
   for (const [, rem] of css.matchAll(/(\d*\.?\d+)rem\b/g)) assert.equal((Number.parseFloat(rem) * 4) % 1, 0, `${rem}rem`);
 });

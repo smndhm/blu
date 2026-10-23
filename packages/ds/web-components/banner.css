@@ -1,6 +1,6 @@
 /*
  * <ds-banner>, in its shadow root: the tokens come before, on :host. Sizes in rem, as everywhere in the design system;
- * scripts/build.js turns them into px, the tokens' and these, as the page's root font size is not ours
+ * banner.ts turns them into px, the tokens' and these, as the page's root font size is not ours
  */
 :host {
   /* All but the custom properties: the tokens stay; light or dark as the system, after it */

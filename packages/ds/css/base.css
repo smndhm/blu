@@ -1,4 +1,7 @@
 /* HTML elements, styled without classes, after modern-normalize: also the Markdown content of articles */
+@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
+@import 'modern-normalize' layer(ds.normalize);
+
 @layer ds.base {
   :root {
     /* Native checkboxes, radio buttons and progress bars in the primary color */

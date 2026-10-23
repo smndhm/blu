@@ -2,6 +2,8 @@
  * A button, or a link that looks like one: filled with the primary color (`--outline`: outlined with it, for a
  * secondary action, or a button within the text)
  */
+@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
+
 @layer ds.components {
   .ds-c-button {
     display: inline-block;
