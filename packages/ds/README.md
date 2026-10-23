@@ -48,6 +48,7 @@ Only the tokens the projects use: a new one comes with its first use. In JavaScr
 | `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                      |
 
 ```css
+@import '@dume/ds/fonts.css';
 @import '@dume/ds/tokens.css';
 @import '@dume/ds/base.css';
 @import '@dume/ds/utilities.css';
@@ -73,7 +74,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | `--ds-b-size-radius`                                                               | `0.5rem` (8px)                                                |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`                              | `3px solid var(--ds-b-color-primary)`, `2px`                  |
 
-Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels; it is the page's to load (`@fontsource-variable/bricolage-grotesque`); without it, headings fall back to the system font.
+Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `fonts.css` points to its files relatively (`fonts/…`): a page that inlines it serves `@dume/ds/fonts/` and rewrites the path, as simon.duhem.fr does with `/fonts/`. Without it, headings fall back to the system font.
 
 ## Components
 
@@ -99,4 +100,4 @@ colors.dark.primary; // '#c9a2ff'
 
 ## Development
 
-`pnpm build` writes `dist/`: `tokens.css` from `src/tokens.js`, the one source of the tokens, then `base.css` (modern-normalize and `css/base.css`), `utilities.css` and `components/` from `css/`, each in its cascade layer. `pnpm test` checks the tokens' names, contrasts and sizes.
+`pnpm build` writes `dist/`: `tokens.css` from `src/tokens.js`, the one source of the tokens, then `base.css` (modern-normalize and `css/base.css`), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css` and `components/` from `css/`, each in its cascade layer. `pnpm test` checks the tokens' names, contrasts and sizes.

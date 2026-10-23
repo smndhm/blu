@@ -14,10 +14,8 @@ export default async function (eleventyConfig) {
       './public/': '/',
     })
     .addPassthroughCopy('./content/articles/feed/pretty-atom-feed.xsl')
-    // Title font (latin subsets only), see css/index.css
-    .addPassthroughCopy({
-      'node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin{,-ext}-wght-normal.woff2': 'fonts',
-    })
+    // The heading font, from @dume/ds: its fonts.css, inlined in the layout, points to /fonts/
+    .addPassthroughCopy({ 'node_modules/@dume/ds/dist/fonts': 'fonts' })
     // Social sharing images, referenced by `ogImage` front matter
     .addPassthroughCopy('./content/{articles/*,ia-postrophe}/og.{png,jpg,webp}')
     // IApostrophe script (bookmarklet and text tester), built by apps/ia-postrophe

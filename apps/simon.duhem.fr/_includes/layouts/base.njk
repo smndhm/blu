@@ -31,8 +31,10 @@
 
 		{%- include "partials/structured-data.njk" %}
 
-		{#- The design tokens (packages/ds), then the site's stylesheet #}
+		{#- @dume/ds (packages/ds): its heading font, the files served at /fonts/ (eleventy.config.js), its tokens, base and utilities, then the site's stylesheet #}
+		{%- set dsFonts %}{% include "node_modules/@dume/ds/dist/fonts.css" %}{% endset %}
 		<style>
+			{{ dsFonts | replace("url(fonts/", "url(/fonts/") | safe }}
 			{% include "node_modules/@dume/ds/dist/tokens.css" %}
 			{% include "node_modules/@dume/ds/dist/base.css" %}
 			{% include "node_modules/@dume/ds/dist/utilities.css" %}

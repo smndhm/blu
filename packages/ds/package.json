@@ -24,7 +24,9 @@
     "./tokens.css": "./dist/tokens.css",
     "./base.css": "./dist/base.css",
     "./utilities.css": "./dist/utilities.css",
-    "./components/*.css": "./dist/components/*.css"
+    "./components/*.css": "./dist/components/*.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./fonts/*": "./dist/fonts/*"
   },
   "files": [
     "src",
@@ -36,6 +38,7 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
     "modern-normalize": "3.0.1"
   }
 }
