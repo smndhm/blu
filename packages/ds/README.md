@@ -17,6 +17,8 @@ Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the
 
 @dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/ds`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its own tokens the same way. A new category goes in this list, in the Stylelint rule and in the test.
 
+Only the tokens the projects use: a new one comes with its first use. In JavaScript, the same path: `colors.light.backgroundSurface`, `outlines.focus`. Classes, once components come: the `.ds-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--primary`).
+
 ## Units
 
 - `rem` for sizes, on the base 4: multiples of 4px, `0.25rem` (`0.5rem` is 8px, `1rem` 16px). They follow the font size the visitor chose in the browser.
@@ -25,8 +27,6 @@ Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the
 - No unit for line heights (`1.5`), `ch` for a reading width (`65ch`), `clamp()` for a size that follows the screen between a minimum and a maximum, `dvh` rather than `vh`, logical properties (`margin-inline`, `padding-block`).
 - A page's root font size stays the browser's: no `font-size: 62.5%`, which would make every `rem` 10px.
 - The exception: a component shown in a page that is not ours, such as Music Bridge's message on a music page, is in px, as that page's root font size is not ours.
-
-Only the tokens the projects use: a new one comes with its first use. In JavaScript, the same path: `colors.light.backgroundSurface`, `outlines.focus`. Classes, once components come: the `.ds-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--primary`).
 
 ## CSS
 
