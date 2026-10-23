@@ -1,5 +1,4 @@
 /* An article (`.ds-c-post`): its header, title, date and other details, and content */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
 @layer ds.components {
   .ds-c-post__header {

@@ -3,7 +3,6 @@
  * secondary action or a button within the text; `--ghost`: neither filled nor outlined, tinted on hover, for an action
  * that stays discreet, such as closing a message)
  */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
 @layer ds.components {
   .ds-c-button {

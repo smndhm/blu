@@ -1,5 +1,4 @@
 /* A link to the main content, only shown when focused */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
 @layer ds.components {
   .ds-c-skip-link {

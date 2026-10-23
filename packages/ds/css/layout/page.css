@@ -1,5 +1,4 @@
 /* A page: a column of readable width, its main content growing to push the footer down (`--centered`: centered) */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
 @layer ds.layout {
   .ds-l-page {

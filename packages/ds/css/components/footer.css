@@ -1,5 +1,4 @@
 /* A site's footer, a list of links */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
 @layer ds.components {
   .ds-c-footer {

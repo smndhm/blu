@@ -1,7 +1,6 @@
 /*! @dume/ds, my design system, the whole of it: for my projects' needs while in version 0 */
 
 /* In one stylesheet, for a site that takes all of it (its fonts/ next to it) */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 @import './fonts.css';
 @import './tokens.css';
 @import './base.css';

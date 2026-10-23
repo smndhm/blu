@@ -1,7 +1,6 @@
 /*
  * Code examples, highlighted by Prism: its Okaidia theme first, in this same layer, then these fixes
  */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 @import 'prismjs/themes/prism-okaidia.css' layer(ds.components);
 
 @layer ds.components {

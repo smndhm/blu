@@ -3,7 +3,6 @@
  * `data-placeholder`; `--multiline` for a text on several lines), and a message under it whose line is kept, so that
  * nothing moves when it shows
  */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
 @layer ds.components {
   .ds-c-field__label {

@@ -1,5 +1,4 @@
 /* Hidden on screen, read by screen readers: https://www.a11yproject.com/posts/how-to-hide-content/ */
-@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
 @layer ds.utilities {
   .ds-u-visually-hidden {
