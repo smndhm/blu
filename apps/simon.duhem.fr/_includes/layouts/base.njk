@@ -31,7 +31,8 @@
 
 		{%- include "partials/structured-data.njk" %}
 
-		{#- Add the contents of a file to the bundle #}
+		{#- The design tokens (packages/design), then the site's stylesheet #}
+		<style>{% include "node_modules/@dume/design/dist/tokens.css" %}</style>
 		<style>{% include "css/index.css" %}</style>
 
 		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}

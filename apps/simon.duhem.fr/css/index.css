@@ -25,29 +25,8 @@
    ========================================================================== */
 
 :root {
-  --color-dark: #222;
-  --color-light: #fafafa;
-  --font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  --font-family-title: 'Bricolage Grotesque', var(--font-family);
-  --font-family-monospace: ui-monospace, consolas, menlo, monaco, 'Liberation Mono', 'Courier New', monospace;
-  --background-color: var(--color-light);
-  --text-color: var(--color-dark);
-  --text-color-muted: #555;
-  --accent-color: #4b0195;
-  --border-color: #ccc;
+  /* The colors, fonts and focus ring are @dume/design's (packages/design), set before this stylesheet */
   --syntax-tab-size: 2;
-
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-color: var(--color-dark);
-    --text-color: var(--color-light);
-    --text-color-muted: #bbb;
-    --accent-color: #c9a2ff;
-    --border-color: #555;
-  }
 }
 
 /* ==========================================================================
@@ -63,9 +42,9 @@
 }
 
 html {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: var(--font-family);
+  background-color: var(--sd-b-color-background);
+  color: var(--sd-b-color-text);
+  font-family: var(--sd-b-font-family);
   line-height: 1.6;
 
   /* Reserve the scrollbar space without forcing a scrollbar on short pages */
@@ -78,7 +57,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-title);
+  font-family: var(--sd-b-font-family-heading);
 }
 
 h1,
@@ -100,19 +79,19 @@ h2 {
 
 a[href] {
   color: inherit;
-  text-decoration-color: var(--accent-color);
+  text-decoration-color: var(--sd-b-color-primary);
   text-decoration-thickness: 0.1em;
   text-underline-offset: 0.2em;
 }
 
 a[href]:hover {
-  color: var(--accent-color);
+  color: var(--sd-b-color-primary);
 }
 
 :focus-visible {
   border-radius: 2px;
-  outline: 3px solid var(--accent-color);
-  outline-offset: 2px;
+  outline: var(--sd-b-outline-focus);
+  outline-offset: var(--sd-b-outline-offset-focus);
 }
 
 img {
@@ -150,7 +129,7 @@ th {
 
 pre,
 code {
-  font-family: var(--font-family-monospace);
+  font-family: var(--sd-b-font-family-monospace);
 }
 
 pre:not([class*='language-']) {
@@ -222,9 +201,9 @@ code {
   top: 1rem;
   left: 1rem;
   padding: 0.5rem 1rem;
-  border: 2px solid var(--text-color);
-  background: var(--background-color);
-  color: var(--text-color);
+  border: 2px solid var(--sd-b-color-text);
+  background: var(--sd-b-color-background);
+  color: var(--sd-b-color-text);
 }
 
 .skip-link:not(:focus) {
@@ -244,12 +223,12 @@ code {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--sd-b-color-border);
   gap: 0.5rem 1.5rem;
 }
 
 .site-header__brand {
-  font-family: var(--font-family-title);
+  font-family: var(--sd-b-font-family-heading);
   font-weight: 700;
 }
 
@@ -271,13 +250,13 @@ code {
 .site-header__nav-link:hover,
 .site-header__nav-link[aria-current] {
   text-decoration: underline;
-  text-decoration-color: var(--accent-color);
+  text-decoration-color: var(--sd-b-color-primary);
 }
 
 /* Footer */
 .site-footer {
   padding: 1rem 0;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--sd-b-color-border);
 }
 
 .site-footer__list {
@@ -338,7 +317,7 @@ code {
 
 .post-list__meta {
   margin: 0.25rem 0 0;
-  color: var(--text-color-muted);
+  color: var(--sd-b-color-text-muted);
   font-size: 0.9375rem;
 }
 
@@ -349,7 +328,7 @@ code {
 
 .post__meta {
   margin: 0.25rem 0 0;
-  color: var(--text-color-muted);
+  color: var(--sd-b-color-text-muted);
   font-size: 0.9375rem;
 }
 
@@ -358,7 +337,7 @@ code {
   display: flex;
   justify-content: space-between;
   padding: 1.5rem 0 0;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--sd-b-color-border);
   margin: 3rem 0 0;
   gap: 0.5rem 1rem;
   list-style: none;

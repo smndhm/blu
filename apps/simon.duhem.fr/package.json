@@ -2,7 +2,7 @@
   "name": "simon.duhem.fr",
   "private": true,
   "version": "2.1.0",
-  "description": "Site personnel : présentation, articles et slides de conférences.",
+  "description": "Site personnel : pr\u00e9sentation, articles et slides de conf\u00e9rences.",
   "type": "module",
   "scripts": {
     "build": "eleventy",
@@ -17,6 +17,7 @@
     "@11ty/eleventy-img": "7.0.0",
     "@11ty/eleventy-plugin-rss": "3.1.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "5.0.2",
+    "@dume/design": "workspace:*",
     "@dume/dev-config": "1.3.0",
     "@fontsource-variable/bricolage-grotesque": "5.3.0",
     "cross-env": "10.1.0",

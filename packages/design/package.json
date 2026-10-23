@@ -1,0 +1,35 @@
+{
+  "name": "@dume/design",
+  "version": "0.0.0",
+  "description": "The design tokens shared by my projects (simon.duhem.fr, Music Bridge…): colors, light and dark, fonts, radius and focus ring, as CSS custom properties and as a JavaScript module",
+  "author": "Simon Duhem",
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "css-custom-properties",
+    "dark-mode"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smndhm/blu.git",
+    "directory": "packages/design"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/tokens.d.ts",
+      "default": "./src/tokens.js"
+    },
+    "./tokens.css": "./dist/tokens.css"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test 'tests/*.test.js'",
+    "prepublishOnly": "pnpm build"
+  }
+}
