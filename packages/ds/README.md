@@ -15,7 +15,7 @@ Custom properties are named in lowercase words:
 
 Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the role, `background`, is missing), `--ds-b-focus-outline` (`focus` is no category: the CSS property is).
 
-@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/ds`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its tokens (`css/tokens.css`) the same way. A new category goes in this list, in the Stylelint rule and in the test.
+@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, without depending on this package. Its tests check its tokens (`css/tokens.css`) the same way. A new category goes in this list, in the Stylelint rule and in the test.
 
 Only the tokens the projects use: a new one comes with its first use. Classes: the `.ds-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--primary`): a block's class on its root, its elements only inside it, each with its class even without a style of its own, so that the markup tells the component's structure.
 
