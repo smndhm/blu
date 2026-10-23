@@ -13,6 +13,12 @@ const testerInput = document.querySelector<HTMLElement>('#tester-input');
 const testerSummary = document.querySelector<HTMLElement>('#tester-summary');
 
 if (testerInput && testerSummary) {
+  // The highlight colors of config.ts, as the bookmarklet's
+  const sheet = new CSSStyleSheet();
+  sheet.insertRule(`::highlight(iapostrophe-tester-ia) { background-color: ${config.IAcharacters.color}; color: black; }`);
+  sheet.insertRule(`::highlight(iapostrophe-tester-human) { background-color: ${config.humanCharacters.color}; color: black; }`);
+  document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+
   const update = () => {
     const text = testerInput.textContent ?? '';
 

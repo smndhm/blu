@@ -1,0 +1,9 @@
+/* A quote set apart: a line in the primary color, the heading font */
+.ds-c-quote {
+  padding-left: 1rem;
+  border-left: 4px solid var(--ds-b-color-primary);
+  margin: 2.5rem 0 0;
+  font-family: var(--ds-b-font-family-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+}

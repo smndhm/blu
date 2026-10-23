@@ -66,6 +66,17 @@ The custom properties are set on `:root`, with `color-scheme: light dark` and th
 
 Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is the page's to load (`@fontsource-variable/bricolage-grotesque`); without it, headings fall back to the system font.
 
+## Components
+
+One stylesheet per component, in `css/components/`, after the tokens: `@import '@dume/ds/components/button.css';`.
+
+| Component                           | Classes                                                        | For                                                         |
+| ----------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------- |
+| [Button](css/components/button.css) | `.ds-c-button`, `--outline`                                    | A button, or a link that looks like one                     |
+| [Field](css/components/field.css)   | `.ds-c-field__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept |
+| [Table](css/components/table.css)   | `.ds-c-table`                                                  | A data table                                                |
+| [Quote](css/components/quote.css)   | `.ds-c-quote`                                                  | A quote set apart                                           |
+
 ## JavaScript
 
 For styles a page cannot load, such as a shadow root's or a canvas', and for scripts:

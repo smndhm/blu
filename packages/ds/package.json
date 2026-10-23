@@ -21,11 +21,13 @@
       "types": "./src/tokens.d.ts",
       "default": "./src/tokens.js"
     },
-    "./tokens.css": "./dist/tokens.css"
+    "./tokens.css": "./dist/tokens.css",
+    "./components/*.css": "./css/components/*.css"
   },
   "files": [
     "src",
-    "dist"
+    "dist",
+    "css"
   ],
   "scripts": {
     "build": "node scripts/build.js",
