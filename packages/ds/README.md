@@ -21,7 +21,16 @@ Only the tokens the projects use: a new one comes with its first use.
 
 HTML elements are styled without classes, in the base: links, headings, tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--outline`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes.
 
-Web components, once the design system has some, are named `ds-` too (`<ds-notice>`); third-party ones keep their name (`<heading-anchors>`).
+### Web components
+
+A component is HTML and CSS first: a native element (`<a>`, `<button>`, `<dialog>`, `<details>`…) and a class. It becomes a web component only when it needs what CSS and native HTML cannot give:
+
+- a behavior of its own, in JavaScript, that the browser does not have (Music Bridge's message, closed with its button or Escape);
+- styles isolated from the page in a shadow root, when the page is not ours (Music Bridge's message, on a music platform's page).
+
+Not for a look alone (a button, a field: a class is enough), nor for what a native element already does. Its content works without JavaScript wherever it can, the web component enhancing it.
+
+Web components are named `ds-` too (`<ds-notice>`); third-party ones keep their name (`<heading-anchors>`).
 
 ## Units
 
