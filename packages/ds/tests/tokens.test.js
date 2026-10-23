@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { colors, cssVariables } from '../src/tokens.js';
+import { colors, cssVariables, sizes } from '../src/tokens.js';
 
 /** Relative luminance of a #rgb or #rrggbb color */
 function luminance(hex) {
@@ -44,6 +44,13 @@ test('names every custom property after the taxonomy (see the README)', () => {
   const names = cssVariables().match(/--ds-[\w-]+(?=:)/g);
   assert.ok(names.length > 0);
   for (const property of names) assert.match(property, name);
+});
+
+test('sizes in rem on the base 4: multiples of 0.25rem', () => {
+  for (const [name, value] of Object.entries(sizes)) {
+    assert.match(value, /^\d*\.?\d+rem$/, name);
+    assert.equal((Number.parseFloat(value) * 4) % 1, 0, `${name}: ${value} is no multiple of 0.25rem`);
+  }
 });
 
 test('sets the dark colors under prefers-color-scheme: dark, on any selector', () => {

@@ -17,6 +17,15 @@ Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the
 
 @dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/ds`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its own tokens the same way. A new category goes in this list, in the Stylelint rule and in the test.
 
+## Units
+
+- `rem` for sizes, on the base 4: multiples of 4px, `0.25rem` (`0.5rem` is 8px, `1rem` 16px). They follow the font size the visitor chose in the browser.
+- `em` inside a component, for what grows with its text, such as a button's padding.
+- `px` for borders and the focus ring: 1px stays 1px, and the 3px ring stays visible whatever the zoom.
+- No unit for line heights (`1.5`), `ch` for a reading width (`65ch`), `clamp()` for a size that follows the screen between a minimum and a maximum, `dvh` rather than `vh`, logical properties (`margin-inline`, `padding-block`).
+- A page's root font size stays the browser's: no `font-size: 62.5%`, which would make every `rem` 10px.
+- The exception: a component shown in a page that is not ours, such as Music Bridge's message on a music page, is in px, as that page's root font size is not ours.
+
 Only the tokens the projects use: a new one comes with its first use. In JavaScript, the same path: `colors.light.backgroundSurface`, `outlines.focus`. Classes, once components come: the `.ds-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--primary`).
 
 ## CSS
@@ -52,7 +61,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark` and th
 | Custom property                                                                    | Value                                                         |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | `--ds-b-font-family`, `--ds-b-font-family-heading`, `--ds-b-font-family-monospace` | system-ui (the system's font), Bricolage Grotesque, monospace |
-| `--ds-b-size-radius`                                                               | `8px`                                                         |
+| `--ds-b-size-radius`                                                               | `0.5rem` (8px)                                                |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`                              | `3px solid var(--ds-b-color-primary)`, `2px`                  |
 
 Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is the page's to load (`@fontsource-variable/bricolage-grotesque`); without it, headings fall back to the system font.

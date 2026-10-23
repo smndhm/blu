@@ -46,10 +46,10 @@ export const fonts = {
   familyMonospace: "ui-monospace, Consolas, Menlo, Monaco, 'Liberation Mono', 'Courier New', monospace",
 };
 
-/** In px: a page's root font size is not always the browser's (62.5% on Music Bridge's options, the page's own in a shadow root) */
-export const sizes = { radius: '8px' };
+/** In rem, on the base 4 (multiples of 4px, 0.25rem): 8px */
+export const sizes = { radius: '0.5rem' };
 
-/** The keyboard focus ring, in the primary color: `outline: var(--ds-b-outline-focus); outline-offset: var(--ds-b-outline-offset-focus);` */
+/** The keyboard focus ring, in the primary color, in px as a border (it stays visible whatever the zoom): `outline: var(--ds-b-outline-focus); outline-offset: var(--ds-b-outline-offset-focus);` */
 export const outlines = { focus: '3px solid var(--ds-b-color-primary)', offsetFocus: '2px' };
 
 /** `textMuted` → `text-muted` */
