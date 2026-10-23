@@ -21,6 +21,10 @@ export default async function (eleventyConfig) {
     // IApostrophe script (bookmarklet and text tester), built by apps/ia-postrophe
     .addPassthroughCopy({
       'node_modules/ia-postrophe/dist/ia-postrophe.js': 'js/ia-postrophe.js',
+    })
+    // The heading-anchors web component, loaded by the article layout
+    .addPassthroughCopy({
+      'node_modules/@zachleat/heading-anchors/heading-anchors.js': 'js/heading-anchors.js',
     });
 
   // Run Eleventy when these files change:
@@ -34,15 +38,6 @@ export default async function (eleventyConfig) {
   eleventyConfig.addWatchTarget('node_modules/@dume/ds/dist/**/*.css');
   // Watch images for the image pipeline.
   eleventyConfig.addWatchTarget('content/**/*.{svg,webp,png,jpg,jpeg,gif}');
-
-  // Per-page bundle, see https://github.com/11ty/eleventy-plugin-bundle
-  // Bundle <script> content and adds a {% js %} paired shortcode
-  eleventyConfig.addBundle('js', {
-    toFileDirectory: 'dist',
-    // Add all <script> content to the `js` bundle (use <script eleventy:ignore> to opt-out)
-    // Supported selectors: https://www.npmjs.com/package/posthtml-match-helper
-    bundleHtmlContentFromSelector: 'script',
-  });
 
   // Official plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight, {

@@ -1,5 +1,4 @@
-{#- Données structurées schema.org (JSON-LD) : la personne sur l'accueil, l'article sur chaque post.
-    `eleventy:ignore` : le bundle js ne doit pas les extraire #}
+{#- Données structurées schema.org (JSON-LD) : la personne sur l'accueil, l'article sur chaque post #}
 {%- set person = {
 	"@type": "Person",
 	"name": metadata.author.name,
@@ -9,7 +8,7 @@
 	"sameAs": metadata.social | pluck("url")
 } %}
 {%- if page.url == "/" %}
-<script type="application/ld+json" eleventy:ignore>{{ {
+<script type="application/ld+json">{{ {
 	"@context": "https://schema.org",
 	"@type": "ProfilePage",
 	"url": metadata.url,
@@ -18,7 +17,7 @@
 	"mainEntity": person
 } | jsonLd | safe }}</script>
 {%- elif layout == "layouts/post.njk" %}
-<script type="application/ld+json" eleventy:ignore>{{ {
+<script type="application/ld+json">{{ {
 	"@context": "https://schema.org",
 	"@type": "BlogPosting",
 	"headline": title,
