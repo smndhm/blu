@@ -33,8 +33,10 @@ for (const theme of ['light', 'dark']) {
 
   test(`${theme}: every color has its custom property`, () => {
     const css = cssVariables();
-    for (const [name, value] of Object.entries(colors[theme]))
-      assert.ok(css.includes(`--ds-b-color-${name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}: ${value};`), name);
+    for (const [name, value] of Object.entries(colors[theme])) {
+      const property = `--ds-b-color-${name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}`;
+      assert.match(css, new RegExp(`${property}: (light-dark\\([^)]*${value}[^)]*\\)|${value});`), name);
+    }
   });
 }
 
@@ -53,10 +55,12 @@ test('sizes in rem on the base 4: multiples of 0.25rem', () => {
   }
 });
 
-test('sets the dark colors under prefers-color-scheme: dark, on any selector', () => {
+test('sets each color in light-dark(), on any selector, with color-scheme', () => {
   const css = cssVariables(':host');
   assert.match(css, /^:host \{\n {2}color-scheme: light dark;/);
-  assert.match(css, /@media \(prefers-color-scheme: dark\) \{\n {2}:host \{\n {4}--ds-b-color-text: #fafafa;/);
+  assert.ok(css.includes('--ds-b-color-text: light-dark(#222, #fafafa);'));
+  assert.ok(css.includes('--ds-b-color-border-control: #8a8a8a;'));
+  assert.ok(!css.includes('@media'));
   assert.ok(css.includes("--ds-b-font-family-heading: 'Bricolage Grotesque', "));
   assert.ok(css.includes('--ds-b-outline-focus: 3px solid var(--ds-b-color-primary);'));
 });

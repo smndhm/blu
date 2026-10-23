@@ -1,0 +1,113 @@
+/* HTML elements, after modern-normalize: also the Markdown content of articles */
+
+:root {
+  /* Native checkboxes, radio buttons and progress bars in the primary color */
+  accent-color: var(--ds-b-color-primary);
+  background-color: var(--ds-b-color-background);
+  color: var(--ds-b-color-text);
+  font-family: var(--ds-b-font-family);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--ds-b-font-family-heading);
+  text-wrap: balance;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-block: 0 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-block: 2.5rem 1rem;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a[href] {
+  color: inherit;
+  text-decoration-color: var(--ds-b-color-primary);
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+
+  &:hover {
+    color: var(--ds-b-color-primary);
+  }
+}
+
+:focus-visible {
+  border-radius: 2px;
+  outline: var(--ds-b-outline-focus);
+  outline-offset: var(--ds-b-outline-offset-focus);
+}
+
+img {
+  max-inline-size: 100%;
+}
+
+img[width][height] {
+  block-size: auto;
+}
+
+img[src$='.svg'] {
+  block-size: auto;
+  inline-size: 100%;
+  max-inline-size: none;
+}
+
+video,
+iframe {
+  block-size: auto;
+  inline-size: 100%;
+}
+
+iframe {
+  aspect-ratio: 16 / 9;
+}
+
+table {
+  margin-block: 1em;
+}
+
+td,
+th {
+  padding-inline-end: 1em;
+}
+
+pre,
+code {
+  font-family: var(--ds-b-font-family-monospace);
+}
+
+pre {
+  direction: ltr;
+  hyphens: none;
+  line-height: 1.375;
+  margin-block: 0.5em;
+  overflow-x: auto;
+  tab-size: 2;
+  text-align: start;
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
+}
+
+code {
+  word-break: break-all;
+}

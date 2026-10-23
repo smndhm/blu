@@ -1,13 +1,14 @@
 /* A button, or a link that looks like one: filled with the primary color, or outlined (`--outline`) */
 .ds-c-button {
   display: inline-block;
-  padding: 0.25rem 0.75rem;
   border: 2px solid var(--ds-b-color-primary);
   border-radius: var(--ds-b-size-radius);
   background-color: var(--ds-b-color-primary);
   color: var(--ds-b-color-text-on-primary);
   font-family: var(--ds-b-font-family);
   font-weight: 700;
+  padding-block: 0.25rem;
+  padding-inline: 0.75rem;
   text-decoration: none;
 }
 

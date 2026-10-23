@@ -28,24 +28,33 @@ Only the tokens the projects use: a new one comes with its first use. In JavaScr
 - A page's root font size stays the browser's: no `font-size: 62.5%`, which would make every `rem` 10px.
 - The exception: a component shown in a page that is not ours, such as Music Bridge's message on a music page, is in px, as that page's root font size is not ours.
 
+## Standards
+
+- Plain CSS, no preprocessor: native nesting, custom properties, `color-mix()`, `@layer`.
+- The target: [Baseline widely available](https://web.dev/baseline), what every major browser has had for 30 months.
+- Light and dark themes: each color is `light-dark(light, dark)`, which follows `color-scheme`, the system's by default; `color-scheme: dark` on a page or an element forces a theme.
+- Left-to-right and right-to-left languages alike: logical properties and values (`margin-inline-start`, `text-align: start`), which @dume/dev-config's Stylelint configuration requires.
+- Cascade layers: `ds.normalize`, `ds.base`, `ds.components`, `ds.utilities`, under any project's own CSS, which wins without a specificity fight.
+- Windows' contrast themes (`forced-colors`): components draw their edges with borders and outlines, which those themes keep, not with backgrounds alone.
+- Native controls in the primary color (`accent-color`), balanced headings and paragraphs without an orphan word (`text-wrap`).
+
 ## CSS
+
+| Stylesheet                  | What                                                                                                                                          |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                       |
+| `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements: text, headings, links, focus ring, images, code |
+| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                             |
+| `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                      |
 
 ```css
 @import '@dume/ds/tokens.css';
-
-body {
-  background: var(--ds-b-color-background);
-  color: var(--ds-b-color-text);
-  font-family: var(--ds-b-font-family);
-}
-
-:focus-visible {
-  outline: var(--ds-b-outline-focus);
-  outline-offset: var(--ds-b-outline-offset-focus);
-}
+@import '@dume/ds/base.css';
+@import '@dume/ds/utilities.css';
+@import '@dume/ds/components/button.css';
 ```
 
-The custom properties are set on `:root`, with `color-scheme: light dark` and the dark colors under `prefers-color-scheme: dark`:
+The custom properties are set on `:root`, with `color-scheme: light dark`, each color in `light-dark()`:
 
 | Custom property                   | Light     | Dark      | For                              |
 | --------------------------------- | --------- | --------- | -------------------------------- |
@@ -68,7 +77,7 @@ Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests 
 
 ## Components
 
-One stylesheet per component, in `css/components/`, after the tokens: `@import '@dume/ds/components/button.css';`.
+One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`.
 
 | Component                           | Classes                                                        | For                                                         |
 | ----------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------- |
@@ -90,4 +99,4 @@ colors.dark.primary; // '#c9a2ff'
 
 ## Development
 
-`pnpm build` writes `dist/tokens.css` from `src/tokens.js`, the one source of the tokens; `pnpm test` checks their contrasts.
+`pnpm build` writes `dist/`: `tokens.css` from `src/tokens.js`, the one source of the tokens, then `base.css` (modern-normalize and `css/base.css`), `utilities.css` and `components/` from `css/`, each in its cascade layer. `pnpm test` checks the tokens' names, contrasts and sizes.

@@ -6,7 +6,8 @@
  */
 
 /**
- * Colors, light and dark, the dark ones under `prefers-color-scheme: dark`. Text colors pass WCAG AA (4.5:1) on both
+ * Colors, light and dark: each custom property is `light-dark(light, dark)`, which follows `color-scheme` (the system's
+ * by default, or `color-scheme: dark` on a page or an element). Text colors pass WCAG AA (4.5:1) on both
  * backgrounds, `borderControl` the 3:1 asked of input borders (tests/tokens.test.js checks them).
  */
 export const colors = {
@@ -56,28 +57,27 @@ export const outlines = { focus: '3px solid var(--ds-b-color-primary)', offsetFo
 const kebab = name => name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 
 /** Custom properties of a category: `color` and `{ textMuted }` → `--ds-b-color-text-muted` */
-const declarations = (category, tokens, indent) =>
+const declarations = (category, tokens) =>
   Object.entries(tokens)
-    .map(([name, value]) => `${indent}--ds-b-${category}-${kebab(name)}: ${value};`)
+    .map(([name, value]) => `  --ds-b-${category}-${kebab(name)}: ${value};`)
     .join('\n');
+
+/** A color in both themes: `light-dark()`, or the color when it is the same */
+const themed = Object.fromEntries(
+  Object.keys(colors.light).map(name => [name, colors.light[name] === colors.dark[name] ? colors.light[name] : `light-dark(${colors.light[name]}, ${colors.dark[name]})`]),
+);
 
 /**
  * The tokens as CSS custom properties on `selector` (`:root` for a page, `:host` for a shadow root), with
- * `color-scheme: light dark` and the dark colors under `prefers-color-scheme: dark`.
+ * `color-scheme: light dark`.
  */
 export function cssVariables(selector = ':root') {
   return `${selector} {
   color-scheme: light dark;
-${declarations('color', colors.light, '  ')}
-${declarations('font', fonts, '  ')}
-${declarations('size', sizes, '  ')}
-${declarations('outline', outlines, '  ')}
-}
-
-@media (prefers-color-scheme: dark) {
-  ${selector} {
-${declarations('color', colors.dark, '    ')}
-  }
+${declarations('color', themed)}
+${declarations('font', fonts)}
+${declarations('size', sizes)}
+${declarations('outline', outlines)}
 }
 `;
 }

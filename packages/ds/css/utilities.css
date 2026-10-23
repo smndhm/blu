@@ -1,0 +1,9 @@
+/* Hidden on screen, read by screen readers: https://www.a11yproject.com/posts/how-to-hide-content/ */
+.ds-u-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}

@@ -21,146 +21,18 @@
 }
 
 /* ==========================================================================
-   Settings
+   Site: what @dume/ds (packages/ds) does not set, its tokens, base and utilities being included before this stylesheet
    ========================================================================== */
 
 :root {
-  /* The colors, fonts and focus ring are @dume/ds's (packages/ds), set before this stylesheet */
   --syntax-tab-size: 2;
-}
-
-/* ==========================================================================
-   Base: HTML elements, also used by the Markdown content of articles
-   ========================================================================== */
-
-* {
-  box-sizing: border-box;
-}
-
-@view-transition {
-  navigation: auto;
-}
-
-html {
-  background-color: var(--ds-b-color-background);
-  color: var(--ds-b-color-text);
-  font-family: var(--ds-b-font-family);
-  line-height: 1.6;
 
   /* Reserve the scrollbar space without forcing a scrollbar on short pages */
   scrollbar-gutter: stable;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--ds-b-font-family-heading);
-}
-
-h1,
-h2,
-h3 {
-  line-height: 1.2;
-}
-
-h1 {
-  margin: 0 0 1rem;
-  font-size: 2.5rem;
-  font-weight: 800;
-}
-
-h2 {
-  margin: 2.5rem 0 1rem;
-  font-size: 1.5rem;
-}
-
-a[href] {
-  color: inherit;
-  text-decoration-color: var(--ds-b-color-primary);
-  text-decoration-thickness: 0.1em;
-  text-underline-offset: 0.2em;
-}
-
-a[href]:hover {
-  color: var(--ds-b-color-primary);
-}
-
-:focus-visible {
-  border-radius: 2px;
-  outline: var(--ds-b-outline-focus);
-  outline-offset: var(--ds-b-outline-offset-focus);
-}
-
-img {
-  max-width: 100%;
-}
-
-img[width][height] {
-  height: auto;
-}
-
-img[src$='.svg'] {
-  width: 100%;
-  max-width: none;
-  height: auto;
-}
-
-video,
-iframe {
-  width: 100%;
-  height: auto;
-}
-
-iframe {
-  aspect-ratio: 16/9;
-}
-
-table {
-  margin: 1em 0;
-}
-
-td,
-th {
-  padding-right: 1em;
-}
-
-pre,
-code {
-  font-family: var(--ds-b-font-family-monospace);
-}
-
-pre:not([class*='language-']) {
-  margin: 0.5em 0;
-  direction: ltr;
-  hyphens: none;
-  line-height: 1.375;
-  overflow-x: auto;
-  tab-size: var(--syntax-tab-size);
-  text-align: left;
-  white-space: pre;
-  word-break: normal;
-  word-spacing: normal;
-}
-
-code {
-  word-break: break-all;
-}
-
-/* ==========================================================================
-   Utilities
-   ========================================================================== */
-
-/* https://www.a11yproject.com/posts/how-to-hide-content/ */
-.visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
-  white-space: nowrap;
+@view-transition {
+  navigation: auto;
 }
 
 /* ==========================================================================
@@ -170,12 +42,11 @@ code {
 /* Page layout */
 .page {
   display: flex;
-  max-width: 44rem;
-  min-height: 100vh;
-  min-height: 100svh; /* Mobile: viewport with the browser UI shown, never overflows */
   flex-direction: column;
   padding: 0 1rem;
   margin: 0 auto;
+  max-inline-size: 44rem;
+  min-block-size: 100svh; /* Mobile: the viewport with the browser UI shown, never overflows */
 }
 
 .page__main {
@@ -198,21 +69,21 @@ code {
 .skip-link {
   position: absolute;
   z-index: 999;
-  top: 1rem;
-  left: 1rem;
   padding: 0.5rem 1rem;
   border: 2px solid var(--ds-b-color-text);
   background: var(--ds-b-color-background);
   color: var(--ds-b-color-text);
+  inset-block-start: 1rem;
+  inset-inline-start: 1rem;
 }
 
 .skip-link:not(:focus) {
   overflow: hidden;
-  width: 1px;
-  height: 1px;
   padding: 0;
   border: 0;
+  block-size: 1px;
   clip-path: inset(50%);
+  inline-size: 1px;
   white-space: nowrap;
 }
 
@@ -223,7 +94,7 @@ code {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--ds-b-color-border);
+  border-block-end: 1px solid var(--ds-b-color-border);
   gap: 0.5rem 1.5rem;
 }
 
@@ -256,7 +127,7 @@ code {
 /* Footer */
 .site-footer {
   padding: 1rem 0;
-  border-top: 1px solid var(--ds-b-color-border);
+  border-block-start: 1px solid var(--ds-b-color-border);
 }
 
 .site-footer__list {
@@ -307,7 +178,7 @@ code {
 }
 
 .post-list__item + .post-list__item {
-  margin-top: 1.5rem;
+  margin-block-start: 1.5rem;
 }
 
 .post-list__title {
@@ -323,7 +194,7 @@ code {
 
 /* Article */
 .post__header {
-  margin-bottom: 2rem;
+  margin-block-end: 2rem;
 }
 
 .post__meta {
@@ -337,8 +208,8 @@ code {
   display: flex;
   justify-content: space-between;
   padding: 1.5rem 0 0;
-  border-top: 1px solid var(--ds-b-color-border);
   margin: 3rem 0 0;
+  border-block-start: 1px solid var(--ds-b-color-border);
   gap: 0.5rem 1rem;
   list-style: none;
 }
@@ -348,5 +219,5 @@ code {
 }
 
 .post-nav__item--next {
-  text-align: right;
+  text-align: end;
 }
