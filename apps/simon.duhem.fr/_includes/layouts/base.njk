@@ -12,7 +12,7 @@
 		<link rel="icon" href="/favicon.ico" sizes="any">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="manifest" href="/manifest.webmanifest">
-		<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/ds/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="alternate" href="/articles/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }} - Articles">
 
 		<meta property="og:type" content="{{ 'article' if layout == 'layouts/post.njk' else 'website' }}">
@@ -31,22 +31,8 @@
 
 		{%- include "partials/structured-data.njk" %}
 
-		{#- @dume/ds (packages/ds): its heading font, the files served at /fonts/ (eleventy.config.js), its tokens, base and utilities, the layouts and components of every page #}
-		{%- set dsFonts %}{% include "node_modules/@dume/ds/dist/fonts.css" %}{% endset %}
-		<style>
-			{{ dsFonts | replace("url(fonts/", "url(/fonts/") | safe }}
-			{% include "node_modules/@dume/ds/dist/tokens.css" %}
-			{% include "node_modules/@dume/ds/dist/base.css" %}
-			{% include "node_modules/@dume/ds/dist/utilities.css" %}
-			{% include "node_modules/@dume/ds/dist/layout/page.css" %}
-			{% include "node_modules/@dume/ds/dist/layout/cluster.css" %}
-			{% include "node_modules/@dume/ds/dist/components/skip-link.css" %}
-			{% include "node_modules/@dume/ds/dist/components/header.css" %}
-			{% include "node_modules/@dume/ds/dist/components/footer.css" %}
-		</style>
-
-		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
-		<style>{% getBundle "css" %}</style>
+		{#- The design system, @dume/ds: all of the site's style (eleventy.config.js copies it as /ds/) #}
+		<link rel="stylesheet" href="/ds/ds.css">
 
 		{#- Add the heading-anchors web component to the JavaScript bundle #}
 		<script type="module">{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}</script>

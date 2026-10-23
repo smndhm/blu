@@ -40,8 +40,19 @@ Only the tokens the projects use: a new one comes with its first use. Classes: t
 
 ## CSS
 
+The whole design system is one stylesheet, `@dume/ds/ds.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
+
+```html
+<link rel="stylesheet" href="/ds/ds.css" />
+```
+
+simon.duhem.fr does so: its Eleventy configuration copies `dist/` as `/ds/`.
+
+Its parts are also stylesheets of their own, for a project that only takes some of them:
+
 | Stylesheet                  | What                                                                                                                                          |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                    |
 | `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                       |
 | `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements: text, headings, links, focus ring, images, code |
 | `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                             |
@@ -49,10 +60,8 @@ Only the tokens the projects use: a new one comes with its first use. Classes: t
 | `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                      |
 
 ```css
-@import '@dume/ds/fonts.css';
 @import '@dume/ds/tokens.css';
 @import '@dume/ds/base.css';
-@import '@dume/ds/utilities.css';
 @import '@dume/ds/components/button.css';
 ```
 
@@ -75,7 +84,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | `--ds-b-size-radius`                                                               | `0.5rem` (8px)                                                |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`                              | `3px solid var(--ds-b-color-primary)`, `2px`                  |
 
-Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `fonts.css` points to its files relatively (`fonts/…`): a page that inlines it serves `@dume/ds/fonts/` and rewrites the path, as simon.duhem.fr does with `/fonts/`. Without it, headings fall back to the system font.
+Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `ds.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
 
 ## Components
 
@@ -98,4 +107,4 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 
 ## Development
 
-`pnpm build` writes `dist/` from `css/`: `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), each in its cascade layer. `pnpm test` checks the tokens' names, contrasts and sizes.
+`pnpm build` writes `dist/` from `css/`: `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), each in its cascade layer, then `ds.css`, all of them in one stylesheet. `pnpm test` checks the tokens' names, contrasts and sizes.

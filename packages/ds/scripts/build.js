@@ -1,5 +1,5 @@
 // Writes dist/ from css/: the tokens, modern-normalize and the base, the utilities, layouts and components, each in its
-// cascade layer, under any project's own CSS, and the heading font
+// cascade layer, under any project's own CSS, the heading font, and ds.css, all of them in one stylesheet
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
@@ -41,3 +41,11 @@ for (const face of (await readFile(join(fontsource, 'wght.css'), 'utf8')).match(
   faces.push(face.replace("'Bricolage Grotesque Variable'", "'Bricolage Grotesque'").replace(`./files/${file}`, `fonts/${file}`));
 }
 await writeFile(new URL('fonts.css', dist), `/* @dume/ds, built by scripts/build.js: Bricolage Grotesque (SIL Open Font License), its files in fonts/ */\n${faces.join('\n\n')}\n`);
+
+// ds.css: all of the above in one stylesheet, for a site that takes the whole design system (its fonts/ next to it)
+const parts = ['fonts.css', 'tokens.css', 'base.css', 'utilities.css'];
+for (const folder of ['layout', 'components']) {
+  for (const file of (await readdir(new URL(`${folder}/`, dist))).toSorted()) parts.push(`${folder}/${file}`);
+}
+const all = await Promise.all(parts.map(part => readFile(new URL(part, dist), 'utf8')));
+await writeFile(new URL('ds.css', dist), all.join('\n'));

@@ -14,8 +14,8 @@ export default async function (eleventyConfig) {
       './public/': '/',
     })
     .addPassthroughCopy('./content/articles/feed/pretty-atom-feed.xsl')
-    // The heading font, from @dume/ds: its fonts.css, inlined in the layout, points to /fonts/
-    .addPassthroughCopy({ 'node_modules/@dume/ds/dist/fonts': 'fonts' })
+    // The design system, @dume/ds (packages/ds): ds.css, loaded by the layout, and its fonts, as /ds/
+    .addPassthroughCopy({ 'node_modules/@dume/ds/dist': 'ds' })
     // Social sharing images, referenced by `ogImage` front matter
     .addPassthroughCopy('./content/{articles/*,ia-postrophe}/og.{png,jpg,webp}')
     // IApostrophe script (bookmarklet and text tester), built by apps/ia-postrophe
@@ -35,15 +35,7 @@ export default async function (eleventyConfig) {
   // Watch images for the image pipeline.
   eleventyConfig.addWatchTarget('content/**/*.{svg,webp,png,jpg,jpeg,gif}');
 
-  // Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
-  // Bundle <style> content and adds a {% css %} paired shortcode
-  eleventyConfig.addBundle('css', {
-    toFileDirectory: 'dist',
-    // Add all <style> content to `css` bundle (use <style eleventy:ignore> to opt-out)
-    // Supported selectors: https://www.npmjs.com/package/posthtml-match-helper
-    bundleHtmlContentFromSelector: 'style',
-  });
-
+  // Per-page bundle, see https://github.com/11ty/eleventy-plugin-bundle
   // Bundle <script> content and adds a {% js %} paired shortcode
   eleventyConfig.addBundle('js', {
     toFileDirectory: 'dist',

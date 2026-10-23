@@ -1,13 +1,6 @@
 ---
 layout: layouts/base.njk
 ---
-{# The article, its previous and next links and the code example components of @dume/ds, only on articles, in the page's CSS bundle #}
-<style>
-	{% include "node_modules/@dume/ds/dist/components/post.css" %}
-	{% include "node_modules/@dume/ds/dist/components/post-nav.css" %}
-	{% include "node_modules/@dume/ds/dist/components/code.css" %}
-</style>
-
 <article class="ds-c-post">
 	<header class="ds-c-post__header">
 		<h1 class="ds-c-post__title">{{ title }}</h1>
