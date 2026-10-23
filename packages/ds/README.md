@@ -21,6 +21,8 @@ Only the tokens the projects use: a new one comes with its first use.
 
 HTML elements are styled without classes, in the base: links, headings, tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--outline`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes.
 
+Web components, once the design system has some, are named `ds-` too (`<ds-notice>`); third-party ones keep their name (`<heading-anchors>`).
+
 ## Units
 
 - `rem` for sizes, on the base 4: multiples of 4px, `0.25rem` (`0.5rem` is 8px, `1rem` 16px). They follow the font size the visitor chose in the browser.
