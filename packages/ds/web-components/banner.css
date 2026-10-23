@@ -6,6 +6,8 @@
   /* All but the custom properties: the tokens stay; light or dark as the system, after it */
   all: initial;
   position: fixed;
+
+  /* The highest there is, the largest 32-bit integer: above the page's own sticky headers, players and dialogs */
   z-index: 2147483647;
   display: flex;
   justify-content: center;
