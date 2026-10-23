@@ -110,7 +110,6 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 | [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                     |
 | [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                | A site's header: its name and navigation                           |
 | [Footer](css/components/footer.css)       | `.ds-c-footer`                                                     | A site's footer                                                    |
-| [Links](css/components/links.css)         | `.ds-c-links`                                                      | A few prominent links, under a home page's introduction            |
 | [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`                   | A list of articles or talks                                        |
 | [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                 | An article                                                         |
 | [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                    | Links to the previous and next articles                            |
