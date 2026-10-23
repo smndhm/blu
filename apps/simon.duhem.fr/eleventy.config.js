@@ -14,10 +14,8 @@ export default async function (eleventyConfig) {
       './public/': '/',
     })
     .addPassthroughCopy('./content/articles/feed/pretty-atom-feed.xsl')
-    // Title font (latin subsets only), see css/index.css
-    .addPassthroughCopy({
-      'node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin{,-ext}-wght-normal.woff2': 'fonts',
-    })
+    // The design system, @dume/ds (packages/ds): ds.css, loaded by the layout, and its fonts, as /ds/
+    .addPassthroughCopy({ 'node_modules/@dume/ds/dist': 'ds' })
     // Social sharing images, referenced by `ogImage` front matter
     .addPassthroughCopy('./content/{articles/*,ia-postrophe}/og.{png,jpg,webp}')
     // IApostrophe script (bookmarklet and text tester), built by apps/ia-postrophe
@@ -32,20 +30,12 @@ export default async function (eleventyConfig) {
   eleventyConfig.addWatchTarget('../slides/src/*.md');
   // Watch the IApostrophe script, rebuilt by `pnpm --filter ia-postrophe dev`
   eleventyConfig.addWatchTarget('node_modules/ia-postrophe/dist/ia-postrophe.js');
-  // Watch CSS files
-  eleventyConfig.addWatchTarget('css/**/*.css');
+  // Watch the styles of @dume/ds, rebuilt by `pnpm --filter @dume/ds build`
+  eleventyConfig.addWatchTarget('node_modules/@dume/ds/dist/**/*.css');
   // Watch images for the image pipeline.
   eleventyConfig.addWatchTarget('content/**/*.{svg,webp,png,jpg,jpeg,gif}');
 
-  // Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
-  // Bundle <style> content and adds a {% css %} paired shortcode
-  eleventyConfig.addBundle('css', {
-    toFileDirectory: 'dist',
-    // Add all <style> content to `css` bundle (use <style eleventy:ignore> to opt-out)
-    // Supported selectors: https://www.npmjs.com/package/posthtml-match-helper
-    bundleHtmlContentFromSelector: 'style',
-  });
-
+  // Per-page bundle, see https://github.com/11ty/eleventy-plugin-bundle
   // Bundle <script> content and adds a {% js %} paired shortcode
   eleventyConfig.addBundle('js', {
     toFileDirectory: 'dist',

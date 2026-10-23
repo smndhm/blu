@@ -1,0 +1,36 @@
+/*
+ * A form field (`.ds-c-field`): its label, its control (an input, a select, or an element with `contenteditable`, its placeholder in
+ * `data-placeholder`; `--multiline` for a text on several lines), and a message under it whose line is kept, so that
+ * nothing moves when it shows
+ */
+@layer ds.components {
+  .ds-c-field__label {
+    display: block;
+    font-weight: 700;
+    margin-block: 0 var(--ds-b-size-8);
+  }
+
+  .ds-c-field__control {
+    border: var(--ds-b-size-border-1) solid var(--ds-b-color-border-control);
+    border-radius: var(--ds-b-size-radius);
+    background-color: var(--ds-b-color-background);
+    color: var(--ds-b-color-text);
+    padding-block: var(--ds-b-size-12);
+    padding-inline: var(--ds-b-size-16);
+
+    &:empty::before {
+      color: var(--ds-b-color-text-muted);
+      content: attr(data-placeholder);
+    }
+  }
+
+  .ds-c-field__control--multiline {
+    min-block-size: 9rem;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .ds-c-field__message {
+    min-block-size: 1lh;
+  }
+}

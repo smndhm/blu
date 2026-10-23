@@ -1,0 +1,42 @@
+{
+  "name": "@dume/ds",
+  "version": "0.0.0",
+  "description": "My design system: the styles shared by my projects (simon.duhem.fr, Music Bridge), design tokens, base, layouts and components",
+  "author": "Simon Duhem",
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "css-custom-properties",
+    "dark-mode"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smndhm/blu.git",
+    "directory": "packages/ds"
+  },
+  "type": "module",
+  "exports": {
+    "./ds.css": "./dist/ds.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./base.css": "./dist/base.css",
+    "./utilities.css": "./dist/utilities.css",
+    "./components/*.css": "./dist/components/*.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./fonts/*": "./dist/fonts/*",
+    "./layout/*.css": "./dist/layout/*.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test 'tests/*.test.js'",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "modern-normalize": "3.0.1",
+    "prismjs": "1.30.0"
+  }
+}

@@ -1,0 +1,14 @@
+/* A button, or a link that looks like one: outlined in the primary color */
+@layer ds.components {
+  .ds-c-button {
+    display: inline-block;
+    border: var(--ds-b-size-border-2) solid var(--ds-b-color-primary);
+    border-radius: var(--ds-b-size-radius);
+    color: inherit;
+    font-family: var(--ds-b-font-family);
+    font-weight: 700;
+    padding-block: var(--ds-b-size-4);
+    padding-inline: var(--ds-b-size-12);
+    text-decoration: none;
+  }
+}

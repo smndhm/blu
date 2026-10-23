@@ -1,0 +1,59 @@
+/*
+ * Code examples, highlighted by Prism: its Okaidia theme comes first in the built stylesheet, in this same layer
+ * (scripts/build.js), then these fixes
+ */
+@layer ds.components {
+  /* #f92672 on #272822 is 3.9:1, below the WCAG AA 4.5:1 ratio: lighter pink at 4.9:1 */
+  .token.property,
+  .token.tag,
+  .token.constant,
+  .token.symbol {
+    color: #fb5a8f;
+  }
+
+  /*
+   * New diff- syntax
+   */
+
+  pre[class*='language-diff-'] {
+    --eleventy-code-padding: 1.25em;
+
+    padding-inline: var(--eleventy-code-padding);
+  }
+
+  .token.deleted {
+    background-color: hsl(0deg 51% 37%);
+    color: inherit;
+  }
+
+  .token.inserted {
+    background-color: hsl(126deg 31% 39%);
+    color: inherit;
+  }
+
+  /* Make the + and - characters unselectable for copy/paste */
+  .token.prefix.unchanged,
+  .token.prefix.inserted,
+  .token.prefix.deleted {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 0.125em;
+    user-select: none;
+  }
+
+  .token.prefix.inserted,
+  .token.prefix.deleted {
+    background-color: rgb(0 0 0 / 20%);
+    inline-size: var(--eleventy-code-padding);
+  }
+
+  /* Optional: full-width background color */
+  .token.inserted:not(.prefix),
+  .token.deleted:not(.prefix) {
+    display: block;
+    color: inherit; /* override del, ins, mark defaults */
+    margin-inline: calc(-1 * var(--eleventy-code-padding));
+    text-decoration: none; /* override del, ins, mark defaults */
+  }
+}
