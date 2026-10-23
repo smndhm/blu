@@ -6,7 +6,7 @@
   border-radius: var(--ds-b-size-radius);
   background-color: var(--ds-b-color-primary);
   color: var(--ds-b-color-text-on-primary);
-  font-family: var(--ds-b-font-family-heading);
+  font-family: var(--ds-b-font-family);
   font-weight: 700;
   text-decoration: none;
 }
