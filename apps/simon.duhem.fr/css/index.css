@@ -42,9 +42,9 @@
 }
 
 html {
-  background-color: var(--sd-b-color-background);
-  color: var(--sd-b-color-text);
-  font-family: var(--sd-b-font-family);
+  background-color: var(--ds-b-color-background);
+  color: var(--ds-b-color-text);
+  font-family: var(--ds-b-font-family);
   line-height: 1.6;
 
   /* Reserve the scrollbar space without forcing a scrollbar on short pages */
@@ -57,7 +57,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--sd-b-font-family-heading);
+  font-family: var(--ds-b-font-family-heading);
 }
 
 h1,
@@ -79,19 +79,19 @@ h2 {
 
 a[href] {
   color: inherit;
-  text-decoration-color: var(--sd-b-color-primary);
+  text-decoration-color: var(--ds-b-color-primary);
   text-decoration-thickness: 0.1em;
   text-underline-offset: 0.2em;
 }
 
 a[href]:hover {
-  color: var(--sd-b-color-primary);
+  color: var(--ds-b-color-primary);
 }
 
 :focus-visible {
   border-radius: 2px;
-  outline: var(--sd-b-outline-focus);
-  outline-offset: var(--sd-b-outline-offset-focus);
+  outline: var(--ds-b-outline-focus);
+  outline-offset: var(--ds-b-outline-offset-focus);
 }
 
 img {
@@ -129,7 +129,7 @@ th {
 
 pre,
 code {
-  font-family: var(--sd-b-font-family-monospace);
+  font-family: var(--ds-b-font-family-monospace);
 }
 
 pre:not([class*='language-']) {
@@ -201,9 +201,9 @@ code {
   top: 1rem;
   left: 1rem;
   padding: 0.5rem 1rem;
-  border: 2px solid var(--sd-b-color-text);
-  background: var(--sd-b-color-background);
-  color: var(--sd-b-color-text);
+  border: 2px solid var(--ds-b-color-text);
+  background: var(--ds-b-color-background);
+  color: var(--ds-b-color-text);
 }
 
 .skip-link:not(:focus) {
@@ -223,12 +223,12 @@ code {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--sd-b-color-border);
+  border-bottom: 1px solid var(--ds-b-color-border);
   gap: 0.5rem 1.5rem;
 }
 
 .site-header__brand {
-  font-family: var(--sd-b-font-family-heading);
+  font-family: var(--ds-b-font-family-heading);
   font-weight: 700;
 }
 
@@ -250,13 +250,13 @@ code {
 .site-header__nav-link:hover,
 .site-header__nav-link[aria-current] {
   text-decoration: underline;
-  text-decoration-color: var(--sd-b-color-primary);
+  text-decoration-color: var(--ds-b-color-primary);
 }
 
 /* Footer */
 .site-footer {
   padding: 1rem 0;
-  border-top: 1px solid var(--sd-b-color-border);
+  border-top: 1px solid var(--ds-b-color-border);
 }
 
 .site-footer__list {
@@ -317,7 +317,7 @@ code {
 
 .post-list__meta {
   margin: 0.25rem 0 0;
-  color: var(--sd-b-color-text-muted);
+  color: var(--ds-b-color-text-muted);
   font-size: 0.9375rem;
 }
 
@@ -328,7 +328,7 @@ code {
 
 .post__meta {
   margin: 0.25rem 0 0;
-  color: var(--sd-b-color-text-muted);
+  color: var(--ds-b-color-text-muted);
   font-size: 0.9375rem;
 }
 
@@ -337,7 +337,7 @@ code {
   display: flex;
   justify-content: space-between;
   padding: 1.5rem 0 0;
-  border-top: 1px solid var(--sd-b-color-border);
+  border-top: 1px solid var(--ds-b-color-border);
   margin: 3rem 0 0;
   gap: 0.5rem 1rem;
   list-style: none;

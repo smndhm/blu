@@ -34,14 +34,14 @@ for (const theme of ['light', 'dark']) {
   test(`${theme}: every color has its custom property`, () => {
     const css = cssVariables();
     for (const [name, value] of Object.entries(colors[theme]))
-      assert.ok(css.includes(`--sd-b-color-${name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}: ${value};`), name);
+      assert.ok(css.includes(`--ds-b-color-${name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}: ${value};`), name);
   });
 }
 
 test('names every custom property after the taxonomy (see the README)', () => {
-  // As @dume/dev-config's Stylelint rule: --sd-b-{category}-…, --sd-c-{component}-{category}-…, --sd-l-{layout}-{category}-…
-  const name = /^--sd-(b|[cl]-[a-z0-9]+)-(color|font|size|outline)(-[a-z0-9]+)+$/;
-  const names = cssVariables().match(/--sd-[\w-]+(?=:)/g);
+  // As @dume/dev-config's Stylelint rule: --ds-b-{category}-…, --ds-c-{component}-{category}-…, --ds-l-{layout}-{category}-…
+  const name = /^--ds-(b|[cl]-[a-z0-9]+)-(color|font|size|outline)(-[a-z0-9]+)+$/;
+  const names = cssVariables().match(/--ds-[\w-]+(?=:)/g);
   assert.ok(names.length > 0);
   for (const property of names) assert.match(property, name);
 });
@@ -49,7 +49,7 @@ test('names every custom property after the taxonomy (see the README)', () => {
 test('sets the dark colors under prefers-color-scheme: dark, on any selector', () => {
   const css = cssVariables(':host');
   assert.match(css, /^:host \{\n {2}color-scheme: light dark;/);
-  assert.match(css, /@media \(prefers-color-scheme: dark\) \{\n {2}:host \{\n {4}--sd-b-color-text: #fafafa;/);
-  assert.ok(css.includes("--sd-b-font-family-heading: 'Bricolage Grotesque', "));
-  assert.ok(css.includes('--sd-b-outline-focus: 3px solid var(--sd-b-color-primary);'));
+  assert.match(css, /@media \(prefers-color-scheme: dark\) \{\n {2}:host \{\n {4}--ds-b-color-text: #fafafa;/);
+  assert.ok(css.includes("--ds-b-font-family-heading: 'Bricolage Grotesque', "));
+  assert.ok(css.includes('--ds-b-outline-focus: 3px solid var(--ds-b-color-primary);'));
 });

@@ -1,6 +1,6 @@
 /**
  * The design tokens: the one place for the colors, fonts, radius and focus ring of my projects, only those they use.
- * Each token is also a CSS custom property, `--sd-b-color-primary` for `colors.light.primary` and `colors.dark.primary`
+ * Each token is also a CSS custom property, `--ds-b-color-primary` for `colors.light.primary` and `colors.dark.primary`
  * (see the README for the naming): dist/tokens.css sets them (built by scripts/build.js), and `cssVariables()` gives the
  * same CSS for a stylesheet a page cannot load, such as a shadow root's.
  */
@@ -48,16 +48,16 @@ export const fonts = {
 /** In px: a page's root font size is not always the browser's (62.5% on Music Bridge's options, the page's own in a shadow root) */
 export const sizes = { radius: '8px' };
 
-/** The keyboard focus ring, in the primary color: `outline: var(--sd-b-outline-focus); outline-offset: var(--sd-b-outline-offset-focus);` */
-export const outlines = { focus: '3px solid var(--sd-b-color-primary)', offsetFocus: '2px' };
+/** The keyboard focus ring, in the primary color: `outline: var(--ds-b-outline-focus); outline-offset: var(--ds-b-outline-offset-focus);` */
+export const outlines = { focus: '3px solid var(--ds-b-color-primary)', offsetFocus: '2px' };
 
 /** `textMuted` → `text-muted` */
 const kebab = name => name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 
-/** Custom properties of a category: `color` and `{ textMuted }` → `--sd-b-color-text-muted` */
+/** Custom properties of a category: `color` and `{ textMuted }` → `--ds-b-color-text-muted` */
 const declarations = (category, tokens, indent) =>
   Object.entries(tokens)
-    .map(([name, value]) => `${indent}--sd-b-${category}-${kebab(name)}: ${value};`)
+    .map(([name, value]) => `${indent}--ds-b-${category}-${kebab(name)}: ${value};`)
     .join('\n');
 
 /**

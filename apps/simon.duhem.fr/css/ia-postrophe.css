@@ -4,9 +4,9 @@
 .bookmarklet {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  border: 2px solid var(--sd-b-color-primary);
+  border: 2px solid var(--ds-b-color-primary);
   border-radius: 999px;
-  font-family: var(--sd-b-font-family-heading);
+  font-family: var(--ds-b-font-family-heading);
   font-weight: 700;
   text-decoration: none;
 }
@@ -20,16 +20,16 @@
 .tester__input {
   min-height: 9rem;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--sd-b-color-text-muted);
+  border: 1px solid var(--ds-b-color-text-muted);
   border-radius: 4px;
-  background-color: var(--sd-b-color-background);
-  color: var(--sd-b-color-text);
+  background-color: var(--ds-b-color-background);
+  color: var(--ds-b-color-text);
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
 
 .tester__input:empty::before {
-  color: var(--sd-b-color-text-muted);
+  color: var(--ds-b-color-text-muted);
   content: attr(data-placeholder);
 }
 
@@ -57,13 +57,13 @@
 .examples th,
 .examples td {
   padding: 0.5rem 1rem 0.5rem 0;
-  border-bottom: 1px solid var(--sd-b-color-border);
+  border-bottom: 1px solid var(--ds-b-color-border);
   text-align: left;
   vertical-align: top;
 }
 
 .examples thead th {
-  font-family: var(--sd-b-font-family-heading);
+  font-family: var(--ds-b-font-family-heading);
 }
 
 .examples tbody th {
@@ -73,9 +73,9 @@
 /* Closing quote */
 .quote {
   padding-left: 1rem;
-  border-left: 4px solid var(--sd-b-color-primary);
+  border-left: 4px solid var(--ds-b-color-primary);
   margin: 2.5rem 0 0;
-  font-family: var(--sd-b-font-family-heading);
+  font-family: var(--ds-b-font-family-heading);
   font-size: 1.25rem;
   font-weight: 700;
 }

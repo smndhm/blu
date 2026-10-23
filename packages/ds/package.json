@@ -1,7 +1,7 @@
 {
   "name": "@dume/ds",
   "version": "0.0.0",
-  "description": "Simon Duhem's design system (DS, the other way round): the design tokens shared by my projects (simon.duhem.fr, Music Bridge\u2026), colors, light and dark, fonts, radius and focus ring, as CSS custom properties and as a JavaScript module",
+  "description": "My design system (DS): the design tokens shared by my projects (simon.duhem.fr, Music Bridge), colors, light and dark, fonts, radius and focus ring, as CSS custom properties and as a JavaScript module",
   "author": "Simon Duhem",
   "keywords": [
     "design-system",
