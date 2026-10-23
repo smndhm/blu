@@ -38,6 +38,14 @@ for (const theme of ['light', 'dark']) {
   });
 }
 
+test('names every custom property after the taxonomy (see the README)', () => {
+  // --sd-{layer}-{category}-{role}-{variant}: the known layers and categories, then lowercase words
+  const name = /^--sd-(b|c|l)-(color|font|size|outline)(-[a-z]+)+$/;
+  const names = cssVariables().match(/--sd-[\w-]+(?=:)/g);
+  assert.ok(names.length > 0);
+  for (const property of names) assert.match(property, name);
+});
+
 test('sets the dark colors under prefers-color-scheme: dark, on any selector', () => {
   const css = cssVariables(':host');
   assert.match(css, /^:host \{\n {2}color-scheme: light dark;/);
