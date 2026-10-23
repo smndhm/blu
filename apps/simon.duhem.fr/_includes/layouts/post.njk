@@ -3,7 +3,7 @@ layout: layouts/base.njk
 ---
 <article class="ds-c-post">
 	<header class="ds-c-post__header">
-		<h1 class="ds-c-post__title">{{ title }}</h1>
+		<h1>{{ title }}</h1>
 		<p class="ds-c-post__meta">
 			<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
 			{%- for topic in tags | topics %} · {{ topic }}{% endfor %}
@@ -13,7 +13,7 @@ layout: layouts/base.njk
 		{%- endif %}
 	</header>
 
-	<heading-anchors class="ds-c-post__content">
+	<heading-anchors>
 		{{ content | safe }}
 	</heading-anchors>
 </article>

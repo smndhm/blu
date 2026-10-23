@@ -1,4 +1,4 @@
-/* HTML elements, after modern-normalize: also the Markdown content of articles */
+/* HTML elements, styled without classes, after modern-normalize: also the Markdown content of articles */
 
 :root {
   /* Native checkboxes, radio buttons and progress bars in the primary color */
@@ -84,13 +84,34 @@ iframe {
   aspect-ratio: 16 / 9;
 }
 
+/* A data table: a line between rows */
 table {
+  border-collapse: collapse;
+  inline-size: 100%;
   margin-block: 1em;
 }
 
-td,
-th {
-  padding-inline-end: 1em;
+th,
+td {
+  border-block-end: 1px solid var(--ds-b-color-border);
+  padding-block: 0.5rem;
+  padding-inline: 0 1rem;
+  text-align: start;
+  vertical-align: top;
+}
+
+tbody th {
+  font-weight: 400;
+}
+
+/* A quote set apart: a line in the primary color, larger bold text */
+blockquote {
+  border-inline-start: 4px solid var(--ds-b-color-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-block: 2.5rem 0;
+  margin-inline: 0;
+  padding-inline-start: 1rem;
 }
 
 pre,

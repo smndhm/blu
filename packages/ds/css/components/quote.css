@@ -1,9 +1,0 @@
-/* A quote set apart: a line in the primary color, larger bold text */
-.ds-c-quote {
-  border-inline-start: 4px solid var(--ds-b-color-primary);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-block: 2.5rem 0;
-  margin-inline: 0;
-  padding-inline-start: 1rem;
-}

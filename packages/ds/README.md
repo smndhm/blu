@@ -17,7 +17,9 @@ Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the
 
 @dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, without depending on this package. Its tests check its tokens (`css/tokens.css`) the same way. A new category goes in this list, in the Stylelint rule and in the test.
 
-Only the tokens the projects use: a new one comes with its first use. Classes: the `.ds-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--primary`): a block's class on its root, its elements only inside it, each with its class even without a style of its own, so that the markup tells the component's structure.
+Only the tokens the projects use: a new one comes with its first use.
+
+HTML elements are styled without classes, in the base: links, headings, tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--outline`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes.
 
 ## Units
 
@@ -50,14 +52,14 @@ simon.duhem.fr does so: its Eleventy configuration copies `dist/` as `/ds/`.
 
 Its parts are also stylesheets of their own, for a project that only takes some of them:
 
-| Stylesheet                  | What                                                                                                                                          |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                    |
-| `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                       |
-| `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements: text, headings, links, focus ring, images, code |
-| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                             |
-| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`)                                 |
-| `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                      |
+| Stylesheet                  | What                                                                                                                                                                           |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                                                     |
+| `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                        |
+| `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, links, focus ring, images, tables, quotes, code |
+| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                                                              |
+| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`)                                                                  |
+| `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                       |
 
 ```css
 @import '@dume/ds/tokens.css';
@@ -90,20 +92,18 @@ Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests 
 
 One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`.
 
-| Component                                 | Classes                                                               | For                                                                |
-| ----------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`                                           | A button, or a link that looks like one                            |
-| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message`    | A label, its control, a message under it whose line is kept        |
-| [Table](css/components/table.css)         | `.ds-c-table`                                                         | A data table                                                       |
-| [Quote](css/components/quote.css)         | `.ds-c-quote`                                                         | A quote set apart                                                  |
-| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                     | A link to the main content, shown when focused                     |
-| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__nav`, `__list`, `__item`, `__link`      | A site's header: its name and navigation                           |
-| [Footer](css/components/footer.css)       | `.ds-c-footer`, `__list`, `__item`                                    | A site's footer                                                    |
-| [Hero](css/components/hero.css)           | `.ds-c-hero`, `__title`, `__description`, `__nav`, `__list`, `__item` | The introduction of a home page                                    |
-| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`                      | A list of articles or talks                                        |
-| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__title`, `__meta`, `__content`            | An article                                                         |
-| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                       | Links to the previous and next articles                            |
-| [Code](css/components/code.css)           | Prism's classes                                                       | Code examples highlighted by Prism (Okaidia theme, contrast fixed) |
+| Component                                 | Classes                                                            | For                                                                |
+| ----------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`                                        | A button, or a link that looks like one                            |
+| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept        |
+| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                     |
+| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                | A site's header: its name and navigation                           |
+| [Footer](css/components/footer.css)       | `.ds-c-footer`                                                     | A site's footer                                                    |
+| [Hero](css/components/hero.css)           | `.ds-c-hero`, `__title`, `__list`                                  | The introduction of a home page                                    |
+| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`                   | A list of articles or talks                                        |
+| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                 | An article                                                         |
+| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                    | Links to the previous and next articles                            |
+| [Code](css/components/code.css)           | Prism's classes                                                    | Code examples highlighted by Prism (Okaidia theme, contrast fixed) |
 
 ## Development
 
