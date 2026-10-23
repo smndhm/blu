@@ -35,7 +35,7 @@ Web components are named `ds-` too (`<ds-notice>`); third-party ones keep their 
 ## Units
 
 - `rem` for sizes, on the base 4: multiples of 4px, `0.25rem` (`0.5rem` is 8px, `1rem` 16px). They follow the font size the visitor chose in the browser.
-- Spacing, font sizes and radii from the tokens (`var(--ds-b-size-16)`), never written in rem or px: the scale stays in one place. Stylelint (@dume/dev-config) checks both rules.
+- Spacing, font sizes, radii and border widths from the tokens (`var(--ds-b-size-16)`, `var(--ds-b-size-border-1) solid`), never written in rem or px: the scale stays in one place. Stylelint (@dume/dev-config) checks both rules.
 - `em` inside a component, for what grows with its text, such as a button's padding.
 - `px` for borders and the focus ring: 1px stays 1px, and the 3px ring stays visible whatever the zoom.
 - No unit for line heights (`1.5`), `ch` for a reading width (`65ch`), `clamp()` for a size that follows the screen between a minimum and a maximum, `dvh` rather than `vh`, logical properties (`margin-inline`, `padding-block`).
@@ -98,6 +98,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | `--ds-b-size-4`, `-8`, `-12`, `-16`, `-20`, `-24`, `-32`, `-40`, `-48`               | `0.25rem` to `3rem`, named after their px, for spacing and fonts alike |
 | `--ds-b-size-display`                                                                | `clamp(2.5rem, 8vw, 4rem)`, a home page's title                        |
 | `--ds-b-size-radius`                                                                 | `0.5rem` (8px)                                                         |
+| `--ds-b-size-border-1`, `-2`, `-4`                                                   | `1px`, `2px`, `4px`: border widths                                     |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`, `--ds-b-outline-radius-focus` | `3px solid var(--ds-b-color-primary)`, `2px`, `2px`                    |
 
 Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `ds.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.

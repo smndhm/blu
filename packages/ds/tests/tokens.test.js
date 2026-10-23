@@ -53,11 +53,17 @@ test('names every custom property after the taxonomy (see the README)', () => {
 });
 
 test('sizes in rem on the base 4: multiples of 0.25rem', () => {
-  const sizes = Object.entries(tokens).filter(([token]) => token.startsWith('--ds-b-size-'));
+  const sizes = Object.entries(tokens).filter(([token]) => token.startsWith('--ds-b-size-') && !token.startsWith('--ds-b-size-border-'));
   assert.ok(sizes.length > 0);
   for (const [name, value] of sizes) {
     const rems = [...value.matchAll(/(\d*\.?\d+)rem/g)].map(([, number]) => Number.parseFloat(number));
     assert.ok(rems.length > 0, `${name}: ${value} has no rem`);
     for (const rem of rems) assert.equal((rem * 4) % 1, 0, `${name}: ${rem}rem is no multiple of 0.25rem`);
   }
+});
+
+test('border widths in px', () => {
+  const borders = Object.entries(tokens).filter(([token]) => token.startsWith('--ds-b-size-border-'));
+  assert.ok(borders.length > 0);
+  for (const [name, value] of borders) assert.match(value, /^\d+px$/, name);
 });

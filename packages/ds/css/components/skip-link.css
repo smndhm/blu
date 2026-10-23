@@ -2,7 +2,7 @@
 .ds-c-skip-link {
   position: absolute;
   z-index: 999;
-  border: 2px solid var(--ds-b-color-text);
+  border: var(--ds-b-size-border-2) solid var(--ds-b-color-text);
   background: var(--ds-b-color-background);
   color: var(--ds-b-color-text);
   inset-block-start: var(--ds-b-size-16);

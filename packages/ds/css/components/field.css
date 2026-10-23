@@ -10,7 +10,7 @@
 }
 
 .ds-c-field__control {
-  border: 1px solid var(--ds-b-color-border-control);
+  border: var(--ds-b-size-border-1) solid var(--ds-b-color-border-control);
   border-radius: var(--ds-b-size-radius);
   background-color: var(--ds-b-color-background);
   color: var(--ds-b-color-text);

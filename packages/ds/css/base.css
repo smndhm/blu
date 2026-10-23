@@ -104,7 +104,7 @@ table {
 
 th,
 td {
-  border-block-end: 1px solid var(--ds-b-color-border);
+  border-block-end: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
   padding-block: var(--ds-b-size-8);
   padding-inline: 0 var(--ds-b-size-16);
   text-align: start;
@@ -117,7 +117,7 @@ tbody th {
 
 /* A quote set apart: a line in the primary color, larger text */
 blockquote {
-  border-inline-start: 4px solid var(--ds-b-color-primary);
+  border-inline-start: var(--ds-b-size-border-4) solid var(--ds-b-color-primary);
   font-size: var(--ds-b-size-20);
   margin-block: var(--ds-b-size-40) 0;
   margin-inline: 0;

@@ -4,7 +4,7 @@
   justify-content: space-between;
   padding: var(--ds-b-size-24) 0 0;
   margin: var(--ds-b-size-48) 0 0;
-  border-block-start: 1px solid var(--ds-b-color-border);
+  border-block-start: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
   gap: var(--ds-b-size-8) var(--ds-b-size-16);
   list-style: none;
 }

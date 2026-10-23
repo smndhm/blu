@@ -41,6 +41,11 @@
   --ds-b-size-display: clamp(2.5rem, 8vw, 4rem);
   --ds-b-size-radius: 0.5rem;
 
+  /* Border widths, in px: a 1px line stays 1px whatever the zoom */
+  --ds-b-size-border-1: 1px;
+  --ds-b-size-border-2: 2px;
+  --ds-b-size-border-4: 4px;
+
   /* The keyboard focus ring, in px as a border: it stays visible whatever the zoom */
   --ds-b-outline-focus: 3px solid var(--ds-b-color-primary);
   --ds-b-outline-offset-focus: 2px;

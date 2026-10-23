@@ -1,7 +1,7 @@
 /* A button, or a link that looks like one: outlined in the primary color */
 .ds-c-button {
   display: inline-block;
-  border: 2px solid var(--ds-b-color-primary);
+  border: var(--ds-b-size-border-2) solid var(--ds-b-color-primary);
   border-radius: var(--ds-b-size-radius);
   color: inherit;
   font-family: var(--ds-b-font-family);
