@@ -1,0 +1,30 @@
+/* A site's header: its name, in the heading font, and its navigation */
+.ds-c-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-block-end: 1px solid var(--ds-b-color-border);
+  gap: 0.5rem 1.5rem;
+  padding-block: 1rem;
+}
+
+.ds-c-header__brand {
+  font-family: var(--ds-b-font-family-heading);
+  font-weight: 700;
+}
+
+.ds-c-header__brand,
+.ds-c-header__link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--ds-b-color-primary);
+  }
+}
+
+.ds-c-header__link[aria-current] {
+  text-decoration: underline;
+  text-decoration-color: var(--ds-b-color-primary);
+}

@@ -1,0 +1,21 @@
+/* A list of articles or talks: titles and their details */
+.ds-c-post-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ds-c-post-list__item + .ds-c-post-list__item {
+  margin-block-start: 1.5rem;
+}
+
+.ds-c-post-list__title {
+  font-size: 1.25rem;
+  margin-block: 0 0.25rem;
+}
+
+.ds-c-post-list__meta {
+  color: var(--ds-b-color-text-muted);
+  font-size: 0.9375rem;
+  margin-block: 0.25rem 0;
+}

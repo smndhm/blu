@@ -1,0 +1,5 @@
+/* A site's footer */
+.ds-c-footer {
+  border-block-start: 1px solid var(--ds-b-color-border);
+  padding-block: 1rem;
+}

@@ -1,0 +1,25 @@
+/* A page: a column of readable width, its main content growing to push the footer down (`--centered`: centered) */
+.ds-l-page {
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+  max-inline-size: 44rem;
+  min-block-size: 100svh; /* Mobile: the viewport with the browser UI shown, never overflows */
+  padding-inline: 1rem;
+}
+
+.ds-l-page__main {
+  flex-grow: 1;
+  padding-block: 2rem;
+
+  /* Focused by the skip link: no ring around the whole content */
+  &:focus {
+    outline: none;
+  }
+}
+
+.ds-l-page--centered .ds-l-page__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

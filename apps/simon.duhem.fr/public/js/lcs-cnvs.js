@@ -29,7 +29,8 @@ class LcsCnvs {
     this.#window = window;
 
     this.#canvas = document.createElement('canvas');
-    this.#canvas.className = 'lcs-cnvs';
+    // Behind the page and the pointer, kept faint so that the text's contrast stays sufficient
+    this.#canvas.style.cssText = 'position: fixed; z-index: -1; inset: 0; opacity: 0.35; pointer-events: none;';
     this.#canvas.setAttribute('aria-hidden', 'true');
     this.#ctx = this.#canvas.getContext('2d');
     this.#resize();

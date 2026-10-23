@@ -1,0 +1,22 @@
+/* A link to the main content, only shown when focused */
+.ds-c-skip-link {
+  position: absolute;
+  z-index: 999;
+  border: 2px solid var(--ds-b-color-text);
+  background: var(--ds-b-color-background);
+  color: var(--ds-b-color-text);
+  inset-block-start: 1rem;
+  inset-inline-start: 1rem;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+
+  &:not(:focus) {
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    white-space: nowrap;
+  }
+}

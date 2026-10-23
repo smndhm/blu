@@ -34,7 +34,7 @@ Only the tokens the projects use: a new one comes with its first use. In JavaScr
 - The target: [Baseline widely available](https://web.dev/baseline), what every major browser has had for 30 months.
 - Light and dark themes: each color is `light-dark(light, dark)`, which follows `color-scheme`, the system's by default; `color-scheme: dark` on a page or an element forces a theme.
 - Left-to-right and right-to-left languages alike: logical properties and values (`margin-inline-start`, `text-align: start`), which @dume/dev-config's Stylelint configuration requires.
-- Cascade layers: `ds.normalize`, `ds.base`, `ds.components`, `ds.utilities`, under any project's own CSS, which wins without a specificity fight.
+- Cascade layers: `ds.normalize`, `ds.base`, `ds.layout`, `ds.components`, `ds.utilities`, under any project's own CSS, which wins without a specificity fight.
 - Windows' contrast themes (`forced-colors`): components draw their edges with borders and outlines, which those themes keep, not with backgrounds alone.
 - Native controls in the primary color (`accent-color`), balanced headings and paragraphs without an orphan word (`text-wrap`).
 

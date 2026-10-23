@@ -31,15 +31,19 @@
 
 		{%- include "partials/structured-data.njk" %}
 
-		{#- @dume/ds (packages/ds): its heading font, the files served at /fonts/ (eleventy.config.js), its tokens, base and utilities, then the site's stylesheet #}
+		{#- @dume/ds (packages/ds): its heading font, the files served at /fonts/ (eleventy.config.js), its tokens, base and utilities, the layouts and components of every page #}
 		{%- set dsFonts %}{% include "node_modules/@dume/ds/dist/fonts.css" %}{% endset %}
 		<style>
 			{{ dsFonts | replace("url(fonts/", "url(/fonts/") | safe }}
 			{% include "node_modules/@dume/ds/dist/tokens.css" %}
 			{% include "node_modules/@dume/ds/dist/base.css" %}
 			{% include "node_modules/@dume/ds/dist/utilities.css" %}
+			{% include "node_modules/@dume/ds/dist/layout/page.css" %}
+			{% include "node_modules/@dume/ds/dist/layout/cluster.css" %}
+			{% include "node_modules/@dume/ds/dist/components/skip-link.css" %}
+			{% include "node_modules/@dume/ds/dist/components/header.css" %}
+			{% include "node_modules/@dume/ds/dist/components/footer.css" %}
 		</style>
-		<style>{% include "css/index.css" %}</style>
 
 		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
 		<style>{% getBundle "css" %}</style>
@@ -47,30 +51,30 @@
 		{#- Add the heading-anchors web component to the JavaScript bundle #}
 		<script type="module">{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}</script>
 	</head>
-	<body class="page{% if bodyClass %} {{ bodyClass }}{% endif %}">
+	<body class="ds-l-page{% if bodyClass %} {{ bodyClass }}{% endif %}">
 		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
 		{%- if page.url != "/" %}
-		<a href="#main" class="skip-link">Aller au contenu</a>
+		<a href="#main" class="ds-c-skip-link">Aller au contenu</a>
 
-		<header class="site-header">
-			<a href="/" class="site-header__brand">{{ metadata.title }}</a>
-			<nav class="site-header__nav" aria-label="Principale">
-				<ul class="site-header__nav-list">
+		<header class="ds-c-header">
+			<a href="/" class="ds-c-header__brand">{{ metadata.title }}</a>
+			<nav aria-label="Principale">
+				<ul class="ds-l-cluster">
 					{%- for entry in [{ url: "/articles/", title: "Articles" }] %}
-					<li><a href="{{ entry.url }}" class="site-header__nav-link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
+					<li><a href="{{ entry.url }}" class="ds-c-header__link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
 					{%- endfor %}
 				</ul>
 			</nav>
 		</header>
 		{%- endif %}
 
-		<main id="main" class="page__main" tabindex="-1">
+		<main id="main" class="ds-l-page__main" tabindex="-1">
 			{{ content | safe }}
 		</main>
 
 		{%- if page.url != "/" %}
-		<footer class="site-footer">
-			<ul class="site-footer__list">
+		<footer class="ds-c-footer">
+			<ul class="ds-l-cluster">
 				{%- for link in metadata.social %}
 				<li><a href="{{ link.url }}">{{ link.name }}</a></li>
 				{%- endfor %}

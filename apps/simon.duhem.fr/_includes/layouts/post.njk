@@ -1,24 +1,25 @@
 ---
 layout: layouts/base.njk
 ---
-{# Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle #}
-<style>{% include "node_modules/prismjs/themes/prism-okaidia.css" %}</style>
-<style>{% include "css/prism-diff.css" %}</style>
-<style>{% include "css/prism-a11y.css" %}</style>
+{# The article and code example components of @dume/ds, only on articles, in the page's CSS bundle #}
+<style>
+	{% include "node_modules/@dume/ds/dist/components/post.css" %}
+	{% include "node_modules/@dume/ds/dist/components/code.css" %}
+</style>
 
-<article class="post">
-	<header class="post__header">
-		<h1 class="post__title">{{ title }}</h1>
-		<p class="post__meta">
+<article>
+	<header class="ds-c-post__header">
+		<h1>{{ title }}</h1>
+		<p class="ds-c-post__meta">
 			<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
 			{%- for topic in tags | topics %} · {{ topic }}{% endfor %}
 		</p>
 		{%- if origin %}
-		<p class="post__meta">Publié initialement sur <a href="{{ origin.href }}">{{ origin.title }}</a>.</p>
+		<p class="ds-c-post__meta">Publié initialement sur <a href="{{ origin.href }}">{{ origin.title }}</a>.</p>
 		{%- endif %}
 	</header>
 
-	<heading-anchors class="post__content">
+	<heading-anchors>
 		{{ content | safe }}
 	</heading-anchors>
 </article>
@@ -27,10 +28,10 @@ layout: layouts/base.njk
 {%- set previousPost = collections.posts | getPreviousCollectionItem %}
 {%- set nextPost = collections.posts | getNextCollectionItem %}
 {%- if nextPost or previousPost %}
-<nav class="post-nav" aria-label="Autres articles">
-	<ul class="post-nav__list">
-		{%- if previousPost %}<li class="post-nav__item post-nav__item--prev">← Précédent<br> <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></li>{% endif %}
-		{%- if nextPost %}<li class="post-nav__item post-nav__item--next">Suivant →<br><a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></li>{% endif %}
+<nav aria-label="Autres articles">
+	<ul class="ds-c-post__nav">
+		{%- if previousPost %}<li class="ds-c-post__nav-item">← Précédent<br> <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></li>{% endif %}
+		{%- if nextPost %}<li class="ds-c-post__nav-item ds-c-post__nav-item--next">Suivant →<br><a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></li>{% endif %}
 	</ul>
 </nav>
 {%- endif %}

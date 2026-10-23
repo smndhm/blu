@@ -30,8 +30,8 @@ export default async function (eleventyConfig) {
   eleventyConfig.addWatchTarget('../slides/src/*.md');
   // Watch the IApostrophe script, rebuilt by `pnpm --filter ia-postrophe dev`
   eleventyConfig.addWatchTarget('node_modules/ia-postrophe/dist/ia-postrophe.js');
-  // Watch CSS files
-  eleventyConfig.addWatchTarget('css/**/*.css');
+  // Watch the styles of @dume/ds, rebuilt by `pnpm --filter @dume/ds build`
+  eleventyConfig.addWatchTarget('node_modules/@dume/ds/dist/**/*.css');
   // Watch images for the image pipeline.
   eleventyConfig.addWatchTarget('content/**/*.{svg,webp,png,jpg,jpeg,gif}');
 

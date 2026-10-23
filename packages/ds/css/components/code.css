@@ -1,4 +1,17 @@
 /*
+ * Code examples, highlighted by Prism: its Okaidia theme comes first in the built stylesheet (scripts/build.js), then
+ * these fixes
+ */
+
+/* #f92672 on #272822 is 3.9:1, below the WCAG AA 4.5:1 ratio: lighter pink at 4.9:1 */
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol {
+  color: #fb5a8f;
+}
+
+/*
  * New diff- syntax
  */
 

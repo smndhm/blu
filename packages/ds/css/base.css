@@ -7,6 +7,14 @@
   color: var(--ds-b-color-text);
   font-family: var(--ds-b-font-family);
   line-height: 1.6;
+
+  /* Reserve the scrollbar's room without forcing a scrollbar on short pages */
+  scrollbar-gutter: stable;
+}
+
+/* A cross-fade between the pages of a site */
+@view-transition {
+  navigation: auto;
 }
 
 h1,
@@ -16,13 +24,8 @@ h4,
 h5,
 h6 {
   font-family: var(--ds-b-font-family-heading);
-  text-wrap: balance;
-}
-
-h1,
-h2,
-h3 {
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 h1 {
