@@ -1,14 +1,14 @@
 /*
- * A button, or a link that looks like one: outlined in the primary color (`--filled`: filled with it, for a page's main
- * actions)
+ * A button, or a link that looks like one: filled with the primary color (`--outline`: outlined with it, for a
+ * secondary action, or a button within the text)
  */
 @layer ds.components {
   .ds-c-button {
     display: inline-block;
     border: var(--ds-b-size-border-2) solid var(--ds-b-color-primary);
     border-radius: var(--ds-b-size-radius);
-    background-color: transparent;
-    color: inherit;
+    background-color: var(--ds-b-color-primary);
+    color: var(--ds-b-color-text-on-primary);
     font-family: var(--ds-b-font-family);
     font-size: inherit;
     font-weight: inherit;
@@ -18,8 +18,8 @@
     text-decoration: none;
   }
 
-  .ds-c-button--filled {
-    background-color: var(--ds-b-color-primary);
-    color: var(--ds-b-color-text-on-primary);
+  .ds-c-button--outline {
+    background-color: transparent;
+    color: inherit;
   }
 }
