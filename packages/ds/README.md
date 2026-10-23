@@ -64,7 +64,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark` and th
 | `--ds-b-size-radius`                                                               | `0.5rem` (8px)                                                |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`                              | `3px solid var(--ds-b-color-primary)`, `2px`                  |
 
-Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is the page's to load (`@fontsource-variable/bricolage-grotesque`); without it, headings fall back to the system font.
+Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels; it is the page's to load (`@fontsource-variable/bricolage-grotesque`); without it, headings fall back to the system font.
 
 ## Components
 
