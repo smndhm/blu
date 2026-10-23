@@ -19,7 +19,7 @@ Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the
 
 Only the tokens the projects use: a new one comes with its first use.
 
-HTML elements are styled without classes, in the base: links, headings, tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--outline`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes.
+HTML elements are styled without classes, in the base: links, headings, tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-l-page--centered`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes. A modifier only when its block or element is also used without it, or when it is a variant of its own (`.ds-c-field__control--multiline`: a select or an input is the control without it).
 
 ### Web components
 
@@ -105,7 +105,7 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 
 | Component                                 | Classes                                                            | For                                                                |
 | ----------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`                                        | A button, or a link that looks like one                            |
+| [Button](css/components/button.css)       | `.ds-c-button`                                                     | A button, or a link that looks like one, outlined                  |
 | [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept        |
 | [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                     |
 | [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                | A site's header: its name and navigation                           |
