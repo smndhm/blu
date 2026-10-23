@@ -39,8 +39,8 @@ for (const theme of ['light', 'dark']) {
 }
 
 test('names every custom property after the taxonomy (see the README)', () => {
-  // --sd-{layer}-{category}-{role}-{variant}: the known layers and categories, then lowercase words
-  const name = /^--sd-(b|c|l)-(color|font|size|outline)(-[a-z]+)+$/;
+  // As @dume/dev-config's Stylelint rule: --sd-b-{category}-…, --sd-c-{component}-{category}-…, --sd-l-{layout}-{category}-…
+  const name = /^--sd-(b|[cl]-[a-z0-9]+)-(color|font|size|outline)(-[a-z0-9]+)+$/;
   const names = cssVariables().match(/--sd-[\w-]+(?=:)/g);
   assert.ok(names.length > 0);
   for (const property of names) assert.match(property, name);

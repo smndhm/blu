@@ -4,19 +4,20 @@ The design tokens shared by my projects ([simon.duhem.fr](https://simon.duhem.fr
 
 ## Naming
 
-Custom properties are named `--sd-{layer}-{category}-{role}-{variant}`, in lowercase words:
+Custom properties are named in lowercase words:
 
-- `--sd-`: the namespace.
-- The layer: `b-` for base tokens, `c-` for a component's (`--sd-c-button-…`), `l-` for layout's (`--sd-l-grid-…`).
+- `--sd-b-{category}-{role}-{variant}` for a base token: `--sd-b-color-text`, `--sd-b-color-text-muted`, `--sd-b-color-background-surface`, `--sd-b-outline-focus`.
+- `--sd-c-{component}-{category}-…` for a component's (`--sd-c-button-size-min-height`), `--sd-l-{layout}-{category}-…` for a layout's (`--sd-l-grid-size-gap`).
+- `--sd-` is the namespace; `b`, `c`, `l` the layer.
 - The category, from a closed list: `color`, `font`, `size`, or the CSS property a composite value goes to (`outline`).
-- The role, then the variant, from the most general to the most specific: `--sd-b-color-text`, `--sd-b-color-text-muted`, `--sd-b-color-text-on-primary`, `--sd-b-color-background-surface`, `--sd-b-outline-focus`.
+- The role, then the variant, from the most general to the most specific.
 - The light and dark themes change the values, never the names.
 
-Not `--sd-b-muted-color` (the category comes first), `--sd-b-color-surface` (the role, `background`, is missing), `--sd-b-focus-outline` (`focus` is no category: the CSS property is). The tests check the namespace, the layer and the category of every token; a new category goes in the list above and in the test.
+Not `--sd-b-muted-color` (the category comes first), `--sd-b-color-surface` (the role, `background`, is missing), `--sd-b-focus-outline` (`focus` is no category: the CSS property is).
+
+@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/design`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its own tokens the same way. A new category goes in this list, in the Stylelint rule and in the test.
 
 Only the tokens the projects use: a new one comes with its first use. In JavaScript, the same path: `colors.light.backgroundSurface`, `outlines.focus`. Classes, once components come: the `.sd-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.sd-c-button--primary`).
-
-In a project that installs `@dume/design`, @dume/dev-config's Stylelint configuration reports a `var()` naming none of its tokens nor a custom property of the project: a misspelled or renamed token.
 
 ## CSS
 
