@@ -2,7 +2,7 @@
   "name": "simon.duhem.fr",
   "private": true,
   "version": "2.1.0",
-  "description": "Site personnel : pr\u00e9sentation, articles et slides de conf\u00e9rences.",
+  "description": "Site personnel.",
   "type": "module",
   "scripts": {
     "build": "eleventy",
