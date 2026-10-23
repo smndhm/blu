@@ -1,15 +1,16 @@
 ---
 layout: layouts/base.njk
 ---
-{# The article and code example components of @dume/ds, only on articles, in the page's CSS bundle #}
+{# The article, its previous and next links and the code example components of @dume/ds, only on articles, in the page's CSS bundle #}
 <style>
 	{% include "node_modules/@dume/ds/dist/components/post.css" %}
+	{% include "node_modules/@dume/ds/dist/components/post-nav.css" %}
 	{% include "node_modules/@dume/ds/dist/components/code.css" %}
 </style>
 
-<article>
+<article class="ds-c-post">
 	<header class="ds-c-post__header">
-		<h1>{{ title }}</h1>
+		<h1 class="ds-c-post__title">{{ title }}</h1>
 		<p class="ds-c-post__meta">
 			<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
 			{%- for topic in tags | topics %} · {{ topic }}{% endfor %}
@@ -19,7 +20,7 @@ layout: layouts/base.njk
 		{%- endif %}
 	</header>
 
-	<heading-anchors>
+	<heading-anchors class="ds-c-post__content">
 		{{ content | safe }}
 	</heading-anchors>
 </article>
@@ -28,10 +29,10 @@ layout: layouts/base.njk
 {%- set previousPost = collections.posts | getPreviousCollectionItem %}
 {%- set nextPost = collections.posts | getNextCollectionItem %}
 {%- if nextPost or previousPost %}
-<nav aria-label="Autres articles">
-	<ul class="ds-c-post__nav">
-		{%- if previousPost %}<li class="ds-c-post__nav-item">← Précédent<br> <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></li>{% endif %}
-		{%- if nextPost %}<li class="ds-c-post__nav-item ds-c-post__nav-item--next">Suivant →<br><a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></li>{% endif %}
+<nav class="ds-c-post-nav" aria-label="Autres articles">
+	<ul class="ds-c-post-nav__list">
+		{%- if previousPost %}<li class="ds-c-post-nav__item">← Précédent<br> <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></li>{% endif %}
+		{%- if nextPost %}<li class="ds-c-post-nav__item ds-c-post-nav__item--next">Suivant →<br><a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></li>{% endif %}
 	</ul>
 </nav>
 {%- endif %}

@@ -58,7 +58,7 @@
 
 		<header class="ds-c-header">
 			<a href="/" class="ds-c-header__brand">{{ metadata.title }}</a>
-			<nav aria-label="Principale">
+			<nav class="ds-c-header__nav" aria-label="Principale">
 				<ul class="ds-l-cluster">
 					{%- for entry in [{ url: "/articles/", title: "Articles" }] %}
 					<li><a href="{{ entry.url }}" class="ds-c-header__link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>

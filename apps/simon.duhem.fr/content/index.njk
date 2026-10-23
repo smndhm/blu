@@ -8,8 +8,8 @@ documentTitle: 'Simon Duhem, architecte front-end : accessibilité et Web Compon
 
 <div class="ds-c-hero">
 <h1 class="ds-c-hero__title">{{ metadata.title }}</h1>
-<p>{{ metadata.intro }}</p>
-<nav aria-label="Liens">
+<p class="ds-c-hero__description">{{ metadata.intro }}</p>
+<nav class="ds-c-hero__nav" aria-label="Liens">
 	<ul class="ds-l-cluster ds-c-hero__links">
 		<li><a href="/articles/">Articles</a></li>
 		{%- for link in metadata.social %}
