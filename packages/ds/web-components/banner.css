@@ -1,5 +1,5 @@
 /*
- * <ds-notice>, in its shadow root: the tokens come before, set on :host in px by scripts/build.js, as the page's root
+ * <ds-banner>, in its shadow root: the tokens come before, set on :host in px by scripts/build.js, as the page's root
  * font size is not ours
  */
 :host {
@@ -13,7 +13,7 @@
   inset: var(--ds-b-size-12) var(--ds-b-size-12) auto;
   pointer-events: none;
 
-  --ds-c-notice-color-hover: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 8%, transparent), color-mix(in srgb, var(--ds-b-color-primary) 12%, transparent));
+  --ds-c-banner-color-hover: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 8%, transparent), color-mix(in srgb, var(--ds-b-color-primary) 12%, transparent));
 }
 
 div {
@@ -73,7 +73,7 @@ button {
   line-height: 1;
 
   &:hover {
-    background-color: var(--ds-c-notice-color-hover);
+    background-color: var(--ds-c-banner-color-hover);
   }
 }
 

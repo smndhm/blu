@@ -30,13 +30,13 @@ A component is HTML and CSS first: a native element (`<a>`, `<button>`, `<dialog
 
 Not for a look alone (a button, a field: a class is enough), nor for what a native element already does. Its content works without JavaScript wherever it can, the web component enhancing it.
 
-Web components are named `ds-` too (`<ds-notice>`); third-party ones keep their name (`<heading-anchors>`).
+Web components are named `ds-` too (`<ds-banner>`); third-party ones keep their name (`<heading-anchors>`).
 
 They live in `web-components/`, in JavaScript, each with its styles in its shadow root: the build puts them in the module, after the tokens set on `:host` in px, as a page that is not ours has its own root font size.
 
 | Web component                      | Module                              | What it is                                                                                                                                                                                                                                                                                |
 | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Notice](web-components/notice.js) | `@dume/ds/web-components/notice.js` | `<ds-notice>`, a message at the top of a page that is not ours, announced by screen readers, closed with its button or Escape: `showNotice(document, { text, lang, closeLabel, iconUrl, link })`, without the custom elements registry, which an extension's content script does not have |
+| [Banner](web-components/banner.js) | `@dume/ds/web-components/banner.js` | `<ds-banner>`, a message at the top of a page that is not ours, announced by screen readers, closed with its button or Escape: `showBanner(document, { text, lang, closeLabel, iconUrl, link })`, without the custom elements registry, which an extension's content script does not have |
 
 ## Units
 
@@ -128,4 +128,4 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 
 ## Development
 
-Each file in `css/` declares its cascade layer (`@layer ds.components { … }`). `pnpm build` writes `dist/` from them: the layers' order on top of each file, `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), then `ds.css`, all of them in one stylesheet, and `web-components/`, their styles in their module. `pnpm test` checks the tokens' names, contrasts and sizes, and `<ds-notice>`.
+Each file in `css/` declares its cascade layer (`@layer ds.components { … }`). `pnpm build` writes `dist/` from them: the layers' order on top of each file, `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), then `ds.css`, all of them in one stylesheet, and `web-components/`, their styles in their module. `pnpm test` checks the tokens' names, contrasts and sizes, and `<ds-banner>`.

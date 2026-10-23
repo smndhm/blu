@@ -1,4 +1,4 @@
-export interface Notice {
+export interface Banner {
   text: string;
   lang: string;
   closeLabel: string;
@@ -11,5 +11,5 @@ export interface Notice {
 /** The time between adding the status region and its text, for screen readers to notice it first */
 export const ANNOUNCE_DELAY: number;
 
-/** Shows a `<ds-notice>` at the top of the page and returns it */
-export function showNotice(doc: Document, notice: Notice): HTMLElement;
+/** Shows a `<ds-banner>` at the top of the page and returns it */
+export function showBanner(doc: Document, banner: Banner): HTMLElement;
