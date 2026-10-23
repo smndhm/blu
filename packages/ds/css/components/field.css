@@ -6,7 +6,7 @@
 .ds-c-field__label {
   display: block;
   font-weight: 700;
-  margin-block: 0 var(--ds-b-size-space-8);
+  margin-block: 0 var(--ds-b-size-8);
 }
 
 .ds-c-field__control {
@@ -14,8 +14,8 @@
   border-radius: var(--ds-b-size-radius);
   background-color: var(--ds-b-color-background);
   color: var(--ds-b-color-text);
-  padding-block: var(--ds-b-size-space-12);
-  padding-inline: var(--ds-b-size-space-16);
+  padding-block: var(--ds-b-size-12);
+  padding-inline: var(--ds-b-size-16);
 
   &:empty::before {
     color: var(--ds-b-color-text-muted);

@@ -2,10 +2,10 @@
 .ds-c-post-nav__list {
   display: flex;
   justify-content: space-between;
-  padding: var(--ds-b-size-space-24) 0 0;
-  margin: var(--ds-b-size-space-48) 0 0;
+  padding: var(--ds-b-size-24) 0 0;
+  margin: var(--ds-b-size-48) 0 0;
   border-block-start: 1px solid var(--ds-b-color-border);
-  gap: var(--ds-b-size-space-8) var(--ds-b-size-space-16);
+  gap: var(--ds-b-size-8) var(--ds-b-size-16);
   list-style: none;
 }
 

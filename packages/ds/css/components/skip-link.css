@@ -5,10 +5,10 @@
   border: 2px solid var(--ds-b-color-text);
   background: var(--ds-b-color-background);
   color: var(--ds-b-color-text);
-  inset-block-start: var(--ds-b-size-space-16);
-  inset-inline-start: var(--ds-b-size-space-16);
-  padding-block: var(--ds-b-size-space-8);
-  padding-inline: var(--ds-b-size-space-16);
+  inset-block-start: var(--ds-b-size-16);
+  inset-inline-start: var(--ds-b-size-16);
+  padding-block: var(--ds-b-size-8);
+  padding-inline: var(--ds-b-size-16);
 
   &:not(:focus) {
     overflow: hidden;
