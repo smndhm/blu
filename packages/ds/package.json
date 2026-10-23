@@ -1,7 +1,7 @@
 {
-  "name": "@dume/design",
+  "name": "@dume/ds",
   "version": "0.0.0",
-  "description": "The design tokens shared by my projects (simon.duhem.fr, Music Bridge…): colors, light and dark, fonts, radius and focus ring, as CSS custom properties and as a JavaScript module",
+  "description": "Simon Duhem's design system (DS, the other way round): the design tokens shared by my projects (simon.duhem.fr, Music Bridge\u2026), colors, light and dark, fonts, radius and focus ring, as CSS custom properties and as a JavaScript module",
   "author": "Simon Duhem",
   "keywords": [
     "design-system",
@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smndhm/blu.git",
-    "directory": "packages/design"
+    "directory": "packages/ds"
   },
   "type": "module",
   "exports": {

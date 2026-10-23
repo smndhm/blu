@@ -1,6 +1,6 @@
-# @dume/design
+# @dume/ds
 
-The design tokens shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), so that their style lives in one place: colors, light and dark, fonts, radius and the keyboard focus ring. Only the tokens the projects use, and components as they repeat from one project to another.
+My design system, DS (SD, Simon Duhem, the other way round, hence the `--sd-` of its custom properties): the design tokens shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), so that their style lives in one place: colors, light and dark, fonts, radius and the keyboard focus ring. Only the tokens the projects use, and components as they repeat from one project to another.
 
 ## Naming
 
@@ -15,14 +15,14 @@ Custom properties are named in lowercase words:
 
 Not `--sd-b-muted-color` (the category comes first), `--sd-b-color-surface` (the role, `background`, is missing), `--sd-b-focus-outline` (`focus` is no category: the CSS property is).
 
-@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/design`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its own tokens the same way. A new category goes in this list, in the Stylelint rule and in the test.
+@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/ds`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its own tokens the same way. A new category goes in this list, in the Stylelint rule and in the test.
 
 Only the tokens the projects use: a new one comes with its first use. In JavaScript, the same path: `colors.light.backgroundSurface`, `outlines.focus`. Classes, once components come: the `.sd-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.sd-c-button--primary`).
 
 ## CSS
 
 ```css
-@import '@dume/design/tokens.css';
+@import '@dume/ds/tokens.css';
 
 body {
   background: var(--sd-b-color-background);
@@ -62,7 +62,7 @@ Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests 
 For styles a page cannot load, such as a shadow root's or a canvas', and for scripts:
 
 ```js
-import { colors, cssVariables } from '@dume/design';
+import { colors, cssVariables } from '@dume/ds';
 
 shadowRoot.innerHTML = `<style>${cssVariables(':host')} div { color: var(--sd-b-color-text); }</style>…`;
 colors.dark.primary; // '#c9a2ff'

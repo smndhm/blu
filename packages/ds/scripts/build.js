@@ -4,4 +4,4 @@ import { cssVariables } from '../src/tokens.js';
 
 const dist = new URL('../dist/', import.meta.url);
 await mkdir(dist, { recursive: true });
-await writeFile(new URL('tokens.css', dist), `/* @dume/design tokens, built from src/tokens.js */\n${cssVariables()}`);
+await writeFile(new URL('tokens.css', dist), `/* @dume/ds tokens, built from src/tokens.js */\n${cssVariables()}`);

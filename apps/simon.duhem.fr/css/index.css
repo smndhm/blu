@@ -25,7 +25,7 @@
    ========================================================================== */
 
 :root {
-  /* The colors, fonts and focus ring are @dume/design's (packages/design), set before this stylesheet */
+  /* The colors, fonts and focus ring are @dume/ds's (packages/ds), set before this stylesheet */
   --syntax-tab-size: 2;
 }
 
