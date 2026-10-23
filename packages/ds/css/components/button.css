@@ -1,14 +1,25 @@
-/* A button, or a link that looks like one: outlined in the primary color */
+/*
+ * A button, or a link that looks like one: filled with the primary color (`--outline`: outlined with it, for a
+ * secondary action, or a button within the text)
+ */
 @layer ds.components {
   .ds-c-button {
     display: inline-block;
     border: var(--ds-b-size-border-2) solid var(--ds-b-color-primary);
     border-radius: var(--ds-b-size-radius);
-    color: inherit;
+    background-color: var(--ds-b-color-primary);
+    color: var(--ds-b-color-text-on-primary);
     font-family: var(--ds-b-font-family);
-    font-weight: 700;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
     padding-block: var(--ds-b-size-4);
     padding-inline: var(--ds-b-size-12);
     text-decoration: none;
+  }
+
+  .ds-c-button--outline {
+    background-color: transparent;
+    color: inherit;
   }
 }
