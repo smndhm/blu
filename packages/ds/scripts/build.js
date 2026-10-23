@@ -1,36 +1,32 @@
-// Writes dist/ from css/: the tokens, modern-normalize and the base, the utilities, layouts and components, each in its
-// cascade layer, under any project's own CSS, the heading font, and ds.css, all of them in one stylesheet
+// Writes dist/ from css/, whose files each declare their cascade layer: the layers' order on top of each, modern-normalize
+// before the base, Prism's Okaidia theme before the code component, the heading font, and ds.css, all of them in one
+// stylesheet
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
 
+const require = createRequire(import.meta.url);
 const dist = new URL('../dist/', import.meta.url);
 const css = new URL('../css/', import.meta.url);
-// The layers' order, at the top of each file: whichever comes first sets it
+// The layers' order, at the top of each file: whichever a page loads first sets it, under any project's own CSS
 const order = '@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;';
-const layer = (name, content) => `@layer ds.${name} {\n${content.trim()}\n}\n`;
-const write = (path, ...layers) => writeFile(new URL(path, dist), `/* @dume/ds, built by scripts/build.js */\n${order}\n\n${layers.join('\n')}`);
+const write = (path, ...parts) => writeFile(new URL(path, dist), `/* @dume/ds, built by scripts/build.js */\n${order}\n\n${parts.join('\n')}`);
 const read = path => readFile(new URL(path, css), 'utf8');
+const dependency = async (name, layer) => `@layer ds.${layer} {\n${(await readFile(require.resolve(name), 'utf8')).trim()}\n}\n`;
 
 await mkdir(new URL('components/', dist), { recursive: true });
 await mkdir(new URL('layout/', dist), { recursive: true });
-await write('tokens.css', layer('base', await read('tokens.css')));
-const normalize = await readFile(createRequire(import.meta.url).resolve('modern-normalize'), 'utf8');
-await write('base.css', layer('normalize', normalize), layer('base', await read('base.css')));
-await write('utilities.css', layer('utilities', await read('utilities.css')));
-for (const file of await readdir(new URL('layout/', css))) {
-  await write(`layout/${file}`, layer('layout', await read(`layout/${file}`)));
-}
-// The code component starts with Prism's Okaidia theme
-const okaidia = await readFile(createRequire(import.meta.url).resolve('prismjs/themes/prism-okaidia.css'), 'utf8');
+await write('tokens.css', await read('tokens.css'));
+await write('base.css', await dependency('modern-normalize', 'normalize'), await read('base.css'));
+await write('utilities.css', await read('utilities.css'));
+for (const file of await readdir(new URL('layout/', css))) await write(`layout/${file}`, await read(`layout/${file}`));
+const okaidia = await dependency('prismjs/themes/prism-okaidia.css', 'components');
 for (const file of await readdir(new URL('components/', css))) {
-  const content = await read(`components/${file}`);
-  await write(`components/${file}`, layer('components', file === 'code.css' ? `${okaidia}\n${content}` : content));
+  await write(`components/${file}`, ...(file === 'code.css' ? [okaidia] : []), await read(`components/${file}`));
 }
 
 // Bricolage Grotesque, the heading font (SIL Open Font License): its Latin subsets, as `fonts/` next to fonts.css,
 // under the family name of the heading token
-const require = createRequire(import.meta.url);
 const fontsource = dirname(require.resolve('@fontsource-variable/bricolage-grotesque/wght.css'));
 await mkdir(new URL('fonts/', dist), { recursive: true });
 const faces = [];

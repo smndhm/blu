@@ -122,4 +122,4 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 
 ## Development
 
-`pnpm build` writes `dist/` from `css/`: `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), each in its cascade layer, then `ds.css`, all of them in one stylesheet. `pnpm test` checks the tokens' names, contrasts and sizes.
+Each file in `css/` declares its cascade layer (`@layer ds.components { … }`). `pnpm build` writes `dist/` from them: the layers' order on top of each file, `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), then `ds.css`, all of them in one stylesheet. `pnpm test` checks the tokens' names, contrasts and sizes.

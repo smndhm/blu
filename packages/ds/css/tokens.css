@@ -2,54 +2,56 @@
  * The design tokens, only those my projects use: colors in `light-dark(light, dark)`, which follows `color-scheme`, the
  * system's by default; text colors pass WCAG AA (4.5:1) on both backgrounds, the control border 3:1 (tests/tokens.test.js)
  */
-:root {
-  --ds-b-color-text: light-dark(#222, #fafafa);
-  --ds-b-color-text-muted: light-dark(#555, #bbb);
-  --ds-b-color-background: light-dark(#fafafa, #222);
+@layer ds.base {
+  :root {
+    --ds-b-color-text: light-dark(#222, #fafafa);
+    --ds-b-color-text-muted: light-dark(#555, #bbb);
+    --ds-b-color-background: light-dark(#fafafa, #222);
 
-  /* A box on the background, such as a checkbox with its label and help */
-  --ds-b-color-background-surface: light-dark(#f1edf7, #2e2a35);
+    /* A box on the background, such as a checkbox with its label and help */
+    --ds-b-color-background-surface: light-dark(#f1edf7, #2e2a35);
 
-  /* A separator, a decorative border */
-  --ds-b-color-border: light-dark(#ccc, #555);
+    /* A separator, a decorative border */
+    --ds-b-color-border: light-dark(#ccc, #555);
 
-  /* The border of an input, a select */
-  --ds-b-color-border-control: #8a8a8a;
-  --ds-b-color-primary: light-dark(#4b0195, #c9a2ff);
+    /* The border of an input, a select */
+    --ds-b-color-border-control: #8a8a8a;
+    --ds-b-color-primary: light-dark(#4b0195, #c9a2ff);
 
-  /* Text on the primary color, such as a button's */
-  --ds-b-color-text-on-primary: light-dark(#fff, #222);
+    /* Text on the primary color, such as a button's */
+    --ds-b-color-text-on-primary: light-dark(#fff, #222);
 
-  /* The system's font, then the names older browsers know it by, then emoji */
-  --ds-b-font-family: system-ui, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    /* The system's font, then the names older browsers know it by, then emoji */
+    --ds-b-font-family: system-ui, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 
-  /* Headings only, where the page loads fonts.css: else the system's */
-  --ds-b-font-family-heading: 'Bricolage Grotesque', var(--ds-b-font-family);
-  --ds-b-font-family-monospace: ui-monospace, consolas, menlo, monaco, 'Liberation Mono', 'Courier New', monospace;
+    /* Headings only, where the page loads fonts.css: else the system's */
+    --ds-b-font-family-heading: 'Bricolage Grotesque', var(--ds-b-font-family);
+    --ds-b-font-family-monospace: ui-monospace, consolas, menlo, monaco, 'Liberation Mono', 'Courier New', monospace;
 
-  /* Sizes, for spacing and fonts alike: in rem on the base 4 (multiples of 0.25rem, 4px), named after their px. The
-     display one grows with the viewport, for a home page's title */
-  --ds-b-size-4: 0.25rem;
-  --ds-b-size-8: 0.5rem;
-  --ds-b-size-12: 0.75rem;
-  --ds-b-size-16: 1rem;
-  --ds-b-size-20: 1.25rem;
-  --ds-b-size-24: 1.5rem;
-  --ds-b-size-32: 2rem;
-  --ds-b-size-40: 2.5rem;
-  --ds-b-size-48: 3rem;
-  --ds-b-size-display: clamp(2.5rem, 8vw, 4rem);
-  --ds-b-size-radius: 0.5rem;
+    /* Sizes, for spacing and fonts alike: in rem on the base 4 (multiples of 0.25rem, 4px), named after their px. The
+       display one grows with the viewport, for a home page's title */
+    --ds-b-size-4: 0.25rem;
+    --ds-b-size-8: 0.5rem;
+    --ds-b-size-12: 0.75rem;
+    --ds-b-size-16: 1rem;
+    --ds-b-size-20: 1.25rem;
+    --ds-b-size-24: 1.5rem;
+    --ds-b-size-32: 2rem;
+    --ds-b-size-40: 2.5rem;
+    --ds-b-size-48: 3rem;
+    --ds-b-size-display: clamp(2.5rem, 8vw, 4rem);
+    --ds-b-size-radius: 0.5rem;
 
-  /* Border widths, in px: a 1px line stays 1px whatever the zoom */
-  --ds-b-size-border-1: 1px;
-  --ds-b-size-border-2: 2px;
-  --ds-b-size-border-4: 4px;
+    /* Border widths, in px: a 1px line stays 1px whatever the zoom */
+    --ds-b-size-border-1: 1px;
+    --ds-b-size-border-2: 2px;
+    --ds-b-size-border-4: 4px;
 
-  /* The keyboard focus ring, in px as a border: it stays visible whatever the zoom */
-  --ds-b-outline-focus: 3px solid var(--ds-b-color-primary);
-  --ds-b-outline-offset-focus: 2px;
-  --ds-b-outline-radius-focus: 2px;
+    /* The keyboard focus ring, in px as a border: it stays visible whatever the zoom */
+    --ds-b-outline-focus: 3px solid var(--ds-b-color-primary);
+    --ds-b-outline-offset-focus: 2px;
+    --ds-b-outline-radius-focus: 2px;
 
-  color-scheme: light dark;
+    color-scheme: light dark;
+  }
 }

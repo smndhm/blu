@@ -1,30 +1,32 @@
 /* A site's header: its name, in the heading font, and its navigation, a list of links */
-.ds-c-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  border-block-end: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
-  gap: var(--ds-b-size-8) var(--ds-b-size-24);
-  padding-block: var(--ds-b-size-16);
-}
+@layer ds.components {
+  .ds-c-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    border-block-end: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
+    gap: var(--ds-b-size-8) var(--ds-b-size-24);
+    padding-block: var(--ds-b-size-16);
+  }
 
-.ds-c-header__brand {
-  font-family: var(--ds-b-font-family-heading);
-  font-weight: 700;
-}
+  .ds-c-header__brand {
+    font-family: var(--ds-b-font-family-heading);
+    font-weight: 700;
+  }
 
-.ds-c-header__brand,
-.ds-c-header__link {
-  text-decoration: none;
+  .ds-c-header__brand,
+  .ds-c-header__link {
+    text-decoration: none;
 
-  &:hover {
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: var(--ds-b-color-primary);
+    }
+  }
+
+  .ds-c-header__link[aria-current] {
     text-decoration: underline;
     text-decoration-color: var(--ds-b-color-primary);
   }
-}
-
-.ds-c-header__link[aria-current] {
-  text-decoration: underline;
-  text-decoration-color: var(--ds-b-color-primary);
 }

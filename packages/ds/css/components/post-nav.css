@@ -1,18 +1,20 @@
 /* Links to the previous and next articles, the next one at the end of the line */
-.ds-c-post-nav__list {
-  display: flex;
-  justify-content: space-between;
-  padding: var(--ds-b-size-24) 0 0;
-  margin: var(--ds-b-size-48) 0 0;
-  border-block-start: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
-  gap: var(--ds-b-size-8) var(--ds-b-size-16);
-  list-style: none;
-}
+@layer ds.components {
+  .ds-c-post-nav__list {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--ds-b-size-24) 0 0;
+    margin: var(--ds-b-size-48) 0 0;
+    border-block-start: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
+    gap: var(--ds-b-size-8) var(--ds-b-size-16);
+    list-style: none;
+  }
 
-.ds-c-post-nav__item {
-  flex: 1 1 0;
-}
+  .ds-c-post-nav__item {
+    flex: 1 1 0;
+  }
 
-.ds-c-post-nav__item--next {
-  text-align: end;
+  .ds-c-post-nav__item--next {
+    text-align: end;
+  }
 }
