@@ -1,8 +1,8 @@
 ---
 marp: true
 lang: fr
-title: Les Web Components et l’accessibilité
-description: 'Shadow DOM et accessibilité : liens ARIA cassés, gestion des événements, outils d’audit qui ignorent les Web Components. Les limites et les solutions.'
+title: Les Web Components et l'accessibilité
+description: "Shadow DOM et accessibilité : liens ARIA cassés, gestion des événements, outils d'audit qui ignorent les Web Components. Les limites et les solutions."
 author: Simon Duhem & Nicolas Jouanno Daniel
 keywords: web Components, composants web, accessibility, accessibilité, a11y
 image: https://www.paris-web.fr/media/pages/2025/les-web-components-et-laccessibilite/4734750850-1747341738/ogimage.png
