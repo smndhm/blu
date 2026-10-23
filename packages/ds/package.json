@@ -1,7 +1,7 @@
 {
   "name": "@dume/ds",
   "version": "0.0.0",
-  "description": "My design system (DS): the design tokens shared by my projects (simon.duhem.fr, Music Bridge), colors, light and dark, fonts, radius and focus ring, as CSS custom properties and as a JavaScript module",
+  "description": "My design system: the styles shared by my projects (simon.duhem.fr, Music Bridge), design tokens, base, layouts and components",
   "author": "Simon Duhem",
   "keywords": [
     "design-system",
@@ -17,10 +17,6 @@
   },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./src/tokens.d.ts",
-      "default": "./src/tokens.js"
-    },
     "./tokens.css": "./dist/tokens.css",
     "./base.css": "./dist/base.css",
     "./utilities.css": "./dist/utilities.css",
@@ -30,7 +26,6 @@
     "./layout/*.css": "./dist/layout/*.css"
   },
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {

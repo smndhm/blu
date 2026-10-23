@@ -1,9 +1,8 @@
-// Writes dist/: the tokens as CSS custom properties (from src/tokens.js), modern-normalize and the base, the utilities
-// layouts and components (from css/), each in its cascade layer, under any project's own CSS, and the heading font
+// Writes dist/ from css/: the tokens, modern-normalize and the base, the utilities, layouts and components, each in its
+// cascade layer, under any project's own CSS, and the heading font
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
-import { cssVariables } from '../src/tokens.js';
 
 const dist = new URL('../dist/', import.meta.url);
 const css = new URL('../css/', import.meta.url);
@@ -15,7 +14,7 @@ const read = path => readFile(new URL(path, css), 'utf8');
 
 await mkdir(new URL('components/', dist), { recursive: true });
 await mkdir(new URL('layout/', dist), { recursive: true });
-await write('tokens.css', layer('base', cssVariables()));
+await write('tokens.css', layer('base', await read('tokens.css')));
 const normalize = await readFile(createRequire(import.meta.url).resolve('modern-normalize'), 'utf8');
 await write('base.css', layer('normalize', normalize), layer('base', await read('base.css')));
 await write('utilities.css', layer('utilities', await read('utilities.css')));

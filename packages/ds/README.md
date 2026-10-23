@@ -1,6 +1,6 @@
 # @dume/ds
 
-My design system, DS (also SD, Simon Duhem, the other way round), with its `--ds-` custom properties: the design tokens shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), so that their style lives in one place: colors, light and dark, fonts, radius and the keyboard focus ring. Only the tokens the projects use, and components as they repeat from one project to another.
+My design system: the styles shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), its custom properties and classes prefixed with `ds-`. Only what the projects use: tokens, components and layouts come as they repeat from one project to another.
 
 ## Naming
 
@@ -15,9 +15,9 @@ Custom properties are named in lowercase words:
 
 Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the role, `background`, is missing), `--ds-b-focus-outline` (`focus` is no category: the CSS property is).
 
-@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/ds`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its own tokens the same way. A new category goes in this list, in the Stylelint rule and in the test.
+@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, and, in a project that installs `@dume/ds`, reports a `var()` naming none of its tokens nor a custom property of the project. This package's tests check its tokens (`css/tokens.css`) the same way. A new category goes in this list, in the Stylelint rule and in the test.
 
-Only the tokens the projects use: a new one comes with its first use. In JavaScript, the same path: `colors.light.backgroundSurface`, `outlines.focus`. Classes, once components come: the `.ds-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--primary`).
+Only the tokens the projects use: a new one comes with its first use. Classes, once components come: the `.ds-` namespace, then `c-` for components, `l-` for layout, `u-` for utilities, in [BEM](https://getbem.com/introduction/) (`.ds-c-button--primary`).
 
 ## Units
 
@@ -87,17 +87,6 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 | [Table](css/components/table.css)   | `.ds-c-table`                                                  | A data table                                                |
 | [Quote](css/components/quote.css)   | `.ds-c-quote`                                                  | A quote set apart                                           |
 
-## JavaScript
-
-For styles a page cannot load, such as a shadow root's or a canvas', and for scripts:
-
-```js
-import { colors, cssVariables } from '@dume/ds';
-
-shadowRoot.innerHTML = `<style>${cssVariables(':host')} div { color: var(--ds-b-color-text); }</style>…`;
-colors.dark.primary; // '#c9a2ff'
-```
-
 ## Development
 
-`pnpm build` writes `dist/`: `tokens.css` from `src/tokens.js`, the one source of the tokens, then `base.css` (modern-normalize and `css/base.css`), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css` and `components/` from `css/`, each in its cascade layer. `pnpm test` checks the tokens' names, contrasts and sizes.
+`pnpm build` writes `dist/` from `css/`: `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), each in its cascade layer. `pnpm test` checks the tokens' names, contrasts and sizes.
