@@ -19,7 +19,7 @@ Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the
 
 Only the tokens the projects use: a new one comes with its first use.
 
-HTML elements are styled without classes, in the base: links, headings, tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-l-page--centered`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes. A modifier only when its block or element is also used without it, or when it is a variant of its own (`.ds-c-field__control--multiline`: a select or an input is the control without it).
+HTML elements are styled without classes, in the base: links, headings, a heading and its tagline (`hgroup`), tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-l-page--centered`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes. A modifier only when its block or element is also used without it, or when it is a variant of its own (`.ds-c-field__control--multiline`: a select or an input is the control without it).
 
 ### Web components
 
@@ -63,14 +63,14 @@ simon.duhem.fr does so: its Eleventy configuration copies `dist/` as `/ds/`.
 
 Its parts are also stylesheets of their own, for a project that only takes some of them:
 
-| Stylesheet                  | What                                                                                                                                                                           |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                                                     |
-| `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                        |
-| `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, links, focus ring, images, tables, quotes, code |
-| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                                                              |
-| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`)                                                                  |
-| `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                       |
+| Stylesheet                  | What                                                                                                                                                                                     |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                                                               |
+| `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
+| `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
+| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                                                                        |
+| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`)                                                                            |
+| `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                                 |
 
 ```css
 @import '@dume/ds/tokens.css';
@@ -110,7 +110,7 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 | [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                     |
 | [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                | A site's header: its name and navigation                           |
 | [Footer](css/components/footer.css)       | `.ds-c-footer`                                                     | A site's footer                                                    |
-| [Hero](css/components/hero.css)           | `.ds-c-hero`, `__title`, `__list`                                  | The introduction of a home page                                    |
+| [Links](css/components/links.css)         | `.ds-c-links`                                                      | A few prominent links, under a home page's introduction            |
 | [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`                   | A list of articles or talks                                        |
 | [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                 | An article                                                         |
 | [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                    | Links to the previous and next articles                            |
