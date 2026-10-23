@@ -33,9 +33,6 @@
 
 		{#- The design system, @dume/ds: all of the site's style (eleventy.config.js copies it as /ds/) #}
 		<link rel="stylesheet" href="/ds/ds.css">
-
-		{#- Add the heading-anchors web component to the JavaScript bundle #}
-		<script type="module">{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}</script>
 	</head>
 	<body class="ds-l-page{% if bodyClass %} {{ bodyClass }}{% endif %}">
 		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
@@ -68,7 +65,5 @@
 			</ul>
 		</footer>
 		{%- endif %}
-
-		<script type="module" src="{% getBundleFileUrl "js" %}"></script>
 	</body>
 </html>
