@@ -62,8 +62,15 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 0.25em;
 
+    /* Hovered: the primary color and a thicker underline, not the color alone; pressed: darker still */
     &:hover {
       color: var(--ds-b-color-primary);
+      text-decoration-thickness: var(--ds-b-size-border-2);
+    }
+
+    &:active {
+      color: var(--ds-b-color-primary-active);
+      text-decoration-thickness: var(--ds-b-size-border-2);
     }
   }
 

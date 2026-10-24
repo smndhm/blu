@@ -1,6 +1,7 @@
 /*
  * The design tokens, only those my projects use: colors in `light-dark(light, dark)`, which follows `color-scheme`, the
- * system's by default; text colors pass WCAG AA (4.5:1) on both backgrounds, the control border 3:1 (tests/tokens.test.js)
+ * system's by default; text colors pass WCAG AA (4.5:1) on both backgrounds, the control border 3:1, also as the three
+ * kinds of color blindness see them (tests/tokens.test.js)
  */
 
 /* The layers' order, for every stylesheet of the design system: the tokens come first */
@@ -24,6 +25,20 @@
 
     /* Text on the primary color, such as a button's */
     --ds-b-color-text-on-primary: light-dark(#fff, #222);
+
+    /* The interactive states (see the README): the primary color hovered and pressed, darker in the light theme, lighter
+       in the dark one; the background of an element hovered and pressed, the primary color over whatever is behind */
+    --ds-b-color-primary-hover: light-dark(#3c0177, #d9beff);
+    --ds-b-color-primary-active: light-dark(#2d0159, #e9daff);
+    --ds-b-color-background-hover: light-dark(#4b019514, #c9a2ff24);
+    --ds-b-color-background-active: light-dark(#4b019529, #c9a2ff42);
+
+    /* A disabled element: its text and background, which WCAG does not require to contrast */
+    --ds-b-color-text-disabled: light-dark(#767676, #949494);
+    --ds-b-color-background-disabled: light-dark(#e8e8e8, #333);
+
+    /* An error, a destructive action: the primary color's chroma, turned to red (oklch 0.515 0.196 15, 0.72 0.135 15) */
+    --ds-b-color-danger: light-dark(#bd1541, #ec7f89);
 
     /* The system's font, then the names older browsers know it by, then emoji */
     --ds-b-font-family: system-ui, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';

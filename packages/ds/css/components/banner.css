@@ -1,0 +1,51 @@
+/*
+ * A message that stays until it is closed, by the page's own script. <ds-banner> is this component in a shadow root,
+ * for a page that is not ours, with its behavior (web-components/banner.ts). After the button's styles, which its close
+ * button takes
+ */
+
+@layer ds.components {
+  .ds-c-banner {
+    --ds-c-banner-size-max-inline: 42.5rem;
+    --ds-c-banner-size-icon: var(--ds-b-size-24);
+    --ds-c-banner-size-button: var(--ds-b-size-32);
+
+    display: flex;
+    align-items: center;
+    padding: var(--ds-b-size-8) var(--ds-b-size-8) var(--ds-b-size-8) var(--ds-b-size-16);
+    border: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
+    border-radius: var(--ds-b-size-radius);
+    background-color: var(--ds-b-color-background);
+    box-shadow: 0 var(--ds-b-size-4) var(--ds-b-size-16) #0004;
+    color: var(--ds-b-color-text);
+    font-family: var(--ds-b-font-family);
+    font-size: var(--ds-b-size-16);
+    gap: var(--ds-b-size-12);
+    inline-size: fit-content;
+    line-height: 1.4;
+    max-inline-size: var(--ds-c-banner-size-max-inline);
+  }
+
+  .ds-c-banner__icon {
+    flex: none;
+    block-size: var(--ds-c-banner-size-icon);
+    inline-size: var(--ds-c-banner-size-icon);
+  }
+
+  .ds-c-banner__text {
+    margin: 0;
+  }
+
+  /* A ghost button (`.ds-c-button--ghost`), square, its symbol centered */
+  .ds-c-banner__close {
+    display: grid;
+    flex: none;
+    padding: 0;
+    block-size: var(--ds-c-banner-size-button);
+    cursor: pointer;
+    font-size: var(--ds-b-size-20);
+    inline-size: var(--ds-c-banner-size-button);
+    line-height: 1;
+    place-content: center;
+  }
+}

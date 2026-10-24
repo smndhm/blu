@@ -77,8 +77,18 @@ test('has no link without one', () => {
   assert.equal(host.shadowRoot.querySelector('a').hasAttribute('href'), false);
 });
 
+test('is the banner component, .ds-c-banner, in its shadow root', () => {
+  const host = showBanner(document, { text: 'Message', lang: 'en', closeLabel: 'Close' });
+  const banner = host.shadowRoot.querySelector('.ds-c-banner');
+  assert.ok(banner.querySelector('img.ds-c-banner__icon'));
+  assert.ok(banner.querySelector('p.ds-c-banner__text [role="status"]'));
+  assert.ok(banner.querySelector('button.ds-c-button.ds-c-button--ghost.ds-c-banner__close'));
+});
+
 test('its sizes in rem on the base 4, from the tokens or its own, no px: the build turns them into px', () => {
-  const css = readFileSync(`${import.meta.dirname}/../web-components/banner.css`, 'utf8').replaceAll(/\/\*[\s\S]*?\*\//g, '');
-  assert.doesNotMatch(css, /\dpx\b/);
-  for (const [, rem] of css.matchAll(/(\d*\.?\d+)rem\b/g)) assert.equal((Number.parseFloat(rem) * 4) % 1, 0, `${rem}rem`);
+  for (const file of ['web-components/banner.css', 'css/components/banner.css']) {
+    const css = readFileSync(`${import.meta.dirname}/../${file}`, 'utf8').replaceAll(/\/\*[\s\S]*?\*\//g, '');
+    assert.doesNotMatch(css, /\dpx\b/, file);
+    for (const [, rem] of css.matchAll(/(\d*\.?\d+)rem\b/g)) assert.equal((Number.parseFloat(rem) * 4) % 1, 0, `${file}: ${rem}rem`);
+  }
 });
