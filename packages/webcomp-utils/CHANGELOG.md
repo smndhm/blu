@@ -1,5 +1,12 @@
 # @dume/webcomp-utils
 
+## 1.0.3
+
+### Patch Changes
+
+- c1a7f70: Updated dependency `typedoc-plugin-markdown` to `4.14.1`.
+- 30ae1aa: Updated dependency `vite` to `8.3.5`.
+
 ## 1.0.2
 
 ### Patch Changes

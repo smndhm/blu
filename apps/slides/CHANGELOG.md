@@ -1,5 +1,11 @@
 # slides
 
+## 1.0.3
+
+### Patch Changes
+
+- 75ebb28: Apostrophes typed on a keyboard in The Remote Tribe talk's title and description, and in the feed's subtitle.
+
 ## 1.0.2
 
 ### Patch Changes
