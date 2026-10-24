@@ -17,7 +17,7 @@
   },
   "type": "module",
   "exports": {
-    "./ds.css": "./dist/ds.css",
+    "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./base.css": "./dist/base.css",
     "./utilities.css": "./dist/utilities.css",

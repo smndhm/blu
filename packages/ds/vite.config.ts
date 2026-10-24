@@ -1,5 +1,5 @@
 // Builds dist/ with Vite+ (`vp pack`): each stylesheet of css/ on its own, its imports in it (modern-normalize before the
-// base, Prism's Okaidia theme before the code component), ds.css with all of them, the heading font's files, and the web
+// base, Prism's Okaidia theme before the code component), styles.css with all of them, the heading font's files, and the web
 // components, their styles in them
 import { readdirSync } from 'node:fs';
 import { defineConfig } from 'vite-plus';

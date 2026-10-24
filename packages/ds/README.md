@@ -62,10 +62,10 @@ They live in `web-components/`, in TypeScript, each with its styles in its shado
 
 ## CSS
 
-The whole design system is one stylesheet, `@dume/ds/ds.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
+The whole design system is one stylesheet, `@dume/ds/styles.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
 
 ```html
-<link rel="stylesheet" href="/ds/ds.css" />
+<link rel="stylesheet" href="/ds/styles.css" />
 ```
 
 simon.duhem.fr does so: its Eleventy configuration copies `dist/` as `/ds/`.
@@ -109,7 +109,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | `--ds-b-size-border-1`, `-2`, `-4`                                                   | `1px`, `2px`, `4px`: border widths                                     |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`, `--ds-b-outline-radius-focus` | `3px solid var(--ds-b-color-primary)`, `2px`, `2px`                    |
 
-Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `ds.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
+Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `styles.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
 
 ## Components
 
@@ -130,4 +130,4 @@ One stylesheet per component, after the tokens: `@import '@dume/ds/components/bu
 
 ## Development
 
-Built with [Vite+](https://viteplus.dev) (`vp pack`, its settings in `vite.config.ts`). Each file in `css/` declares its own layer (`@layer ds.components { … }`), their order set once, in `tokens.css`, which comes first; its imports are bundled into it, in their layer: modern-normalize before the base (`@import 'modern-normalize' layer(ds.normalize)`), Prism's Okaidia theme before the code component. `pnpm build` writes `dist/`: each stylesheet, `ds.css` (all of them, from `css/ds.css`), `fonts/` (Bricolage Grotesque's Latin subsets, from @fontsource-variable/bricolage-grotesque, which `css/fonts.css` declares), and `web-components/` with their types. Lightning CSS keeps the syntax as it is for the browsers aimed at (`light-dark()`, nesting). `pnpm test` (Vitest) checks the tokens' names, contrasts and sizes, and `<ds-banner>`.
+Built with [Vite+](https://viteplus.dev) (`vp pack`, its settings in `vite.config.ts`). Each file in `css/` declares its own layer (`@layer ds.components { … }`), their order set once, in `tokens.css`, which comes first; its imports are bundled into it, in their layer: modern-normalize before the base (`@import 'modern-normalize' layer(ds.normalize)`), Prism's Okaidia theme before the code component. `pnpm build` writes `dist/`: each stylesheet, `styles.css` (all of them, from `css/styles.css`), `fonts/` (Bricolage Grotesque's Latin subsets, from @fontsource-variable/bricolage-grotesque, which `css/fonts.css` declares), and `web-components/` with their types. Lightning CSS keeps the syntax as it is for the browsers aimed at (`light-dark()`, nesting). `pnpm test` (Vitest) checks the tokens' names, contrasts and sizes, and `<ds-banner>`.
