@@ -26,8 +26,11 @@
     }
   }
 
+  /* The current page: in bold, underlined 2px, not the underline alone, which the hover shows too */
   .ds-c-header__link[aria-current] {
+    font-weight: 700;
     text-decoration: underline;
     text-decoration-color: var(--ds-b-color-primary);
+    text-decoration-thickness: var(--ds-b-size-border-2);
   }
 }

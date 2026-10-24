@@ -4,6 +4,8 @@ My design system: the styles shared by my projects ([simon.duhem.fr](https://sim
 
 Every component is HTML and CSS first: native elements and a class, usable in any page without JavaScript. A web component, when one is needed, is that same component in a shadow root, with the behavior it adds (see [Web components](#web-components)).
 
+Every interactive element has all its states, and they are accessible: see [Interactive states](#interactive-states).
+
 While in version 0, it covers my projects' needs only, and a minor version may change what is there: use it elsewhere at your own pace, its version pinned.
 
 ## Naming
@@ -43,6 +45,31 @@ They live in `web-components/`, in TypeScript, each with its styles in its shado
 | Web component                      | Module                              | What it is                                                                                                                                                                                                                                                                                |
 | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Banner](web-components/banner.js) | `@dume/ds/web-components/banner.js` | `<ds-banner>`, a message at the top of a page that is not ours, announced by screen readers, closed with its button or Escape: `showBanner(document, { text, lang, closeLabel, iconUrl, link })`, without the custom elements registry, which an extension's content script does not have |
+
+## Interactive states
+
+Every interactive element (link, button, control) has all its states, each defined by the design system, never left to the browser's defaults:
+
+| State                       | What changes                                                                                              | Selector                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Rest                        | the component's own look                                                                                  |                                              |
+| Hovered                     | the primary color, darker (light theme) or lighter (dark theme); a tinted background; a thicker underline | `:hover`, unless disabled                    |
+| Keyboard focus              | the focus ring, 3px in the primary color, 2px off the element: on everything, never removed               | `:focus-visible`                             |
+| Pressed                     | darker or lighter still, a more tinted background                                                         | `:active`, unless disabled                   |
+| Disabled                    | grey text and background, the `not-allowed` cursor, no hover                                              | `:disabled`, `[aria-disabled='true']`        |
+| Invalid (a control)         | a 2px border in the danger color, a message saying why                                                    | `[aria-invalid='true']`, `__message--danger` |
+| Current (a navigation link) | in bold, underlined 2px                                                                                   | `[aria-current]`                             |
+
+They are accessible:
+
+- A state never shows by its color alone: a link is always underlined, thicker when hovered; the current page is also in bold; an invalid control has a thicker border and a message, its text saying what is wrong.
+- Contrasts: 4.5:1 for text, 3:1 for borders and the focus ring, in every state, in both themes, on both backgrounds. The tests check them as people see them, and as the three kinds of color blindness do (protanopia, deuteranopia, tritanopia, simulated). WCAG asks nothing of a disabled element: its grey is meant to fade.
+- Disabled with `aria-disabled="true"` looks the same as with `disabled`, for a link, or a button that stays in the keyboard order to explain why it cannot be used.
+- Windows' contrast themes (`forced-colors`): a disabled element in the system's grey text color (`GrayText`); a ghost button's transparent border shows there.
+- Buttons and links have the pointer cursor, as most design systems do (GOV.UK, USWDS, Carbon, Primer, DSFR), the `not-allowed` one when disabled.
+- Targets of 24px at least (WCAG 2.5.8): a button, with its padding and line height; the banner's close button, 32px.
+
+The state colors are tokens (`--ds-b-color-primary-hover`, `-active`, `--ds-b-color-background-hover`, `-active`, `--ds-b-color-text-disabled`, `--ds-b-color-background-disabled`, `--ds-b-color-danger`): a component takes them, never a color of its own. A new component lists its states in the table of components.
 
 ## Units
 
@@ -93,16 +120,23 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 
 The custom properties are set on `:root`, with `color-scheme: light dark`, each color in `light-dark()`:
 
-| Custom property                   | Light     | Dark      | For                              |
-| --------------------------------- | --------- | --------- | -------------------------------- |
-| `--ds-b-color-text`               | `#222`    | `#fafafa` | Text                             |
-| `--ds-b-color-text-muted`         | `#555`    | `#bbb`    | Secondary text                   |
-| `--ds-b-color-background`         | `#fafafa` | `#222`    | The page                         |
-| `--ds-b-color-background-surface` | `#f1edf7` | `#2e2a35` | A box on the page                |
-| `--ds-b-color-border`             | `#ccc`    | `#555`    | A separator, a decorative border |
-| `--ds-b-color-border-control`     | `#8a8a8a` | `#8a8a8a` | The border of an input (3:1)     |
-| `--ds-b-color-primary`            | `#4b0195` | `#c9a2ff` | Links, focus, buttons            |
-| `--ds-b-color-text-on-primary`    | `#fff`    | `#222`    | Text on the primary color        |
+| Custom property                    | Light       | Dark        | For                                                                       |
+| ---------------------------------- | ----------- | ----------- | ------------------------------------------------------------------------- |
+| `--ds-b-color-text`                | `#222`      | `#fafafa`   | Text                                                                      |
+| `--ds-b-color-text-muted`          | `#555`      | `#bbb`      | Secondary text                                                            |
+| `--ds-b-color-background`          | `#fafafa`   | `#222`      | The page                                                                  |
+| `--ds-b-color-background-surface`  | `#f1edf7`   | `#2e2a35`   | A box on the page                                                         |
+| `--ds-b-color-border`              | `#ccc`      | `#555`      | A separator, a decorative border                                          |
+| `--ds-b-color-border-control`      | `#8a8a8a`   | `#8a8a8a`   | The border of an input (3:1)                                              |
+| `--ds-b-color-primary`             | `#4b0195`   | `#c9a2ff`   | Links, focus, buttons                                                     |
+| `--ds-b-color-text-on-primary`     | `#fff`      | `#222`      | Text on the primary color                                                 |
+| `--ds-b-color-primary-hover`       | `#3c0177`   | `#d9beff`   | The primary color, hovered                                                |
+| `--ds-b-color-primary-active`      | `#2d0159`   | `#e9daff`   | The primary color, pressed                                                |
+| `--ds-b-color-background-hover`    | `#4b019514` | `#c9a2ff24` | A background hovered: the primary color, translucent                      |
+| `--ds-b-color-background-active`   | `#4b019529` | `#c9a2ff42` | A background pressed                                                      |
+| `--ds-b-color-text-disabled`       | `#767676`   | `#949494`   | The text of a disabled element                                            |
+| `--ds-b-color-background-disabled` | `#e8e8e8`   | `#333`      | The background of a disabled element                                      |
+| `--ds-b-color-danger`              | `#bd1541`   | `#ec7f89`   | An error, a destructive action: the primary color's chroma, turned to red |
 
 | Custom property                                                                      | Value                                                                  |
 | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
@@ -113,7 +147,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | `--ds-b-size-border-1`, `-2`, `-4`                                                   | `1px`, `2px`, `4px`: border widths                                     |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`, `--ds-b-outline-radius-focus` | `3px solid var(--ds-b-color-primary)`, `2px`, `2px`                    |
 
-Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `styles.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
+Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes, also as the three kinds of color blindness see them: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `styles.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
 
 ## Components
 
@@ -129,19 +163,19 @@ The banner, as `<ds-banner>` shows it: the page's script closes it, and puts its
 </div>
 ```
 
-| Component                                 | Classes                                                            | For                                                                                                                                                            |
-| ----------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Banner](css/components/banner.css)       | `.ds-c-banner`, `__icon`, `__text`, `__close`                      | A message that stays until closed, `<ds-banner>`'s markup: its close button a ghost button, which the page's script closes it with                             |
-| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`, `--ghost`                             | A button, or a link that looks like one, filled; outlined for a secondary action or within the text; ghost, neither filled nor outlined, for a discreet action |
-| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept                                                                                                    |
-| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                                                                                                                 |
-| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                | A site's header: its name and navigation                                                                                                                       |
-| [Footer](css/components/footer.css)       | `.ds-c-footer`                                                     | A site's footer                                                                                                                                                |
-| [Links](css/components/links.css)         | `.ds-c-links`                                                      | A few prominent links, under a home page's introduction                                                                                                        |
-| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`, `__description`  | A list of articles or talks, with their descriptions                                                                                                           |
-| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                 | An article                                                                                                                                                     |
-| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                    | Links to the previous and next articles                                                                                                                        |
-| [Code](css/components/code.css)           | Prism's classes                                                    | Code examples highlighted by Prism (Okaidia theme, contrast fixed)                                                                                             |
+| Component                                 | Classes                                                                         | For                                                                                                                                                                                                                               |
+| ----------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Banner](css/components/banner.css)       | `.ds-c-banner`, `__icon`, `__text`, `__close`                                   | A message that stays until closed, `<ds-banner>`'s markup: its close button a ghost button, which the page's script closes it with                                                                                                |
+| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`, `--ghost`                                          | A button, or a link that looks like one, filled; outlined for a secondary action or within the text; ghost, neither filled nor outlined, for a discreet action. Hovered, focused, pressed, disabled (`disabled`, `aria-disabled`) |
+| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` (`--danger`) | A label, its control, a message under it whose line is kept. Hovered, focused, invalid (`aria-invalid`, its message `--danger`), disabled                                                                                         |
+| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                               | A link to the main content, shown when focused                                                                                                                                                                                    |
+| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                             | A site's header: its name and navigation, the current page's link (`aria-current`) in bold                                                                                                                                        |
+| [Footer](css/components/footer.css)       | `.ds-c-footer`                                                                  | A site's footer                                                                                                                                                                                                                   |
+| [Links](css/components/links.css)         | `.ds-c-links`                                                                   | A few prominent links, under a home page's introduction                                                                                                                                                                           |
+| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`, `__description`               | A list of articles or talks, with their descriptions                                                                                                                                                                              |
+| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                              | An article                                                                                                                                                                                                                        |
+| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                                 | Links to the previous and next articles                                                                                                                                                                                           |
+| [Code](css/components/code.css)           | Prism's classes                                                                 | Code examples highlighted by Prism (Okaidia theme, contrast fixed)                                                                                                                                                                |
 
 ## Development
 
