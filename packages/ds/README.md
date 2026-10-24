@@ -2,6 +2,8 @@
 
 My design system: the styles shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), its custom properties and classes prefixed with `ds-`. Only what the projects use: tokens, components and layouts come as they repeat from one project to another.
 
+Every component is HTML and CSS first: native elements and a class, usable in any page without JavaScript. A web component, when one is needed, is that same component in a shadow root, with the behavior it adds (see [Web components](#web-components)).
+
 While in version 0, it covers my projects' needs only, and a minor version may change what is there: use it elsewhere at your own pace, its version pinned.
 
 ## Naming
@@ -32,9 +34,11 @@ A component is HTML and CSS first: a native element (`<a>`, `<button>`, `<dialog
 
 Not for a look alone (a button, a field: a class is enough), nor for what a native element already does. Its content works without JavaScript wherever it can, the web component enhancing it.
 
+A web component is built on a component of `css/components`, which works without it in a page of ours: its shadow root takes that component's stylesheet and classes, and adds only what the page's base would give (links, focus ring) and its own place on the page. `<ds-banner>` is the banner (`.ds-c-banner`) in a shadow root.
+
 Web components are named `ds-` too (`<ds-banner>`); third-party ones keep their name (`<heading-anchors>`).
 
-They live in `web-components/`, in TypeScript, each with its styles in its shadow root: its module imports them, with the tokens set on `:host`, and turns their rem into px, as a page that is not ours has its own root font size.
+They live in `web-components/`, in TypeScript, each with its styles in its shadow root: its module imports them (the tokens set on `:host`, its component's stylesheet, its own), and turns their rem into px, as a page that is not ours has its own root font size.
 
 | Web component                      | Module                              | What it is                                                                                                                                                                                                                                                                                |
 | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -113,10 +117,21 @@ Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests 
 
 ## Components
 
-One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`.
+One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`. The button first: other components build on it (the banner's close button).
+
+```html
+<dialog class="ds-c-banner" open>
+  <img class="ds-c-banner__icon" src="icon.svg" alt="" />
+  <p class="ds-c-banner__text">A message. <a href="…">A link</a></p>
+  <form method="dialog">
+    <button class="ds-c-button ds-c-button--ghost ds-c-banner__close" aria-label="Close">×</button>
+  </form>
+</dialog>
+```
 
 | Component                                 | Classes                                                            | For                                                                                                                                                            |
 | ----------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Banner](css/components/banner.css)       | `.ds-c-banner`, `__icon`, `__text`, `__close`                      | A message that stays until closed: a `<dialog open>`, its close button a ghost button in a `<form method="dialog">`, which closes it without JavaScript        |
 | [Button](css/components/button.css)       | `.ds-c-button`, `--outline`, `--ghost`                             | A button, or a link that looks like one, filled; outlined for a secondary action or within the text; ghost, neither filled nor outlined, for a discreet action |
 | [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept                                                                                                    |
 | [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                                                                                                                 |

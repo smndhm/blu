@@ -7,7 +7,10 @@
 @import './utilities.css';
 @import './layout/cluster.css';
 @import './layout/page.css';
+
+/* The button first: other components build on it (the banner's close button) */
 @import './components/button.css';
+@import './components/banner.css';
 @import './components/code.css';
 @import './components/field.css';
 @import './components/footer.css';
