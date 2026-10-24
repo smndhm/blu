@@ -119,19 +119,19 @@ Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests 
 
 One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`. The button first: other components build on it (the banner's close button).
 
+The banner, as `<ds-banner>` shows it: the page's script closes it, and puts its text in the status region when it shows it after the page has loaded, for screen readers to announce it.
+
 ```html
-<dialog class="ds-c-banner" open>
+<div class="ds-c-banner" lang="en">
   <img class="ds-c-banner__icon" src="icon.svg" alt="" />
-  <p class="ds-c-banner__text">A message. <a href="…">A link</a></p>
-  <form method="dialog">
-    <button class="ds-c-button ds-c-button--ghost ds-c-banner__close" aria-label="Close">×</button>
-  </form>
-</dialog>
+  <p class="ds-c-banner__text"><span role="status">A message.</span> <a href="…">A link</a></p>
+  <button type="button" class="ds-c-button ds-c-button--ghost ds-c-banner__close" aria-label="Close">×</button>
+</div>
 ```
 
 | Component                                 | Classes                                                            | For                                                                                                                                                            |
 | ----------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Banner](css/components/banner.css)       | `.ds-c-banner`, `__icon`, `__text`, `__close`                      | A message that stays until closed: a `<dialog open>`, its close button a ghost button in a `<form method="dialog">`, which closes it without JavaScript        |
+| [Banner](css/components/banner.css)       | `.ds-c-banner`, `__icon`, `__text`, `__close`                      | A message that stays until closed, `<ds-banner>`'s markup: its close button a ghost button, which the page's script closes it with                             |
 | [Button](css/components/button.css)       | `.ds-c-button`, `--outline`, `--ghost`                             | A button, or a link that looks like one, filled; outlined for a secondary action or within the text; ghost, neither filled nor outlined, for a discreet action |
 | [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept                                                                                                    |
 | [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                                                                                                                 |
