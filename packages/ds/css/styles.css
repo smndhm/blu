@@ -1,0 +1,19 @@
+/*! @dume/ds, my design system, the whole of it: for my projects' needs while in version 0 */
+
+/* In one stylesheet, for a site that takes all of it (its fonts/ next to it) */
+@import './fonts.css';
+@import './tokens.css';
+@import './base.css';
+@import './utilities.css';
+@import './layout/cluster.css';
+@import './layout/page.css';
+@import './components/button.css';
+@import './components/code.css';
+@import './components/field.css';
+@import './components/footer.css';
+@import './components/header.css';
+@import './components/links.css';
+@import './components/post-list.css';
+@import './components/post-nav.css';
+@import './components/post.css';
+@import './components/skip-link.css';

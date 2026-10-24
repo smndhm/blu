@@ -1,4 +1,5 @@
 /* A site's header: its name, in the heading font, and its navigation, a list of links */
+
 @layer ds.components {
   .ds-c-header {
     display: flex;

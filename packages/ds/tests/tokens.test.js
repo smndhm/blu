@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import test from 'node:test';
+import { test } from 'vite-plus/test';
 
 /** The custom properties of css/tokens.css: their names, and each color in the light and dark themes */
 const tokens = Object.fromEntries(

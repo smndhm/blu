@@ -14,7 +14,7 @@ export default async function (eleventyConfig) {
       './public/': '/',
     })
     .addPassthroughCopy('./content/articles/feed/pretty-atom-feed.xsl')
-    // The design system, @dume/ds (packages/ds): ds.css, loaded by the layout, and its fonts, as /ds/
+    // The design system, @dume/ds (packages/ds): styles.css, loaded by the layout, and its fonts, as /ds/
     .addPassthroughCopy({ 'node_modules/@dume/ds/dist': 'ds' })
     // Social sharing images, referenced by `ogImage` front matter
     .addPassthroughCopy('./content/{articles/*,ia-postrophe}/og.{png,jpg,webp}')

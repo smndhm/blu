@@ -2,6 +2,8 @@
 
 My design system: the styles shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), its custom properties and classes prefixed with `ds-`. Only what the projects use: tokens, components and layouts come as they repeat from one project to another.
 
+While in version 0, it covers my projects' needs only, and a minor version may change what is there: use it elsewhere at your own pace, its version pinned.
+
 ## Naming
 
 Custom properties are named in lowercase words:
@@ -30,7 +32,13 @@ A component is HTML and CSS first: a native element (`<a>`, `<button>`, `<dialog
 
 Not for a look alone (a button, a field: a class is enough), nor for what a native element already does. Its content works without JavaScript wherever it can, the web component enhancing it.
 
-Web components are named `ds-` too (`<ds-notice>`); third-party ones keep their name (`<heading-anchors>`).
+Web components are named `ds-` too (`<ds-banner>`); third-party ones keep their name (`<heading-anchors>`).
+
+They live in `web-components/`, in TypeScript, each with its styles in its shadow root: its module imports them, with the tokens set on `:host`, and turns their rem into px, as a page that is not ours has its own root font size.
+
+| Web component                      | Module                              | What it is                                                                                                                                                                                                                                                                                |
+| ---------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Banner](web-components/banner.js) | `@dume/ds/web-components/banner.js` | `<ds-banner>`, a message at the top of a page that is not ours, announced by screen readers, closed with its button or Escape: `showBanner(document, { text, lang, closeLabel, iconUrl, link })`, without the custom elements registry, which an extension's content script does not have |
 
 ## Units
 
@@ -48,16 +56,16 @@ Web components are named `ds-` too (`<ds-notice>`); third-party ones keep their 
 - The target: [Baseline widely available](https://web.dev/baseline), what every major browser has had for 30 months.
 - Light and dark themes: each color is `light-dark(light, dark)`, which follows `color-scheme`, the system's by default; `color-scheme: dark` on a page or an element forces a theme.
 - Left-to-right and right-to-left languages alike: logical properties and values (`margin-inline-start`, `text-align: start`), which @dume/dev-config's Stylelint configuration requires.
-- Cascade layers: `ds.normalize`, `ds.base`, `ds.layout`, `ds.components`, `ds.utilities`, under any project's own CSS, which wins without a specificity fight.
+- Cascade layers: `ds.normalize`, `ds.base`, `ds.layout`, `ds.components`, `ds.utilities`, under any project's own CSS, which wins without a specificity fight. Their order is set in `tokens.css`, the first stylesheet to import.
 - Windows' contrast themes (`forced-colors`): components draw their edges with borders and outlines, which those themes keep, not with backgrounds alone.
 - Native controls in the primary color (`accent-color`), balanced headings and paragraphs without an orphan word (`text-wrap`).
 
 ## CSS
 
-The whole design system is one stylesheet, `@dume/ds/ds.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
+The whole design system is one stylesheet, `@dume/ds/styles.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
 
 ```html
-<link rel="stylesheet" href="/ds/ds.css" />
+<link rel="stylesheet" href="/ds/styles.css" />
 ```
 
 simon.duhem.fr does so: its Eleventy configuration copies `dist/` as `/ds/`.
@@ -101,25 +109,25 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | `--ds-b-size-border-1`, `-2`, `-4`                                                   | `1px`, `2px`, `4px`: border widths                                     |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`, `--ds-b-outline-radius-focus` | `3px solid var(--ds-b-color-primary)`, `2px`, `2px`                    |
 
-Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `ds.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
+Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `styles.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
 
 ## Components
 
 One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`.
 
-| Component                                 | Classes                                                            | For                                                                                                 |
-| ----------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
-| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`                                        | A button, or a link that looks like one, filled; outlined for a secondary action or within the text |
-| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept                                         |
-| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                                                      |
-| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                | A site's header: its name and navigation                                                            |
-| [Footer](css/components/footer.css)       | `.ds-c-footer`                                                     | A site's footer                                                                                     |
-| [Links](css/components/links.css)         | `.ds-c-links`                                                      | A few prominent links, under a home page's introduction                                             |
-| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`, `__description`  | A list of articles or talks, with their descriptions                                                |
-| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                 | An article                                                                                          |
-| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                    | Links to the previous and next articles                                                             |
-| [Code](css/components/code.css)           | Prism's classes                                                    | Code examples highlighted by Prism (Okaidia theme, contrast fixed)                                  |
+| Component                                 | Classes                                                            | For                                                                                                                                                            |
+| ----------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`, `--ghost`                             | A button, or a link that looks like one, filled; outlined for a secondary action or within the text; ghost, neither filled nor outlined, for a discreet action |
+| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` | A label, its control, a message under it whose line is kept                                                                                                    |
+| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                  | A link to the main content, shown when focused                                                                                                                 |
+| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                | A site's header: its name and navigation                                                                                                                       |
+| [Footer](css/components/footer.css)       | `.ds-c-footer`                                                     | A site's footer                                                                                                                                                |
+| [Links](css/components/links.css)         | `.ds-c-links`                                                      | A few prominent links, under a home page's introduction                                                                                                        |
+| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`, `__description`  | A list of articles or talks, with their descriptions                                                                                                           |
+| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                 | An article                                                                                                                                                     |
+| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                    | Links to the previous and next articles                                                                                                                        |
+| [Code](css/components/code.css)           | Prism's classes                                                    | Code examples highlighted by Prism (Okaidia theme, contrast fixed)                                                                                             |
 
 ## Development
 
-Each file in `css/` declares its cascade layer (`@layer ds.components { … }`). `pnpm build` writes `dist/` from them: the layers' order on top of each file, `tokens.css`, `base.css` (modern-normalize first), `fonts.css` and `fonts/` (from @fontsource-variable/bricolage-grotesque), `utilities.css`, `layout/` and `components/` (Prism's Okaidia theme first in `code.css`), then `ds.css`, all of them in one stylesheet. `pnpm test` checks the tokens' names, contrasts and sizes.
+Built with [Vite+](https://viteplus.dev) (`vp pack`, its settings in `vite.config.ts`). Each file in `css/` declares its own layer (`@layer ds.components { … }`), their order set once, in `tokens.css`, which comes first; its imports are bundled into it, in their layer: modern-normalize before the base (`@import 'modern-normalize' layer(ds.normalize)`), Prism's Okaidia theme before the code component. `pnpm build` writes `dist/`: each stylesheet, `styles.css` (all of them, from `css/styles.css`), `fonts/` (Bricolage Grotesque's Latin subsets, from @fontsource-variable/bricolage-grotesque, which `css/fonts.css` declares), and `web-components/` with their types. Lightning CSS keeps the syntax as it is for the browsers aimed at (`light-dark()`, nesting). `pnpm test` (Vitest) checks the tokens' names, contrasts and sizes, and `<ds-banner>`.

@@ -1,4 +1,5 @@
 /* A few prominent links, such as a home page's, under its introduction (with `.ds-l-cluster`) */
+
 @layer ds.components {
   .ds-c-links {
     font-size: var(--ds-b-size-20);

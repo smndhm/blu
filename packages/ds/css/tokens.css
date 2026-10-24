@@ -2,6 +2,10 @@
  * The design tokens, only those my projects use: colors in `light-dark(light, dark)`, which follows `color-scheme`, the
  * system's by default; text colors pass WCAG AA (4.5:1) on both backgrounds, the control border 3:1 (tests/tokens.test.js)
  */
+
+/* The layers' order, for every stylesheet of the design system: the tokens come first */
+@layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
+
 @layer ds.base {
   :root {
     --ds-b-color-text: light-dark(#222, #fafafa);

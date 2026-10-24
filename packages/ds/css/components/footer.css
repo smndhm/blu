@@ -1,4 +1,5 @@
 /* A site's footer, a list of links */
+
 @layer ds.components {
   .ds-c-footer {
     border-block-start: var(--ds-b-size-border-1) solid var(--ds-b-color-border);

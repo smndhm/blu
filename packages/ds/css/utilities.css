@@ -1,4 +1,5 @@
 /* Hidden on screen, read by screen readers: https://www.a11yproject.com/posts/how-to-hide-content/ */
+
 @layer ds.utilities {
   .ds-u-visually-hidden {
     position: absolute;
