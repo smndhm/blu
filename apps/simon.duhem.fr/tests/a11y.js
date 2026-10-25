@@ -18,6 +18,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import process from 'node:process';
 import { chromium } from 'playwright';
+// From the repository's root, which has @dume/dev-config for the whole repository
 import { audit as axe, contrastRatio } from '@dume/dev-config/a11y';
 
 const siteDir = new URL('../_site/', import.meta.url).pathname;
