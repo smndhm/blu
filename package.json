@@ -11,6 +11,7 @@
     "build": "turbo build",
     "test": "turbo run test",
     "test:a11y": "turbo run test:a11y",
+    "doc:check": "pnpm --filter @dume/webcomp-utils doc && git diff --exit-code -- packages/webcomp-utils/README.md",
     "manypkg:fix": "manypkg fix",
     "lint:style": "stylelint '**/*.{scss,css}' --ignore-path .gitignore --allow-empty-input",
     "lint:prettier": "prettier . --check",

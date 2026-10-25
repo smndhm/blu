@@ -17,5 +17,6 @@ jobs:
       checks: |
         pnpm lint
         pnpm test
+        pnpm doc:check
         pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
         pnpm test:a11y
