@@ -26,8 +26,6 @@ jobs:
       - name: Install Chromium
         run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
 
-      - name: Build site
-        run: pnpm --filter "simon.duhem.fr..." build
-
+      # Builds what it audits first (turbo.json)
       - name: Run axe on every page
-        run: pnpm --filter simon.duhem.fr test:a11y
+        run: pnpm test:a11y

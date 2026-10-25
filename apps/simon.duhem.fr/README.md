@@ -11,9 +11,10 @@ pnpm --filter simon.duhem.fr start
 
 ## Accessibilité
 
+Depuis la racine du dépôt, qui construit d'abord le site et ses dépendances (turbo) :
+
 ```sh
-pnpm --filter "simon.duhem.fr..." build
-pnpm --filter simon.duhem.fr test:a11y
+pnpm test:a11y
 ```
 
 `tests/a11y.js` audite avec [axe-core](https://github.com/dequelabs/axe-core) toutes les pages HTML de `_site` (le sitemap n'a pas les articles publiés d'abord ailleurs), plus les présentations du `sitemap.xml`, en thème clair et sombre, selon les critères WCAG 2.2 A et AA. Les présentations Marp en font partie : `test:a11y` les génère d'abord dans `apps/slides/dist/a11y` avec le modèle `bare`, où toutes les diapositives sont visibles (`pnpm --filter slides a11y:html`).

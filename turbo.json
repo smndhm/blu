@@ -5,7 +5,11 @@
     "build": {
       "dependsOn": ["^build"]
     },
-    "test": {}
+    "test": {},
+    "simon.duhem.fr#test:a11y": {
+      "dependsOn": ["build"],
+      "cache": false
+    }
   },
   "globalPassThroughEnv": ["CHROMIUM_PATH"]
 }

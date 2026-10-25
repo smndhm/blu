@@ -17,6 +17,5 @@ jobs:
       checks: |
         pnpm lint
         pnpm test
-        pnpm --filter "simon.duhem.fr..." build
         pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
-        pnpm --filter simon.duhem.fr test:a11y
+        pnpm test:a11y
