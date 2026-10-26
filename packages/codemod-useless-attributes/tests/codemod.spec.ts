@@ -23,7 +23,7 @@ describe('codemod workflow entry (codemod:ast-grep contract)', () => {
   it('returns the transformed source and logs the file with a count', async () => {
     const result = await transform(fakeRoot('<form method="get"><input type="text"></form>'));
     expect(result).toBe('<form><input></form>');
-    expect(logged.join('\n')).toContain('page.html - Removing or rewriting 2 redundant attribute(s)');
+    expect(logged.join('\n')).toContain('page.html - Removing or rewriting 2 useless attribute(s)');
   });
 
   it('returns null when the file is untouched', async () => {

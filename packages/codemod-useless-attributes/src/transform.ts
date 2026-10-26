@@ -251,7 +251,7 @@ function decide(element: Element, name: string, value: string, hasValue: boolean
 
 /**
  * Remove (or, for boolean attributes, rewrite) the attributes that the HTML
- * and ARIA specifications make redundant. Everything outside the edited
+ * and ARIA specifications make useless. Everything outside the edited
  * attribute ranges is preserved byte for byte, so the transform is safe on
  * HTML-ish templates (Nunjucks, Jinja...) as long as the edited attributes
  * themselves are static literals.

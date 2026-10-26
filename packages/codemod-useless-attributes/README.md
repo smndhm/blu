@@ -1,6 +1,6 @@
-# @dume/codemod-redundant-attributes
+# @dume/codemod-useless-attributes
 
-Codemod that removes from HTML what the specifications already say:
+Codemod that removes the HTML attributes that have no effect:
 
 - native attributes set to the value used when they are missing: `<input type="text">` -> `<input>`, `<form method="get">` -> `<form>`, `<textarea rows="2">` -> `<textarea>`;
 - values written on boolean attributes: `<input disabled="disabled">` -> `<input disabled>`;
@@ -15,19 +15,19 @@ Every change is a no-op for browsers and assistive technologies, each one source
 
 ```sh
 # Dry-run (default): report what would change, write nothing
-npx @dume/codemod-redundant-attributes src/
+npx @dume/codemod-useless-attributes src/
 
 # Apply
-npx @dume/codemod-redundant-attributes --write src/
+npx @dume/codemod-useless-attributes --write src/
 
 # Include template files when walking directories (explicit file paths are always processed)
-npx @dume/codemod-redundant-attributes --ext html,njk --write .
+npx @dume/codemod-useless-attributes --ext html,njk --write .
 
 # Only some rules
-npx @dume/codemod-redundant-attributes --rules aria-default,redundant-role src/
+npx @dume/codemod-useless-attributes --rules aria-default,redundant-role src/
 
 # Stylesheets and scripts living elsewhere
-npx @dume/codemod-redundant-attributes --references src/styles --references src/scripts src/pages/
+npx @dume/codemod-useless-attributes --references src/styles --references src/scripts src/pages/
 ```
 
 Options:
@@ -45,7 +45,7 @@ The report gives, for each attribute, the action (`remove`, `rewrite`, `skip`, `
 Programmatic API:
 
 ```js
-import { transformHtml } from '@dume/codemod-redundant-attributes';
+import { transformHtml } from '@dume/codemod-useless-attributes';
 
 const { output, findings, changed } = transformHtml('<nav role="navigation" aria-hidden="false"></nav>');
 // output === '<nav></nav>'
@@ -59,7 +59,7 @@ For rollouts driven by the [Codemod CLI](https://docs.codemod.com/), the package
 
 ```js
 // workflow script
-import transform from '@dume/codemod-redundant-attributes/codemod';
+import transform from '@dume/codemod-useless-attributes/codemod';
 
 export default transform;
 ```

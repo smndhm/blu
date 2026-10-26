@@ -1,20 +1,22 @@
 {
-  "name": "@dume/codemod-redundant-attributes",
+  "name": "@dume/codemod-useless-attributes",
   "version": "0.0.0",
-  "description": "Codemod that removes what the HTML and ARIA specifications make redundant: attributes set to their default value, boolean attribute values, ARIA states at their default, roles equal to the implicit role, ARIA repeating a native attribute.",
+  "description": "Codemod that removes HTML attributes with no effect, per the HTML and ARIA specifications: attributes set to their default value, boolean attribute values, ARIA states at their default, roles equal to the implicit role, ARIA repeating a native attribute, invalid values the browser ignores.",
   "keywords": [
     "codemod",
     "html",
     "aria",
     "attributes",
     "defaults",
-    "redundant",
+    "useless",
     "whatwg",
     "wai-aria",
     "cleanup",
-    "cli"
+    "cli",
+    "redundant",
+    "invalid"
   ],
-  "homepage": "https://github.com/smndhm/blu/tree/main/packages/codemod-redundant-attributes#readme",
+  "homepage": "https://github.com/smndhm/blu/tree/main/packages/codemod-useless-attributes#readme",
   "bugs": {
     "url": "https://github.com/smndhm/blu/issues"
   },
@@ -37,7 +39,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "codemod-redundant-attributes": "bin/codemod-redundant-attributes.mjs"
+    "codemod-useless-attributes": "bin/codemod-useless-attributes.mjs"
   },
   "files": [
     "dist",

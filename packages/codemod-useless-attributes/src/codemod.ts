@@ -32,7 +32,7 @@ async function transform(root: SgRootLike): Promise<string | null> {
   if (!changed) return null;
 
   const edited = findings.filter(finding => finding.type === 'removed' || finding.type === 'rewritten').length;
-  console.log(`${fileName} - Removing or rewriting ${edited} redundant attribute(s)`);
+  console.log(`${fileName} - Removing or rewriting ${edited} useless attribute(s)`);
   return output;
 }
 
