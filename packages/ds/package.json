@@ -1,6 +1,6 @@
 {
   "name": "@dume/ds",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "My design system: the styles shared by my projects (simon.duhem.fr, Music Bridge), design tokens, base, layouts and components",
   "author": "Simon Duhem",
   "keywords": [

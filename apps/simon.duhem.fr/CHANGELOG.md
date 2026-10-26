@@ -1,5 +1,18 @@
 # simon.duhem.fr
 
+## 2.1.1
+
+### Patch Changes
+
+- d21bbd2: Article Music Bridge : Korben en parle
+- 05c7f7f: The button is filled with the primary color, and outlined with `--outline`, for a secondary action or a button within the text (IApostrophe's bookmarklet); its text in the text's weight; on a `<button>`, no background nor font of the browser's.
+- 75ebb28: @dume/ds: my design system, the design tokens shared by my projects (colors, light and dark, fonts, font sizes, spacing, radius, focus ring) as CSS custom properties, the heading font (Bricolage Grotesque), modern-normalize and a base styling HTML elements without classes, a visually hidden utility, page and cluster layouts and its first components (button, field, skip link, header, footer, links, post list, post, post nav, code): plain CSS, colors in light-dark(), logical properties, in cascade layers, all of it in one stylesheet, styles.css. simon.duhem.fr takes all its style from it, loading styles.css, which its Eleventy configuration copies as /ds/: it has no stylesheet of its own anymore; the IApostrophe page neither. The list of articles and talks shows their descriptions. The 404 page just says "Non". The IApostrophe tester's highlight colors come from its script, as the bookmarklet's.
+- 294cd87: simon.duhem.fr loads the heading-anchors web component as a file, on articles only, copied by Eleventy like the design system: no JavaScript bundle anymore.
+- 75ebb28: Apostrophes typed on a keyboard in The Remote Tribe talk's title and description, and in the feed's subtitle.
+- f033c14: Updated dependency `@11ty/eleventy-img` to `7.1.0`.
+- d962800: Updated dependency `@11ty/eleventy-img` to `7.1.1`.
+- 6f6171a: Updated dependency `@dume/dev-config` to `1.4.0`.
+
 ## 2.1.0
 
 ### Minor Changes
