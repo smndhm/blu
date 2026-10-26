@@ -20,6 +20,11 @@
   "bugs": {
     "url": "https://github.com/smndhm/blu/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smndhm/blu.git",
+    "directory": "packages/codemod-drop-useless-attributes"
+  },
   "license": "MIT",
   "author": {
     "name": "Simon Duhem",
