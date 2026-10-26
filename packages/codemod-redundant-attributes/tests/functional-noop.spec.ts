@@ -80,3 +80,36 @@ describe('functional no-op on boolean attributes and numeric defaults', () => {
     expect(reflect(result.output)).toEqual(reflect(source));
   });
 });
+
+const reflectInvalid = (html: string) => {
+  const { window } = new JSDOM(html);
+  const document = window.document;
+  const form = document.forms[0];
+  const div = document.querySelector('div')!;
+  return [
+    form.method,
+    form.enctype,
+    document.querySelector('input')!.type,
+    document.querySelector('button')!.type,
+    document.querySelector('p')!.dir,
+    document.querySelector('th')!.scope,
+    div.draggable,
+    div.translate,
+  ];
+};
+
+describe('functional no-op on invalid keyword values', () => {
+  const source = `<!doctype html>
+<html><body>
+<form method="put" enctype="json"><input type="txt"><button type="sumbit">Go</button></form>
+<p dir="left">a</p>
+<table><tr><th scope="column">a</th></tr></table>
+<div draggable="yes" translate="false"></div>
+</body></html>`;
+
+  it('the browser sees the same states before and after', () => {
+    const result = transformHtml(source);
+    expect(result.changed).toBe(true);
+    expect(reflectInvalid(result.output)).toEqual(reflectInvalid(source));
+  });
+});

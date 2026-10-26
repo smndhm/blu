@@ -4,6 +4,7 @@ import { enumeratedAttributes, type Definition } from 'html-enumerated-attribute
 import { find, html } from 'property-information';
 import { conditionalAttributes, conditionReasons, supplementaryRules, type ConditionId } from './defaults.js';
 import { ariaDefaults, duplicatedNative, implicitRole, keptRedundantRoles, type ElementView } from './aria.js';
+import { ariaTokens, findKeywordAttribute, isValidKeyword } from './invalid.js';
 import { collectReferences, createReferences, findReference, type AttributeReferences } from './references.js';
 
 type Element = DefaultTreeAdapterMap['element'];
@@ -21,10 +22,12 @@ const DYNAMIC_VALUE = /\{\{|\{%|<%|\$\{/;
  * - `aria-default`: an ARIA state or property set to its default (`aria-hidden="false"`)
  * - `redundant-role`: a role the element already has (`<nav role="navigation">`)
  * - `aria-native`: an ARIA attribute repeating a native one (`aria-required="true"` next to `required`)
+ * - `invalid-value`: a keyword attribute with a value the spec does not define, removed when the browser then does what
+ *   it does without the attribute (`<input type="txt">`), reported otherwise (`hidden="no"` hides)
  */
-export type RuleId = 'html-default' | 'boolean-value' | 'aria-default' | 'redundant-role' | 'aria-native';
+export type RuleId = 'html-default' | 'boolean-value' | 'aria-default' | 'redundant-role' | 'aria-native' | 'invalid-value';
 
-export const RULES: readonly RuleId[] = ['html-default', 'boolean-value', 'aria-default', 'redundant-role', 'aria-native'];
+export const RULES: readonly RuleId[] = ['html-default', 'boolean-value', 'aria-default', 'redundant-role', 'aria-native', 'invalid-value'];
 
 export interface Finding {
   /** `removed` and `rewritten` are applied; `skipped` is a candidate kept on purpose; `warning` needs a person */
@@ -166,6 +169,7 @@ function concernedRule(element: Element, name: string, rules: ReadonlySet<RuleId
   if (rules.has('html-default') && (conditionFor(element.tagName, name) !== undefined || isKnownAttribute(element.tagName, name))) return 'html-default';
   if (rules.has('aria-default') && name in ariaDefaults) return 'aria-default';
   if (rules.has('redundant-role') && name === 'role') return 'redundant-role';
+  if (rules.has('invalid-value') && (findKeywordAttribute(element.tagName, name) || name in ariaTokens)) return 'invalid-value';
   return undefined;
 }
 
@@ -215,6 +219,24 @@ function decideAriaNative(element: ElementView, name: string, value: string): De
 }
 
 /** `hasValue` tells `disabled=""` from a bare `disabled`, which parse to the same empty value */
+function decideInvalidValue(element: Element, name: string, value: string): Decision {
+  const entry = findKeywordAttribute(element.tagName, name);
+  if (entry) {
+    if (isValidKeyword(entry, value)) return undefined;
+    // A typo in spacing or case may hide the intended value: removing it would lose what the author meant
+    if (isValidKeyword(entry, value.trim()) || isValidKeyword({ ...entry, caseSensitive: false }, value.trim())) {
+      return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value, so the browser ignores it; did you mean "${value.trim()}"?` };
+    }
+    if (entry.invalidEffect) return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value: ${entry.invalidEffect}` };
+    return { action: 'remove', rule: 'invalid-value', reason: `not a valid ${name} value; the browser does what it does without the attribute` };
+  }
+  const tokens = ariaTokens[name];
+  if (tokens && value !== '' && !tokens.includes(value.toLowerCase())) {
+    return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value (${tokens.join(', ')}); browsers differ on what they do with it` };
+  }
+  return undefined;
+}
+
 function decide(element: Element, name: string, value: string, hasValue: boolean, rules: ReadonlySet<RuleId>, context: DocumentContext): Decision {
   const elementView = view(element)!;
   return (
@@ -222,7 +244,8 @@ function decide(element: Element, name: string, value: string, hasValue: boolean
     (rules.has('aria-native') && name.startsWith('aria-') ? decideAriaNative(elementView, name, value) : undefined) ??
     (rules.has('redundant-role') && name === 'role' ? decideRedundantRole(elementView, value) : undefined) ??
     (rules.has('html-default') ? decideHtmlDefault(element, name, value, context) : undefined) ??
-    (rules.has('boolean-value') ? decideBooleanValue(name, value, hasValue) : undefined)
+    (rules.has('boolean-value') ? decideBooleanValue(name, value, hasValue) : undefined) ??
+    (rules.has('invalid-value') ? decideInvalidValue(element, name, value) : undefined)
   );
 }
 

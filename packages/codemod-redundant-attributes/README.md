@@ -6,7 +6,8 @@ Codemod that removes from HTML what the specifications already say:
 - values written on boolean attributes: `<input disabled="disabled">` -> `<input disabled>`;
 - ARIA states and properties set to their default: `<div aria-hidden="false">` -> `<div>`;
 - roles the element already has: `<nav role="navigation">` -> `<nav>`;
-- ARIA repeating a native attribute: `<input required aria-required="true">` -> `<input required>`.
+- ARIA repeating a native attribute: `<input required aria-required="true">` -> `<input required>`;
+- invalid values the browser ignores: `<input type="txt">` -> `<input>`, while invalid values that still do something (`hidden="no"` hides) are reported.
 
 Every change is a no-op for browsers and assistive technologies, each one sourced to the [WHATWG HTML Living Standard](https://html.spec.whatwg.org/multipage/), [WAI-ARIA 1.3](https://w3c.github.io/aria/) or [ARIA in HTML](https://www.w3.org/TR/html-aria/). Everything outside the edited attributes is kept byte for byte, so the tool also runs on HTML-like templates (Nunjucks, Jinja...).
 
@@ -124,6 +125,34 @@ ARIA in HTML says authors [should not set an ARIA attribute that repeats a nativ
 - `aria-checked` matching the `checked` attribute of a native checkbox or radio button.
 
 `aria-checked` contradicting a native checkbox or radio button (`aria-checked="true"` without `checked`, `aria-checked="mixed"`) is left and reported as a warning: use `checked` or `indeterminate`.
+
+### `invalid-value`: values the spec does not define
+
+Each keyword attribute has an _invalid value default_: the state a value outside its keywords maps to. When it is the same as the _missing value default_, an invalid value does exactly what no attribute does, and is removed:
+
+| Removed when invalid                                                                          | Invalid and missing both mean           |
+| --------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `input type`                                                                                  | Text                                    |
+| `button type`                                                                                 | the default button behavior             |
+| `form method`, `enctype`, `autocomplete`                                                      | GET, urlencoded, on                     |
+| `img decoding`, `loading`, `fetchpriority` (and on `iframe`, `link`, `script`)                | auto, eager, auto                       |
+| `textarea wrap`, `area shape`, `th scope`, `ol type`                                          | soft, rectangle, auto, decimal          |
+| `referrerpolicy`, `preload`                                                                   | the default policy, the default preload |
+| `dir`, `inputmode`, `enterkeyhint`, `spellcheck`, `draggable`, `translate`, `contenteditable` | no state, default, inherit              |
+
+When the two differ, the invalid value does something, so it is reported and left:
+
+| Reported                    | What an invalid value does                                   |
+| --------------------------- | ------------------------------------------------------------ |
+| `hidden="no"`               | hides the element, like `hidden`                             |
+| `crossorigin="true"`        | anonymous CORS request, while no attribute means no CORS     |
+| `track kind="subtitle"`     | metadata: the track is never shown                           |
+| `formmethod`, `formenctype` | get or urlencoded, while no attribute means the form's value |
+| `popover="yes"`             | a manual popover, while no attribute means no popover        |
+
+A value that becomes valid once trimmed or lowercased (`type=" email "`) is reported with the probable intent, never removed: the author meant something. The keywords are listed from the current spec (`src/invalid.ts`, one source link per attribute), not from `html-enumerated-attributes`, which lacks recent keywords (`contenteditable="plaintext-only"`, `hidden="until-found"`) and lists `target`, which takes any window name. jsdom checks that the browser sees the same states before and after for the attributes it implements.
+
+Boolean attributes are handled by `boolean-value`: whatever their value, they are true, so `disabled="false"` is reported, never removed. Invalid values of ARIA states and properties (`aria-hidden="no"`, `aria-invalid="yes"`) are reported, never removed: browsers differ on them, and Chrome hides content with `aria-hidden="no"`.
 
 ## Stylesheets and scripts
 

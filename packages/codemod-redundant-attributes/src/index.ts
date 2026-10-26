@@ -4,3 +4,4 @@ export { ariaDefaults, implicitRole, keptRedundantRoles, nativeDuplicates, type 
 export { collectReferences, createReferences, findReference, type AttributeReference, type AttributeReferences, type SourceKind } from './references.js';
 export { processFiles, readReferences, run, type FileReport, type ProcessOptions } from './cli.js';
 export { default as codemodTransform, type SgRootLike } from './codemod.js';
+export { ariaTokens, findKeywordAttribute, isValidKeyword, keywordAttributes, type KeywordAttribute } from './invalid.js';

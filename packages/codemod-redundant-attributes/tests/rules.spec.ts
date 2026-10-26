@@ -183,3 +183,70 @@ describe('rule selection', () => {
     ]);
   });
 });
+
+describe('invalid-value', () => {
+  it.each([
+    ['<input type="txt">', '<input>'],
+    ['<input type="">', '<input>'],
+    ['<button type="sumbit">a</button>', '<button>a</button>'],
+    ['<form method="put"></form>', '<form></form>'],
+    ['<form enctype="json"></form>', '<form></form>'],
+    ['<img src="a.png" alt="" loading="later">', '<img src="a.png" alt="">'],
+    ['<img src="a.png" alt="" decoding="fast" fetchpriority="urgent">', '<img src="a.png" alt="">'],
+    ['<p dir="left">a</p>', '<p>a</p>'],
+    ['<th scope="column">a</th>', '<th>a</th>'],
+    ['<input inputmode="digits" enterkeyhint="ok">', '<input>'],
+    ['<div draggable="yes" spellcheck="on" translate="false" contenteditable="yes"></div>', '<div></div>'],
+    ['<a href="/" referrerpolicy="none">a</a>', '<a href="/">a</a>'],
+    ['<ol type="x"><li>a</li></ol>', '<ol><li>a</li></ol>'],
+  ])('%s -> %s: the browser does what it does without the attribute', (source, expected) => {
+    expect(output(source)).toBe(expected);
+    expect(findings(source).every(finding => finding.rule === 'invalid-value' && finding.type === 'removed')).toBe(true);
+  });
+
+  it.each([
+    '<input type="email">',
+    '<input type="EMAIL">',
+    '<div contenteditable="plaintext-only"></div>',
+    '<div hidden="until-found">a</div>',
+    '<div popover="hint"></div>',
+    '<img src="a.png" alt="" crossorigin="">',
+    '<a href="/" target="results">a</a>',
+    '<ol type="I"><li>a</li></ol>',
+  ])('leaves the valid %s alone', source => {
+    expect(output(source)).toBe(source);
+    expect(findings(source)).toEqual([]);
+  });
+
+  it.each([
+    ['<div hidden="no">a</div>', 'hides the element'],
+    ['<img src="a.png" alt="" crossorigin="true">', 'means anonymous'],
+    ['<track src="a.vtt" kind="subtitle">', 'never shown'],
+    ['<button formmethod="put">a</button>', "the form's method"],
+    ['<div popover="yes"></div>', 'means manual'],
+  ])('reports %s, whose invalid value does something, and leaves it', (source, effect) => {
+    expect(output(source)).toBe(source);
+    expect(findings(source)).toMatchObject([{ type: 'warning', rule: 'invalid-value', reason: expect.stringContaining(effect) }]);
+  });
+
+  it.each([
+    ['<input type=" email ">', 'did you mean "email"'],
+    ['<ol type=" i "><li>a</li></ol>', 'did you mean "i"'],
+  ])('reports %s, close to a valid value, instead of removing what the author meant', (source, hint) => {
+    expect(output(source)).toBe(source);
+    expect(findings(source)).toMatchObject([{ type: 'warning', reason: expect.stringContaining(hint) }]);
+  });
+
+  it.each(['<div aria-hidden="no">a</div>', '<input aria-invalid="yes">', '<button aria-pressed="on">a</button>'])(
+    'reports the invalid ARIA value in %s and never removes it',
+    source => {
+      expect(output(source)).toBe(source);
+      expect(findings(source)).toMatchObject([{ type: 'warning', rule: 'invalid-value' }]);
+    },
+  );
+
+  it('keeps an invalid value a stylesheet selects', () => {
+    const source = '<style>[type="txt"] { color: red }</style><input type="txt">';
+    expect(output(source)).toBe(source);
+  });
+});
