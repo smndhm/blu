@@ -6,10 +6,10 @@ import { collectReferences, createReferences, SOURCE_KINDS, type AttributeRefere
 
 const IGNORED_DIRECTORIES = new Set(['node_modules', 'dist', 'build', 'coverage', '.git']);
 
-const HELP = `codemod-useless-attributes: remove the HTML attributes that have no effect, per the HTML and ARIA specifications
+const HELP = `codemod-drop-useless-attributes: remove the HTML attributes that have no effect, per the HTML and ARIA specifications
 
 Usage:
-  codemod-useless-attributes [options] [paths...]
+  codemod-drop-useless-attributes [options] [paths...]
 
 Paths can be files or directories (default: current directory).
 Directories are walked recursively; node_modules, dist, build, coverage and .git are skipped.

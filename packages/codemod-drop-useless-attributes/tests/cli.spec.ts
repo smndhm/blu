@@ -11,7 +11,7 @@ describe('processFiles', () => {
   let directory: string;
 
   beforeEach(async () => {
-    directory = await mkdtemp(join(tmpdir(), 'codemod-useless-attributes-'));
+    directory = await mkdtemp(join(tmpdir(), 'codemod-drop-useless-attributes-'));
     await writeFile(join(directory, 'page.html'), SAMPLE);
     await writeFile(join(directory, 'partial.njk'), '<input type="text" value="{{ value }}">\n');
     await mkdir(join(directory, 'node_modules'));
@@ -78,7 +78,7 @@ describe('run', () => {
   let logged: string[];
 
   beforeEach(async () => {
-    directory = await mkdtemp(join(tmpdir(), 'codemod-useless-attributes-run-'));
+    directory = await mkdtemp(join(tmpdir(), 'codemod-drop-useless-attributes-run-'));
     await writeFile(join(directory, 'page.html'), SAMPLE);
     logged = [];
     vi.spyOn(console, 'log').mockImplementation((...parts: unknown[]) => {

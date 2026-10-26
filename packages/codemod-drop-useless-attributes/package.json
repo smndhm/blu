@@ -1,5 +1,5 @@
 {
-  "name": "@dume/codemod-useless-attributes",
+  "name": "@dume/codemod-drop-useless-attributes",
   "version": "0.0.0",
   "description": "Codemod that removes HTML attributes with no effect, per the HTML and ARIA specifications: attributes set to their default value, boolean attribute values, ARIA states at their default, roles equal to the implicit role, ARIA repeating a native attribute, invalid values the browser ignores.",
   "keywords": [
@@ -16,7 +16,7 @@
     "redundant",
     "invalid"
   ],
-  "homepage": "https://github.com/smndhm/blu/tree/main/packages/codemod-useless-attributes#readme",
+  "homepage": "https://github.com/smndhm/blu/tree/main/packages/codemod-drop-useless-attributes#readme",
   "bugs": {
     "url": "https://github.com/smndhm/blu/issues"
   },
@@ -39,7 +39,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "codemod-useless-attributes": "bin/codemod-useless-attributes.mjs"
+    "codemod-drop-useless-attributes": "bin/codemod-drop-useless-attributes.mjs"
   },
   "files": [
     "dist",

@@ -1,4 +1,4 @@
-# @dume/codemod-useless-attributes
+# @dume/codemod-drop-useless-attributes
 
 Codemod that removes the HTML attributes that have no effect:
 
@@ -15,19 +15,19 @@ Every change is a no-op for browsers and assistive technologies, each one source
 
 ```sh
 # Dry-run (default): report what would change, write nothing
-npx @dume/codemod-useless-attributes src/
+npx @dume/codemod-drop-useless-attributes src/
 
 # Apply
-npx @dume/codemod-useless-attributes --write src/
+npx @dume/codemod-drop-useless-attributes --write src/
 
 # Include template files when walking directories (explicit file paths are always processed)
-npx @dume/codemod-useless-attributes --ext html,njk --write .
+npx @dume/codemod-drop-useless-attributes --ext html,njk --write .
 
 # Only some rules
-npx @dume/codemod-useless-attributes --rules aria-default,redundant-role src/
+npx @dume/codemod-drop-useless-attributes --rules aria-default,redundant-role src/
 
 # Stylesheets and scripts living elsewhere
-npx @dume/codemod-useless-attributes --references src/styles --references src/scripts src/pages/
+npx @dume/codemod-drop-useless-attributes --references src/styles --references src/scripts src/pages/
 ```
 
 Options:
@@ -45,7 +45,7 @@ The report gives, for each attribute, the action (`remove`, `rewrite`, `skip`, `
 Programmatic API:
 
 ```js
-import { transformHtml } from '@dume/codemod-useless-attributes';
+import { transformHtml } from '@dume/codemod-drop-useless-attributes';
 
 const { output, findings, changed } = transformHtml('<nav role="navigation" aria-hidden="false"></nav>');
 // output === '<nav></nav>'
@@ -59,7 +59,7 @@ For rollouts driven by the [Codemod CLI](https://docs.codemod.com/), the package
 
 ```js
 // workflow script
-import transform from '@dume/codemod-useless-attributes/codemod';
+import transform from '@dume/codemod-drop-useless-attributes/codemod';
 
 export default transform;
 ```
