@@ -27,6 +27,25 @@ describe('collectReferences', () => {
     expect(findReference(references, 'role', 'button')).toBe('file:3');
   });
 
+  it('counts only the literal a getAttribute() value is compared to', () => {
+    const references = referencesOf("this.isDialog = this.getAttribute('role') === 'dialog';\nif (el.getAttribute(\"type\") !== `text`) {}", 'js');
+    expect(findReference(references, 'role', 'navigation')).toBeUndefined();
+    expect(findReference(references, 'role', 'dialog')).toBe('file:1');
+    expect(findReference(references, 'type', 'text')).toBe('file:2');
+  });
+
+  it('ignores removeAttribute() and setAttribute(), which do not read the markup, but not toggleAttribute()', () => {
+    const references = referencesOf("el.removeAttribute('role'); el.setAttribute('type', 'x');\nel.toggleAttribute('hidden');", 'js');
+    expect(findReference(references, 'role', 'navigation')).toBeUndefined();
+    expect(findReference(references, 'type', 'text')).toBeUndefined();
+    expect(findReference(references, 'hidden', '')).toBe('file:2');
+  });
+
+  it('still counts any value for a getAttribute() whose value is used otherwise', () => {
+    expect(findReference(referencesOf("const role = el.getAttribute('role');", 'js'), 'role', 'navigation')).toBe('file:1');
+    expect(findReference(referencesOf('if (el.getAttribute(`type`) === `${kind}`) {}', 'js'), 'type', 'text')).toBe('file:1');
+  });
+
   it('keeps a boolean attribute rewrite when only its presence is selected', () => {
     const references = referencesOf('[disabled] {}\n[open="open"] {}', 'css');
     expect(findReference(references, 'disabled', 'disabled', true)).toBeUndefined();

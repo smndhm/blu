@@ -171,3 +171,87 @@ export const ariaTokens: Record<string, string[]> = {
   'aria-selected': ['true', 'false', 'undefined'],
   'aria-sort': ['ascending', 'descending', 'none', 'other'],
 };
+
+/** The states and properties of WAI-ARIA 1.3, deprecated ones included: https://w3c.github.io/aria/#state_prop_def */
+export const ariaAttributes = new Set([
+  'aria-actions',
+  'aria-activedescendant',
+  'aria-atomic',
+  'aria-autocomplete',
+  'aria-braillelabel',
+  'aria-brailleroledescription',
+  'aria-busy',
+  'aria-checked',
+  'aria-colcount',
+  'aria-colindex',
+  'aria-colindextext',
+  'aria-colspan',
+  'aria-controls',
+  'aria-current',
+  'aria-describedby',
+  'aria-description',
+  'aria-details',
+  'aria-disabled',
+  'aria-dropeffect',
+  'aria-errormessage',
+  'aria-expanded',
+  'aria-flowto',
+  'aria-grabbed',
+  'aria-haspopup',
+  'aria-hidden',
+  'aria-invalid',
+  'aria-keyshortcuts',
+  'aria-label',
+  'aria-labelledby',
+  'aria-level',
+  'aria-live',
+  'aria-modal',
+  'aria-multiline',
+  'aria-multiselectable',
+  'aria-orientation',
+  'aria-owns',
+  'aria-placeholder',
+  'aria-posinset',
+  'aria-pressed',
+  'aria-readonly',
+  'aria-relevant',
+  'aria-required',
+  'aria-roledescription',
+  'aria-rowcount',
+  'aria-rowindex',
+  'aria-rowindextext',
+  'aria-rowspan',
+  'aria-selected',
+  'aria-setsize',
+  'aria-sort',
+  'aria-valuemax',
+  'aria-valuemin',
+  'aria-valuenow',
+  'aria-valuetext',
+]);
+
+function distance(a: string, b: string): number {
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i += 1) {
+    let previous = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const current = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (a[i - 1] === b[j - 1] ? 0 : 1));
+      previous = current;
+    }
+  }
+  return row[b.length];
+}
+
+/** What an attribute named aria-something that ARIA does not define was probably meant to be */
+export function probableAriaAttribute(name: string): string | undefined {
+  if (name === 'aria-role') return 'role';
+  let best: string | undefined;
+  let bestDistance = 3;
+  for (const candidate of ariaAttributes) {
+    const candidateDistance = distance(name, candidate);
+    if (candidateDistance < bestDistance) [best, bestDistance] = [candidate, candidateDistance];
+  }
+  return best;
+}

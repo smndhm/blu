@@ -112,6 +112,8 @@ Removed when the role is the element's implicit role per the [ARIA in HTML confo
 
 Only a single lowercase role is compared: a list of roles is a fallback chain. Left out because the implicit role depends on context or changes something: headings (an explicit `heading` role loses the level), `header`, `footer`, `aside`, `section`, `img alt=""`, `td`, `th`, `option`, `li` in a list that has another role.
 
+An empty role (`role=""`) is removed too: it is as if there were none, and the element keeps its implicit role.
+
 Kept and reported: `role="list"` on `<ul>`, `<ol>` and `<menu>`. WebKit (Safari with VoiceOver) drops the list semantics of a list styled with `list-style: none`, and `role="list"` brings them back.
 
 ### `aria-native`: ARIA repeating a native attribute
@@ -152,14 +154,16 @@ When the two differ, the invalid value does something, so it is reported and lef
 
 A value that becomes valid once trimmed or lowercased (`type=" email "`) is reported with the probable intent, never removed: the author meant something. The keywords are listed from the current spec (`src/invalid.ts`, one source link per attribute), not from `html-enumerated-attributes`, which lacks recent keywords (`contenteditable="plaintext-only"`, `hidden="until-found"`) and lists `target`, which takes any window name. jsdom checks that the browser sees the same states before and after for the attributes it implements.
 
-Boolean attributes are handled by `boolean-value`: whatever their value, they are true, so `disabled="false"` is reported, never removed. Invalid values of ARIA states and properties (`aria-hidden="no"`, `aria-invalid="yes"`) are reported, never removed: browsers differ on them, and Chrome hides content with `aria-hidden="no"`.
+Boolean attributes are handled by `boolean-value`: whatever their value, they are true, so `disabled="false"` is reported, never removed. Invalid values of ARIA states and properties (`aria-hidden="no"`, `aria-invalid="yes"`) are reported, never removed: browsers differ on them, and Chrome hides content with `aria-hidden="no"`. So are attributes ARIA does not define, with the probable intent: `aria-role="button"` (did you mean `role`?), `aria-labeledby` (did you mean `aria-labelledby`?). They do nothing, but removing them would lose what the author meant.
 
 ## Stylesheets and scripts
 
 Removing `type="text"` changes nothing for the browser, but `input[type="text"]` no longer matches it and `input:not([type])` starts to. Before removing an attribute, the codemod reads the stylesheets (`css`, `scss`, `sass`, `less`, `styl`), the scripts (`js`, `ts`, `jsx`, `tsx` and their module variants) and the components (`vue`, `svelte`, `astro`) under the given paths and `--references`, plus the inline `<style>` and `<script>` of each file. An attribute is kept, and reported with the file and line, when:
 
-- a selector or a script depends on its presence: `[type]`, `:not([type])`, `[role^="nav"]`, `getAttribute('type')`, `hasAttribute('type')`;
-- a selector compares it to the value being removed: `[type="text"]`, `[aria-hidden="false"]`.
+- a selector or a script depends on its presence: `[type]`, `:not([type])`, `[role^="nav"]`, `getAttribute('type')`, `hasAttribute('type')`, `toggleAttribute('hidden')`;
+- a selector or a script compares it to the value being removed: `[type="text"]`, `[aria-hidden="false"]`, `getAttribute('role') === 'dialog'` for `role="dialog"` only.
+
+`removeAttribute()` and `setAttribute()` write without reading, so they keep nothing.
 
 A selector on another value (`input[type="email"]`) does not block anything, nor does a selector on another element: `select[size]` keeps `size` on `<select>` only, and `input:not([type])` does not keep `type` on `<script>`. A selector without an element (`[type]`, `.field[type]`), or whose element is unsure, counts for every element. For a boolean attribute written bare, only a selector on its value blocks the rewrite: `[disabled]` still matches `disabled`. In scripts, selectors are read from string literals only, so `items[index]` is not taken for one.
 

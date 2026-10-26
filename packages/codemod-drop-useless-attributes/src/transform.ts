@@ -4,7 +4,7 @@ import { enumeratedAttributes, type Definition } from 'html-enumerated-attribute
 import { find, html } from 'property-information';
 import { conditionalAttributes, conditionReasons, supplementaryRules, type ConditionId } from './defaults.js';
 import { ariaDefaults, duplicatedNative, implicitRole, keptRedundantRoles, type ElementView } from './aria.js';
-import { ariaTokens, findKeywordAttribute, isValidKeyword } from './invalid.js';
+import { ariaAttributes, ariaTokens, findKeywordAttribute, isValidKeyword, probableAriaAttribute } from './invalid.js';
 import { collectReferences, createReferences, findReference, type AttributeReferences } from './references.js';
 
 type Element = DefaultTreeAdapterMap['element'];
@@ -210,6 +210,8 @@ function decideAriaDefault(name: string, value: string): Decision {
 }
 
 function decideRedundantRole(element: ElementView, value: string): Decision {
+  // An empty role is as if there were none: the element keeps its implicit role
+  if (value.trim() === '') return { action: 'remove', rule: 'redundant-role', reason: 'an empty role is as if there were none' };
   // A single role in lowercase only: a list of roles is a fallback chain, and the browser reads it from the left.
   if (!/^[a-z]+$/.test(value) || implicitRole(element) !== value) return undefined;
   const kept = keptRedundantRoles[element.tagName]?.[value];
@@ -231,6 +233,11 @@ function decideAriaNative(element: ElementView, name: string, value: string): De
 
 /** `hasValue` tells `disabled=""` from a bare `disabled`, which parse to the same empty value */
 function decideInvalidValue(element: Element, name: string, value: string): Decision {
+  // An attribute ARIA does not define does nothing, but what the author meant is lost if it goes: reported only
+  if (name.startsWith('aria-') && !ariaAttributes.has(name)) {
+    const meant = probableAriaAttribute(name);
+    return { action: 'warn', rule: 'invalid-value', reason: `${name} is not an ARIA attribute, so it does nothing${meant ? `; did you mean ${meant}?` : ''}` };
+  }
   const entry = findKeywordAttribute(element.tagName, name);
   if (entry) {
     if (isValidKeyword(entry, value)) return undefined;

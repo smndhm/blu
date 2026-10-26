@@ -250,3 +250,36 @@ describe('invalid-value', () => {
     expect(output(source)).toBe(source);
   });
 });
+
+describe('attributes that ARIA does not define', () => {
+  it.each([
+    ['<a href="#" aria-role="button">a</a>', 'did you mean role?'],
+    ['<input aria-labeledby="l">', 'did you mean aria-labelledby?'],
+    ['<div aria-hiden="true">a</div>', 'did you mean aria-hidden?'],
+    ['<div aria-foo-bar-baz="x">a</div>', 'is not an ARIA attribute, so it does nothing'],
+  ])('reports %s and leaves it: what the author meant would be lost', (source, reason) => {
+    expect(output(source)).toBe(source);
+    expect(findings(source)).toMatchObject([{ type: 'warning', rule: 'invalid-value', reason: expect.stringContaining(reason) }]);
+  });
+
+  it.each(['<div aria-description="d" aria-braillelabel="b" aria-colindextext="c">a</div>', '<div aria-dropeffect="move" aria-grabbed="false">a</div>'])(
+    'knows the ARIA 1.3 attributes, deprecated ones included: %s',
+    source => {
+      expect(findings(source)).toEqual([]);
+    },
+  );
+});
+
+describe('empty role', () => {
+  it.each([
+    ['<span role="">a</span>', '<span>a</span>'],
+    ['<div role=" ">a</div>', '<div>a</div>'],
+  ])('%s -> %s: an empty role is as if there were none', (source, expected) => {
+    expect(output(source)).toBe(expected);
+  });
+
+  it('keeps an empty role a stylesheet selects', () => {
+    const source = '<style>[role] { outline: 1px solid }</style><span role="">a</span>';
+    expect(output(source)).toBe(source);
+  });
+});

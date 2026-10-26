@@ -8,7 +8,7 @@ export type SourceKind = 'css' | 'js' | 'mixed';
 
 /** Where an attribute is referenced, as `file:line` */
 export interface AttributeReference {
-  /** Set when the presence of the attribute matters, whatever its value: `[type]`, `[type^="t"]`, `getAttribute('type')` */
+  /** Set when the presence of the attribute matters, whatever its value: `[type]`, `[type^="t"]`, `getAttribute('type')`, `hasAttribute('type')`, `toggleAttribute('type')` */
   anyValue?: string;
   /** Values compared with `=`, lowercased */
   values: Map<string, string>;
@@ -54,7 +54,10 @@ export function createReferences(): AttributeReferences {
 }
 
 const ATTRIBUTE_SELECTOR = /\[\s*([A-Za-z_][\w:-]*)\s*(?:([~|^$*]?=)\s*(?:"([^"]*)"|'([^']*)'|([^\]\s'"]+)))?\s*(?:[iIsS]\s*)?\]/g;
-const ATTRIBUTE_METHOD = /\b(?:get|has|remove|toggle)Attribute(?:NS)?\s*\(\s*(?:[^,()]+,\s*)?(["'`])([^"'`]+)\1/g;
+// removeAttribute() and setAttribute() write without reading: what the markup had does not change what they do
+const ATTRIBUTE_METHOD = /\b(get|has|toggle)Attribute(?:NS)?\s*\(\s*(?:[^,()]+,\s*)?(["'`])([^"'`]+)\2\s*\)/g;
+/** A value read with getAttribute() and compared to a literal right away: only that literal matters */
+const COMPARED_TO = /^\s*[!=]==?\s*(["'`])([^"'`$]*)\1/;
 const STRING_LITERAL = /'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"|`(?:[^`\\]|\\.)*`/g;
 
 export const SOURCE_KINDS: Record<string, SourceKind> = {
@@ -108,7 +111,11 @@ export function collectReferences(text: string, kind: SourceKind, location: stri
     scanSelectors(text, 0);
   }
   if (kind !== 'css') {
-    for (const match of text.matchAll(ATTRIBUTE_METHOD)) add(match[2], match.index);
+    for (const match of text.matchAll(ATTRIBUTE_METHOD)) {
+      const compared = match[1] === 'get' ? COMPARED_TO.exec(text.slice(match.index + match[0].length)) : null;
+      if (compared) add(match[3], match.index, '=', compared[2]);
+      else add(match[3], match.index);
+    }
   }
 }
 
