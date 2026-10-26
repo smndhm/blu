@@ -176,9 +176,10 @@ describe('value normalization', () => {
     expect(transformHtml('<input type=text>').output).toBe('<input>');
   });
 
-  it('does not trim: a padded value is not an exact state match and is kept', () => {
+  it('does not trim: a padded value is no default for html-default, but an invalid value meaning the default for invalid-value', () => {
     const source = '<input type=" text ">';
-    expect(transformHtml(source).output).toBe(source);
+    expect(transformHtml(source, { rules: ['html-default'] }).output).toBe(source);
+    expect(transformHtml(source).findings).toMatchObject([{ type: 'removed', rule: 'invalid-value' }]);
   });
 });
 

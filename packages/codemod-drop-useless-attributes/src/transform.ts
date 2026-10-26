@@ -91,7 +91,8 @@ interface Edit {
 }
 
 /** What a rule decides for one attribute */
-type Decision = { action: 'remove' | 'rewrite' | 'skip' | 'warn'; rule: RuleId; reason?: string } | undefined;
+/** A rewrite drops the value (`disabled="disabled"` becomes `disabled`), or with `value`, writes that one instead */
+type Decision = { action: 'remove' | 'rewrite' | 'skip' | 'warn'; rule: RuleId; reason?: string; value?: string } | undefined;
 
 function isElement(node: Node): node is Element {
   return 'tagName' in node;
@@ -255,6 +256,18 @@ function decideInvalidValue(element: Element, name: string, value: string): Deci
     if (isValidKeyword(entry, value)) return undefined;
     // A typo in spacing or case may hide the intended value: removing it would lose what the author meant
     if (isValidKeyword(entry, value.trim()) || isValidKeyword({ ...entry, caseSensitive: false }, value.trim())) {
+      // <button type=" submit ">: invalid means the Auto state, as type="submit" does without a command; the explicit type
+      // kept on a <button> is kept here too, written right
+      if (element.tagName === 'button' && name === 'type' && value.trim().toLowerCase() === 'submit') {
+        if (getAttribute(element, 'commandfor') !== undefined || getAttribute(element, 'command') !== undefined) {
+          return { action: 'warn', rule: 'invalid-value', reason: 'not a valid type value: with a command, it means Auto, not submit; write type="submit" or remove it' };
+        }
+        return { action: 'rewrite', rule: 'invalid-value', value: 'submit', reason: 'not a valid type value: written as the submit it meant' };
+      }
+      // What it meant is what the browser does without it (`type=" text "`): nothing to keep, nothing meant is lost
+      if (!entry.invalidEffect && conditionFor(element.tagName, name) === undefined && isRemovableDefault(element.tagName, name, value.trim())) {
+        return { action: 'remove', rule: 'invalid-value', reason: `not a valid ${name} value, and "${value.trim()}", what it meant, is the default anyway` };
+      }
       return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value, so the browser ignores it; did you mean "${value.trim()}"?` };
     }
     if (entry.invalidEffect) return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value: ${entry.invalidEffect}` };
@@ -361,8 +374,9 @@ export function transformHtml(source: string, options: TransformOptions = {}): T
       }
 
       if (decision.action === 'rewrite') {
-        // Keep the name as written, drop `="value"`
-        edits.push({ startOffset: attributeLocation.startOffset + name.length, endOffset: attributeLocation.endOffset, text: '' });
+        // Keep the name as written; drop `="value"`, or write the new value
+        const text = decision.value === undefined ? '' : `="${decision.value}"`;
+        edits.push({ startOffset: attributeLocation.startOffset + name.length, endOffset: attributeLocation.endOffset, text });
         report('rewritten', decision.rule, decision.reason);
         continue;
       }

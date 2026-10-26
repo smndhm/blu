@@ -230,6 +230,41 @@ describe('invalid-value', () => {
   });
 
   it.each([
+    ['<input type=" text ">', '<input>'],
+    ['<input type="TEXT ">', '<input>'],
+    ['<form method=" get"></form>', '<form></form>'],
+    ['<ol type=" 1 "><li>a</li></ol>', '<ol><li>a</li></ol>'],
+  ])('%s -> %s: invalid, and what it meant is the default anyway', (source, expected) => {
+    expect(output(source)).toBe(expected);
+    expect(findings(source)).toMatchObject([{ type: 'removed', rule: 'invalid-value', reason: expect.stringContaining('is the default anyway') }]);
+  });
+
+  it.each([
+    ['<button type=" submit ">a</button>', '<button type="submit">a</button>'],
+    ['<button TYPE="submit ">a</button>', '<button TYPE="submit">a</button>'],
+    ["<button type=' Submit'>a</button>", '<button type="submit">a</button>'],
+  ])('%s -> %s: the explicit type of a <button>, written right', (source, expected) => {
+    expect(output(source)).toBe(expected);
+    expect(findings(source)).toMatchObject([{ type: 'rewritten', rule: 'invalid-value' }]);
+    expect(findings(expected)).toMatchObject([{ type: 'skipped', rule: 'html-default' }]);
+  });
+
+  it('leaves type=" submit " on a button with a command, where it means Auto and not submit', () => {
+    const source = '<button type=" submit " commandfor="d" command="show-modal">a</button>';
+    expect(output(source)).toBe(source);
+    expect(findings(source)).toMatchObject([{ type: 'warning', reason: expect.stringContaining('with a command') }]);
+  });
+
+  it('leaves <button type="Submit">, which is valid: keywords ignore case', () => {
+    expect(findings('<button type="Submit">a</button>')).toMatchObject([{ type: 'skipped', rule: 'html-default' }]);
+  });
+
+  it.each(['<img src="a.png" alt="" crossorigin=" anonymous ">', '<div hidden=" until-found ">a</div>'])('reports %s: what it meant is not what no attribute does', source => {
+    expect(output(source)).toBe(source);
+    expect(findings(source)).toMatchObject([{ type: 'warning' }]);
+  });
+
+  it.each([
     ['<input type=" email ">', 'did you mean "email"'],
     ['<ol type=" i "><li>a</li></ol>', 'did you mean "i"'],
   ])('reports %s, close to a valid value, instead of removing what the author meant', (source, hint) => {
