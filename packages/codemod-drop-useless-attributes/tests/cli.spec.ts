@@ -1,4 +1,4 @@
-import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -64,6 +64,22 @@ describe('processFiles', () => {
   it('applies only the rules asked for', async () => {
     const reports = await processFiles([directory], { write: false, extensions: ['html'], rules: ['aria-default'] });
     expect(reports[0].changed).toBe(false);
+  });
+
+  it('skips hidden directories, such as a vendored .yarn release, for files and selectors alike', async () => {
+    await mkdir(join(directory, '.yarn'));
+    await writeFile(join(directory, '.yarn', 'release.cjs'), 'document.querySelector("form[method]")');
+    await writeFile(join(directory, '.yarn', 'page.html'), SAMPLE);
+    const reports = await processFiles([directory], { write: false, extensions: ['html'] });
+    expect(reports.map(report => report.file)).toEqual([join(directory, 'page.html')]);
+    expect(reports[0].findings.filter(finding => finding.type === 'removed')).toHaveLength(2);
+  });
+
+  it('skips symbolic links inside a directory, broken or looping', async () => {
+    await symlink(join(directory, 'missing'), join(directory, 'broken.html'));
+    await symlink(directory, join(directory, 'loop'));
+    const reports = await processFiles([directory], { write: false, extensions: ['html'] });
+    expect(reports.map(report => report.file)).toEqual([join(directory, 'page.html')]);
   });
 
   it('processes explicitly passed files regardless of extension filter', async () => {

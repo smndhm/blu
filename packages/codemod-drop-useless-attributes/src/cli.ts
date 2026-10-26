@@ -1,10 +1,11 @@
 import { parseArgs } from 'node:util';
-import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { lstat, readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import { RULES, transformHtml, type Finding, type RuleId } from './transform.js';
 import { collectReferences, createReferences, SOURCE_KINDS, type AttributeReferences } from './references.js';
 
-const IGNORED_DIRECTORIES = new Set(['node_modules', 'dist', 'build', 'coverage', '.git']);
+// Besides hidden entries (.git, .yarn, .next, .svelte-kit, .astro, .cache...): dependencies, tooling and build output
+const IGNORED_DIRECTORIES = new Set(['node_modules', 'dist', 'build', 'coverage']);
 
 const HELP = `codemod-drop-useless-attributes: remove the HTML attributes that have no effect, per the HTML and ARIA specifications
 
@@ -12,7 +13,7 @@ Usage:
   codemod-drop-useless-attributes [options] [paths...]
 
 Paths can be files or directories (default: current directory).
-Directories are walked recursively; node_modules, dist, build, coverage and .git are skipped.
+Directories are walked recursively; node_modules, dist, build, coverage and hidden entries (.git, .yarn...) are skipped.
 
 Options:
   --write              Apply the changes. Without it the codemod runs in dry-run mode and only reports.
@@ -43,10 +44,12 @@ export interface ProcessOptions {
 async function collectFiles(paths: string[], accept: (path: string, explicit: boolean) => boolean): Promise<string[]> {
   const files: string[] = [];
   const visit = async (path: string, explicit: boolean): Promise<void> => {
-    const stats = await stat(path);
+    // A path given is followed; inside a directory, a symbolic link is not (it may loop, or point nowhere)
+    const stats = await (explicit ? stat : lstat)(path);
+    if (stats.isSymbolicLink()) return;
     if (stats.isDirectory()) {
       for (const entry of await readdir(path)) {
-        if (IGNORED_DIRECTORIES.has(entry)) continue;
+        if (IGNORED_DIRECTORIES.has(entry) || entry.startsWith('.')) continue;
         await visit(join(path, entry), false);
       }
     } else if (accept(path, explicit)) {
