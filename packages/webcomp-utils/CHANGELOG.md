@@ -1,5 +1,14 @@
 # @dume/webcomp-utils
 
+## 1.0.3
+
+### Patch Changes
+
+- c1a7f70: Updated dependency `typedoc-plugin-markdown` to `4.14.1`.
+- 81c2708: Updated dependency `typescript` to `6.0.3`.
+- 30ae1aa: Updated dependency `vite` to `8.3.5`.
+- e73985e: Its README documents its API again (deepQuerySelector, deepQuerySelectorAll, findCustomElements: parameters, returns, examples), which typedoc-plugin-markdown 4 had moved to files of their own, out of the package: typedoc writes the whole module in one file, without links to a commit.
+
 ## 1.0.2
 
 ### Patch Changes
