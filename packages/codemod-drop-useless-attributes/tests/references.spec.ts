@@ -34,6 +34,33 @@ describe('collectReferences', () => {
   });
 });
 
+describe('element scope of a selector', () => {
+  it.each([
+    ['input[type="text"] {}', 'input'],
+    ['form > input.big[type] {}', 'input'],
+    ['input[title="a b"][type] {}', 'input'],
+    ['input:not([type]) {}', 'input'],
+    ['ul li:is([role]) {}', 'li'],
+    ["document.querySelector('input[type=text]')", 'input'],
+  ])('%s only counts for <%s>', (text, tag) => {
+    const references = referencesOf(text, text.startsWith('document') ? 'js' : 'css');
+    expect(findReference(references, 'type', 'text', false, tag) ?? findReference(references, 'role', 'x', false, tag)).toBeDefined();
+    expect(findReference(references, 'type', 'text', false, 'script') ?? findReference(references, 'role', 'x', false, 'script')).toBeUndefined();
+  });
+
+  it.each(['[type] {}', '.field[type] {}', ':has([type]) {}', '&[type] {}', 'input:not([a])[type] {}', '[a="[b"][type] {}'])(
+    '%s counts for every element, the element being absent or unsure',
+    text => {
+      expect(findReference(referencesOf(text, 'css'), 'type', 'text', false, 'script')).toBe('file:1');
+    },
+  );
+
+  it('removes type="text/javascript" from a script when only inputs are selected by type', () => {
+    const references = referencesOf('input[type="text"] { border: 0 }\ninput:not([type]) {}', 'css');
+    expect(transformHtml('<script type="text/javascript">x()</script><input type="text">', { references }).output).toBe('<script>x()</script><input type="text">');
+  });
+});
+
 describe('transformHtml with references', () => {
   it('keeps an attribute a project stylesheet depends on, and says where', () => {
     const references = referencesOf('input:not([type]) { border: 0 }', 'css');

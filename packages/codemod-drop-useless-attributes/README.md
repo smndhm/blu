@@ -161,7 +161,7 @@ Removing `type="text"` changes nothing for the browser, but `input[type="text"]`
 - a selector or a script depends on its presence: `[type]`, `:not([type])`, `[role^="nav"]`, `getAttribute('type')`, `hasAttribute('type')`;
 - a selector compares it to the value being removed: `[type="text"]`, `[aria-hidden="false"]`.
 
-A selector on another value (`input[type="email"]`) does not block anything. For a boolean attribute written bare, only a selector on its value blocks the rewrite: `[disabled]` still matches `disabled`. In scripts, selectors are read from string literals only, so `items[index]` is not taken for one.
+A selector on another value (`input[type="email"]`) does not block anything, nor does a selector on another element: `select[size]` keeps `size` on `<select>` only, and `input:not([type])` does not keep `type` on `<script>`. A selector without an element (`[type]`, `.field[type]`), or whose element is unsure, counts for every element. For a boolean attribute written bare, only a selector on its value blocks the rewrite: `[disabled]` still matches `disabled`. In scripts, selectors are read from string literals only, so `items[index]` is not taken for one.
 
 ## Frameworks
 

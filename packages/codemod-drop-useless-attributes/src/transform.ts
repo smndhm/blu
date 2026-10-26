@@ -331,7 +331,7 @@ export function transformHtml(source: string, options: TransformOptions = {}): T
         continue;
       }
 
-      const referencedAt = findReference(references, name, value, decision.action === 'rewrite');
+      const referencedAt = findReference(references, name, value, decision.action === 'rewrite', element.tagName);
       if (referencedAt) {
         report('skipped', decision.rule, `referenced by a selector or a script at ${referencedAt}`);
         continue;
