@@ -178,11 +178,14 @@ The codemod reads files as HTML, and edits only static attributes of native elem
 | Svelte, Astro                                 | Yes, with `--ext html,svelte,astro`. Expressions (`type={kind}`, `{...props}`) are left alone.                                                             |
 | JSX, TSX                                      | No: a script is not HTML, and comparisons or generics could be read as tags.                                                                               |
 
+HTML e-mails are out of scope: e-mail clients do not render HTML as browsers do, and some keep relying on attributes the spec makes useless (`<style type="text/css">`).
+
 In every syntax, components are skipped: tags with a dash (`<my-button>`) and tags written in PascalCase (`<MyButton>`, `<Button>`), whose attributes are props, not HTML attributes.
 
 ## What is never touched
 
 - Dynamic values: any value with a brace (`{{ x }}`, `{% if %}`, `${x}`, `{kind}`) or `<%`, and framework binding attribute names (`:type`, `v-bind:`, `ng-*`...). Dynamic values of attributes a rule handles are reported as skipped.
+- Front matter (YAML, TOML, JSON, Astro's script between `---`) and what is written inside a template tag (`{{ " aria-current=\"page\"" }}`): it may look like markup, but it is a string of another language. A value with an escaped quote (`\"`) is taken for one too.
 - Custom elements (tag names containing `-`) and PascalCase components: they define their own semantics.
 - Foreign content (SVG, MathML), even when attribute names collide with HTML ones.
 - Start tags with duplicate attributes: locations are unreliable there, the whole tag is left alone.

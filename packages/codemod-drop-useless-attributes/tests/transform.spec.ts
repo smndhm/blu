@@ -252,3 +252,32 @@ describe('framework templates', () => {
     expect(transformHtml(source).output).toBe('<input [disabled]="off" [attr.aria-hidden]="h" (input)="x()">');
   });
 });
+
+describe('text that only looks like markup', () => {
+  it('never touches a tag written in front matter, here JSON in a Handlebars page', () => {
+    const source = '---\n{\n  "description": "Emulates <input type=\\"range\\"> and <input type=\\"text\\">"\n}\n---\n<input type="text">\n';
+    expect(transformHtml(source).output).toBe('---\n{\n  "description": "Emulates <input type=\\"range\\"> and <input type=\\"text\\">"\n}\n---\n<input>\n');
+    expect(transformHtml(source).findings).toHaveLength(1);
+  });
+
+  it('never touches YAML or TOML front matter', () => {
+    for (const source of ['---\ntitle: <input type="text">\n---\n', '+++\ntitle = "<nav role=\'navigation\'>"\n+++\n']) {
+      expect(transformHtml(source).output).toBe(source);
+    }
+  });
+
+  it('never touches an attribute written inside a template tag', () => {
+    const source = '<a href="/"{{ " aria-current=\\"page\\"" | safe if active }}>a</a><input{{ " type=\\"txt\\"" }}>';
+    expect(transformHtml(source).output).toBe(source);
+    expect(transformHtml(source).findings).toEqual([]);
+  });
+
+  it('treats a value with an escaped quote as a string of another language', () => {
+    const source = '<div data-x="1"><input type=\\"txt\\"></div>';
+    expect(transformHtml(source).output).toBe(source);
+  });
+
+  it('still cleans the attributes next to a template tag', () => {
+    expect(transformHtml('<input type="text" value="{{ v }}" {% if x %}required{% endif %}>').output).toBe('<input value="{{ v }}" {% if x %}required{% endif %}>');
+  });
+});

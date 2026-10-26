@@ -17,7 +17,17 @@ const HTML_NS = 'http://www.w3.org/1999/xhtml';
  * Template syntaxes that make a value dynamic: any brace covers Nunjucks/Jinja/Liquid (`{{ }}`, `{% %}`), Angular and
  * Vue interpolation, template literals (`${}`), and the expressions of Svelte, Astro and JSX (`type={kind}`); plus EJS.
  */
-const DYNAMIC_VALUE = /[{}]|<%/;
+const DYNAMIC_VALUE = /[{}]|<%|\\["']/;
+
+/**
+ * Parts of a template file that are not markup, though they may look like it: front matter (YAML, TOML, JSON, Astro's
+ * script) and template tags, where `{{ " aria-current=\"page\"" }}` or `"<input type=\"range\">"` is a string.
+ */
+const NOT_MARKUP = [/^(---|\+\+\+)\r?\n[\s\S]*?\r?\n\1[ \t]*(?:\r?\n|$)/g, /\{\{[\s\S]*?\}\}/g, /\{%[\s\S]*?%\}/g, /\{#[\s\S]*?#\}/g, /<%[\s\S]*?%>/g];
+
+function notMarkupRanges(source: string): [number, number][] {
+  return NOT_MARKUP.flatMap(pattern => [...source.matchAll(pattern)].map(match => [match.index, match.index + match[0].length] as [number, number]));
+}
 
 /** A tag written in PascalCase in the source is a framework component (Vue, Svelte, Astro, JSX), not an HTML element */
 function isComponentTag(source: string, element: Element): boolean {
@@ -287,6 +297,7 @@ export function transformHtml(source: string, options: TransformOptions = {}): T
   };
 
   const isFullDocument = /^\s*<!doctype\s/i.test(source) || /<html[\s>]/i.test(source);
+  const notMarkup = notMarkupRanges(source);
   const tree: ParentNode = isFullDocument ? parse(source, parserOptions) : parseFragment(source, parserOptions);
 
   const context: DocumentContext = { isFullDocument, hasBaseTarget: false };
@@ -319,6 +330,9 @@ export function transformHtml(source: string, options: TransformOptions = {}): T
       const { name, value } = attribute;
       const attributeLocation = location.attrs[name];
       if (!attributeLocation) continue;
+      // Its name inside front matter or a template tag: a string of another language, not an attribute (a value that is
+      // a template tag is reported as dynamic below)
+      if (notMarkup.some(([start, end]) => attributeLocation.startOffset >= start && attributeLocation.startOffset < end)) continue;
 
       const report = (type: Finding['type'], rule: RuleId, reason?: string) =>
         findings.push({ type, rule, tag: element.tagName, attribute: name, value, line: attributeLocation.startLine, column: attributeLocation.startCol, reason });
