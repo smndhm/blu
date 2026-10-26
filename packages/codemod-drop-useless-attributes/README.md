@@ -163,10 +163,23 @@ Removing `type="text"` changes nothing for the browser, but `input[type="text"]`
 
 A selector on another value (`input[type="email"]`) does not block anything. For a boolean attribute written bare, only a selector on its value blocks the rewrite: `[disabled]` still matches `disabled`. In scripts, selectors are read from string literals only, so `items[index]` is not taken for one.
 
+## Frameworks
+
+The codemod reads files as HTML, and edits only static attributes of native elements:
+
+| Syntax                                        | Support                                                                                                                                                    |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| HTML, Nunjucks, Jinja, Liquid, EJS            | Yes. Interpolations (`{{ }}`, `{% %}`, `<%= %>`) are left alone.                                                                                           |
+| Vue single-file components, Angular templates | Yes, with `--ext html,vue`. Bindings (`:type`, `v-bind:`, `@click`, `[disabled]`, `[attr.aria-hidden]`, `(input)`) have other names and are never touched. |
+| Svelte, Astro                                 | Yes, with `--ext html,svelte,astro`. Expressions (`type={kind}`, `{...props}`) are left alone.                                                             |
+| JSX, TSX                                      | No: a script is not HTML, and comparisons or generics could be read as tags.                                                                               |
+
+In every syntax, components are skipped: tags with a dash (`<my-button>`) and tags written in PascalCase (`<MyButton>`, `<Button>`), whose attributes are props, not HTML attributes.
+
 ## What is never touched
 
-- Dynamic values: template interpolations (`{{ x }}`, `{% if %}`, `<%= %>`, `${x}`) and framework binding attribute names (`:type`, `v-bind:`, `ng-*`...). Dynamic values of attributes a rule handles are reported as skipped.
-- Custom elements (tag names containing `-`): they define their own semantics.
+- Dynamic values: any value with a brace (`{{ x }}`, `{% if %}`, `${x}`, `{kind}`) or `<%`, and framework binding attribute names (`:type`, `v-bind:`, `ng-*`...). Dynamic values of attributes a rule handles are reported as skipped.
+- Custom elements (tag names containing `-`) and PascalCase components: they define their own semantics.
 - Foreign content (SVG, MathML), even when attribute names collide with HTML ones.
 - Start tags with duplicate attributes: locations are unreliable there, the whole tag is left alone.
 

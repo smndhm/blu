@@ -221,3 +221,34 @@ describe('report', () => {
     expect(findings).toMatchObject([{ tag: 'input', attribute: 'type', value: 'text', line: 2, column: 10 }]);
   });
 });
+
+describe('framework templates', () => {
+  it.each(['<input type={kind} disabled={off} aria-hidden={hidden}>', '<input type="text{suffix}">', '<input hidden={x} />', 'export const A = () => <input disabled={false} />;'])(
+    'treats the expressions of Svelte, Astro and JSX in %s as dynamic',
+    source => {
+      expect(transformHtml(source).output).toBe(source);
+    },
+  );
+
+  it.each(['<MyButton disabled="disabled" aria-hidden="false" />', '<Button type="submit" role="button">a</Button>', '<Card role="button" aria-hidden="false" />'])(
+    'never touches the PascalCase component in %s',
+    source => {
+      expect(transformHtml(source).output).toBe(source);
+      expect(transformHtml(source).findings).toEqual([]);
+    },
+  );
+
+  it('still treats an uppercase HTML tag as HTML', () => {
+    expect(transformHtml('<INPUT TYPE="TEXT">').output).toBe('<INPUT>');
+  });
+
+  it('cleans the static attributes of native elements in a Vue single-file component, leaving bindings alone', () => {
+    const source = '<template>\n  <input type="text" :disabled="off" v-model="q" @input="x" aria-hidden="false">\n</template>\n<script setup>\nconst q = ref("")\n</script>\n';
+    expect(transformHtml(source).output).toBe('<template>\n  <input :disabled="off" v-model="q" @input="x">\n</template>\n<script setup>\nconst q = ref("")\n</script>\n');
+  });
+
+  it('leaves Angular bindings alone', () => {
+    const source = '<input type="text" [disabled]="off" [attr.aria-hidden]="h" (input)="x()">';
+    expect(transformHtml(source).output).toBe('<input [disabled]="off" [attr.aria-hidden]="h" (input)="x()">');
+  });
+});

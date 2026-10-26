@@ -13,8 +13,19 @@ type Node = DefaultTreeAdapterMap['node'];
 
 const HTML_NS = 'http://www.w3.org/1999/xhtml';
 
-/** Template syntaxes (Nunjucks/Jinja, Angular/Vue interpolation, EJS, template literals) that make a value dynamic. */
-const DYNAMIC_VALUE = /\{\{|\{%|<%|\$\{/;
+/**
+ * Template syntaxes that make a value dynamic: any brace covers Nunjucks/Jinja/Liquid (`{{ }}`, `{% %}`), Angular and
+ * Vue interpolation, template literals (`${}`), and the expressions of Svelte, Astro and JSX (`type={kind}`); plus EJS.
+ */
+const DYNAMIC_VALUE = /[{}]|<%/;
+
+/** A tag written in PascalCase in the source is a framework component (Vue, Svelte, Astro, JSX), not an HTML element */
+function isComponentTag(source: string, element: Element): boolean {
+  const offset = element.sourceCodeLocation?.startTag?.startOffset;
+  if (offset === undefined) return false;
+  const written = source.slice(offset + 1, offset + 1 + element.tagName.length);
+  return written !== written.toLowerCase() && written !== written.toUpperCase();
+}
 
 /**
  * - `html-default`: a native attribute whose value is the one used when it is missing (`<input type="text">`)
@@ -290,8 +301,8 @@ export function transformHtml(source: string, options: TransformOptions = {}): T
 
   for (const element of walk(tree)) {
     if (element.namespaceURI !== HTML_NS) continue;
-    // Custom elements define their own semantics; native defaults do not apply.
-    if (element.tagName.includes('-')) continue;
+    // Custom elements and framework components define their own semantics; native defaults do not apply.
+    if (element.tagName.includes('-') || isComponentTag(source, element)) continue;
     const location = element.sourceCodeLocation;
     if (!location?.startTag || !location.attrs) continue;
     const { startTag } = location;
