@@ -15,15 +15,17 @@ const HTML_NS = 'http://www.w3.org/1999/xhtml';
 
 /**
  * Template syntaxes that make a value dynamic: any brace covers Nunjucks/Jinja/Liquid (`{{ }}`, `{% %}`), Angular and
- * Vue interpolation, template literals (`${}`), and the expressions of Svelte, Astro and JSX (`type={kind}`); plus EJS.
+ * Vue interpolation, template literals (`${}`), and the expressions of Svelte, Astro and JSX (`type={kind}`); plus EJS
+ * and JSP (`<%= %>`), PHP (`<?php ?>`, `<?= ?>`) and Razor (`@Model.Type`, `@(x)`).
  */
-const DYNAMIC_VALUE = /[{}]|<%|\\["']/;
+const DYNAMIC_VALUE = /[{}]|<%|<\?|(?:^|[^\w.])@[\w(]|\\["']/;
 
 /**
  * Parts of a template file that are not markup, though they may look like it: front matter (YAML, TOML, JSON, Astro's
  * script) and template tags, where `{{ " aria-current=\"page\"" }}` or `"<input type=\"range\">"` is a string.
+ * PHP code runs to `?>`, or to the end of the file, as its style guides recommend leaving it unclosed.
  */
-const NOT_MARKUP = [/^(---|\+\+\+)\r?\n[\s\S]*?\r?\n\1[ \t]*(?:\r?\n|$)/g, /\{\{[\s\S]*?\}\}/g, /\{%[\s\S]*?%\}/g, /\{#[\s\S]*?#\}/g, /<%[\s\S]*?%>/g];
+const NOT_MARKUP = [/^(---|\+\+\+)\r?\n[\s\S]*?\r?\n\1[ \t]*(?:\r?\n|$)/g, /\{\{[\s\S]*?\}\}/g, /\{%[\s\S]*?%\}/g, /\{#[\s\S]*?#\}/g, /<%[\s\S]*?%>/g, /<\?[\s\S]*?(?:\?>|$)/g];
 
 function notMarkupRanges(source: string): [number, number][] {
   return NOT_MARKUP.flatMap(pattern => [...source.matchAll(pattern)].map(match => [match.index, match.index + match[0].length] as [number, number]));

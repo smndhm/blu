@@ -171,12 +171,14 @@ A selector on another value (`input[type="email"]`) does not block anything, nor
 
 The codemod reads files as HTML, and edits only static attributes of native elements:
 
-| Syntax                                        | Support                                                                                                                                                    |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| HTML, Nunjucks, Jinja, Liquid, EJS            | Yes. Interpolations (`{{ }}`, `{% %}`, `<%= %>`) are left alone.                                                                                           |
-| Vue single-file components, Angular templates | Yes, with `--ext html,vue`. Bindings (`:type`, `v-bind:`, `@click`, `[disabled]`, `[attr.aria-hidden]`, `(input)`) have other names and are never touched. |
-| Svelte, Astro                                 | Yes, with `--ext html,svelte,astro`. Expressions (`type={kind}`, `{...props}`) are left alone.                                                             |
-| JSX, TSX                                      | No: a script is not HTML, and comparisons or generics could be read as tags.                                                                               |
+| Syntax                                                                | Support                                                                                                                                                             |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| HTML, Nunjucks, Jinja, Django, Twig, Liquid, Handlebars, Go templates | Yes. Template tags (`{{ }}`, `{% %}`, `{# #}`) are left alone.                                                                                                      |
+| EJS, ERB, JSP, PHP, Razor                                             | Yes, with `--ext` (`erb`, `php`, `cshtml`...). Their code (`<%= %>`, `<?php ?>`, `@Model.Type`) is left alone, and so is a PHP file left unclosed, from `<?php` on. |
+| Thymeleaf                                                             | Yes: `th:` attributes have other names. A `type="text"` next to `th:type` goes, `th:type` sets it anyway.                                                           |
+| Vue single-file components, Angular templates                         | Yes, with `--ext html,vue`. Bindings (`:type`, `v-bind:`, `@click`, `[disabled]`, `[attr.aria-hidden]`, `(input)`) have other names and are never touched.          |
+| Svelte, Astro                                                         | Yes, with `--ext html,svelte,astro`. Expressions (`type={kind}`, `{...props}`) are left alone.                                                                      |
+| JSX, TSX                                                              | No: a script is not HTML, and comparisons or generics could be read as tags.                                                                                        |
 
 HTML e-mails are out of scope: e-mail clients do not render HTML as browsers do, and some keep relying on attributes the spec makes useless (`<style type="text/css">`).
 

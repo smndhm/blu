@@ -272,6 +272,31 @@ describe('text that only looks like markup', () => {
     expect(transformHtml(source).findings).toEqual([]);
   });
 
+  it.each([
+    '<input type="<?php echo $type; ?>">',
+    '<div aria-hidden="<?= $hidden ?>">a</div>',
+    '<input type="@Model.Type" role="@(role)">',
+    '<input type="<?php echo $a->type; ?>">',
+  ])('treats the PHP or Razor value of %s as dynamic', source => {
+    expect(transformHtml(source).output).toBe(source);
+    expect(transformHtml(source).findings.every(finding => finding.type === 'skipped')).toBe(true);
+  });
+
+  it('never touches markup echoed by PHP, and still cleans the markup around it', () => {
+    const source = '<?php echo \'<input type="txt">\'; ?><input type="text"><?php if ($a->b) { ?><input type="text"><?php } ?>';
+    expect(transformHtml(source).output).toBe('<?php echo \'<input type="txt">\'; ?><input><?php if ($a->b) { ?><input><?php } ?>');
+  });
+
+  it('never touches the HTML in the strings of a PHP file left unclosed', () => {
+    const source = '<?php\n$post->id();\nreturn \'<input type="\' . $t . \'" size="20"><nav role="navigation">\';\n';
+    expect(transformHtml(source).output).toBe(source);
+    expect(transformHtml(source).findings).toEqual([]);
+  });
+
+  it('keeps an e-mail address or a decorator-like value that is not Razor', () => {
+    expect(transformHtml('<a href="mailto:a@b.fr" target="_self">a</a>').findings).toMatchObject([{ type: 'skipped', reason: expect.stringContaining('base target') }]);
+  });
+
   it('treats a value with an escaped quote as a string of another language', () => {
     const source = '<div data-x="1"><input type=\\"txt\\"></div>';
     expect(transformHtml(source).output).toBe(source);
