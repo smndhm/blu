@@ -4,7 +4,7 @@ import { enumeratedAttributes, type Definition } from 'html-enumerated-attribute
 import { find, html } from 'property-information';
 import { conditionalAttributes, conditionReasons, supplementaryRules, type ConditionId } from './defaults.js';
 import { ariaDefaults, duplicatedNative, implicitRole, keptRedundantRoles, type ElementView } from './aria.js';
-import { ariaAttributes, ariaTokens, findKeywordAttribute, isValidKeyword, probableAriaAttribute } from './invalid.js';
+import { ariaAttributes, ariaTokens, closeKeyword, findKeywordAttribute, isValidKeyword, probableAriaAttribute } from './invalid.js';
 import { collectReferences, createReferences, findReference, type AttributeReferences } from './references.js';
 
 type Element = DefaultTreeAdapterMap['element'];
@@ -265,12 +265,18 @@ function decideInvalidValue(element: Element, name: string, value: string): Deci
         return { action: 'rewrite', rule: 'invalid-value', value: 'submit', reason: 'not a valid type value: written as the submit it meant' };
       }
       // What it meant is what the browser does without it (`type=" text "`): nothing to keep, nothing meant is lost
-      if (!entry.invalidEffect && conditionFor(element.tagName, name) === undefined && isRemovableDefault(element.tagName, name, value.trim())) {
+      if (!entry.invalid && conditionFor(element.tagName, name) === undefined && isRemovableDefault(element.tagName, name, value.trim())) {
         return { action: 'remove', rule: 'invalid-value', reason: `not a valid ${name} value, and "${value.trim()}", what it meant, is the default anyway` };
       }
       return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value, so the browser ignores it; did you mean "${value.trim()}"?` };
     }
-    if (entry.invalidEffect) return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value: ${entry.invalidEffect}` };
+    if (entry.invalid) {
+      const { means, as, otherwise } = entry.invalid;
+      const close = closeKeyword(entry, value);
+      if (close) return { action: 'warn', rule: 'invalid-value', reason: `not a valid ${name} value, which ${means}; did you mean "${close}"?` };
+      // Written as what the browser does with it, valid; the report keeps what it was, which may not be what was meant
+      return { action: 'rewrite', rule: 'invalid-value', value: as === '' ? undefined : as, reason: `was ${name}="${value}", invalid, which ${means}: written so; ${otherwise}` };
+    }
     return { action: 'remove', rule: 'invalid-value', reason: `not a valid ${name} value; the browser does what it does without the attribute` };
   }
   const tokens = ariaTokens[name];

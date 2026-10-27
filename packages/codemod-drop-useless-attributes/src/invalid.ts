@@ -5,6 +5,9 @@
  * anonymous, no attribute means no CORS; `hidden="foo"` hides), the value does something, so it is reported, never
  * removed.
  *
+ * Such a value is written as what it does (`hidden="no"` becomes `hidden`), unless it is close to another keyword, a typo
+ * whose fix would be lost (`kind="subtitle"`, meant `subtitles`): that one is reported.
+ *
  * Keywords are listed here from the current WHATWG HTML Living Standard rather than taken from
  * `html-enumerated-attributes`, whose data lacks recent keywords (`contenteditable="plaintext-only"`,
  * `hidden="until-found"`) and lists `target`, which takes any navigable name, as a keyword attribute.
@@ -19,8 +22,8 @@ export interface KeywordAttribute {
   /** Valid keywords, lowercase unless `caseSensitive` */
   keywords: string[];
   caseSensitive?: boolean;
-  /** Undefined when an invalid value maps to the missing value default; else what an invalid value does */
-  invalidEffect?: string;
+  /** Set when an invalid value does something else than no attribute: what it does, as written, and what to do otherwise */
+  invalid?: { means: string; as: string; otherwise: string };
   source: string;
 }
 
@@ -98,40 +101,40 @@ export const keywordAttributes: KeywordAttribute[] = [
     attribute: 'crossorigin',
     tags: ['audio', 'img', 'link', 'script', 'video'],
     keywords: ['anonymous', 'use-credentials', ''],
-    invalidEffect: 'an invalid value means anonymous, while no attribute means no CORS request: write crossorigin to keep it, or remove it',
+    invalid: { means: 'means anonymous', as: '', otherwise: 'remove it for no CORS request' },
     source: `${SPEC}urls-and-fetching.html#cors-settings-attributes`,
   },
   {
     attribute: 'kind',
     tags: ['track'],
     keywords: ['subtitles', 'captions', 'descriptions', 'chapters', 'metadata'],
-    invalidEffect: 'an invalid value means metadata, a track that is never shown, while no attribute means subtitles',
+    invalid: { means: 'means metadata, a track never shown', as: 'metadata', otherwise: 'write subtitles or captions to show it' },
     source: `${SPEC}media.html#attr-track-kind`,
   },
   {
     attribute: 'formmethod',
     tags: ['button', 'input'],
     keywords: ['get', 'post', 'dialog'],
-    invalidEffect: "an invalid value means get, while no attribute means the form's method",
+    invalid: { means: 'means get', as: 'get', otherwise: "remove it to use the form's method" },
     source: `${SPEC}form-control-infrastructure.html#attr-fs-formmethod`,
   },
   {
     attribute: 'formenctype',
     tags: ['button', 'input'],
     keywords: ['application/x-www-form-urlencoded', 'multipart/form-data', 'text/plain'],
-    invalidEffect: "an invalid value means application/x-www-form-urlencoded, while no attribute means the form's enctype",
+    invalid: { means: 'means application/x-www-form-urlencoded', as: 'application/x-www-form-urlencoded', otherwise: "remove it to use the form's enctype" },
     source: `${SPEC}form-control-infrastructure.html#attr-fs-formenctype`,
   },
   {
     attribute: 'hidden',
     keywords: ['', 'hidden', 'until-found'],
-    invalidEffect: 'an invalid value hides the element: write hidden to keep it hidden, or remove it to show it',
+    invalid: { means: 'hides the element', as: '', otherwise: 'remove it to show the element' },
     source: `${SPEC}interaction.html#the-hidden-attribute`,
   },
   {
     attribute: 'popover',
     keywords: ['auto', 'manual', 'hint', ''],
-    invalidEffect: 'an invalid value means manual, while no attribute means no popover',
+    invalid: { means: 'means manual', as: 'manual', otherwise: 'remove it for no popover' },
     source: `${SPEC}popover.html#attr-popover`,
   },
 ];
@@ -242,6 +245,12 @@ function distance(a: string, b: string): number {
     }
   }
   return row[b.length];
+}
+
+/** A keyword the value is a typo of (`subtitle` for `subtitles`), if any */
+export function closeKeyword(entry: KeywordAttribute, value: string): string | undefined {
+  const folded = value.trim().toLowerCase();
+  return entry.keywords.find(keyword => keyword !== '' && distance(folded, keyword.toLowerCase()) <= 2 && distance(folded, keyword.toLowerCase()) < keyword.length / 2);
 }
 
 /** What an attribute named aria-something that ARIA does not define was probably meant to be */

@@ -219,14 +219,31 @@ describe('invalid-value', () => {
   });
 
   it.each([
-    ['<div hidden="no">a</div>', 'hides the element'],
-    ['<img src="a.png" alt="" crossorigin="true">', 'means anonymous'],
-    ['<track src="a.vtt" kind="subtitle">', 'never shown'],
-    ['<button formmethod="put">a</button>', "the form's method"],
-    ['<div popover="yes"></div>', 'means manual'],
-  ])('reports %s, whose invalid value does something, and leaves it', (source, effect) => {
+    ['<div hidden="no">a</div>', '<div hidden>a</div>', 'remove it to show the element'],
+    ['<img src="a.png" alt="" crossorigin="true">', '<img src="a.png" alt="" crossorigin>', 'means anonymous'],
+    ['<track src="a.vtt" kind="foo">', '<track src="a.vtt" kind="metadata">', 'write subtitles or captions to show it'],
+    ['<button formmethod="put">a</button>', '<button formmethod="get">a</button>', "the form's method"],
+    ['<form><input type="submit" formenctype="json"></form>', '<form><input type="submit" formenctype="application/x-www-form-urlencoded"></form>', "the form's enctype"],
+    ['<div popover="yes"></div>', '<div popover="manual"></div>', 'for no popover'],
+  ])('%s -> %s: an invalid value that does something is written as what it does, the report keeping what it was', (source, expected, hint) => {
+    expect(output(source)).toBe(expected);
+    expect(findings(source)).toMatchObject([{ type: 'rewritten', rule: 'invalid-value', reason: expect.stringContaining(hint) }]);
+    expect(findings(expected)).toEqual([]);
+  });
+
+  it.each([
+    ['<track src="a.vtt" kind="subtitle">', 'did you mean "subtitles"'],
+    ['<track src="a.vtt" kind="caption">', 'did you mean "captions"'],
+    ['<img src="a.png" alt="" crossorigin="use-credential">', 'did you mean "use-credentials"'],
+    ['<div hidden="untilfound">a</div>', 'did you mean "until-found"'],
+  ])('reports %s, a typo of another keyword, and leaves it: writing what it does would lose the fix', (source, hint) => {
     expect(output(source)).toBe(source);
-    expect(findings(source)).toMatchObject([{ type: 'warning', rule: 'invalid-value', reason: expect.stringContaining(effect) }]);
+    expect(findings(source)).toMatchObject([{ type: 'warning', rule: 'invalid-value', reason: expect.stringContaining(hint) }]);
+  });
+
+  it('keeps an invalid value a stylesheet selects', () => {
+    const source = '<style>[hidden="no"] { display: block }</style><div hidden="no">a</div>';
+    expect(output(source)).toBe(source);
   });
 
   it.each([

@@ -7,7 +7,7 @@ Codemod that removes the HTML attributes that have no effect:
 - ARIA states and properties set to their default: `<div aria-hidden="false">` -> `<div>`;
 - roles the element already has: `<nav role="navigation">` -> `<nav>`;
 - ARIA repeating a native attribute: `<input required aria-required="true">` -> `<input required>`;
-- invalid values the browser ignores: `<input type="txt">` -> `<input>`, while invalid values that still do something (`hidden="no"` hides) are reported.
+- invalid values: ignored by the browser, they go (`<input type="txt">` -> `<input>`); doing something, they are written as what they do (`hidden="no"`, which hides, -> `hidden`).
 
 Every change is a no-op for browsers and assistive technologies, each one sourced to the [WHATWG HTML Living Standard](https://html.spec.whatwg.org/multipage/), [WAI-ARIA 1.3](https://w3c.github.io/aria/) or [ARIA in HTML](https://www.w3.org/TR/html-aria/). Everything outside the edited attributes is kept byte for byte, so the tool also runs on HTML-like templates (Nunjucks, Jinja...).
 
@@ -144,15 +144,18 @@ Each keyword attribute has an _invalid value default_: the state a value outside
 | `referrerpolicy`, `preload`                                                                   | the default policy, the default preload |
 | `dir`, `inputmode`, `enterkeyhint`, `spellcheck`, `draggable`, `translate`, `contenteditable` | no state, default, inherit              |
 
-When the two differ, the invalid value does something, so it is reported and left:
+When the two differ, the invalid value does something: it is written as what it does, which keeps the behavior and makes it valid, and the report says what it was and what to do if that is not what was meant:
 
-| Reported                    | What an invalid value does                                   |
-| --------------------------- | ------------------------------------------------------------ |
-| `hidden="no"`               | hides the element, like `hidden`                             |
-| `crossorigin="true"`        | anonymous CORS request, while no attribute means no CORS     |
-| `track kind="subtitle"`     | metadata: the track is never shown                           |
-| `formmethod`, `formenctype` | get or urlencoded, while no attribute means the form's value |
-| `popover="yes"`             | a manual popover, while no attribute means no popover        |
+| Before               | After                                             | Report                                  |
+| -------------------- | ------------------------------------------------- | --------------------------------------- |
+| `hidden="no"`        | `hidden`                                          | hides the element; remove it to show it |
+| `crossorigin="true"` | `crossorigin` (anonymous)                         | remove it for no CORS request           |
+| `track kind="foo"`   | `kind="metadata"`, a track never shown            | write subtitles or captions to show it  |
+| `formmethod="put"`   | `formmethod="get"`                                | remove it to use the form's method      |
+| `formenctype="json"` | `formenctype="application/x-www-form-urlencoded"` | remove it to use the form's enctype     |
+| `popover="yes"`      | `popover="manual"`                                | remove it for no popover                |
+
+A value close to another keyword is a typo whose fix the rewrite would lose: `kind="subtitle"` (meant `subtitles`, a track that shows) or `crossorigin="use-credential"` is reported with the probable fix and left.
 
 A value that becomes valid once trimmed or lowercased (`type=" email "`) is reported with the probable intent, never removed: the author meant something else than what the browser does. When what it meant is the default anyway (`<input type=" text ">`), nothing meant is lost and it is removed. `<button type=" submit ">` is written `type="submit"`, the explicit type kept on a button; with a `commandfor` or `command` attribute, where an invalid type means Auto and not submit, it is only reported. The keywords are listed from the current spec (`src/invalid.ts`, one source link per attribute), not from `html-enumerated-attributes`, which lacks recent keywords (`contenteditable="plaintext-only"`, `hidden="until-found"`) and lists `target`, which takes any window name. jsdom checks that the browser sees the same states before and after for the attributes it implements.
 
