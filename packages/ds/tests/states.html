@@ -7,7 +7,7 @@
     <!--
       The board of the design system's interactive states, from its own stylesheet. A page cannot hover, focus or press
       an element itself: the accessibility test (pnpm --filter @dume/ds test:a11y) forces in Chromium the state each
-      element names in data-state, and writes screenshots of both themes in tests/screenshots/.
+      element names in data-state, and compares the board with its screenshots, tests/screenshots/light.png and dark.png.
     -->
     <link rel="stylesheet" href="../dist/styles.css" />
     <style>

@@ -31,11 +31,11 @@ jobs:
       - name: Run axe on every page, and on the design system's board of states
         run: pnpm test:a11y
 
-      # The board of the design system's interactive states, in both themes, to look at
-      - name: Upload the screenshots of the states
-        if: ${{ !cancelled() }}
+      # When the board of the design system's states does not match its screenshots: the screenshots taken and their differences
+      - name: Upload the differences of the states
+        if: ${{ failure() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: ds-states
-          path: packages/ds/tests/screenshots/
+          path: packages/ds/test-results/
           if-no-files-found: ignore

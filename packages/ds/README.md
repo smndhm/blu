@@ -71,13 +71,13 @@ They are accessible:
 
 The board of states, [`tests/states.html`](tests/states.html), shows every interactive element in each of its states at once, from the design system's own stylesheet. A page cannot hover nor press an element itself: the accessibility test forces in Chromium the state each element names in `data-state` (`hover`, `focus-visible`, `active`), as the DevTools do, so the very `:hover`, `:focus-visible` and `:active` rules apply.
 
-The accessibility test (`pnpm --filter @dume/ds test:a11y`, in the Accessibility workflow) loads it in Chromium, in both themes:
+The accessibility test (`pnpm --filter @dume/ds test:a11y`, in the Accessibility workflow) loads it in both themes, with Playwright Test:
 
 - axe checks it, and so the contrast of every state, which it cannot do on a page nobody hovers;
 - each state must look other than the element at rest (color, background, border, outline, underline, weight or cursor);
-- the styles of each state must match [`tests/states.snapshot.json`](tests/states.snapshot.json). After a change meant to change a state, `pnpm --filter @dume/ds test:a11y --update` writes it again: its diff shows what changed.
+- the board must match its screenshots, [`tests/screenshots/light.png`](tests/screenshots/light.png) and [`dark.png`](tests/screenshots/dark.png): a color, a border, a corner or a size that changes fails the test.
 
-Its screenshots, in both themes, are in `tests/screenshots/`, and among the artifacts of the workflow: they show the board.
+The board renders in the Chromium of Playwright's Docker image, the version of `@playwright/test`: the same fonts and the same rendering on every computer and in CI, so the screenshots match anywhere. Docker is needed. After a change meant to change a state, `pnpm --filter @dume/ds test:a11y --update-snapshots` takes them again: look at them in the diff. When the test fails, the screenshots taken and their differences are in `test-results/`, and among the artifacts of the workflow.
 
 The state colors are tokens (`--ds-b-color-primary-hover`, `-active`, `--ds-b-color-background-hover`, `-active`, `--ds-b-color-text-disabled`, `--ds-b-color-background-disabled`, `--ds-b-color-danger`): a component takes them, never a color of its own. A new component lists its states in the table of components.
 

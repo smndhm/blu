@@ -11,5 +11,5 @@ apps/simon.duhem.fr/_site
 # Remote images fetched by eleventy-img at build
 .cache
 
-# The screenshots of the board of states, made by the accessibility test
-packages/ds/tests/screenshots
+# What Playwright Test writes when a test fails: the screenshots taken and their differences
+test-results
