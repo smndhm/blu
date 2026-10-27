@@ -64,7 +64,10 @@ for (const colorScheme of ['light', 'dark']) {
           Object.fromEntries(
             [...row.querySelectorAll('[data-case]')].map(element => {
               const computed = getComputedStyle(element);
-              return [element.dataset.case, Object.fromEntries(properties.map(property => [property, computed.getPropertyValue(property)]))];
+              const style = Object.fromEntries(properties.map(property => [property, computed.getPropertyValue(property)]));
+              // No outline drawn: its width is 0px whatever it computes to, which differs between Chromium versions
+              if (style['outline-style'] === 'none') style['outline-width'] = '0px';
+              return [element.dataset.case, style];
             }),
           ),
         ]),
