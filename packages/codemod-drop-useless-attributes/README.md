@@ -128,6 +128,8 @@ ARIA in HTML says authors [should not set an ARIA attribute that repeats a nativ
 
 `aria-checked` contradicting a native checkbox or radio button (`aria-checked="true"` without `checked`, `aria-checked="mixed"`) is left and reported as a warning: use `checked` or `indeterminate`.
 
+With both, browsers ignore the ARIA attribute ("user agents MUST ignore the WAI-ARIA attributes"), so the page as served does not change. A script can still rely on it: `<button disabled aria-disabled="true">` whose script removes `disabled` once loaded, to keep the button focusable while announced disabled, loses that announcement. Such a script removes `disabled` without reading `aria-disabled`, so the stylesheet and script check does not see it: leave this rule out (`--rules`) on such pages. `aria-disabled="true"` alone, the way to keep a disabled control focusable, is never touched.
+
 ### `invalid-value`: values the spec does not define
 
 Each keyword attribute has an _invalid value default_: the state a value outside its keywords maps to. When it is the same as the _missing value default_, an invalid value does exactly what no attribute does, and is removed:
