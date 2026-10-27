@@ -4,7 +4,7 @@
  *   (hovered, pressed, focused, disabled, invalid, current), which it cannot do on a page nobody hovers;
  * - each state looks other than the element at rest: the same color, background, border, outline, underline and cursor
  *   would mean a state lost;
- * - the styles of each state match states/states.snapshot.json, the reference: computed styles are the same from one
+ * - the styles of each state match tests/states.snapshot.json, the reference: computed styles are the same from one
  *   computer to another, where a screenshot's pixels are not (fonts, antialiasing). Run with --update to write it
  *   after a change meant to change a state, and review its diff.
  * The screenshots of both themes are written to states/screenshots/, to look at.
@@ -20,7 +20,7 @@ import { audit } from '@dume/dev-config/a11y';
 import { forceStates } from '../scripts/forced-states.js';
 
 const states = new URL('../states/', import.meta.url);
-const snapshotFile = new URL('states.snapshot.json', states);
+const snapshotFile = new URL('states.snapshot.json', import.meta.url);
 const update = process.argv.includes('--update');
 
 // What tells a state from another: neither sizes nor positions, which depend on the fonts of the computer
@@ -92,13 +92,13 @@ await browser.close();
 const written = `${JSON.stringify(snapshot, undefined, 2)}\n`;
 if (update) {
   writeFileSync(snapshotFile, written);
-  console.log('states/states.snapshot.json written: review its diff');
+  console.log('tests/states.snapshot.json written: review its diff');
 } else {
   let reference;
   try {
     reference = readFileSync(snapshotFile, 'utf8');
   } catch {
-    failures.push('No states/states.snapshot.json: run with --update to write it');
+    failures.push('No tests/states.snapshot.json: run with --update to write it');
   }
   if (reference !== undefined && reference !== written) {
     const expected = JSON.parse(reference);
@@ -112,7 +112,7 @@ if (update) {
         }
       }
     }
-    failures.push('The states differ from states/states.snapshot.json: when meant, run with --update and review its diff');
+    failures.push('The states differ from tests/states.snapshot.json: when meant, run with --update and review its diff');
   }
 }
 

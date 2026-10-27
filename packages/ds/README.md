@@ -79,7 +79,7 @@ The accessibility test (`pnpm --filter @dume/ds test:a11y`, in the Accessibility
 
 - axe checks it, and so the contrast of every state, which it cannot do on a page nobody hovers;
 - each state must look other than the element at rest (color, background, border, outline, underline, weight or cursor);
-- the styles of each state must match [`states/states.snapshot.json`](states/states.snapshot.json). After a change meant to change a state, `pnpm --filter @dume/ds test:a11y --update` writes it again: its diff shows what changed.
+- the styles of each state must match [`tests/states.snapshot.json`](tests/states.snapshot.json). After a change meant to change a state, `pnpm --filter @dume/ds test:a11y --update` writes it again: its diff shows what changed.
 
 Its screenshots, in both themes, are in `states/screenshots/`, and among the artifacts of the workflow.
 
