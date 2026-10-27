@@ -10,3 +10,7 @@ apps/simon.duhem.fr/_site
 
 # Remote images fetched by eleventy-img at build
 .cache
+
+# The board of states: its stylesheet and screenshots, made by the build and the accessibility test
+packages/ds/states/forced.css
+packages/ds/states/screenshots

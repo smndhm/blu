@@ -9,6 +9,10 @@
     "simon.duhem.fr#test:a11y": {
       "dependsOn": ["build"],
       "cache": false
+    },
+    "@dume/ds#test:a11y": {
+      "dependsOn": ["build"],
+      "cache": false
     }
   },
   "globalPassThroughEnv": ["CHROMIUM_PATH"]

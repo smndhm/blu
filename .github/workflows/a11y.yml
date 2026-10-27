@@ -7,6 +7,7 @@ on:
       - 'apps/simon.duhem.fr/**'
       - 'apps/ia-postrophe/**'
       - 'apps/slides/src/**'
+      - 'packages/ds/**'
       - 'pnpm-lock.yaml'
       - '.github/workflows/a11y.yml'
 
@@ -27,5 +28,14 @@ jobs:
         run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
 
       # Builds what it audits first (turbo.json)
-      - name: Run axe on every page
+      - name: Run axe on every page, and on the design system's board of states
         run: pnpm test:a11y
+
+      # The board of the design system's interactive states, in both themes, to look at
+      - name: Upload the screenshots of the states
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: ds-states
+          path: packages/ds/states/screenshots/
+          if-no-files-found: ignore

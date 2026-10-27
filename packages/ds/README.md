@@ -69,6 +69,20 @@ They are accessible:
 - Buttons and links have the pointer cursor, as most design systems do (GOV.UK, USWDS, Carbon, Primer, DSFR), the `not-allowed` one when disabled.
 - Targets of 24px at least (WCAG 2.5.8): a button, with its padding and line height; the banner's close button, 32px.
 
+The board of states, [`states/index.html`](states/index.html), shows every interactive element in each of its states at once, from the design system's own stylesheet: `forced.css` is `dist/styles.css` where `:hover`, `:focus-visible` and `:active` are `[data-state~='…']` attributes, as a page cannot hover nor press an element itself. To open it:
+
+```sh
+pnpm --filter @dume/ds build && pnpm --filter @dume/ds states
+```
+
+The accessibility test (`pnpm --filter @dume/ds test:a11y`, in the Accessibility workflow) loads it in Chromium, in both themes:
+
+- axe checks it, and so the contrast of every state, which it cannot do on a page nobody hovers;
+- each state must look other than the element at rest (color, background, border, outline, underline, weight or cursor);
+- the styles of each state must match [`states/states.snapshot.json`](states/states.snapshot.json). After a change meant to change a state, `pnpm --filter @dume/ds test:a11y --update` writes it again: its diff shows what changed.
+
+Its screenshots, in both themes, are in `states/screenshots/`, and among the artifacts of the workflow.
+
 The state colors are tokens (`--ds-b-color-primary-hover`, `-active`, `--ds-b-color-background-hover`, `-active`, `--ds-b-color-text-disabled`, `--ds-b-color-background-disabled`, `--ds-b-color-danger`): a component takes them, never a color of its own. A new component lists its states in the table of components.
 
 ## Units

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Interactive states, @dume/ds</title>
+    <!--
+      The board of the design system's interactive states, each one always on: forced.css is the design system's
+      stylesheet where :hover, :focus-visible and :active are [data-state] attributes. Build it, then open this page:
+      pnpm --filter @dume/ds build && pnpm --filter @dume/ds states
+      The accessibility test (pnpm --filter @dume/ds test:a11y) checks it in both themes.
+    -->
+    <link rel="stylesheet" href="forced.css" />
+    <style>
+      body {
+        padding: var(--ds-b-size-24);
+      }
+
+      table {
+        border-collapse: separate;
+        border-spacing: var(--ds-b-size-24) var(--ds-b-size-16);
+        inline-size: auto;
+        margin-inline: calc(-1 * var(--ds-b-size-24));
+      }
+
+      th,
+      td {
+        border: 0;
+        padding: 0;
+        text-align: start;
+        vertical-align: middle;
+      }
+
+      thead th {
+        color: var(--ds-b-color-text-muted);
+        font-weight: 400;
+      }
+
+      tbody th {
+        white-space: nowrap;
+      }
+
+      .ds-c-field__control {
+        inline-size: 10rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Interactive states</h1>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Element</th>
+            <th scope="col">Rest</th>
+            <th scope="col">Hovered</th>
+            <th scope="col">Keyboard focus</th>
+            <th scope="col">Pressed</th>
+            <th scope="col">Disabled</th>
+            <th scope="col">Other</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-component="link">
+            <th scope="row">Link</th>
+            <td><a href="#link" data-case="rest">A link</a></td>
+            <td><a href="#link" data-case="hover" data-state="hover">A link</a></td>
+            <td><a href="#link" data-case="focus-visible" data-state="focus-visible">A link</a></td>
+            <td><a href="#link" data-case="active" data-state="active">A link</a></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr data-component="button">
+            <th scope="row">Button</th>
+            <td><button type="button" class="ds-c-button" data-case="rest">Send</button></td>
+            <td><button type="button" class="ds-c-button" data-case="hover" data-state="hover">Send</button></td>
+            <td><button type="button" class="ds-c-button" data-case="focus-visible" data-state="focus-visible">Send</button></td>
+            <td><button type="button" class="ds-c-button" data-case="active" data-state="active">Send</button></td>
+            <td><button type="button" class="ds-c-button" disabled data-case="disabled" data-state="hover">Send</button></td>
+            <td><a href="#button" class="ds-c-button" aria-disabled="true" data-case="aria-disabled" data-state="hover">Send</a></td>
+          </tr>
+          <tr data-component="button-outline">
+            <th scope="row">Outline button</th>
+            <td><button type="button" class="ds-c-button ds-c-button--outline" data-case="rest">Cancel</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--outline" data-case="hover" data-state="hover">Cancel</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--outline" data-case="focus-visible" data-state="focus-visible">Cancel</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--outline" data-case="active" data-state="active">Cancel</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--outline" disabled data-case="disabled" data-state="hover">Cancel</button></td>
+            <td></td>
+          </tr>
+          <tr data-component="button-ghost">
+            <th scope="row">Ghost button</th>
+            <td><button type="button" class="ds-c-button ds-c-button--ghost" data-case="rest">Close</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--ghost" data-case="hover" data-state="hover">Close</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--ghost" data-case="focus-visible" data-state="focus-visible">Close</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--ghost" data-case="active" data-state="active">Close</button></td>
+            <td><button type="button" class="ds-c-button ds-c-button--ghost" disabled data-case="disabled" data-state="hover">Close</button></td>
+            <td></td>
+          </tr>
+          <tr data-component="field">
+            <th scope="row">Field</th>
+            <td><input class="ds-c-field__control" value="Text" aria-label="Field at rest" data-case="rest" /></td>
+            <td><input class="ds-c-field__control" value="Text" aria-label="Hovered field" data-case="hover" data-state="hover" /></td>
+            <td><input class="ds-c-field__control" value="Text" aria-label="Focused field" data-case="focus-visible" data-state="focus-visible" /></td>
+            <td></td>
+            <td><input class="ds-c-field__control" value="Text" aria-label="Disabled field" disabled data-case="disabled" data-state="hover" /></td>
+            <td>
+              <input class="ds-c-field__control" value="Not an e-mail" aria-label="Invalid e-mail" aria-invalid="true" aria-describedby="invalid-message" data-case="invalid" />
+              <p id="invalid-message" class="ds-c-field__message ds-c-field__message--danger">An e-mail address is expected.</p>
+            </td>
+          </tr>
+          <tr data-component="header-link">
+            <th scope="row">Header link</th>
+            <td><a href="#header" class="ds-c-header__link" data-case="rest">Articles</a></td>
+            <td><a href="#header" class="ds-c-header__link" data-case="hover" data-state="hover">Articles</a></td>
+            <td><a href="#header" class="ds-c-header__link" data-case="focus-visible" data-state="focus-visible">Articles</a></td>
+            <td></td>
+            <td></td>
+            <td><a href="#header" class="ds-c-header__link" aria-current="page" data-case="current">Articles</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
