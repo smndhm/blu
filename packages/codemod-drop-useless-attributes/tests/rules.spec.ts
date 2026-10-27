@@ -257,19 +257,12 @@ describe('invalid-value', () => {
   });
 
   it.each([
-    ['<button type=" submit ">a</button>', '<button type="submit">a</button>'],
-    ['<button TYPE="submit ">a</button>', '<button TYPE="submit">a</button>'],
-    ["<button type=' Submit'>a</button>", '<button type="submit">a</button>'],
-  ])('%s -> %s: the explicit type of a <button>, written right', (source, expected) => {
+    ['<button type=" submit ">a</button>', '<button>a</button>'],
+    ['<button TYPE="submit ">a</button>', '<button>a</button>'],
+    ['<button type=" submit " commandfor="d" command="show-modal">a</button>', '<button commandfor="d" command="show-modal">a</button>'],
+  ])('%s -> %s: invalid, it already means Auto, as no type does; the default is never written back', (source, expected) => {
     expect(output(source)).toBe(expected);
-    expect(findings(source)).toMatchObject([{ type: 'rewritten', rule: 'invalid-value' }]);
-    expect(findings(expected)).toMatchObject([{ type: 'skipped', rule: 'html-default' }]);
-  });
-
-  it('leaves type=" submit " on a button with a command, where it means Auto and not submit', () => {
-    const source = '<button type=" submit " commandfor="d" command="show-modal">a</button>';
-    expect(output(source)).toBe(source);
-    expect(findings(source)).toMatchObject([{ type: 'warning', reason: expect.stringContaining('with a command') }]);
+    expect(findings(source)).toMatchObject([{ type: 'removed', rule: 'invalid-value' }]);
   });
 
   it('leaves <button type="Submit">, which is valid: keywords ignore case', () => {
