@@ -12,4 +12,4 @@ apps/simon.duhem.fr/_site
 .cache
 
 # The screenshots of the board of states, made by the accessibility test
-packages/ds/states/screenshots
+packages/ds/tests/screenshots

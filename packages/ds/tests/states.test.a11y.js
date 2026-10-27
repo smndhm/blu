@@ -1,5 +1,5 @@
 /**
- * The board of interactive states (states/index.html), in Chromium, in the light and dark themes. A page cannot hover,
+ * The board of interactive states (tests/states.html), in Chromium, in the light and dark themes. A page cannot hover,
  * focus or press an element itself: each element's state, named in data-state, is forced as the DevTools do
  * (CSS.forcePseudoState), so the design system's very :hover, :focus-visible and :active rules apply. Then:
  * - axe checks it with @dume/dev-config/a11y: every state being always on there, axe checks the contrast of each one
@@ -9,7 +9,7 @@
  * - the styles of each state match tests/states.snapshot.json, the reference: computed styles are the same from one
  *   computer to another, where a screenshot's pixels are not (fonts, antialiasing). Run with --update to write it
  *   after a change meant to change a state, and review its diff.
- * The screenshots of both themes are written to states/screenshots/, to look at.
+ * The screenshots of both themes are written to tests/screenshots/, to look at.
  *
  * Usage: pnpm --filter @dume/ds build && pnpm --filter @dume/ds test:a11y [--update]
  * Set CHROMIUM_PATH to use an already installed Chromium instead of the Playwright one.
@@ -20,7 +20,7 @@ import { chromium } from 'playwright';
 // From the repository's root, which has @dume/dev-config for the whole repository
 import { audit } from '@dume/dev-config/a11y';
 
-const states = new URL('../states/', import.meta.url);
+const screenshots = new URL('screenshots/', import.meta.url);
 const snapshotFile = new URL('states.snapshot.json', import.meta.url);
 const update = process.argv.includes('--update');
 
@@ -42,7 +42,7 @@ const PROPERTIES = [
   'cursor',
 ];
 
-mkdirSync(new URL('screenshots/', states), { recursive: true });
+mkdirSync(screenshots, { recursive: true });
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
 const failures = [];
@@ -50,7 +50,7 @@ const snapshot = {};
 
 for (const colorScheme of ['light', 'dark']) {
   const page = await browser.newPage({ colorScheme, viewport: { width: 1200, height: 600 } });
-  await page.goto(new URL('index.html', states).href);
+  await page.goto(new URL('states.html', import.meta.url).href);
   await page.evaluate(() => document.fonts.ready);
   await forceStates(page);
 
@@ -85,7 +85,7 @@ for (const colorScheme of ['light', 'dark']) {
     }
   }
 
-  await page.screenshot({ path: new URL(`screenshots/${colorScheme}.png`, states).pathname, fullPage: true });
+  await page.screenshot({ path: new URL(`${colorScheme}.png`, screenshots).pathname, fullPage: true });
   await page.close();
 }
 await browser.close();
