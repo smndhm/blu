@@ -1,5 +1,7 @@
 /**
- * The board of interactive states (states/index.html), in Chromium, in the light and dark themes:
+ * The board of interactive states (states/index.html), in Chromium, in the light and dark themes. A page cannot hover,
+ * focus or press an element itself: each element's state, named in data-state, is forced as the DevTools do
+ * (CSS.forcePseudoState), so the design system's very :hover, :focus-visible and :active rules apply. Then:
  * - axe checks it with @dume/dev-config/a11y: every state being always on there, axe checks the contrast of each one
  *   (hovered, pressed, focused, disabled, invalid, current), which it cannot do on a page nobody hovers;
  * - each state looks other than the element at rest: the same color, background, border, outline, underline and cursor
@@ -17,7 +19,6 @@ import process from 'node:process';
 import { chromium } from 'playwright';
 // From the repository's root, which has @dume/dev-config for the whole repository
 import { audit } from '@dume/dev-config/a11y';
-import { forceStates } from '../scripts/forced-states.js';
 
 const states = new URL('../states/', import.meta.url);
 const snapshotFile = new URL('states.snapshot.json', import.meta.url);
@@ -41,7 +42,6 @@ const PROPERTIES = [
   'cursor',
 ];
 
-writeFileSync(new URL('forced.css', states), forceStates(readFileSync(new URL('../dist/styles.css', import.meta.url), 'utf8')));
 mkdirSync(new URL('screenshots/', states), { recursive: true });
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
@@ -52,6 +52,7 @@ for (const colorScheme of ['light', 'dark']) {
   const page = await browser.newPage({ colorScheme, viewport: { width: 1200, height: 600 } });
   await page.goto(new URL('index.html', states).href);
   await page.evaluate(() => document.fonts.ready);
+  await forceStates(page);
 
   for (const violation of await audit(page)) failures.push(`${colorScheme}: ${violation}`);
 
@@ -88,6 +89,20 @@ for (const colorScheme of ['light', 'dark']) {
   await page.close();
 }
 await browser.close();
+
+/** Forces on each element of the page the pseudo-classes its data-state names, for as long as the page is open */
+async function forceStates(page) {
+  const session = await page.context().newCDPSession(page);
+  await session.send('DOM.enable');
+  await session.send('CSS.enable');
+  const { root } = await session.send('DOM.getDocument');
+  const { nodeIds } = await session.send('DOM.querySelectorAll', { nodeId: root.nodeId, selector: '[data-state]' });
+  for (const nodeId of nodeIds) {
+    const { attributes } = await session.send('DOM.getAttributes', { nodeId });
+    const forcedPseudoClasses = attributes[attributes.indexOf('data-state') + 1].split(/\s+/);
+    await session.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses });
+  }
+}
 
 const written = `${JSON.stringify(snapshot, undefined, 2)}\n`;
 if (update) {

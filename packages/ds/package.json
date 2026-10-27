@@ -37,7 +37,6 @@
     "build": "vp pack",
     "test": "vp test run",
     "prepublishOnly": "pnpm build",
-    "states": "node scripts/forced-states.js",
     "test:a11y": "node tests/states.test.a11y.js"
   },
   "dependencies": {

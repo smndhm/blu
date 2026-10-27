@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Interactive states, @dume/ds</title>
     <!--
-      The board of the design system's interactive states, each one always on: forced.css is the design system's
-      stylesheet where :hover, :focus-visible and :active are [data-state] attributes. Build it, then open this page:
-      pnpm --filter @dume/ds build && pnpm --filter @dume/ds states
-      The accessibility test (pnpm --filter @dume/ds test:a11y) checks it in both themes.
+      The board of the design system's interactive states, from its own stylesheet. A page cannot hover, focus or press
+      an element itself: the accessibility test (pnpm --filter @dume/ds test:a11y) forces in Chromium the state each
+      element names in data-state, and writes screenshots of both themes in states/screenshots/.
     -->
-    <link rel="stylesheet" href="forced.css" />
+    <link rel="stylesheet" href="../dist/styles.css" />
     <style>
       body {
         padding: var(--ds-b-size-24);
