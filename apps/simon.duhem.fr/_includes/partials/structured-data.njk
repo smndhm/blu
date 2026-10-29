@@ -1,35 +1,25 @@
-{#- Données structurées schema.org (JSON-LD) : la personne sur l'accueil et sur le CV, l'article sur chaque post #}
+{#- Données structurées schema.org (JSON-LD) : la même personne sur l'accueil, le CV et comme auteur des articles ;
+    l'entreprise du poste en cours, les écoles et les langues viennent du CV (_data/cv.js) #}
+{%- set employer = cv.work[0] %}
 {%- set person = {
 	"@type": "Person",
 	"name": metadata.author.name,
 	"url": metadata.author.url,
 	"jobTitle": metadata.author.jobTitle,
+	"worksFor": { "@type": "Organization", "name": employer.name } if not employer.positions[0].end,
 	"knowsAbout": metadata.author.knowsAbout,
+	"knowsLanguage": cv.languages | pluck("language"),
+	"alumniOf": cv.education | pluck("institution") | organizations("EducationalOrganization"),
 	"sameAs": metadata.social | pluck("url")
 } %}
-{%- if page.url == "/" %}
-<script type="application/ld+json">{{ {
-	"@context": "https://schema.org",
-	"@type": "ProfilePage",
-	"url": metadata.url,
-	"inLanguage": metadata.language,
-	"description": metadata.description,
-	"mainEntity": person
-} | jsonLd | safe }}</script>
-{%- elif page.url == cv.url %}
-{#- La même personne, avec ce que dit le CV : l'entreprise du poste en cours, les écoles, les langues #}
-{%- set employer = cv.work[0] %}
+{%- if page.url == "/" or page.url == cv.url %}
 <script type="application/ld+json">{{ {
 	"@context": "https://schema.org",
 	"@type": "ProfilePage",
 	"url": page.url | htmlBaseUrl(metadata.url),
 	"inLanguage": metadata.language,
-	"description": description,
-	"mainEntity": person | merge({
-		"worksFor": { "@type": "Organization", "name": employer.name } if not employer.positions[0].end,
-		"alumniOf": cv.education | pluck("institution") | organizations("EducationalOrganization"),
-		"knowsLanguage": cv.languages | pluck("language")
-	})
+	"description": description or metadata.description,
+	"mainEntity": person
 } | jsonLd | safe }}</script>
 {%- elif layout == "layouts/post.njk" %}
 <script type="application/ld+json">{{ {
