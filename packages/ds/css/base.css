@@ -60,6 +60,11 @@
       margin-block-end: 0;
     }
 
+    /* A tagline in small print, such as a date: its line as low as its text, not as the paragraph's */
+    & > p:has(> small:only-child) {
+      line-height: 1.2;
+    }
+
     & h1 {
       font-size: var(--ds-b-size-display);
       line-height: 1;
