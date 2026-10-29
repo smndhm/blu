@@ -9,6 +9,95 @@ import metadata from './metadata.js';
  */
 const { author } = metadata;
 
+// Positions grouped by company, the most recent first; a position's location only when it differs from its company's
+const work = [
+  {
+    name: 'MGDIS',
+    location: 'Vannes',
+    positions: [
+      {
+        position: 'Architecte front-end',
+        location: 'Vannes (télétravail)',
+        start: '2021-05',
+        highlights: [
+          'Conception et évolution du design system de MGDIS, une bibliothèque de Web Components, pour une expérience utilisateur cohérente et accessible.',
+          "Définition des bonnes pratiques de développement front-end et d'accessibilité pour une équipe de 50 développeurs.",
+        ],
+        keywords: ['Web Components', 'Stencil', 'TypeScript', 'Storybook', 'RGAA'],
+      },
+      {
+        position: 'Lead Développeur Full Stack',
+        start: '2021-01',
+        end: '2021-08',
+        highlights: ["Encadrement d'une équipe sur des projets de développement full stack."],
+      },
+      {
+        position: 'Développeur Full Stack',
+        start: '2019-03',
+        end: '2021-01',
+        highlights: ["Développement et maintenance d'applications full stack."],
+      },
+    ],
+  },
+  {
+    name: 'Deezer',
+    location: 'Paris',
+    positions: [
+      {
+        position: 'Web Engineer (Studio)',
+        start: '2012-09',
+        end: '2019-03',
+        highlights: [
+          'Intégration de Deezer dans IFTTT, à mon initiative : toutes les phases, du premier contact avec IFTTT au lancement, en passant par les spécifications et le développement.',
+          'Plateforme de candidatures et de votes des Victoires de la Musique (variétés, classique et jazz).',
+          "Applications utilisant l'API Deezer : sites partenaires, bots Twitter, applications Facebook, widgets.",
+        ],
+      },
+      {
+        position: 'Web Developer (Régie)',
+        start: '2012-05',
+        end: '2012-09',
+        highlights: ["Espaces dédiés pour des annonceurs : Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
+      },
+    ],
+  },
+  {
+    name: 'Marine nationale',
+    positions: [
+      {
+        position: 'Analyste développeur, antenne EMM/SIAG - GERHICO',
+        start: '2007-11',
+        end: '2012-04',
+        highlights: [
+          "Analyse, développement, déploiement et maintenance d'une solution mobile pour le système RH de la Marine nationale (RH@psodie), destinée aux officiers.",
+          'Applications pour les services RH : notations, avancements, entretiens de carrière, plans de mutation des officiers.',
+        ],
+      },
+      {
+        position: 'Analyste développeur, DCSSF',
+        start: '2005-07',
+        end: '2007-09',
+        highlights: [
+          "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
+        ],
+      },
+    ],
+  },
+];
+
+// A company's whole period: its first position's start, its last one's end (none while a position is current)
+const withPeriod = company => {
+  const { positions } = company;
+  const start = positions.map(position => position.start).toSorted()[0];
+  const end = positions.some(position => !position.end)
+    ? undefined
+    : positions
+        .map(position => position.end)
+        .toSorted()
+        .at(-1);
+  return { ...company, start, ...(end && { end }) };
+};
+
 export default {
   // The page's path (its permalink, llms.txt; no link on the site yet, only the sitemap) and the PDF's, which scripts/cv-pdf.js writes
   url: '/cv/',
@@ -26,80 +115,7 @@ export default {
       keywords: ['Node.js', 'Vite', 'ESLint', 'Stylelint', 'Prettier', 'monorepo pnpm', 'Changesets', 'Renovate', 'GitHub Actions', 'GitLab CI'],
     },
   ],
-  work: [
-    {
-      name: 'MGDIS',
-      location: 'Vannes',
-      positions: [
-        {
-          position: 'Architecte front-end',
-          location: 'Vannes (télétravail)',
-          start: '2021-05',
-          highlights: [
-            'Conception et évolution du design system de MGDIS, une bibliothèque de Web Components, pour une expérience utilisateur cohérente et accessible.',
-            "Définition des bonnes pratiques de développement front-end et d'accessibilité pour une équipe de 50 développeurs.",
-          ],
-          keywords: ['Web Components', 'Stencil', 'TypeScript', 'Storybook', 'RGAA'],
-        },
-        {
-          position: 'Lead Développeur Full Stack',
-          start: '2021-01',
-          end: '2021-08',
-          highlights: ["Encadrement d'une équipe sur des projets de développement full stack."],
-        },
-        {
-          position: 'Développeur Full Stack',
-          start: '2019-03',
-          end: '2021-01',
-          highlights: ["Développement et maintenance d'applications full stack."],
-        },
-      ],
-    },
-    {
-      name: 'Deezer',
-      location: 'Paris',
-      positions: [
-        {
-          position: 'Web Engineer (Studio)',
-          start: '2012-09',
-          end: '2019-03',
-          highlights: [
-            'Intégration de Deezer dans IFTTT, à mon initiative : toutes les phases, du premier contact avec IFTTT au lancement, en passant par les spécifications et le développement.',
-            'Plateforme de candidatures et de votes des Victoires de la Musique (variétés, classique et jazz).',
-            "Applications utilisant l'API Deezer : sites partenaires, bots Twitter, applications Facebook, widgets.",
-          ],
-        },
-        {
-          position: 'Web Developer (Régie)',
-          start: '2012-05',
-          end: '2012-09',
-          highlights: ["Espaces dédiés pour des annonceurs : Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
-        },
-      ],
-    },
-    {
-      name: 'Marine nationale',
-      positions: [
-        {
-          position: 'Analyste développeur, antenne EMM/SIAG - GERHICO',
-          start: '2007-11',
-          end: '2012-04',
-          highlights: [
-            "Analyse, développement, déploiement et maintenance d'une solution mobile pour le système RH de la Marine nationale (RH@psodie), destinée aux officiers.",
-            'Applications pour les services RH : notations, avancements, entretiens de carrière, plans de mutation des officiers.',
-          ],
-        },
-        {
-          position: 'Analyste développeur, DCSSF',
-          start: '2005-07',
-          end: '2007-09',
-          highlights: [
-            "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
-          ],
-        },
-      ],
-    },
-  ],
+  work: work.map(withPeriod),
   education: [
     {
       studyType: "Certificat de conception, d'analyse et de programmation de systèmes d'information",

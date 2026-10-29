@@ -88,7 +88,7 @@
     }
 
     /* A section's heading and its tagline: the hgroup takes the heading's margins, which then collapse with its neighbors' */
-    &:has(> :is(h2, h3)) > :is(h2, h3) {
+    &:has(> :is(h2, h3, h4, h5, h6)) > :is(h2, h3, h4, h5, h6) {
       margin-block: 0;
     }
 
@@ -98,6 +98,10 @@
 
     &:has(> h3) {
       margin-block: var(--ds-b-size-32) var(--ds-b-size-8);
+    }
+
+    &:has(> :is(h4, h5, h6)) {
+      margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
     }
 
     /* A tagline in small print, such as a date: its line as low as its text, not as the paragraph's */

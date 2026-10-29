@@ -33,11 +33,16 @@ eleventyComputed:
 </ul>
 
 <h2>Expérience professionnelle</h2>
+{#- L'entreprise, sa période et sa ville, puis ses postes #}
 {%- for company in cv.work %}
+<hgroup>
+	<h3>{{ company.name }}</h3>
+	<p class="ds-c-post__meta"><small>{{ period(company.start, company.end, true) }}{% if company.location %}, {{ company.location }}{% endif %}</small></p>
+</hgroup>
 {%- for job in company.positions %}
 <hgroup>
-	<h3>{{ job.position }}, {{ company.name }}</h3>
-	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end, true) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
+	<h4>{{ job.position }}</h4>
+	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end, true) }}{% if job.location %}, {{ job.location }}{% endif %}</small></p>
 </hgroup>
 {#- Un paragraphe par réalisation, resserrés dans une pile #}
 <div class="ds-l-stack">
