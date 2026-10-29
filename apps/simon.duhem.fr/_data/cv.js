@@ -85,19 +85,6 @@ const work = [
   },
 ];
 
-// A company's whole period: its first position's start, its last one's end (none while a position is current)
-const withPeriod = company => {
-  const { positions } = company;
-  const start = positions.map(position => position.start).toSorted()[0];
-  const end = positions.some(position => !position.end)
-    ? undefined
-    : positions
-        .map(position => position.end)
-        .toSorted()
-        .at(-1);
-  return { ...company, start, ...(end && { end }) };
-};
-
 export default {
   // The page's path (its permalink, llms.txt; no link on the site yet, only the sitemap) and the PDF's, which scripts/cv-pdf.js writes
   url: '/cv/',
@@ -115,7 +102,7 @@ export default {
       keywords: ['Node.js', 'Vite', 'ESLint', 'Stylelint', 'Prettier', 'monorepo pnpm', 'Changesets', 'Renovate', 'GitHub Actions', 'GitLab CI'],
     },
   ],
-  work: work.map(withPeriod),
+  work,
   education: [
     {
       studyType: "Certificat de conception, d'analyse et de programmation de systèmes d'information",
