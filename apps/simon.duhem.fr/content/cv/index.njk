@@ -35,7 +35,7 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 {%- for company in cv.work %}
 {%- for job in company.positions %}
 <h3>{{ job.position }}, {{ company.name }}</h3>
-<p class="ds-c-post__meta">{{ period(job.start, job.end) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</p>
+<p class="ds-c-post__meta"><small>{{ period(job.start, job.end) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
 {#- Un paragraphe par réalisation #}
 {%- for highlight in job.highlights %}
 <p>{{ highlight }}</p>
@@ -49,7 +49,7 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 <h2>Formation</h2>
 {%- for school in cv.education %}
 <h3>{{ school.studyType }}</h3>
-<p class="ds-c-post__meta">{{ school.institution }}, {{ school.start | monthYear }} - {{ school.end | monthYear }}</p>
+<p class="ds-c-post__meta"><small>{{ school.institution }}, {{ period(school.start, school.end) }}</small></p>
 {%- endfor %}
 
 <h2>Langues</h2>
@@ -59,11 +59,11 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 <ul>
 	{#- Une ligne par conférence, avec chacun des événements où elle a été donnée #}
 	{%- for title, editions in talks | groupby("title") %}
-	<li>Conférence "<a href="{{ editions[0].url }}">{{ title }}</a>" : {% for talk in editions %}{{ talk.event }}{% if talk.date %} ({{ talk.date | monthYear }}){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</li>
+	<li>Conférence "<a href="{{ editions[0].url }}">{{ title }}</a>" : {% for talk in editions %}{{ talk.event }}{% if talk.date %} <small>(<time datetime="{{ talk.date | isoDate }}">{{ talk.date | monthYear }}</time>)</small>{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</li>
 	{%- endfor %}
 	{%- for post in collections.posts | reverse %}
 	{%- if post.data.origin %}
-	<li>Article "<a href="{{ post.data.origin.href }}">{{ post.data.title }}</a>", {{ post.data.origin.title }} ({{ post.date | monthYear }})</li>
+	<li>Article "<a href="{{ post.data.origin.href }}">{{ post.data.title }}</a>", {{ post.data.origin.title }} <small>(<time datetime="{{ post.date | isoDate }}">{{ post.date | monthYear }}</time>)</small></li>
 	{%- endif %}
 	{%- endfor %}
 </ul>
