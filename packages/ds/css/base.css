@@ -51,8 +51,10 @@
     margin-block: var(--ds-b-size-32) var(--ds-b-size-8);
   }
 
-  /* The text's size, in the heading font and weight; h5 and h6 come with their first use */
-  h4 {
+  /* The lower levels in the text's size (the base 4 has no step between 16px and 20px), set apart by the heading font and weight */
+  h4,
+  h5,
+  h6 {
     font-size: var(--ds-b-size-16);
     margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
   }
