@@ -7,13 +7,14 @@
 export default {
   title: 'Architecte front-end',
   skills: [
-    { name: 'HTML et CSS', keywords: ['HTML', 'CSS', 'Sass', 'BEM'] },
-    { name: 'Web Components', keywords: ['Web Components', 'Shadow DOM', 'Stencil'] },
-    { name: 'JavaScript', keywords: ['JavaScript', 'TypeScript', 'Vue.js', 'PWA', 'extensions de navigateur (WXT)'] },
-    { name: 'Design system', keywords: ['architecture de composants', 'design tokens', 'Storybook', 'Figma'] },
-    { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit', 'tests automatisés (axe-core, jest-axe)'] },
+    { name: 'Concevoir', keywords: ['design system', 'architecture de composants', 'design tokens', 'Storybook', 'Figma'] },
     {
-      name: 'Outillage',
+      name: 'Développer',
+      keywords: ['HTML', 'CSS', 'Sass', 'BEM', 'Web Components', 'Shadow DOM', 'Stencil', 'JavaScript', 'TypeScript', 'Vue.js', 'PWA', 'extensions de navigateur (WXT)'],
+    },
+    { name: 'Rendre accessible', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit', 'tests automatisés (axe-core, jest-axe)'] },
+    {
+      name: 'Industrialiser',
       keywords: ['Node.js', 'Vite', 'Vitest', 'Jest', 'Playwright', 'ESLint', 'Stylelint', 'Prettier', 'monorepo pnpm', 'Turborepo', 'Changesets', 'Renovate', 'GitHub Actions'],
     },
   ],
