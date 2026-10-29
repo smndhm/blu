@@ -1,17 +1,5 @@
-{#- Données structurées schema.org (JSON-LD) : la même personne sur l'accueil, le CV et comme auteur des articles ;
-    l'entreprise du poste en cours, les écoles et les langues viennent du CV (_data/cv.js) #}
-{%- set employer = cv.work[0] %}
-{%- set person = {
-	"@type": "Person",
-	"name": metadata.author.name,
-	"url": metadata.author.url,
-	"jobTitle": metadata.author.jobTitle,
-	"worksFor": { "@type": "Organization", "name": employer.name } if not employer.positions[0].end,
-	"knowsAbout": metadata.author.knowsAbout,
-	"knowsLanguage": cv.languages | pluck("language"),
-	"alumniOf": cv.education | pluck("institution") | organizations("EducationalOrganization"),
-	"sameAs": metadata.social | pluck("url")
-} %}
+{#- Données structurées schema.org (JSON-LD) : la personne (_data/person.js), la même sur l'accueil, le CV et comme
+    auteur des articles #}
 {%- if page.url == "/" or page.url == cv.url %}
 <script type="application/ld+json">{{ {
 	"@context": "https://schema.org",

@@ -3,7 +3,7 @@ layout: layouts/base.njk
 title: CV
 permalink: '{{ cv.url }}'
 eleventyComputed:
-  documentTitle: 'CV de {{ metadata.author.name }}, {{ metadata.author.jobTitle | lower }}'
+  documentTitle: '{{ cv.title }}'
   description: '{{ cv.description }}'
 ---
 {#- Tout le contenu vient de _data/cv.js et _data/metadata.js. Une seule colonne, des sections aux titres classiques et des dates à chaque poste, pour les ATS :
@@ -15,10 +15,8 @@ eleventyComputed:
 <h1>{{ metadata.author.name }}</h1>
 <p><strong>{{ metadata.author.jobTitle }}</strong></p>
 <ul class="ds-l-cluster">
-	<li><a href="mailto:{{ metadata.author.email }}">{{ metadata.author.email }}</a></li>
-	<li><a href="{{ metadata.url }}">{{ metadata.url | replace("https://", "") | replace("/", "") }}</a></li>
-	{%- for link in metadata.social %}
-	<li><a href="{{ link.url }}">{{ link.url | replace("https://", "") | replace("www.", "") | replace(r/\/$/, "") }}</a></li>
+	{%- for contact in metadata.author.contacts %}
+	<li><a href="{{ contact.url }}">{{ contact.text }}</a></li>
 	{%- endfor %}
 </ul>
 <p class="ds-u-print-hidden"><a href="{{ cv.pdf }}" class="ds-c-button">Voir le CV (PDF)</a></p>

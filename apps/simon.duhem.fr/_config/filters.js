@@ -31,9 +31,6 @@ export default function (eleventyConfig) {
     ].toSorted((a, b) => (b.date ?? 0) - (a.date ?? 0)),
   );
 
-  // schema.org organizations of a type from their names, e.g. a CV's schools
-  eleventyConfig.addFilter('organizations', (names, type) => names.map(name => ({ '@type': type, name })));
-
   // Values of `key` in an array of objects
   eleventyConfig.addFilter('pluck', (array, key) => array.map(item => item[key]));
 

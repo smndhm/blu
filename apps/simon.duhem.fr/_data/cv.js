@@ -1,15 +1,21 @@
+import metadata from './metadata.js';
+
 /**
- * The CV, rendered by content/cv/index.njk as the /cv/ page, then printed as `pdf` at deploy time (scripts/cv-pdf.js). Written for applicant tracking systems (ATS): plain sections, dates on every position,
- * keywords spelled out; technologies on the current position only. Dates are `YYYY-MM`; `end` left out means "aujourd'hui".
- * Its name, job title, contact links and summary come from _data/metadata.js, as on the rest of the site.
+ * The CV, rendered by content/cv/index.njk as the `url` page, then printed as `pdf` at deploy time (scripts/cv-pdf.js).
+ * Written for applicant tracking systems (ATS): plain sections, dates on every position, keywords spelled out;
+ * technologies on the current position only. Dates are `YYYY-MM`; `end` left out means "aujourd'hui".
+ * The name, job title, contact links and summary come from _data/metadata.js, as on the rest of the site.
  * Public: no phone number nor postal address.
  */
+const { author } = metadata;
+
 export default {
   // The page's path (its permalink, llms.txt; no link on the site yet, only the sitemap) and the PDF's, which scripts/cv-pdf.js writes
   url: '/cv/',
   pdf: '/cv/simon-duhem-cv.pdf',
-  // The page's meta description: 160 characters at most
-  description: 'CV de Simon Duhem, architecte front-end spécialisé en accessibilité (RGAA, WCAG) et en Web Components, qui conçoit un design system.',
+  // The page's title (and the PDF's), and its meta description: 160 characters at most
+  title: `CV de ${author.name}, ${author.jobTitle.toLowerCase()}`,
+  description: `CV de ${author.name}, ${author.jobTitle.toLowerCase()} spécialisé en accessibilité (RGAA, WCAG) et en Web Components, qui conçoit un design system.`,
   skills: [
     { name: 'Front-end', keywords: ['HTML', 'CSS', 'Sass', 'BEM', 'JavaScript', 'TypeScript', 'Vue.js'] },
     { name: 'Design system', keywords: ['architecture de composants', 'Web Components', 'Shadow DOM', 'Stencil', 'design tokens', 'Storybook', 'Figma'] },
