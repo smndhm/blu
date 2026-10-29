@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign up</title>
+  </head>
+  <body>
+    <header>
+      <nav aria-label="Main">
+        <ul role="list">
+          <li><a href="/" aria-current="page">Home</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <form action="/signup">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+        <input type="checkbox" id="terms" checked>
+        <label for="terms">I agree</label>
+        <textarea id="bio" readonly></textarea>
+        <button disabled>Send</button>
+      </form>
+      <div>Visible to everyone</div>
+      <div aria-hidden="true">Decoration</div>
+      <div hidden="until-found" aria-hidden="true">Found by search</div>
+    </main>
+  </body>
+</html>

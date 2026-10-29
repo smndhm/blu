@@ -1,0 +1,72 @@
+{
+  "name": "@dume/codemod-drop-useless-attributes",
+  "version": "0.0.0",
+  "description": "Codemod that removes HTML attributes with no effect, per the HTML and ARIA specifications: attributes set to their default value, boolean attribute values, ARIA states at their default, roles equal to the implicit role, ARIA repeating a native attribute, invalid values the browser ignores.",
+  "keywords": [
+    "codemod",
+    "html",
+    "aria",
+    "attributes",
+    "defaults",
+    "useless",
+    "whatwg",
+    "wai-aria",
+    "cleanup",
+    "cli",
+    "redundant",
+    "invalid"
+  ],
+  "homepage": "https://github.com/smndhm/blu/tree/main/packages/codemod-drop-useless-attributes#readme",
+  "bugs": {
+    "url": "https://github.com/smndhm/blu/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smndhm/blu.git",
+    "directory": "packages/codemod-drop-useless-attributes"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Simon Duhem",
+    "email": "simon.duhem@gmail.com",
+    "url": "https://simon.duhem.fr"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./codemod": {
+      "types": "./dist/codemod.d.mts",
+      "default": "./dist/codemod.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "codemod-drop-useless-attributes": "bin/codemod-drop-useless-attributes.mjs"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "scripts": {
+    "build": "vp pack",
+    "test": "vp test run",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "html-enumerated-attributes": "1.1.1",
+    "parse5": "8.0.1",
+    "property-information": "7.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "jsdom": "30.1.3",
+    "typescript": "6.0.3",
+    "vite-plus": "1.4.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

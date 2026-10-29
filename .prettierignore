@@ -1,3 +1,6 @@
 pnpm-lock.yaml
 # Written by Changesets
 **/CHANGELOG.md
+
+# Codemod test fixtures are byte-exact input/expected pairs: formatting them would break the tests
+packages/codemod-drop-useless-attributes/tests/fixtures/

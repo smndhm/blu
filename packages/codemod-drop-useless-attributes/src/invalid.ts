@@ -1,0 +1,266 @@
+/**
+ * Invalid values of keyword attributes. The spec gives each keyword attribute an "invalid value default": the state a
+ * value outside its keywords maps to. When that state is the "missing value default" too, an invalid value does
+ * exactly what no attribute does, and removing it is a no-op. When the two differ (`crossorigin="foo"` means
+ * anonymous, no attribute means no CORS; `hidden="foo"` hides), the value does something, so it is reported, never
+ * removed.
+ *
+ * Such a value is written as what it does (`hidden="no"` becomes `hidden`), unless it is close to another keyword, a typo
+ * whose fix would be lost (`kind="subtitle"`, meant `subtitles`): that one is reported.
+ *
+ * Keywords are listed here from the current WHATWG HTML Living Standard rather than taken from
+ * `html-enumerated-attributes`, whose data lacks recent keywords (`contenteditable="plaintext-only"`,
+ * `hidden="until-found"`) and lists `target`, which takes any navigable name, as a keyword attribute.
+ */
+
+const SPEC = 'https://html.spec.whatwg.org/multipage/';
+
+export interface KeywordAttribute {
+  attribute: string;
+  /** Elements it applies to; undefined for a global attribute */
+  tags?: string[];
+  /** Valid keywords, lowercase unless `caseSensitive` */
+  keywords: string[];
+  caseSensitive?: boolean;
+  /** Set when an invalid value does something else than no attribute: what it does, as written, and what to do otherwise */
+  invalid?: { means: string; as: string; otherwise: string };
+  source: string;
+}
+
+export const keywordAttributes: KeywordAttribute[] = [
+  {
+    attribute: 'type',
+    tags: ['input'],
+    keywords: [
+      'hidden',
+      'text',
+      'search',
+      'tel',
+      'url',
+      'email',
+      'password',
+      'date',
+      'month',
+      'week',
+      'time',
+      'datetime-local',
+      'number',
+      'range',
+      'color',
+      'checkbox',
+      'radio',
+      'file',
+      'submit',
+      'image',
+      'reset',
+      'button',
+    ],
+    source: `${SPEC}input.html#attr-input-type`,
+  },
+  { attribute: 'type', tags: ['button'], keywords: ['submit', 'reset', 'button'], source: `${SPEC}form-elements.html#attr-button-type` },
+  { attribute: 'method', tags: ['form'], keywords: ['get', 'post', 'dialog'], source: `${SPEC}form-control-infrastructure.html#attr-fs-method` },
+  {
+    attribute: 'enctype',
+    tags: ['form'],
+    keywords: ['application/x-www-form-urlencoded', 'multipart/form-data', 'text/plain'],
+    source: `${SPEC}form-control-infrastructure.html#attr-fs-enctype`,
+  },
+  { attribute: 'autocomplete', tags: ['form'], keywords: ['on', 'off'], source: `${SPEC}forms.html#attr-form-autocomplete` },
+  { attribute: 'decoding', tags: ['img'], keywords: ['sync', 'async', 'auto'], source: `${SPEC}images.html#attr-img-decoding` },
+  { attribute: 'loading', tags: ['img', 'iframe'], keywords: ['lazy', 'eager'], source: `${SPEC}urls-and-fetching.html#lazy-loading-attributes` },
+  { attribute: 'fetchpriority', tags: ['img', 'link', 'script', 'iframe'], keywords: ['high', 'low', 'auto'], source: `${SPEC}urls-and-fetching.html#fetch-priority-attributes` },
+  { attribute: 'wrap', tags: ['textarea'], keywords: ['soft', 'hard'], source: `${SPEC}form-elements.html#attr-textarea-wrap` },
+  { attribute: 'shape', tags: ['area'], keywords: ['circle', 'circ', 'default', 'poly', 'polygon', 'rect', 'rectangle'], source: `${SPEC}image-maps.html#attr-area-shape` },
+  {
+    attribute: 'referrerpolicy',
+    tags: ['a', 'area', 'iframe', 'img', 'link', 'script'],
+    keywords: [
+      '',
+      'no-referrer',
+      'no-referrer-when-downgrade',
+      'same-origin',
+      'origin',
+      'strict-origin',
+      'origin-when-cross-origin',
+      'strict-origin-when-cross-origin',
+      'unsafe-url',
+    ],
+    source: `${SPEC}urls-and-fetching.html#referrer-policy-attributes`,
+  },
+  { attribute: 'preload', tags: ['audio', 'video'], keywords: ['none', 'metadata', 'auto', ''], source: `${SPEC}media.html#attr-media-preload` },
+  { attribute: 'scope', tags: ['th'], keywords: ['row', 'col', 'rowgroup', 'colgroup'], source: `${SPEC}tables.html#attr-th-scope` },
+  { attribute: 'type', tags: ['ol'], keywords: ['1', 'a', 'A', 'i', 'I'], caseSensitive: true, source: `${SPEC}grouping-content.html#attr-ol-type` },
+  { attribute: 'dir', keywords: ['ltr', 'rtl', 'auto'], source: `${SPEC}dom.html#the-dir-attribute` },
+  { attribute: 'inputmode', keywords: ['none', 'text', 'tel', 'url', 'email', 'numeric', 'decimal', 'search'], source: `${SPEC}interaction.html#attr-inputmode` },
+  { attribute: 'enterkeyhint', keywords: ['enter', 'done', 'go', 'next', 'previous', 'search', 'send'], source: `${SPEC}interaction.html#attr-enterkeyhint` },
+  { attribute: 'spellcheck', keywords: ['true', 'false', ''], source: `${SPEC}interaction.html#attr-spellcheck` },
+  { attribute: 'draggable', keywords: ['true', 'false'], source: `${SPEC}dnd.html#the-draggable-attribute` },
+  { attribute: 'translate', keywords: ['yes', 'no', ''], source: `${SPEC}dom.html#attr-translate` },
+  { attribute: 'contenteditable', keywords: ['true', 'false', 'plaintext-only', ''], source: `${SPEC}interaction.html#attr-contenteditable` },
+  {
+    attribute: 'crossorigin',
+    tags: ['audio', 'img', 'link', 'script', 'video'],
+    keywords: ['anonymous', 'use-credentials', ''],
+    invalid: { means: 'means anonymous', as: '', otherwise: 'remove it for no CORS request' },
+    source: `${SPEC}urls-and-fetching.html#cors-settings-attributes`,
+  },
+  {
+    attribute: 'kind',
+    tags: ['track'],
+    keywords: ['subtitles', 'captions', 'descriptions', 'chapters', 'metadata'],
+    invalid: { means: 'means metadata, a track never shown', as: 'metadata', otherwise: 'write subtitles or captions to show it' },
+    source: `${SPEC}media.html#attr-track-kind`,
+  },
+  {
+    attribute: 'formmethod',
+    tags: ['button', 'input'],
+    keywords: ['get', 'post', 'dialog'],
+    invalid: { means: 'means get', as: 'get', otherwise: "remove it to use the form's method" },
+    source: `${SPEC}form-control-infrastructure.html#attr-fs-formmethod`,
+  },
+  {
+    attribute: 'formenctype',
+    tags: ['button', 'input'],
+    keywords: ['application/x-www-form-urlencoded', 'multipart/form-data', 'text/plain'],
+    invalid: { means: 'means application/x-www-form-urlencoded', as: 'application/x-www-form-urlencoded', otherwise: "remove it to use the form's enctype" },
+    source: `${SPEC}form-control-infrastructure.html#attr-fs-formenctype`,
+  },
+  {
+    attribute: 'hidden',
+    keywords: ['', 'hidden', 'until-found'],
+    invalid: { means: 'hides the element', as: '', otherwise: 'remove it to show the element' },
+    source: `${SPEC}interaction.html#the-hidden-attribute`,
+  },
+  {
+    attribute: 'popover',
+    keywords: ['auto', 'manual', 'hint', ''],
+    invalid: { means: 'means manual', as: 'manual', otherwise: 'remove it for no popover' },
+    source: `${SPEC}popover.html#attr-popover`,
+  },
+];
+
+export function findKeywordAttribute(tagName: string, attribute: string): KeywordAttribute | undefined {
+  return keywordAttributes.find(entry => entry.attribute === attribute && (entry.tags === undefined || entry.tags.includes(tagName)));
+}
+
+export function isValidKeyword(entry: KeywordAttribute, value: string): boolean {
+  return entry.keywords.includes(entry.caseSensitive ? value : value.toLowerCase());
+}
+
+/**
+ * ARIA states and properties taking a fixed set of tokens. Browsers differ on unknown values (Chrome hides content
+ * with `aria-hidden="no"`; the spec treats an unknown `aria-invalid` or `aria-current` as true), so an invalid value is
+ * only reported. https://w3c.github.io/aria/#state_prop_def
+ */
+export const ariaTokens: Record<string, string[]> = {
+  'aria-atomic': ['true', 'false'],
+  'aria-autocomplete': ['inline', 'list', 'both', 'none'],
+  'aria-busy': ['true', 'false'],
+  'aria-checked': ['true', 'false', 'mixed', 'undefined'],
+  'aria-current': ['page', 'step', 'location', 'date', 'time', 'true', 'false'],
+  'aria-disabled': ['true', 'false'],
+  'aria-expanded': ['true', 'false', 'undefined'],
+  'aria-haspopup': ['false', 'true', 'menu', 'listbox', 'tree', 'grid', 'dialog'],
+  'aria-hidden': ['true', 'false', 'undefined'],
+  'aria-invalid': ['grammar', 'false', 'spelling', 'true'],
+  'aria-live': ['assertive', 'off', 'polite'],
+  'aria-modal': ['true', 'false'],
+  'aria-multiline': ['true', 'false'],
+  'aria-multiselectable': ['true', 'false'],
+  'aria-orientation': ['horizontal', 'undefined', 'vertical'],
+  'aria-pressed': ['true', 'false', 'mixed', 'undefined'],
+  'aria-readonly': ['true', 'false'],
+  'aria-required': ['true', 'false'],
+  'aria-selected': ['true', 'false', 'undefined'],
+  'aria-sort': ['ascending', 'descending', 'none', 'other'],
+};
+
+/** The states and properties of WAI-ARIA 1.3, deprecated ones included: https://w3c.github.io/aria/#state_prop_def */
+export const ariaAttributes = new Set([
+  'aria-actions',
+  'aria-activedescendant',
+  'aria-atomic',
+  'aria-autocomplete',
+  'aria-braillelabel',
+  'aria-brailleroledescription',
+  'aria-busy',
+  'aria-checked',
+  'aria-colcount',
+  'aria-colindex',
+  'aria-colindextext',
+  'aria-colspan',
+  'aria-controls',
+  'aria-current',
+  'aria-describedby',
+  'aria-description',
+  'aria-details',
+  'aria-disabled',
+  'aria-dropeffect',
+  'aria-errormessage',
+  'aria-expanded',
+  'aria-flowto',
+  'aria-grabbed',
+  'aria-haspopup',
+  'aria-hidden',
+  'aria-invalid',
+  'aria-keyshortcuts',
+  'aria-label',
+  'aria-labelledby',
+  'aria-level',
+  'aria-live',
+  'aria-modal',
+  'aria-multiline',
+  'aria-multiselectable',
+  'aria-orientation',
+  'aria-owns',
+  'aria-placeholder',
+  'aria-posinset',
+  'aria-pressed',
+  'aria-readonly',
+  'aria-relevant',
+  'aria-required',
+  'aria-roledescription',
+  'aria-rowcount',
+  'aria-rowindex',
+  'aria-rowindextext',
+  'aria-rowspan',
+  'aria-selected',
+  'aria-setsize',
+  'aria-sort',
+  'aria-valuemax',
+  'aria-valuemin',
+  'aria-valuenow',
+  'aria-valuetext',
+]);
+
+function distance(a: string, b: string): number {
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i += 1) {
+    let previous = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const current = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (a[i - 1] === b[j - 1] ? 0 : 1));
+      previous = current;
+    }
+  }
+  return row[b.length];
+}
+
+/** A keyword the value is a typo of (`subtitle` for `subtitles`), if any */
+export function closeKeyword(entry: KeywordAttribute, value: string): string | undefined {
+  const folded = value.trim().toLowerCase();
+  return entry.keywords.find(keyword => keyword !== '' && distance(folded, keyword.toLowerCase()) <= 2 && distance(folded, keyword.toLowerCase()) < keyword.length / 2);
+}
+
+/** What an attribute named aria-something that ARIA does not define was probably meant to be */
+export function probableAriaAttribute(name: string): string | undefined {
+  if (name === 'aria-role') return 'role';
+  let best: string | undefined;
+  let bestDistance = 3;
+  for (const candidate of ariaAttributes) {
+    const candidateDistance = distance(name, candidate);
+    if (candidateDistance < bestDistance) [best, bestDistance] = [candidate, candidateDistance];
+  }
+  return best;
+}
