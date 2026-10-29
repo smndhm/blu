@@ -41,7 +41,7 @@
     margin-block: 0 var(--ds-b-size-16);
   }
 
-  /* Two levels per size, on the base 4, the higher one extra bold: h3 and h4 in 20px, h5 and h6 in the text's 16px */
+  /* A size per step of the base 4, the lower levels in the text's 16px, set apart by their weight */
   h2 {
     font-size: var(--ds-b-size-24);
     font-weight: 700;
@@ -54,22 +54,23 @@
     margin-block: var(--ds-b-size-32) var(--ds-b-size-8);
   }
 
-  h4 {
-    font-size: var(--ds-b-size-20);
-    font-weight: 700;
+  h4,
+  h5,
+  h6 {
+    font-size: var(--ds-b-size-16);
     margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
+  }
+
+  h4 {
+    font-weight: 800;
   }
 
   h5 {
-    font-size: var(--ds-b-size-16);
-    font-weight: 800;
-    margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
+    font-weight: 700;
   }
 
   h6 {
-    font-size: var(--ds-b-size-16);
-    font-weight: 700;
-    margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
+    font-weight: 600;
   }
 
   p {
@@ -113,6 +114,12 @@
       font-size: var(--ds-b-size-display);
       line-height: 1;
     }
+  }
+
+  /* A heading right after another, such as a company and its first position on a CV: no margin of its own above, the
+     previous heading's below sets the room between them */
+  :is(h1, h2, h3, h4, h5, h6) + :is(h2, h3, h4, h5, h6, hgroup) {
+    margin-block-start: 0;
   }
 
   a[href] {
