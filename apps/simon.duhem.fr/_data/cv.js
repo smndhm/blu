@@ -13,7 +13,7 @@ export default {
     { name: 'Tests', keywords: ['Vitest', 'Jest', 'Playwright', 'axe-core'] },
     {
       name: 'Outillage',
-      keywords: ['Node.js', 'Vite', 'ESLint', 'Stylelint', 'Prettier', 'monorepo pnpm', 'Turborepo', 'Changesets', 'Renovate', 'GitHub Actions', 'GitLab CI'],
+      keywords: ['Node.js', 'Vite', 'ESLint', 'Stylelint', 'Prettier', 'monorepo pnpm', 'Changesets', 'Renovate', 'GitHub Actions', 'GitLab CI'],
     },
   ],
   work: [
