@@ -7,15 +7,11 @@
 export default {
   title: 'Architecte front-end',
   skills: [
-    { name: 'HTML et CSS', keywords: ['HTML', 'CSS', 'Sass', 'BEM'] },
-    { name: 'Web Components', keywords: ['Web Components', 'Shadow DOM', 'Stencil'] },
-    { name: 'JavaScript', keywords: ['JavaScript', 'TypeScript', 'Vue.js', 'PWA', 'extensions de navigateur (WXT)'] },
-    { name: 'Design system', keywords: ['architecture de composants', 'design tokens', 'Storybook', 'Figma'] },
-    { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit', 'tests automatisés (axe-core, jest-axe)'] },
-    {
-      name: 'Outillage',
-      keywords: ['Node.js', 'Vite', 'Vitest', 'Jest', 'Playwright', 'ESLint', 'Stylelint', 'Prettier', 'monorepo pnpm', 'Turborepo', 'Changesets', 'Renovate', 'GitHub Actions'],
-    },
+    { name: 'Front-end', keywords: ['HTML', 'CSS', 'Sass', 'BEM', 'JavaScript', 'TypeScript', 'Vue.js', 'PWA'] },
+    { name: 'Composants et design system', keywords: ['Web Components', 'Shadow DOM', 'Stencil', 'design tokens', 'Storybook', 'Figma'] },
+    { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit'] },
+    { name: 'Tests', keywords: ['Vitest', 'Jest', 'Playwright', 'axe-core', 'jest-axe'] },
+    { name: 'Outillage', keywords: ['Node.js', 'Vite', 'ESLint', 'Stylelint', 'Prettier', 'pnpm', 'Turborepo', 'Changesets', 'Renovate', 'GitHub Actions'] },
   ],
   work: [
     {
