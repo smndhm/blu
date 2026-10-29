@@ -7,7 +7,7 @@
 export default {
   title: 'Architecte front-end',
   skills: [
-    { name: 'Front-end', keywords: ['HTML', 'CSS', 'Web Components', 'Shadow DOM', 'Stencil', 'JavaScript', 'TypeScript', 'Sass', 'BEM'] },
+    { name: 'Front-end', keywords: ['HTML', 'CSS', 'Web Components', 'Shadow DOM', 'Stencil', 'JavaScript', 'TypeScript', 'Sass (SCSS)', 'BEM'] },
     { name: 'Design system', keywords: ['architecture de composants', 'design tokens', 'Storybook', 'Figma'] },
     { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit', 'tests automatisés (axe-core)'] },
     { name: 'Outillage', keywords: ['Node.js', 'Vite', 'Playwright', 'ESLint', 'Stylelint', 'GitHub Actions', 'monorepo pnpm'] },
