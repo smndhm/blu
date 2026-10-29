@@ -5,7 +5,7 @@
  * Public: no phone number nor postal address.
  */
 export default {
-  // The page's path (its permalink, the header's and home page's links, llms.txt) and the PDF's, which scripts/cv-pdf.js writes
+  // The page's path (its permalink; no link to it yet, only the sitemap) and the PDF's, which scripts/cv-pdf.js writes
   url: '/cv/',
   pdf: '/cv/simon-duhem-cv.pdf',
   // The page's meta description: 160 characters at most

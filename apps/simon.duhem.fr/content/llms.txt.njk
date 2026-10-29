@@ -21,7 +21,6 @@ eleventyExcludeFromCollections: true
 {%- endfor %}
 
 ## Liens
-- [CV]({{ cv.url | htmlBaseUrl(metadata.url) }}) ([PDF]({{ cv.pdf | htmlBaseUrl(metadata.url) }}))
 {% for link in metadata.social %}
 - [{{ link.name | safe }}]({{ link.url }})
 {%- endfor %}
