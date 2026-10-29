@@ -33,7 +33,7 @@ La clé n'est pas secrète : les moteurs la vérifient avec le fichier `public/<
 
 ## CV
 
-La page `/cv/` (`content/cv/index.njk`) est générée depuis `_data/cv.js` : son adresse et celle du PDF, sa description, les compétences, les langues, les postes et la formation. Le profil est l'accroche de la page d'accueil (`intro` de `_data/metadata.js`). Les conférences et les articles publiés ailleurs (champ `origin`) s'y ajoutent seuls. Pas de téléphone ni d'adresse postale : la page et le PDF sont publics. Aucun lien n'y mène pour l'instant : la page n'est que dans le sitemap.
+La page `/cv/` (`content/cv/index.njk`) est générée depuis `_data/cv.js` : son adresse et celle du PDF, sa description, les compétences, les langues, les postes et la formation. Le profil est l'accroche de la page d'accueil (`intro` de `_data/metadata.js`). Les conférences et les articles publiés ailleurs (champ `origin`) s'y ajoutent seuls. Pas de téléphone ni d'adresse postale : la page et le PDF sont publics. Aucun lien du site n'y mène pour l'instant : la page n'est que dans le sitemap et llms.txt. Ses données structurées (JSON-LD) reprennent la personne de l'accueil, avec l'entreprise du poste en cours, les écoles et les langues du CV.
 
 Le PDF, `/cv/simon-duhem-cv.pdf`, est cette page imprimée par Chromium au déploiement (`scripts/cv-pdf.js`), avec les styles d'impression de @dume/ds : thème clair, une seule colonne, du texte sélectionnable, des titres de section classiques et des dates à chaque poste, pour les ATS. Il est balisé (lecteurs d'écran) et a des signets. En local :
 
