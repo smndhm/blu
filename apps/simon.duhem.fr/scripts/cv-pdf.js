@@ -1,5 +1,5 @@
 /**
- * Prints the CV page (`_site/cv/index.html`) as `_site/cv/simon-duhem-cv.pdf`, the file the page links to.
+ * Prints the CV page (`_site/cv/index.html`) as the PDF its data names (`pdf` in _data/cv.js), which the page links to.
  *
  * In the light theme, with @dume/ds's print styles (no header nor footer, no download link): one column of text,
  * for applicant tracking systems (ATS). The PDF is tagged, for screen readers, and has an outline of the headings.
@@ -12,10 +12,12 @@ import { access } from 'node:fs/promises';
 import { join, normalize } from 'node:path';
 import process from 'node:process';
 import { chromium } from 'playwright';
+import cv from '../_data/cv.js';
+import metadata from '../_data/metadata.js';
 
 const siteDir = new URL('../_site/', import.meta.url).pathname;
-const siteUrl = 'https://simon.duhem.fr';
-const output = join(siteDir, 'cv/simon-duhem-cv.pdf');
+const siteUrl = new URL(metadata.url).origin;
+const output = join(siteDir, cv.pdf);
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const page = await browser.newPage({ colorScheme: 'light' });

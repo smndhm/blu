@@ -21,7 +21,7 @@ eleventyExcludeFromCollections: true
 {%- endfor %}
 
 ## Liens
-- [CV]({{ "/cv/" | htmlBaseUrl(metadata.url) }}) ([PDF]({{ "/cv/simon-duhem-cv.pdf" | htmlBaseUrl(metadata.url) }}))
+- [CV]({{ "/cv/" | htmlBaseUrl(metadata.url) }}) ([PDF]({{ cv.pdf | htmlBaseUrl(metadata.url) }}))
 {% for link in metadata.social %}
 - [{{ link.name | safe }}]({{ link.url }})
 {%- endfor %}

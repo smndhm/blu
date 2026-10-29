@@ -1,11 +1,12 @@
 /**
- * The CV, rendered by content/cv/index.njk as the /cv/ page, then printed as /cv/simon-duhem-cv.pdf at deploy time
- * (scripts/cv-pdf.js). Written for applicant tracking systems (ATS): plain sections, dates on every position,
+ * The CV, rendered by content/cv/index.njk as the /cv/ page, then printed as `pdf` at deploy time (scripts/cv-pdf.js). Written for applicant tracking systems (ATS): plain sections, dates on every position,
  * keywords spelled out; technologies on the current position only. Dates are `YYYY-MM`; `end` left out means "aujourd'hui".
- * Its summary is the home page's introduction (`metadata.intro`). Public: no phone number nor postal address.
+ * Its name, job title, contact links and summary come from _data/metadata.js, as on the rest of the site.
+ * Public: no phone number nor postal address.
  */
 export default {
-  title: 'Architecte front-end',
+  // The PDF's path on the site: the page links to it, llms.txt too, scripts/cv-pdf.js writes it
+  pdf: '/cv/simon-duhem-cv.pdf',
   skills: [
     { name: 'Front-end', keywords: ['HTML', 'CSS', 'Sass', 'BEM', 'JavaScript', 'TypeScript', 'Vue.js'] },
     { name: 'Design system', keywords: ['architecture de composants', 'Web Components', 'Shadow DOM', 'Stencil', 'design tokens', 'Storybook', 'Figma'] },
