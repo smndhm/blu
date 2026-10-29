@@ -6,8 +6,9 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 ---
 {#- Contenu : _data/cv.js. Une seule colonne, des sections aux titres classiques et des dates à chaque poste, pour les ATS :
     le PDF (scripts/cv-pdf.js) est cette page imprimée. #}
-{%- macro period(start, end) -%}
-<time datetime="{{ start }}">{{ start | monthYear }}</time> - {% if end %}<time datetime="{{ end }}">{{ end | monthYear }}</time>{% else %}aujourd'hui{% endif %}
+{#- `first`: the period opens its line, its first letter in upper case #}
+{%- macro period(start, end, first = false) -%}
+<time datetime="{{ start }}">{{ start | monthYear | capitalize if first else start | monthYear }}</time> - {% if end %}<time datetime="{{ end }}">{{ end | monthYear }}</time>{% else %}aujourd'hui{% endif %}
 {%- endmacro %}
 <h1>{{ metadata.author.name }}</h1>
 <p><strong>{{ cv.title }}</strong></p>
@@ -36,7 +37,7 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 {%- for job in company.positions %}
 <hgroup>
 	<h3>{{ job.position }}, {{ company.name }}</h3>
-	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
+	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end, true) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
 </hgroup>
 {#- Un paragraphe par réalisation #}
 {%- for highlight in job.highlights %}
