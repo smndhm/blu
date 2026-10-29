@@ -13,6 +13,8 @@ const displayUrl = link => link.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$
 export default {
   title: name,
   url,
+  // The site's address as written in a text: simon.duhem.fr
+  host: displayUrl(url),
   language: 'fr',
   // Présentation affichée sur la page d'accueil
   intro:

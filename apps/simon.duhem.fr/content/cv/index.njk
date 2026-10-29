@@ -70,9 +70,10 @@ eleventyComputed:
 	{%- for talk in talks | uniqueBy("title") %}
 	<li>Conférence "<a href="{{ talk.url }}">{{ talk.title }}</a>", {{ talk.event }}{% if talk.date %} <small>(<time datetime="{{ talk.date | isoDate }}">{{ talk.date | monthYear }}</time>)</small>{% endif %}</li>
 	{%- endfor %}
+	{#- Les articles choisis (`onCv: true` dans leur front matter), à leur publication d'origine s'ils en ont une #}
 	{%- for post in collections.posts | reverse %}
-	{%- if post.data.origin %}
-	<li>Article "<a href="{{ post.data.origin.href }}">{{ post.data.title }}</a>", {{ post.data.origin.title }} <small>(<time datetime="{{ post.date | isoDate }}">{{ post.date | monthYear }}</time>)</small></li>
+	{%- if post.data.onCv %}
+	<li>Article "<a href="{{ post.data.origin.href if post.data.origin else post.url }}">{{ post.data.title }}</a>", {{ post.data.origin.title if post.data.origin else metadata.host }} <small>(<time datetime="{{ post.date | isoDate }}">{{ post.date | monthYear }}</time>)</small></li>
 	{%- endif %}
 	{%- endfor %}
 </ul>
