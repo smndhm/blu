@@ -31,6 +31,9 @@ export default function (eleventyConfig) {
     ].toSorted((a, b) => (b.date ?? 0) - (a.date ?? 0)),
   );
 
+  // The first item of each value of `key`, such as a talk given at several events: its most recent edition
+  eleventyConfig.addFilter('uniqueBy', (array, key) => array.filter((item, index) => array.findIndex(other => other[key] === item[key]) === index));
+
   // Values of `key` in an array of objects
   eleventyConfig.addFilter('pluck', (array, key) => array.map(item => item[key]));
 

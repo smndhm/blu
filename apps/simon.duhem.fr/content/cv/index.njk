@@ -66,9 +66,9 @@ eleventyComputed:
 
 <h2>Conférences et articles</h2>
 <ul>
-	{#- Une ligne par conférence, avec chacun des événements où elle a été donnée #}
-	{%- for title, editions in talks | groupby("title") %}
-	<li>Conférence "<a href="{{ editions[0].url }}">{{ title }}</a>" : {% for talk in editions %}{{ talk.event }}{% if talk.date %} <small>(<time datetime="{{ talk.date | isoDate }}">{{ talk.date | monthYear }}</time>)</small>{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</li>
+	{#- Chaque conférence une fois, dans sa dernière édition #}
+	{%- for talk in talks | uniqueBy("title") %}
+	<li>Conférence "<a href="{{ talk.url }}">{{ talk.title }}</a>", {{ talk.event }}{% if talk.date %} <small>(<time datetime="{{ talk.date | isoDate }}">{{ talk.date | monthYear }}</time>)</small>{% endif %}</li>
 	{%- endfor %}
 	{%- for post in collections.posts | reverse %}
 	{%- if post.data.origin %}
