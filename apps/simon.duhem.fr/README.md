@@ -39,6 +39,7 @@ Les pages ne font qu'afficher : tout ce qui se calcule est fait dans `_data/`.
 - `_data/cv.js` : le CV (adresse de la page et du PDF, titre, description, compétences, postes, formation, langues).
 - `_data/person.js` : l'auteur pour les données structurées (JSON-LD), construit depuis `metadata.js` et `cv.js` : la même personne sur l'accueil, le CV et comme auteur des articles.
 - `_data/talks.js` : les conférences, lues dans le front matter des présentations.
+- `_data/assets.js` : l'adresse de la feuille de style et des scripts, avec une version tirée de leur contenu (`/ds/styles.css?v=…`) : après un déploiement, un navigateur ne garde pas l'ancienne feuille de style en cache avec une nouvelle page.
 
 ## CV
 

@@ -17,7 +17,7 @@ layout: layouts/base.njk
 		{{ content | safe }}
 	</heading-anchors>
 </article>
-<script type="module" src="/js/heading-anchors.js"></script>
+<script type="module" src="{{ assets["/js/heading-anchors.js"] }}"></script>
 
 {%- if collections.posts %}
 {%- set previousPost = collections.posts | getPreviousCollectionItem %}
