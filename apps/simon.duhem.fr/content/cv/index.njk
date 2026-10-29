@@ -34,8 +34,10 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 <h2>Expérience professionnelle</h2>
 {%- for company in cv.work %}
 {%- for job in company.positions %}
-<h3>{{ job.position }}, {{ company.name }}</h3>
-<p class="ds-c-post__meta"><small>{{ period(job.start, job.end) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
+<hgroup>
+	<h3>{{ job.position }}, {{ company.name }}</h3>
+	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
+</hgroup>
 {#- Un paragraphe par réalisation #}
 {%- for highlight in job.highlights %}
 <p>{{ highlight }}</p>
@@ -48,8 +50,10 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 
 <h2>Formation</h2>
 {%- for school in cv.education %}
-<h3>{{ school.studyType }}</h3>
-<p class="ds-c-post__meta"><small>{{ school.institution }}, {{ period(school.start, school.end) }}</small></p>
+<hgroup>
+	<h3>{{ school.studyType }}</h3>
+	<p class="ds-c-post__meta"><small>{{ school.institution }}, {{ period(school.start, school.end) }}</small></p>
+</hgroup>
 {%- endfor %}
 
 <h2>Langues</h2>
