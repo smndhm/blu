@@ -7,9 +7,9 @@
 export default {
   title: 'Architecte front-end',
   skills: [
-    { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit', 'tests automatisés (axe-core)'] },
     { name: 'Front-end', keywords: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Web Components', 'Shadow DOM', 'Stencil'] },
     { name: 'Design system', keywords: ['architecture de composants', 'design tokens', 'Storybook', 'Figma'] },
+    { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit', 'tests automatisés (axe-core)'] },
     { name: 'Outillage', keywords: ['Node.js', 'Vite', 'Playwright', 'ESLint', 'Stylelint', 'GitHub Actions', 'monorepo pnpm'] },
   ],
   work: [
