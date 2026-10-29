@@ -1,7 +1,7 @@
 /**
  * The CV, rendered by content/cv/index.njk as the /cv/ page, then printed as /cv/simon-duhem-cv.pdf at deploy time
  * (scripts/cv-pdf.js). Written for applicant tracking systems (ATS): plain sections, dates on every position,
- * keywords spelled out. Dates are `YYYY-MM`; `end` left out means "aujourd'hui".
+ * keywords spelled out; technologies on the current position only. Dates are `YYYY-MM`; `end` left out means "aujourd'hui".
  * Public: no phone number nor postal address.
  */
 export default {
@@ -56,7 +56,6 @@ export default {
             'Plateforme de candidatures et de votes des Victoires de la Musique (variétés, classique et jazz).',
             "Applications utilisant l'API Deezer : sites partenaires, bots Twitter, applications Facebook, widgets.",
           ],
-          keywords: ['JavaScript', 'Node.js', 'HTML', 'CSS', 'Responsive'],
         },
         {
           position: 'Web Developer (Régie)',
@@ -85,7 +84,6 @@ export default {
           highlights: [
             "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
           ],
-          keywords: ['HTML', 'CSS'],
         },
       ],
     },
