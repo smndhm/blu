@@ -41,19 +41,27 @@
     margin-block: 0 var(--ds-b-size-16);
   }
 
+  /* A size per level, on the base 4, down to h6 in the text's size */
   h2 {
-    font-size: var(--ds-b-size-24);
+    font-size: var(--ds-b-size-32);
     margin-block: var(--ds-b-size-40) var(--ds-b-size-16);
   }
 
   h3 {
-    font-size: var(--ds-b-size-20);
+    font-size: var(--ds-b-size-28);
     margin-block: var(--ds-b-size-32) var(--ds-b-size-8);
   }
 
-  /* The lower levels in the text's size (the base 4 has no step between 16px and 20px), set apart by the heading font and weight */
-  h4,
-  h5,
+  h4 {
+    font-size: var(--ds-b-size-24);
+    margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
+  }
+
+  h5 {
+    font-size: var(--ds-b-size-20);
+    margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
+  }
+
   h6 {
     font-size: var(--ds-b-size-16);
     margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
