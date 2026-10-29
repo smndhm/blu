@@ -31,10 +31,7 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 	{%- endfor %}
 </ul>
 
-<h2>Langues</h2>
-<p>{% for language in cv.languages %}{{ language.language }} ({{ language.fluency }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
-
-<h2>Expérience</h2>
+<h2>Expérience professionnelle</h2>
 {%- for company in cv.work %}
 {%- for job in company.positions %}
 <h3>{{ job.position }}, {{ company.name }}</h3>
@@ -50,20 +47,24 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 {%- endfor %}
 {%- endfor %}
 
-<h2>Conférences et publications</h2>
-<ul>
-	{%- for talk in talks %}
-	<li>Conférence "<a href="{{ talk.url }}">{{ talk.title }}</a>", {{ talk.event }}{% if talk.date %}, {{ talk.date | readableDate }}{% endif %}</li>
-	{%- endfor %}
-	{%- for post in collections.posts | reverse %}
-	{%- if post.data.origin %}
-	<li>Article "<a href="{{ post.data.origin.href }}">{{ post.data.title }}</a>", {{ post.data.origin.title }}, {{ post.date | readableDate }}</li>
-	{%- endif %}
-	{%- endfor %}
-</ul>
-
 <h2>Formation</h2>
 {%- for school in cv.education %}
 <h3>{{ school.studyType }}</h3>
 <p class="ds-c-post__meta">{{ school.institution }}, {{ school.start | monthYear }} - {{ school.end | monthYear }}</p>
 {%- endfor %}
+
+<h2>Langues</h2>
+<p>{% for language in cv.languages %}{{ language.language }} ({{ language.fluency }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+
+<h2>Conférences et articles</h2>
+<ul>
+	{#- Une ligne par conférence, avec chacun des événements où elle a été donnée #}
+	{%- for title, editions in talks | groupby("title") %}
+	<li>Conférence "<a href="{{ editions[0].url }}">{{ title }}</a>" : {% for talk in editions %}{{ talk.event }}{% if talk.date %} ({{ talk.date | monthYear }}){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</li>
+	{%- endfor %}
+	{%- for post in collections.posts | reverse %}
+	{%- if post.data.origin %}
+	<li>Article "<a href="{{ post.data.origin.href }}">{{ post.data.title }}</a>", {{ post.data.origin.title }} ({{ post.date | monthYear }})</li>
+	{%- endif %}
+	{%- endfor %}
+</ul>

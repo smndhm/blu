@@ -10,10 +10,12 @@ export default function (eleventyConfig) {
     return new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
   });
 
-  // CV dates: `YYYY-MM` as "mai 2021", `YYYY` as is
-  eleventyConfig.addFilter('monthYear', value =>
-    /^\d{4}-\d{2}$/.test(value) ? new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(`${value}-01T00:00:00Z`)) : value,
-  );
+  // Month and year, "mai 2021", of a date or of a CV's `YYYY-MM`; a CV's `YYYY` as is
+  eleventyConfig.addFilter('monthYear', value => {
+    if (!(value instanceof Date) && !/^\d{4}-\d{2}$/.test(value)) return value;
+    const date = value instanceof Date ? value : new Date(`${value}-01T00:00:00Z`);
+    return new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', timeZone: 'UTC' }).format(date);
+  });
 
   // `datetime` attribute value, e.g. 2025-09-26
   eleventyConfig.addFilter('isoDate', date => date.toISOString().slice(0, 10));
