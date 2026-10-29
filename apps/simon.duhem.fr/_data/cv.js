@@ -13,7 +13,6 @@ export default {
     { name: 'Front-end', keywords: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Web Components', 'Shadow DOM', 'Stencil'] },
     { name: 'Design system', keywords: ['architecture de composants', 'design tokens', 'Storybook', 'Figma'] },
     { name: 'Outillage', keywords: ['Node.js', 'Vite', 'Playwright', 'ESLint', 'Stylelint', 'GitHub Actions', 'monorepo pnpm'] },
-    { name: 'Back-end', keywords: ['PHP', 'Java', 'API REST', 'OAuth', 'MySQL', 'SQL Server', 'Sybase'] },
   ],
   work: [
     {
