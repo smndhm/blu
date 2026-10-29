@@ -56,7 +56,7 @@ export default {
             'Plateforme de candidatures et de votes des Victoires de la Musique (variétés, classique et jazz).',
             "Applications utilisant l'API Deezer : sites partenaires, bots Twitter, applications Facebook, widgets.",
           ],
-          keywords: ['PHP', 'Node.js', 'JavaScript', 'API', 'OAuth', 'MySQL', 'HTML', 'CSS', 'Responsive'],
+          keywords: ['JavaScript', 'Node.js', 'HTML', 'CSS', 'Responsive'],
         },
         {
           position: 'Web Developer (Régie)',
@@ -74,11 +74,9 @@ export default {
           start: '2007-11',
           end: '2012-04',
           highlights: [
-            'Administration des bases de données Sybase et SQL Server 2008, puis migration de Sybase vers SQL Server 2008.',
             "Analyse, développement, déploiement et maintenance d'une solution mobile pour le système RH de la Marine nationale (RH@psodie), destinée aux officiers.",
             'Applications pour les services RH : notations, avancements, entretiens de carrière, plans de mutation des officiers.',
           ],
-          keywords: ['Java', 'SQL', 'Sybase ASE', 'SQL Server', 'XML'],
         },
         {
           position: 'Analyste développeur, DCSSF',
@@ -87,7 +85,7 @@ export default {
           highlights: [
             "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
           ],
-          keywords: ['PHP', 'MySQL', 'HTML', 'CSS'],
+          keywords: ['HTML', 'CSS'],
         },
       ],
     },
