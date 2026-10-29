@@ -39,13 +39,15 @@ description: CV de Simon Duhem, architecte front-end spécialisé en accessibili
 	<h3>{{ job.position }}, {{ company.name }}</h3>
 	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end, true) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
 </hgroup>
-{#- Un paragraphe par réalisation #}
-{%- for highlight in job.highlights %}
-<p>{{ highlight }}</p>
-{%- endfor %}
-{%- if job.keywords %}
-<p>Technologies : {{ job.keywords | join(", ") }}</p>
-{%- endif %}
+{#- Un paragraphe par réalisation, resserrés dans une pile #}
+<div class="ds-l-stack">
+	{%- for highlight in job.highlights %}
+	<p>{{ highlight }}</p>
+	{%- endfor %}
+	{%- if job.keywords %}
+	<p>Technologies : {{ job.keywords | join(", ") }}</p>
+	{%- endif %}
+</div>
 {%- endfor %}
 {%- endfor %}
 

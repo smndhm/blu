@@ -123,7 +123,7 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 | `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
 | `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
 | `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-print-hidden`: not printed                                                                                     |
-| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`)                                                                            |
+| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`), `stack.css` (`.ds-l-stack`)                                               |
 | `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                                 |
 
 ```css

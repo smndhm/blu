@@ -7,7 +7,7 @@
 export default {
   title: 'Architecte front-end',
   skills: [
-    { name: 'HTML et CSS', keywords: ['HTML', 'CSS', 'Sass (SCSS)', 'BEM'] },
+    { name: 'HTML et CSS', keywords: ['HTML', 'CSS', 'Sass', 'BEM'] },
     { name: 'Web Components', keywords: ['Web Components', 'Shadow DOM', 'Stencil'] },
     { name: 'JavaScript', keywords: ['JavaScript', 'TypeScript', 'Vue.js'] },
     { name: 'Design system', keywords: ['architecture de composants', 'design tokens', 'Storybook', 'Figma'] },
