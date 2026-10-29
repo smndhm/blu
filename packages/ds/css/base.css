@@ -81,8 +81,9 @@
     display: flex;
     flex-direction: column;
 
-    /* The tagline right under its heading: the flex column does not collapse their margins */
-    & > :is(h1, h2, h3, h4, h5, h6) {
+    /* The tagline right under its heading, the flex column not collapsing their margins; a h1 keeps its own, more room
+       under a page's title */
+    & > :is(h2, h3, h4, h5, h6) {
       margin-block-end: 0;
     }
 
