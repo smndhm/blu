@@ -1,5 +1,5 @@
 /**
- * Prints the CV page (`_site/cv/index.html`) as the PDF its data names (`pdf` in _data/cv.js), which the page links to.
+ * Prints the CV page (`url` in _data/cv.js) as its PDF (`pdf`), which the page links to.
  *
  * In the light theme, with @dume/ds's print styles (no header nor footer, no download link): one column of text,
  * for applicant tracking systems (ATS). The PDF is tagged, for screen readers, and has an outline of the headings.
@@ -35,9 +35,9 @@ await page.route('**/*', async route => {
   }
 });
 
-const response = await page.goto(`${siteUrl}/cv/`);
+const response = await page.goto(siteUrl + cv.url);
 if (!response.ok()) {
-  console.error(`/cv/: HTTP ${response.status()}, run the build first`);
+  console.error(`${cv.url}: HTTP ${response.status()}, run the build first`);
   process.exit(1);
 }
 await page.evaluate(() => document.fonts.ready);

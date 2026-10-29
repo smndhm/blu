@@ -5,8 +5,11 @@
  * Public: no phone number nor postal address.
  */
 export default {
-  // The PDF's path on the site: the page links to it, llms.txt too, scripts/cv-pdf.js writes it
+  // The page's path (its permalink, the header's and home page's links, llms.txt) and the PDF's, which scripts/cv-pdf.js writes
+  url: '/cv/',
   pdf: '/cv/simon-duhem-cv.pdf',
+  // The page's meta description: 160 characters at most
+  description: 'CV de Simon Duhem, architecte front-end spécialisé en accessibilité (RGAA, WCAG) et en Web Components, qui conçoit un design system.',
   skills: [
     { name: 'Front-end', keywords: ['HTML', 'CSS', 'Sass', 'BEM', 'JavaScript', 'TypeScript', 'Vue.js'] },
     { name: 'Design system', keywords: ['architecture de composants', 'Web Components', 'Shadow DOM', 'Stencil', 'design tokens', 'Storybook', 'Figma'] },
