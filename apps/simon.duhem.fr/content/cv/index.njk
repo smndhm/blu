@@ -1,0 +1,68 @@
+---
+layout: layouts/base.njk
+title: CV
+documentTitle: CV de Simon Duhem, architecte front-end
+description: CV de Simon Duhem, architecte front-end spécialisé en accessibilité (RGAA, WCAG) et en Web Components, qui conçoit un design system.
+---
+{#- Contenu : _data/cv.js. Une seule colonne, des sections aux titres classiques et des dates à chaque poste, pour les ATS :
+    le PDF (scripts/cv-pdf.js) est cette page imprimée. #}
+{%- macro period(start, end) -%}
+<time datetime="{{ start }}">{{ start | monthYear }}</time> - {% if end %}<time datetime="{{ end }}">{{ end | monthYear }}</time>{% else %}aujourd'hui{% endif %}
+{%- endmacro %}
+<h1>{{ metadata.author.name }}</h1>
+<p><strong>{{ cv.title }}</strong></p>
+<ul class="ds-l-cluster">
+	<li><a href="mailto:{{ metadata.author.email }}">{{ metadata.author.email }}</a></li>
+	<li><a href="{{ metadata.url }}">{{ metadata.url | replace("https://", "") | replace("/", "") }}</a></li>
+	{%- for link in metadata.social %}
+	<li><a href="{{ link.url }}">{{ link.url | replace("https://", "") | replace("www.", "") | replace(r/\/$/, "") }}</a></li>
+	{%- endfor %}
+</ul>
+<p class="ds-u-print-hidden"><a href="/cv/simon-duhem-cv.pdf" class="ds-c-button ds-c-button--outline" download>Télécharger le CV (PDF)</a></p>
+
+<h2>Profil</h2>
+<p>{{ cv.summary }}</p>
+
+<h2>Compétences</h2>
+<ul>
+	{%- for skill in cv.skills %}
+	<li><strong>{{ skill.name }}</strong> : {{ skill.keywords | join(", ") }}</li>
+	{%- endfor %}
+</ul>
+
+<h2>Langues</h2>
+<p>{% for language in cv.languages %}{{ language.language }} ({{ language.fluency }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+
+<h2>Expérience</h2>
+{%- for company in cv.work %}
+{%- for job in company.positions %}
+<h3>{{ job.position }}, {{ company.name }}</h3>
+<p class="ds-c-post__meta">{{ period(job.start, job.end) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</p>
+<ul>
+	{%- for highlight in job.highlights %}
+	<li>{{ highlight }}</li>
+	{%- endfor %}
+</ul>
+{%- if job.keywords %}
+<p>Technologies : {{ job.keywords | join(", ") }}</p>
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+
+<h2>Conférences et publications</h2>
+<ul>
+	{%- for talk in talks %}
+	<li>Conférence "<a href="{{ talk.url }}">{{ talk.title }}</a>", {{ talk.event }}{% if talk.date %}, {{ talk.date | readableDate }}{% endif %}</li>
+	{%- endfor %}
+	{%- for post in collections.posts | reverse %}
+	{%- if post.data.origin %}
+	<li>Article "<a href="{{ post.data.origin.href }}">{{ post.data.title }}</a>", {{ post.data.origin.title }}, {{ post.date | readableDate }}</li>
+	{%- endif %}
+	{%- endfor %}
+</ul>
+
+<h2>Formation</h2>
+{%- for school in cv.education %}
+<h3>{{ school.studyType }}</h3>
+<p class="ds-c-post__meta">{{ school.institution }}, {{ school.start | monthYear }} - {{ school.end | monthYear }}</p>
+{%- endfor %}

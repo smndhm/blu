@@ -9,6 +9,7 @@
     "start": "eleventy --serve --quiet",
     "debug": "cross-env DEBUG=Eleventy* eleventy",
     "benchmark": "cross-env DEBUG=Eleventy:Benchmark* eleventy",
+    "cv:pdf": "node scripts/cv-pdf.js",
     "test:a11y": "pnpm --filter slides a11y:html && node tests/site.test.a11y.js"
   },
   "license": "MIT",

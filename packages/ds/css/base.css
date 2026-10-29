@@ -28,6 +28,11 @@
     font-family: var(--ds-b-font-family-heading);
     line-height: 1.2;
     text-wrap: balance;
+
+    /* Printed: never alone at the bottom of a sheet, with its content on the next one */
+    @media print {
+      break-after: avoid;
+    }
   }
 
   h1 {

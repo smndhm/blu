@@ -10,6 +10,11 @@ export default function (eleventyConfig) {
     return new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
   });
 
+  // CV dates: `YYYY-MM` as "mai 2021", `YYYY` as is
+  eleventyConfig.addFilter('monthYear', value =>
+    /^\d{4}-\d{2}$/.test(value) ? new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(`${value}-01T00:00:00Z`)) : value,
+  );
+
   // `datetime` attribute value, e.g. 2025-09-26
   eleventyConfig.addFilter('isoDate', date => date.toISOString().slice(0, 10));
 

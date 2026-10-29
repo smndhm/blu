@@ -8,6 +8,12 @@
     max-inline-size: 44rem;
     min-block-size: 100svh; /* Mobile: the viewport with the browser UI shown, never overflows */
     padding-inline: var(--ds-b-size-16);
+
+    /* Printed: the sheet's whole width, and the page's own height, not a sheet's, which would add a blank one */
+    @media print {
+      max-inline-size: none;
+      min-block-size: auto;
+    }
   }
 
   .ds-l-page__main {

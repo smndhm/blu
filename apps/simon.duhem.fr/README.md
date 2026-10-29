@@ -31,6 +31,19 @@ Après chaque déploiement, le workflow « Deploy all apps to GitHub Pages » en
 
 La clé n'est pas secrète : les moteurs la vérifient avec le fichier `public/<clé>.txt`, publié à la racine du site. Pour la changer, remplacer ce fichier et la variable `INDEXNOW_KEY` du workflow. Les URL reçues sont visibles dans Bing Webmaster Tools, section IndexNow.
 
+## CV
+
+La page `/cv/` (`content/cv/index.njk`) est générée depuis `_data/cv.js`, le seul fichier à modifier : profil, compétences, langues, postes, formation. Les conférences et les articles publiés ailleurs (champ `origin`) s'y ajoutent seuls. Pas de téléphone ni d'adresse postale : la page et le PDF sont publics.
+
+Le PDF, `/cv/simon-duhem-cv.pdf`, est cette page imprimée par Chromium au déploiement (`scripts/cv-pdf.js`), avec les styles d'impression de @dume/ds : thème clair, une seule colonne, du texte sélectionnable, des titres de section classiques et des dates à chaque poste, pour les ATS. Il est balisé (lecteurs d'écran) et a des signets. En local :
+
+```sh
+pnpm --filter "simon.duhem.fr..." build
+pnpm --filter simon.duhem.fr cv:pdf
+```
+
+Il doit tenir sur deux pages : après avoir modifié le CV, vérifier le nombre de pages du PDF.
+
 ## Structure
 
 - `content/index.njk` : page d'accueil.

@@ -101,6 +101,10 @@ The state colors are tokens (`--ds-b-color-primary-hover`, `-active`, `--ds-b-co
 - Windows' contrast themes (`forced-colors`): components draw their edges with borders and outlines, which those themes keep, not with backgrounds alone.
 - Native controls in the primary color (`accent-color`), balanced headings and paragraphs without an orphan word (`text-wrap`).
 
+## Print
+
+A printed page is in the light theme, the whole width of the sheet, without the site's header, footer and skip link; a heading stays with its content. `.ds-u-print-hidden` leaves out what only makes sense on screen, such as a download link. simon.duhem.fr prints its CV page as a PDF this way.
+
 ## CSS
 
 The whole design system is one stylesheet, `@dume/ds/styles.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
@@ -118,7 +122,7 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 | `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                                                               |
 | `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
 | `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
-| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                                                                        |
+| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-print-hidden`: not printed                                                                                     |
 | `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`)                                                                            |
 | `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                                 |
 
