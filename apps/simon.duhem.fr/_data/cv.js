@@ -2,12 +2,10 @@
  * The CV, rendered by content/cv/index.njk as the /cv/ page, then printed as /cv/simon-duhem-cv.pdf at deploy time
  * (scripts/cv-pdf.js). Written for applicant tracking systems (ATS): plain sections, dates on every position,
  * keywords spelled out; technologies on the current position only. Dates are `YYYY-MM`; `end` left out means "aujourd'hui".
- * Public: no phone number nor postal address.
+ * Its summary is the home page's introduction (`metadata.intro`). Public: no phone number nor postal address.
  */
 export default {
   title: 'Architecte front-end',
-  summary:
-    "Architecte front-end spécialisé en accessibilité et en Web Components. Je conçois et fais évoluer le design system de MGDIS, utilisé par une équipe de 50 développeurs, en m'appuyant sur les standards du web pour construire des interfaces réutilisables et utilisables par tous.",
   skills: [
     { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit', 'tests automatisés (axe-core)'] },
     { name: 'Front-end', keywords: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Web Components', 'Shadow DOM', 'Stencil'] },
