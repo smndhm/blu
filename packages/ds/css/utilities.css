@@ -10,3 +10,13 @@
     white-space: nowrap;
   }
 }
+
+/* Not printed: what only makes sense on screen, such as a download link */
+
+@layer ds.utilities {
+  .ds-u-print-hidden {
+    @media print {
+      display: none;
+    }
+  }
+}

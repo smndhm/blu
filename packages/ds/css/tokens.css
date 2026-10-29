@@ -72,5 +72,10 @@
     --ds-b-outline-radius-focus: 2px;
 
     color-scheme: light dark;
+
+    /* Printed, the light theme: dark text on white paper, whatever the system's theme */
+    @media print {
+      color-scheme: light;
+    }
   }
 }

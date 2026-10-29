@@ -81,6 +81,25 @@ The board renders in the Chromium of Playwright's Docker image, the version of `
 
 The state colors are tokens (`--ds-b-color-primary-hover`, `-active`, `--ds-b-color-background-hover`, `-active`, `--ds-b-color-text-disabled`, `--ds-b-color-background-disabled`, `--ds-b-color-danger`): a component takes them, never a color of its own. A new component lists its states in the table of components.
 
+## Typography
+
+Every heading level has a size and a weight of its own, on the base 4, down to the text's size:
+
+| Level | Size | Weight     | Margins (above, below) |
+| ----- | ---- | ---------- | ---------------------- |
+| `h1`  | 40px | extra bold | 0, 16px                |
+| `h2`  | 24px | bold       | 40px, 16px             |
+| `h3`  | 20px | extra bold | 32px, 8px              |
+| `h4`  | 16px | extra bold | 24px, 8px              |
+| `h5`  | 16px | bold       | 24px, 8px              |
+| `h6`  | 16px | semibold   | 24px, 8px              |
+
+- A heading and its tagline go in a `hgroup`: it takes its heading's margins, and a tagline in small print (a `<small>` alone in its paragraph, such as a date) sits right under it. A `h1` keeps its own margin below.
+- A heading right after another has no margin above: the previous heading's below sets the room between them (a CV's company and its first position).
+- `.ds-l-stack` puts the details of an entry one under the other, 8px apart, closer than paragraphs.
+
+The board of typography, [`tests/typography.html`](tests/typography.html), shows the heading levels, each with its size, weight and margins read from its computed style, a heading and its tagline, the text's elements and the stack. The accessibility test checks it with axe, checks that each heading level looks other than the others and that the `h6` is in the text's size, and compares it with its screenshots, [`tests/screenshots/typography-light.png`](tests/screenshots/typography-light.png) and [`typography-dark.png`](tests/screenshots/typography-dark.png), as the board of states. In Playwright's Docker image, the text's `system-ui` font is one without a bold face: `<strong>` shows in the regular weight on the screenshots only, its computed weight being 700.
+
 ## Units
 
 - `rem` for sizes, on the base 4: multiples of 4px, `0.25rem` (`0.5rem` is 8px, `1rem` 16px). They follow the font size the visitor chose in the browser.
@@ -101,6 +120,10 @@ The state colors are tokens (`--ds-b-color-primary-hover`, `-active`, `--ds-b-co
 - Windows' contrast themes (`forced-colors`): components draw their edges with borders and outlines, which those themes keep, not with backgrounds alone.
 - Native controls in the primary color (`accent-color`), balanced headings and paragraphs without an orphan word (`text-wrap`).
 
+## Print
+
+A printed page is in the light theme, the whole width of the sheet, without the site's header, footer and skip link; a heading stays with its content. `.ds-u-print-hidden` leaves out what only makes sense on screen, such as a download link. simon.duhem.fr prints its CV page as a PDF this way.
+
 ## CSS
 
 The whole design system is one stylesheet, `@dume/ds/styles.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
@@ -118,8 +141,8 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 | `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                                                               |
 | `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
 | `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
-| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers                                                                                                                        |
-| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`)                                                                            |
+| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-print-hidden`: not printed                                                                                     |
+| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`), `stack.css` (`.ds-l-stack`)                                               |
 | `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                                 |
 
 ```css

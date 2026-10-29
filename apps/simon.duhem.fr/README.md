@@ -31,6 +31,28 @@ Après chaque déploiement, le workflow « Deploy all apps to GitHub Pages » en
 
 La clé n'est pas secrète : les moteurs la vérifient avec le fichier `public/<clé>.txt`, publié à la racine du site. Pour la changer, remplacer ce fichier et la variable `INDEXNOW_KEY` du workflow. Les URL reçues sont visibles dans Bing Webmaster Tools, section IndexNow.
 
+## Données
+
+Les pages ne font qu'afficher : tout ce qui se calcule est fait dans `_data/`.
+
+- `_data/metadata.js` : le site et son auteur, la seule source du nom, du titre de poste, de l'accroche et des liens (`author.contacts` : e-mail, site, GitHub, LinkedIn, avec leur adresse écrite en clair).
+- `_data/cv.js` : le CV (adresse de la page et du PDF, titre, description, compétences, postes, formation, langues).
+- `_data/person.js` : l'auteur pour les données structurées (JSON-LD), construit depuis `metadata.js` et `cv.js` : la même personne sur l'accueil, le CV et comme auteur des articles.
+- `_data/talks.js` : les conférences, lues dans le front matter des présentations.
+
+## CV
+
+La page `/cv/` (`content/cv/index.njk`) est générée depuis `_data/cv.js` : son adresse et celle du PDF, sa description, les compétences, les langues, les postes et la formation. Le profil est l'accroche de la page d'accueil (`intro` de `_data/metadata.js`). Les conférences et les articles publiés ailleurs (champ `origin`) s'y ajoutent seuls. Pas de téléphone ni d'adresse postale : la page et le PDF sont publics. Aucun lien du site n'y mène pour l'instant : la page n'est que dans le sitemap et llms.txt. La personne des données structurées (`_data/person.js`) prend dans le CV l'entreprise du poste en cours, les écoles et les langues.
+
+Le PDF, `/cv/simon-duhem-cv.pdf`, est cette page imprimée par Chromium au déploiement (`scripts/cv-pdf.js`), avec les styles d'impression de @dume/ds : thème clair, une seule colonne, du texte sélectionnable, des titres de section classiques et des dates à chaque poste, pour les ATS. Il est balisé (lecteurs d'écran) et a des signets. En local :
+
+```sh
+pnpm --filter "simon.duhem.fr..." build
+pnpm --filter simon.duhem.fr cv:pdf
+```
+
+Il doit tenir sur deux pages : après avoir modifié le CV, vérifier le nombre de pages du PDF.
+
 ## Structure
 
 - `content/index.njk` : page d'accueil.

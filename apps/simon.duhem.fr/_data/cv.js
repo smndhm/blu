@@ -1,0 +1,130 @@
+import metadata from './metadata.js';
+
+/**
+ * The CV, rendered by content/cv/index.njk as the `url` page, then printed as `pdf` at deploy time (scripts/cv-pdf.js).
+ * Written for applicant tracking systems (ATS): plain sections, dates on every position, keywords spelled out;
+ * technologies on the current position only. Dates are `YYYY-MM`; `end` left out means "aujourd'hui".
+ * The name, job title, contact links and summary come from _data/metadata.js, as on the rest of the site.
+ * Public: no phone number nor postal address.
+ */
+const { author } = metadata;
+
+// Positions grouped by company, the most recent first; a position's location only when it differs from its company's
+const work = [
+  {
+    name: 'MGDIS',
+    location: 'Vannes',
+    positions: [
+      {
+        position: 'Architecte front-end',
+        location: 'Vannes (télétravail)',
+        start: '2021-05',
+        highlights: [
+          'Conception et évolution du design system de MGDIS, une bibliothèque de Web Components, pour une expérience utilisateur cohérente et accessible.',
+          "Définition des bonnes pratiques de développement front-end et d'accessibilité pour une équipe de 50 développeurs.",
+        ],
+        keywords: ['Web Components', 'Stencil', 'TypeScript', 'Storybook', 'RGAA'],
+      },
+      {
+        position: 'Lead Développeur Full Stack',
+        start: '2021-01',
+        end: '2021-08',
+        highlights: ["Encadrement d'une équipe sur des projets de développement full stack."],
+      },
+      {
+        position: 'Développeur Full Stack',
+        start: '2019-03',
+        end: '2021-01',
+        highlights: ["Développement et maintenance d'applications full stack."],
+      },
+    ],
+  },
+  {
+    name: 'Deezer',
+    location: 'Paris',
+    positions: [
+      {
+        position: 'Web Engineer (Studio)',
+        start: '2012-09',
+        end: '2019-03',
+        highlights: [
+          'Intégration de Deezer dans IFTTT, à mon initiative : toutes les phases, du premier contact avec IFTTT au lancement, en passant par les spécifications et le développement.',
+          'Plateforme de candidatures et de votes des Victoires de la Musique (variétés, classique et jazz).',
+          "Applications utilisant l'API Deezer : sites partenaires, bots Twitter, applications Facebook, widgets.",
+        ],
+      },
+      {
+        position: 'Web Developer (Régie)',
+        start: '2012-05',
+        end: '2012-09',
+        highlights: ["Espaces dédiés pour des annonceurs : Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
+      },
+    ],
+  },
+  {
+    name: 'Marine nationale',
+    positions: [
+      {
+        position: 'Analyste développeur, antenne EMM/SIAG - GERHICO',
+        start: '2007-11',
+        end: '2012-04',
+        highlights: [
+          "Analyse, développement, déploiement et maintenance d'une solution mobile pour le système RH de la Marine nationale (RH@psodie), destinée aux officiers.",
+          'Applications pour les services RH : notations, avancements, entretiens de carrière, plans de mutation des officiers.',
+        ],
+      },
+      {
+        position: 'Analyste développeur, DCSSF',
+        start: '2005-07',
+        end: '2007-09',
+        highlights: [
+          "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
+        ],
+      },
+    ],
+  },
+];
+
+export default {
+  // The page's path (its permalink, llms.txt; no link on the site yet, only the sitemap) and the PDF's, which scripts/cv-pdf.js writes
+  url: '/cv/',
+  pdf: '/cv/simon-duhem-cv.pdf',
+  // The page's title (and the PDF's), and its meta description: 160 characters at most
+  title: `CV de ${author.name}, ${author.jobTitle.toLowerCase()}`,
+  description: `CV de ${author.name}, ${author.jobTitle.toLowerCase()} spécialisé en accessibilité (RGAA, WCAG) et en Web Components, qui conçoit un design system.`,
+  skills: [
+    { name: 'Front-end', keywords: ['HTML', 'CSS', 'Sass', 'BEM', 'JavaScript', 'TypeScript', 'Vue.js'] },
+    { name: 'Design system', keywords: ['architecture de composants', 'Web Components', 'Shadow DOM', 'Stencil', 'design tokens', 'Storybook', 'Figma'] },
+    { name: 'Accessibilité', keywords: ['RGAA', 'WCAG 2.2', 'ARIA', 'audit'] },
+    { name: 'Tests', keywords: ['Vitest', 'Jest', 'Playwright', 'axe-core'] },
+    {
+      name: 'Outillage',
+      keywords: ['Node.js', 'Vite', 'ESLint', 'Stylelint', 'Prettier', 'monorepo pnpm', 'Changesets', 'Renovate', 'GitHub Actions', 'GitLab CI'],
+    },
+  ],
+  work,
+  education: [
+    {
+      studyType: "Certificat de conception, d'analyse et de programmation de systèmes d'information",
+      institution: "École supérieure et d'application des transmissions (ESAT), Rennes",
+      start: '2007-09',
+      end: '2007-11',
+    },
+    {
+      studyType: "Brevet d'aptitude technique (BAT), systèmes d'information et télécommunications",
+      institution: 'École de Maistrance',
+      start: '2004',
+      end: '2005',
+    },
+    {
+      studyType: "BTS Informatique et réseaux pour l'industrie et les services techniques",
+      institution: 'Lycée Saint-Joseph, Lorient',
+      start: '2002',
+      end: '2004',
+    },
+  ],
+  languages: [
+    { language: 'Français', fluency: 'langue maternelle' },
+    { language: 'Anglais', fluency: 'professionnel' },
+  ],
+};

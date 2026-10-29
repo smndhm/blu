@@ -1,19 +1,12 @@
-{#- Données structurées schema.org (JSON-LD) : la personne sur l'accueil, l'article sur chaque post #}
-{%- set person = {
-	"@type": "Person",
-	"name": metadata.author.name,
-	"url": metadata.author.url,
-	"jobTitle": metadata.author.jobTitle,
-	"knowsAbout": metadata.author.knowsAbout,
-	"sameAs": metadata.social | pluck("url")
-} %}
-{%- if page.url == "/" %}
+{#- Données structurées schema.org (JSON-LD) : la personne (_data/person.js), la même sur l'accueil, le CV et comme
+    auteur des articles #}
+{%- if page.url == "/" or page.url == cv.url %}
 <script type="application/ld+json">{{ {
 	"@context": "https://schema.org",
 	"@type": "ProfilePage",
-	"url": metadata.url,
+	"url": page.url | htmlBaseUrl(metadata.url),
 	"inLanguage": metadata.language,
-	"description": metadata.description,
+	"description": description or metadata.description,
 	"mainEntity": person
 } | jsonLd | safe }}</script>
 {%- elif layout == "layouts/post.njk" %}

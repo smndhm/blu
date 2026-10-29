@@ -10,6 +10,13 @@ export default function (eleventyConfig) {
     return new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
   });
 
+  // Month and year, "mai 2021", of a date or of a CV's `YYYY-MM`; a CV's `YYYY` as is
+  eleventyConfig.addFilter('monthYear', value => {
+    if (!(value instanceof Date) && !/^\d{4}-\d{2}$/.test(value)) return value;
+    const date = value instanceof Date ? value : new Date(`${value}-01T00:00:00Z`);
+    return new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', timeZone: 'UTC' }).format(date);
+  });
+
   // `datetime` attribute value, e.g. 2025-09-26
   eleventyConfig.addFilter('isoDate', date => date.toISOString().slice(0, 10));
 
@@ -23,6 +30,9 @@ export default function (eleventyConfig) {
       ...talks.map(talk => ({ ...talk, isTalk: true })),
     ].toSorted((a, b) => (b.date ?? 0) - (a.date ?? 0)),
   );
+
+  // The first item of each value of `key`, such as a talk given at several events: its most recent edition
+  eleventyConfig.addFilter('uniqueBy', (array, key) => array.filter((item, index) => array.findIndex(other => other[key] === item[key]) === index));
 
   // Values of `key` in an array of objects
   eleventyConfig.addFilter('pluck', (array, key) => array.map(item => item[key]));

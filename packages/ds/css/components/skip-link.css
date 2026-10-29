@@ -1,4 +1,4 @@
-/* A link to the main content, only shown when focused */
+/* A link to the main content, only shown when focused; not printed */
 
 @layer ds.components {
   .ds-c-skip-link {
@@ -11,6 +11,10 @@
     inset-inline-start: var(--ds-b-size-16);
     padding-block: var(--ds-b-size-8);
     padding-inline: var(--ds-b-size-16);
+
+    @media print {
+      display: none;
+    }
 
     &:not(:focus) {
       overflow: hidden;
