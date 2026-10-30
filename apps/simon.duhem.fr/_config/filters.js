@@ -10,11 +10,11 @@ export default function (eleventyConfig) {
     return new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
   });
 
-  // Month and year, "mai 2021", of a date or of a CV's `YYYY-MM`; a CV's `YYYY` as is
-  eleventyConfig.addFilter('monthYear', value => {
+  // Month and year, "mai 2021" or "May 2021" in `lang`, of a date or of a CV's `YYYY-MM`; a CV's `YYYY` as is
+  eleventyConfig.addFilter('monthYear', (value, lang = 'fr') => {
     if (!(value instanceof Date) && !/^\d{4}-\d{2}$/.test(value)) return value;
     const date = value instanceof Date ? value : new Date(`${value}-01T00:00:00Z`);
-    return new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'long', timeZone: 'UTC' }).format(date);
+    return new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long', timeZone: 'UTC' }).format(date);
   });
 
   // `datetime` attribute value, e.g. 2025-09-26

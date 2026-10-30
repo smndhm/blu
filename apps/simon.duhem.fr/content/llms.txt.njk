@@ -21,8 +21,10 @@ eleventyExcludeFromCollections: true
 {%- endfor %}
 
 ## Liens
-- [CV]({{ cv.url | htmlBaseUrl(metadata.url) }}) ([PDF]({{ cv.pdf | htmlBaseUrl(metadata.url) }}))
-{% for link in metadata.social %}
+{%- for version in cv.versions %}
+- [{{ version.title | safe }}]({{ version.url | htmlBaseUrl(metadata.url) }}) ([PDF]({{ version.pdf | htmlBaseUrl(metadata.url) }}))
+{%- endfor %}
+{%- for link in metadata.social %}
 - [{{ link.name | safe }}]({{ link.url }})
 {%- endfor %}
 - [Texte complet des articles]({{ "/llms-full.txt" | htmlBaseUrl(metadata.url) }})

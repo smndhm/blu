@@ -1,5 +1,5 @@
 /**
- * Prints the CV page (`url` in _data/cv.js) as its PDF (`pdf`), which the page links to.
+ * Prints each version of the CV (`cv.versions` in _data/cv.js), its page (`url`) as its PDF (`pdf`), which the page links to.
  *
  * In the light theme, with @dume/ds's print styles (no header nor footer, no download link): one column of text,
  * for applicant tracking systems (ATS). The PDF is tagged, for screen readers, and has an outline of the headings.
@@ -17,7 +17,6 @@ import metadata from '../_data/metadata.js';
 
 const siteDir = new URL('../_site/', import.meta.url).pathname;
 const siteUrl = new URL(metadata.url).origin;
-const output = join(siteDir, cv.pdf);
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const page = await browser.newPage({ colorScheme: 'light' });
@@ -35,21 +34,23 @@ await page.route('**/*', async route => {
   }
 });
 
-const response = await page.goto(siteUrl + cv.url);
-if (!response.ok()) {
-  console.error(`${cv.url}: HTTP ${response.status()}, run the build first`);
-  process.exit(1);
+for (const { url, pdf } of cv.versions) {
+  const response = await page.goto(siteUrl + url);
+  if (!response.ok()) {
+    console.error(`${url}: HTTP ${response.status()}, run the build first`);
+    process.exit(1);
+  }
+  await page.evaluate(() => document.fonts.ready);
+  const output = join(siteDir, pdf);
+  await page.pdf({
+    path: output,
+    format: 'A4',
+    margin: { top: '1.2cm', right: '1.5cm', bottom: '1.2cm', left: '1.5cm' },
+    // About 9.5pt text, a CV's usual size: two pages
+    scale: 0.75,
+    tagged: true,
+    outline: true,
+  });
+  console.log(`CV printed as ${output}`);
 }
-await page.evaluate(() => document.fonts.ready);
-await page.pdf({
-  path: output,
-  format: 'A4',
-  margin: { top: '1.2cm', right: '1.5cm', bottom: '1.2cm', left: '1.5cm' },
-  // About 9.5pt text, a CV's usual size: two pages
-  scale: 0.75,
-  tagged: true,
-  outline: true,
-});
 await browser.close();
-
-console.log(`CV printed as ${output}`);

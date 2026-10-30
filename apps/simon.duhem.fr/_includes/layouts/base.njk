@@ -1,5 +1,8 @@
+{#- La langue de la page (`lang` dans ses données, celle du site sinon) et les textes de l'interface dans cette langue #}
+{%- set language = lang or metadata.language %}
+{%- set ui = i18n[language] -%}
 <!doctype html>
-<html lang="{{ metadata.language }}">
+<html lang="{{ language }}">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +10,10 @@
 		<meta name="description" content="{{ description or metadata.description }}">
 		{#- Article publié d'abord ailleurs (`origin` du front matter) : la publication d'origine reste la référence #}
 		<link rel="canonical" href="{{ origin.href if origin else (page.url | htmlBaseUrl(metadata.url)) }}">
+		{#- Les versions de la page dans chaque langue (`alternates` dans ses données), elle comprise #}
+		{%- for alternate in alternates %}
+		<link rel="alternate" hreflang="{{ alternate.lang }}" href="{{ alternate.url | htmlBaseUrl(metadata.url) }}">
+		{%- endfor %}
 		<meta name="author" content="{{ metadata.author.name }}">
 		<meta name="theme-color" content="#222">
 		<link rel="icon" href="/favicon.ico" sizes="any">
@@ -20,7 +27,7 @@
 		<meta property="og:description" content="{{ description or metadata.description }}">
 		<meta property="og:url" content="{{ page.url | htmlBaseUrl(metadata.url) }}">
 		<meta property="og:site_name" content="{{ metadata.title }}">
-		<meta property="og:locale" content="fr_FR">
+		<meta property="og:locale" content="{{ ui.ogLocale }}">
 		{%- if ogImageUrl %}
 		{#- `ogImage` du front matter, sinon la première image de l'article (_data/eleventyComputed.js) #}
 		<meta property="og:image" content="{{ ogImageUrl | htmlBaseUrl(metadata.url) }}">
@@ -37,11 +44,11 @@
 	<body class="ds-l-page{% if bodyClass %} {{ bodyClass }}{% endif %}">
 		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
 		{%- if page.url != "/" %}
-		<a href="#main" class="ds-c-skip-link">Aller au contenu</a>
+		<a href="#main" class="ds-c-skip-link">{{ ui.skipLink }}</a>
 
 		<header class="ds-c-header">
 			<a href="/" class="ds-c-header__brand">{{ metadata.title }}</a>
-			<nav aria-label="Principale">
+			<nav aria-label="{{ ui.mainNav }}">
 				<ul class="ds-l-cluster">
 					{%- for entry in [{ url: "/articles/", title: "Articles" }] %}
 					<li><a href="{{ entry.url }}" class="ds-c-header__link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
@@ -61,7 +68,7 @@
 				{%- for link in metadata.social %}
 				<li><a href="{{ link.url }}">{{ link.name }}</a></li>
 				{%- endfor %}
-				<li><a href="/articles/feed/feed.xml">Flux RSS</a></li>
+				<li><a href="/articles/feed/feed.xml">{{ ui.feed }}</a></li>
 			</ul>
 		</footer>
 		{%- endif %}

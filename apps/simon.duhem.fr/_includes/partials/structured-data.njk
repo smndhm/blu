@@ -1,11 +1,12 @@
 {#- Données structurées schema.org (JSON-LD) : la personne (_data/person.js), la même sur l'accueil, le CV et comme
     auteur des articles #}
-{%- if page.url == "/" or page.url == cv.url %}
+{#- La page d'accueil et les pages de profil (`profilePage` dans leurs données : le CV dans chaque langue) #}
+{%- if page.url == "/" or profilePage %}
 <script type="application/ld+json">{{ {
 	"@context": "https://schema.org",
 	"@type": "ProfilePage",
 	"url": page.url | htmlBaseUrl(metadata.url),
-	"inLanguage": metadata.language,
+	"inLanguage": lang or metadata.language,
 	"description": description or metadata.description,
 	"mainEntity": person
 } | jsonLd | safe }}</script>
