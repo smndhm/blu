@@ -26,12 +26,12 @@ const work = [
         start: '2021-05',
         highlights: {
           fr: [
-            'Conception et évolution du design system de MGDIS, une bibliothèque de Web Components, pour une expérience utilisateur cohérente et accessible.',
-            "Définition des bonnes pratiques de développement front-end et d'accessibilité pour une équipe de 50 développeurs.",
+            "Conception et évolution du design system de MGDIS, une bibliothèque de Web Components, au sein de l'équipe Core UI.",
+            "Définition de l'architecture et des bonnes pratiques front-end, pour des produits cohérents, de qualité et accessibles.",
           ],
           en: [
-            "Design and evolve MGDIS's design system, a Web Components library, for a consistent and accessible user experience.",
-            'Define front-end development and accessibility best practices for a team of 50 developers.',
+            "Design and evolve MGDIS's design system, a Web Components library, within the Core UI team.",
+            'Define the front-end architecture and best practices, for consistent, high-quality and accessible products.',
           ],
         },
         keywords: ['Web Components', 'Stencil', 'TypeScript', 'Storybook', 'RGAA'],
