@@ -2,4 +2,4 @@
 'simon.duhem.fr': patch
 ---
 
-The CV no longer gives the size of the team the front-end and accessibility best practices are defined for.
+The CV's current position as on LinkedIn: the design system within the Core UI team, the front-end architecture and best practices for consistent, high-quality and accessible products; no team size.
