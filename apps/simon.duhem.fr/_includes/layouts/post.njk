@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+---
+<article class="ds-c-post">
+	<header class="ds-c-post__header">
+		<h1>{{ title }}</h1>
+		<p class="ds-c-post__meta">
+			<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
+			{%- for topic in tags | topics %} · {{ topic }}{% endfor %}
+		</p>
+		{%- if origin %}
+		<p class="ds-c-post__meta">Publié initialement sur <a href="{{ origin.href }}">{{ origin.title }}</a>.</p>
+		{%- endif %}
+	</header>
+
+	<heading-anchors>
+		{{ content | safe }}
+	</heading-anchors>
+</article>
+<script type="module" src="{{ assets["/js/heading-anchors.js"] }}"></script>
+
+{%- if collections.posts %}
+{%- set previousPost = collections.posts | getPreviousCollectionItem %}
+{%- set nextPost = collections.posts | getNextCollectionItem %}
+{%- if nextPost or previousPost %}
+<nav class="ds-c-post-nav" aria-label="Autres articles">
+	<ul class="ds-c-post-nav__list">
+		{%- if previousPost %}<li class="ds-c-post-nav__item">← Précédent<br> <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></li>{% endif %}
+		{%- if nextPost %}<li class="ds-c-post-nav__item ds-c-post-nav__item--next">Suivant →<br><a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></li>{% endif %}
+	</ul>
+</nav>
+{%- endif %}
+{%- endif %}

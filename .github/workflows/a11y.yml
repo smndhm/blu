@@ -1,0 +1,64 @@
+name: Accessibility
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/simon.duhem.fr/**'
+      - 'apps/ia-postrophe/**'
+      - 'apps/slides/src/**'
+      - 'packages/ds/**'
+      - 'packages/pdf-ua/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/a11y.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  axe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Setup environment
+        uses: smndhm/dev-config/ci/setup@cb71a9f6239ed13df381e6d1e367bd2fa20d4236 # main
+
+      - name: Install Chromium
+        run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
+
+      # Builds what it audits first (turbo.json)
+      - name: Run axe on every page, and on the design system's boards of states and typography
+        run: pnpm test:a11y
+
+      # The CV's PDFs, printed from the pages just built, then checked with the slides' against PDF/UA-1, the PDF accessibility
+      # standard
+      - name: Print the CV as PDF
+        run: pnpm --filter simon.duhem.fr cv:pdf
+
+      # The slides' PDFs, as the deployment builds them: printed by Marp, then completed (packages/pdf-ua) in a folder of
+      # their own, as Marp's files belong to root
+      - name: Build the slides as PDF
+        uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
+        with:
+          args: -I apps/slides/src -o apps/slides/dist --pdf --allow-local-files
+        env:
+          MARP_USER: root:root
+
+      - name: Complete the slides' PDFs (PDF/UA-1)
+        run: mkdir -p slides-pdf && cp apps/slides/dist/*.pdf slides-pdf/ && node packages/pdf-ua/src/cli.js slides-pdf/*.pdf
+
+      - name: Check the CV's and the slides' PDFs with veraPDF (PDF/UA-1)
+        uses: docker://verapdf/cli:v1.30.3@sha256:d74b7026c18a0f171e73c153b617fe6520e1511feb24ca98a348b2bb897669fb
+        with:
+          args: --flavour ua1 --format text --verbose --loglevel 0 apps/simon.duhem.fr/_site/cv/simon-duhem-cv.pdf apps/simon.duhem.fr/_site/en/cv/simon-duhem-cv-en.pdf slides-pdf
+
+      # When a board of the design system does not match its screenshots: the screenshots taken and their differences
+      - name: Upload the differences of the boards
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: ds-states
+          path: packages/ds/test-results/
+          if-no-files-found: ignore

@@ -6,4 +6,10 @@ docs
 
 *.tgz
 
-apps/articles/_site
+apps/simon.duhem.fr/_site
+
+# Remote images fetched by eleventy-img at build
+.cache
+
+# What Playwright Test writes when a test fails: the screenshots taken and their differences
+test-results

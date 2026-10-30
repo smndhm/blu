@@ -1,0 +1,27 @@
+{#- Données structurées schema.org (JSON-LD) : la personne (_data/person.js), la même sur l'accueil, le CV et comme
+    auteur des articles #}
+{#- La page d'accueil et les pages de profil (`profilePage` dans leurs données : le CV dans chaque langue) #}
+{%- if page.url == "/" or profilePage %}
+<script type="application/ld+json">{{ {
+	"@context": "https://schema.org",
+	"@type": "ProfilePage",
+	"url": page.url | htmlBaseUrl(metadata.url),
+	"inLanguage": lang or metadata.language,
+	"description": description or metadata.description,
+	"mainEntity": person
+} | jsonLd | safe }}</script>
+{%- elif layout == "layouts/post.njk" %}
+<script type="application/ld+json">{{ {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	"headline": title,
+	"description": description,
+	"datePublished": page.date | isoDate,
+	"inLanguage": metadata.language,
+	"url": page.url | htmlBaseUrl(metadata.url),
+	"image": ogImageUrl | htmlBaseUrl(metadata.url) if ogImageUrl,
+	"keywords": tags | topics,
+	"isBasedOn": origin.href if origin,
+	"author": person
+} | jsonLd | safe }}</script>
+{%- endif %}

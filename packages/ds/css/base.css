@@ -1,0 +1,223 @@
+/* HTML elements, styled without classes, after modern-normalize: also the Markdown content of articles */
+@import 'modern-normalize' layer(ds.normalize);
+
+@layer ds.base {
+  :root {
+    /* Native checkboxes, radio buttons and progress bars in the primary color */
+    accent-color: var(--ds-b-color-primary);
+    background-color: var(--ds-b-color-background);
+    color: var(--ds-b-color-text);
+    font-family: var(--ds-b-font-family);
+    line-height: 1.6;
+
+    /* Reserve the scrollbar's room without forcing a scrollbar on short pages */
+    scrollbar-gutter: stable;
+  }
+
+  /* A cross-fade between the pages of a site */
+  @view-transition {
+    navigation: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--ds-b-font-family-heading);
+    line-height: 1.2;
+    text-wrap: balance;
+
+    /* Printed: never alone at the bottom of a sheet, with its content on the next one */
+    @media print {
+      break-after: avoid;
+    }
+  }
+
+  h1 {
+    font-size: var(--ds-b-size-40);
+    font-weight: 800;
+    margin-block: 0 var(--ds-b-size-16);
+  }
+
+  /* A size per step of the base 4, the lower levels in the text's 16px, set apart by their weight */
+  h2 {
+    font-size: var(--ds-b-size-24);
+    font-weight: 700;
+    margin-block: var(--ds-b-size-40) var(--ds-b-size-16);
+  }
+
+  h3 {
+    font-size: var(--ds-b-size-20);
+    font-weight: 800;
+    margin-block: var(--ds-b-size-32) var(--ds-b-size-8);
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: var(--ds-b-size-16);
+    margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
+  }
+
+  h4 {
+    font-weight: 800;
+  }
+
+  h5 {
+    font-weight: 700;
+  }
+
+  h6 {
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* A heading and its tagline, such as a home page's: a large title, the tagline under it */
+  hgroup {
+    display: flex;
+    flex-direction: column;
+
+    /* The tagline right under its heading, the flex column not collapsing their margins; a h1 keeps its own, more room
+       under a page's title */
+    & > :is(h2, h3, h4, h5, h6) {
+      margin-block-end: 0;
+    }
+
+    /* A section's heading and its tagline: the hgroup takes the heading's margins, which then collapse with its neighbors' */
+    &:has(> :is(h2, h3, h4, h5, h6)) > :is(h2, h3, h4, h5, h6) {
+      margin-block: 0;
+    }
+
+    &:has(> h2) {
+      margin-block: var(--ds-b-size-40) var(--ds-b-size-16);
+    }
+
+    &:has(> h3) {
+      margin-block: var(--ds-b-size-32) var(--ds-b-size-8);
+    }
+
+    &:has(> :is(h4, h5, h6)) {
+      margin-block: var(--ds-b-size-24) var(--ds-b-size-8);
+    }
+
+    /* A tagline in small print, such as a date: its line as low as its text, not as the paragraph's */
+    & > p:has(> small:only-child) {
+      line-height: 1.2;
+    }
+
+    & h1 {
+      font-size: var(--ds-b-size-display);
+      line-height: 1;
+    }
+  }
+
+  /* A heading right after another, such as a company and its first position on a CV: no margin of its own above, the
+     previous heading's below sets the room between them */
+  :is(h1, h2, h3, h4, h5, h6) + :is(h2, h3, h4, h5, h6, hgroup) {
+    margin-block-start: 0;
+  }
+
+  a[href] {
+    color: inherit;
+    text-decoration-color: var(--ds-b-color-primary);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+
+    /* Hovered: the primary color and a thicker underline, not the color alone; pressed: darker still */
+    &:hover {
+      color: var(--ds-b-color-primary);
+      text-decoration-thickness: var(--ds-b-size-border-2);
+    }
+
+    &:active {
+      color: var(--ds-b-color-primary-active);
+      text-decoration-thickness: var(--ds-b-size-border-2);
+    }
+  }
+
+  :focus-visible {
+    border-radius: var(--ds-b-outline-radius-focus);
+    outline: var(--ds-b-outline-focus);
+    outline-offset: var(--ds-b-outline-offset-focus);
+  }
+
+  img {
+    max-inline-size: 100%;
+  }
+
+  img[width][height] {
+    block-size: auto;
+  }
+
+  img[src$='.svg'] {
+    block-size: auto;
+    inline-size: 100%;
+    max-inline-size: none;
+  }
+
+  video,
+  iframe {
+    block-size: auto;
+    inline-size: 100%;
+  }
+
+  iframe {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* A data table: a line between rows */
+  table {
+    border-collapse: collapse;
+    inline-size: 100%;
+    margin-block: 1em;
+  }
+
+  th,
+  td {
+    border-block-end: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
+    padding-block: var(--ds-b-size-8);
+    padding-inline: 0 var(--ds-b-size-16);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  tbody th {
+    font-weight: 400;
+  }
+
+  /* A quote set apart: a line in the primary color, larger text */
+  blockquote {
+    border-inline-start: var(--ds-b-size-border-4) solid var(--ds-b-color-primary);
+    font-size: var(--ds-b-size-20);
+    margin-block: var(--ds-b-size-40) 0;
+    margin-inline: 0;
+    padding-inline-start: var(--ds-b-size-16);
+  }
+
+  pre,
+  code {
+    font-family: var(--ds-b-font-family-monospace);
+  }
+
+  pre {
+    direction: ltr;
+    hyphens: none;
+    line-height: 1.375;
+    margin-block: 0.5em;
+    overflow-x: auto;
+    tab-size: 2;
+    text-align: start;
+    white-space: pre;
+    word-break: normal;
+    word-spacing: normal;
+  }
+
+  code {
+    word-break: break-all;
+  }
+}

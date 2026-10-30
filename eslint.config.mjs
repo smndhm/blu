@@ -1,5 +1,5 @@
 import { defineConfig } from 'eslint/config';
-import eslintConfig from '@dume/linting/eslint';
+import eslintConfig from '@dume/dev-config/lint/eslint';
 import { fileURLToPath } from 'node:url';
 import { includeIgnoreFile } from '@eslint/compat';
 

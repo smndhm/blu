@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup environment
-        uses: ./.github/actions/setup
+        uses: smndhm/dev-config/ci/setup@cb71a9f6239ed13df381e6d1e367bd2fa20d4236 # main
 
       - name: Lint
         run: pnpm lint

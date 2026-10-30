@@ -4,40 +4,38 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.29.1",
+  "packageManager": "pnpm@12.16.0",
+  "prettier": "@dume/dev-config/lint/prettier",
   "scripts": {
     "postinstall": "manypkg check",
     "build": "turbo build",
+    "test": "turbo run test",
+    "test:a11y": "turbo run test:a11y",
+    "doc:check": "pnpm --filter @dume/webcomp-utils doc && git diff --exit-code -- packages/webcomp-utils/README.md",
     "manypkg:fix": "manypkg fix",
     "lint:style": "stylelint '**/*.{scss,css}' --ignore-path .gitignore --allow-empty-input",
     "lint:prettier": "prettier . --check",
+    "lint:oxlint": "oxlint",
     "lint:eslint": "eslint .",
-    "lint": "pnpm lint:style && pnpm lint:prettier && pnpm lint:eslint",
-    "lint:fix": "pnpm lint:style --fix && pnpm lint:prettier --write && pnpm lint:eslint --fix",
+    "lint": "pnpm lint:style && pnpm lint:prettier && pnpm lint:oxlint && pnpm lint:eslint && pnpm lint:claude",
+    "lint:fix": "pnpm lint:style --fix && pnpm lint:prettier --write && pnpm lint:oxlint --fix && pnpm lint:eslint --fix && dev-config sync",
     "changeset:add": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
     "changeset:renovate": "changesets-renovate",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "**/*.{js,json,md,mjs}": [
-      "prettier **/*.{js,json,md,mjs} --write",
-      "eslint **/*.{js,json,md,mjs} --fix"
-    ],
-    "**/*.{scss,css}": "pnpm lint:style"
+    "prepare": "dev-config hooks",
+    "lint:claude": "dev-config sync --check"
   },
   "devDependencies": {
-    "@changesets/cli": "2.30.0",
-    "@dume/linting": "workspace:*",
-    "@eslint/compat": "2.0.3",
+    "@changesets/cli": "3.0.3",
+    "@dume/dev-config": "1.4.0",
+    "@eslint/compat": "2.1.1",
     "@manypkg/cli": "0.25.1",
-    "@scaleway/changesets-renovate": "2.2.4",
-    "eslint": "10.0.2",
-    "husky": "9.1.7",
-    "lint-staged": "16.3.2",
-    "prettier": "3.8.1",
-    "stylelint": "17.1.1",
-    "turbo": "2.8.2"
+    "@scaleway/changesets-renovate": "4.0.6",
+    "eslint": "10.13.0",
+    "oxlint": "1.90.0",
+    "prettier": "3.9.10",
+    "stylelint": "17.16.0",
+    "turbo": "2.11.10"
   }
 }

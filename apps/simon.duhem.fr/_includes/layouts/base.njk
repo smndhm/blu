@@ -1,0 +1,76 @@
+{#- La langue de la page (`lang` dans ses données, celle du site sinon) et les textes de l'interface dans cette langue #}
+{%- set language = lang or metadata.language %}
+{%- set ui = i18n[language] -%}
+<!doctype html>
+<html lang="{{ language }}">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% if documentTitle %}{{ documentTitle }}{% elif title %}{{ title }} - {{ metadata.title }}{% else %}{{ metadata.title }}{% endif %}</title>
+		<meta name="description" content="{{ description or metadata.description }}">
+		{#- Article publié d'abord ailleurs (`origin` du front matter) : la publication d'origine reste la référence #}
+		<link rel="canonical" href="{{ origin.href if origin else (page.url | htmlBaseUrl(metadata.url)) }}">
+		{#- Les versions de la page dans chaque langue (`alternates` dans ses données), elle comprise #}
+		{%- for alternate in alternates %}
+		<link rel="alternate" hreflang="{{ alternate.lang }}" href="{{ alternate.url | htmlBaseUrl(metadata.url) }}">
+		{%- endfor %}
+		<meta name="author" content="{{ metadata.author.name }}">
+		<meta name="theme-color" content="#222">
+		<link rel="icon" href="/favicon.ico" sizes="any">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="manifest" href="/manifest.webmanifest">
+		<link rel="preload" href="/ds/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="alternate" href="/articles/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }} - Articles">
+
+		<meta property="og:type" content="{{ 'article' if layout == 'layouts/post.njk' else 'website' }}">
+		<meta property="og:title" content="{{ title or metadata.title }}">
+		<meta property="og:description" content="{{ description or metadata.description }}">
+		<meta property="og:url" content="{{ page.url | htmlBaseUrl(metadata.url) }}">
+		<meta property="og:site_name" content="{{ metadata.title }}">
+		<meta property="og:locale" content="{{ ui.ogLocale }}">
+		{%- if ogImageUrl %}
+		{#- `ogImage` du front matter, sinon la première image de l'article (_data/eleventyComputed.js) #}
+		<meta property="og:image" content="{{ ogImageUrl | htmlBaseUrl(metadata.url) }}">
+		<meta name="twitter:card" content="summary_large_image">
+		{%- else %}
+		<meta name="twitter:card" content="summary">
+		{%- endif %}
+
+		{%- include "partials/structured-data.njk" %}
+
+		{#- The design system, @dume/ds: all of the site's style (eleventy.config.js copies it as /ds/) #}
+		<link rel="stylesheet" href="{{ assets["/ds/styles.css"] }}">
+	</head>
+	<body class="ds-l-page{% if bodyClass %} {{ bodyClass }}{% endif %}">
+		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
+		{%- if page.url != "/" %}
+		<a href="#main" class="ds-c-skip-link">{{ ui.skipLink }}</a>
+
+		<header class="ds-c-header">
+			<a href="/" class="ds-c-header__brand">{{ metadata.title }}</a>
+			<nav aria-label="{{ ui.mainNav }}">
+				<ul class="ds-l-cluster">
+					{%- for entry in [{ url: "/articles/", title: "Articles" }] %}
+					<li><a href="{{ entry.url }}" class="ds-c-header__link"{% if page.url == entry.url %} aria-current="page"{% elif page.url.startsWith(entry.url) %} aria-current="true"{% endif %}>{{ entry.title }}</a></li>
+					{%- endfor %}
+				</ul>
+			</nav>
+		</header>
+		{%- endif %}
+
+		<main id="main" class="ds-l-page__main" tabindex="-1">
+			{{ content | safe }}
+		</main>
+
+		{%- if page.url != "/" %}
+		<footer class="ds-c-footer">
+			<ul class="ds-l-cluster">
+				{%- for link in metadata.social %}
+				<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+				{%- endfor %}
+				<li><a href="/articles/feed/feed.xml">{{ ui.feed }}</a></li>
+			</ul>
+		</footer>
+		{%- endif %}
+	</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Typography, @dume/ds</title>
+    <!--
+      The board of the design system's typography, from its own stylesheet: the heading levels, a heading and its
+      tagline, the text's elements and the stack layout. Each heading's caption is read from its computed style, so it
+      cannot drift from the CSS. The accessibility test (pnpm --filter @dume/ds test:a11y) checks it with axe and compares
+      it with its screenshots, tests/screenshots/typography-light.png and typography-dark.png.
+    -->
+    <link rel="stylesheet" href="../dist/styles.css" />
+    <style>
+      body {
+        max-inline-size: 44rem;
+        padding: var(--ds-b-size-24);
+      }
+
+      section {
+        border-block-start: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
+        margin-block-start: var(--ds-b-size-40);
+      }
+
+      [data-caption] {
+        color: var(--ds-b-color-text-muted);
+        font-family: var(--ds-b-font-family-monospace);
+        font-size: var(--ds-b-size-12);
+        margin-block: var(--ds-b-size-4) 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Typography</h1>
+      <p>The design system's text, from its own stylesheet.</p>
+
+      <section aria-labelledby="levels">
+        <h2 id="levels">Heading levels</h2>
+        <div data-level="1"><h1>Heading level 1</h1></div>
+        <div data-level="2"><h2>Heading level 2</h2></div>
+        <div data-level="3"><h3>Heading level 3</h3></div>
+        <div data-level="4"><h4>Heading level 4</h4></div>
+        <div data-level="5"><h5>Heading level 5</h5></div>
+        <div data-level="6"><h6>Heading level 6</h6></div>
+        <p>A paragraph, in the text's size: the h6's.</p>
+      </section>
+
+      <section aria-labelledby="taglines">
+        <h2 id="taglines">A heading and its tagline</h2>
+        <hgroup lang="fr">
+          <h3>Architecte front-end, MGDIS</h3>
+          <p class="ds-c-post__meta"><small>Mai 2021 - aujourd'hui, Vannes</small></p>
+        </hgroup>
+        <p>A tagline in small print, such as a date, right under its heading.</p>
+        <h3>MGDIS</h3>
+        <hgroup lang="fr">
+          <h4>Architecte front-end</h4>
+          <p class="ds-c-post__meta"><small>Mai 2021 - aujourd'hui, Vannes (télétravail)</small></p>
+        </hgroup>
+        <div class="ds-l-stack">
+          <p>A heading right after another: the previous heading's margin sets the room between them.</p>
+          <p>The details of an entry, in a stack: closer than paragraphs.</p>
+          <p lang="fr">Technologies : Web Components, Stencil, TypeScript</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="text">
+        <h2 id="text">Text</h2>
+        <p>A paragraph with <strong>strong</strong> and <em>emphasized</em> words, <small>small print</small>, a <a href="#text">link</a> and <code>inline code</code>.</p>
+        <p class="ds-c-post__meta">Details in the muted color, such as an article's date.</p>
+        <ul>
+          <li>A list item</li>
+          <li>Another list item</li>
+        </ul>
+        <ol>
+          <li>A numbered item</li>
+          <li>Another numbered item</li>
+        </ol>
+        <blockquote>A quote set apart.</blockquote>
+      </section>
+    </main>
+    <script type="module">
+      // Each level's caption, from its computed style: size, weight, margins
+      for (const level of document.querySelectorAll('[data-level]')) {
+        const heading = level.querySelector('h1, h2, h3, h4, h5, h6');
+        const style = getComputedStyle(heading);
+        const caption = document.createElement('p');
+        caption.dataset.caption = '';
+        caption.textContent = `h${level.dataset.level}: ${style.fontSize}, weight ${style.fontWeight}, margins ${style.marginBlockStart} ${style.marginBlockEnd}`;
+        level.append(caption);
+      }
+    </script>
+  </body>
+</html>

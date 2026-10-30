@@ -1,0 +1,99 @@
+---js
+{
+  layout: 'layouts/base.njk',
+  title: 'CV',
+  // Une page par version du CV (_data/cv.js), à son adresse et dans sa langue
+  // Toutes dans les collections, donc dans le sitemap, pas seulement la première
+  pagination: { data: 'cv.versions', size: 1, alias: 'version', addAllPagesToCollections: true },
+  permalink: data => data.version.url,
+  profilePage: true,
+  eleventyComputed: {
+    lang: data => data.version.lang,
+    documentTitle: data => data.version.title,
+    description: data => data.version.description,
+    alternates: data => data.version.alternates,
+  },
+}
+---
+{#- Tout le contenu vient de _data/cv.js et _data/metadata.js. Une seule colonne, des sections aux titres classiques et
+    des dates à chaque poste, pour les ATS : le PDF (scripts/cv-pdf.js) est cette page imprimée. #}
+{%- set labels = version.labels %}
+{#- Les conférences et les articles sont en français : sur la version anglaise, une phrase l'annonce et leurs liens le disent
+    (`hreflang`), leur titre aussi (`lang`), pour la voix des lecteurs d'écran #}
+{%- set sourceLang = metadata.language if version.lang != metadata.language %}
+{#- `first`: the period opens its line, its first letter in upper case #}
+{%- macro period(start, end, version, first = false) -%}
+<time datetime="{{ start }}">{{ start | monthYear(version.lang) | capitalize if first else start | monthYear(version.lang) }}</time> - {% if end %}<time datetime="{{ end }}">{{ end | monthYear(version.lang) }}</time>{% else %}{{ version.labels.present }}{% endif %}
+{%- endmacro %}
+<h1>{{ metadata.author.name }}</h1>
+<p><strong>{{ version.jobTitle }}</strong></p>
+<ul class="ds-l-cluster">
+	{%- for contact in metadata.author.contacts %}
+	<li><a href="{{ contact.url }}">{{ contact.text }}</a></li>
+	{%- endfor %}
+</ul>
+<div class="ds-l-stack ds-u-print-hidden">
+	<ul class="ds-l-cluster">
+		<li><a href="{{ version.pdf }}" class="ds-c-button">{{ labels.pdf }}</a></li>
+		<li><a href="{{ version.other.url }}" hreflang="{{ version.other.lang }}" lang="{{ version.other.lang }}">{{ version.other.label }}</a></li>
+	</ul>
+</div>
+
+<h2>{{ labels.summary }}</h2>
+<p>{{ version.summary }}</p>
+
+<h2>{{ labels.skills }}</h2>
+<ul>
+	{%- for skill in version.skills %}
+	<li><strong>{{ skill.name }}</strong>{{ labels.colon }}{{ skill.keywords | join(", ") }}</li>
+	{%- endfor %}
+</ul>
+
+<h2>{{ labels.work }}</h2>
+{#- L'entreprise, puis ses postes avec leurs dates et leur lieu #}
+{%- for company in version.work %}
+<h3>{{ company.name }}</h3>
+{%- for job in company.positions %}
+<hgroup>
+	<h4>{{ job.position }}</h4>
+	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end, version, true) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
+</hgroup>
+{#- Un paragraphe par réalisation, resserrés dans une pile #}
+<div class="ds-l-stack">
+	{%- for highlight in job.highlights %}
+	<p>{{ highlight }}</p>
+	{%- endfor %}
+	{%- if job.keywords %}
+	<p>{{ labels.technologies }}{{ labels.colon }}{{ job.keywords | join(", ") }}</p>
+	{%- endif %}
+</div>
+{%- endfor %}
+{%- endfor %}
+
+<h2>{{ labels.education }}</h2>
+{%- for school in version.education %}
+<hgroup>
+	<h3>{{ school.studyType }}</h3>
+	<p class="ds-c-post__meta"><small>{{ school.institution }}, {{ period(school.start, school.end, version) }}</small></p>
+</hgroup>
+{%- endfor %}
+
+<h2>{{ labels.languages }}</h2>
+<p>{% for language in version.languages %}{{ language.language }} ({{ language.fluency }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+
+<h2>{{ labels.publications }}</h2>
+{%- if sourceLang %}
+<p>{{ labels.inFrench }}</p>
+{%- endif %}
+<ul>
+	{#- Les conférences, chacune dans sa dernière édition, et les articles choisis (`onCv: true` dans leur front matter),
+	    du plus récent au plus ancien ; un article mène à sa publication d'origine s'il en a une #}
+	{%- for item in collections.posts | withTalks(talks | uniqueBy("title")) %}
+	{%- if item.isTalk %}
+	<li>{{ labels.talk }} "<a href="{{ item.url }}"{% if sourceLang %} hreflang="{{ sourceLang }}" lang="{{ sourceLang }}"{% endif %}>{{ item.title }}</a>", {{ item.event }}{% if item.date %} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear(version.lang) }}</time>)</small>{% endif %}</li>
+	{%- elif item.post.data.onCv %}
+	{%- set origin = item.post.data.origin %}
+	<li>{{ labels.article }} "<a href="{{ origin.href if origin else item.url }}"{% if sourceLang %} hreflang="{{ sourceLang }}" lang="{{ sourceLang }}"{% endif %}>{{ item.title }}</a>", {{ origin.title if origin else metadata.host }} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear(version.lang) }}</time>)</small></li>
+	{%- endif %}
+	{%- endfor %}
+</ul>

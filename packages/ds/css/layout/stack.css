@@ -1,0 +1,14 @@
+/* Items one under the other, closer than paragraphs: the details of an entry, such as a CV position's highlights */
+
+@layer ds.layout {
+  .ds-l-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-b-size-8);
+    margin-block: var(--ds-b-size-16);
+
+    & > * {
+      margin-block: 0;
+    }
+  }
+}

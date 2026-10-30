@@ -1,6 +1,14 @@
 name: Deploy all apps to GitHub Pages
 
 on:
+  # Releases created by the Changeset workflow use GITHUB_TOKEN and do not trigger
+  # other workflows, so the site is deployed on every push to main touching it.
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/**'
+      - '.github/workflows/gh-pages.yml'
   release:
     types: [published]
   workflow_dispatch:
@@ -22,63 +30,81 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - name: Set up Node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
-        with:
-          node-version: lts/*
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
-      - name: Install dependencies
-        run: pnpm i
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
+      # Same Node version (.nvmrc) and install as the other workflows
+      - name: Setup environment
+        uses: smndhm/dev-config/ci/setup@cb71a9f6239ed13df381e6d1e367bd2fa20d4236 # main
+
+      # Also builds its workspace dependencies first (ia-postrophe script)
       - name: Build simon.duhem.fr
-        run: pnpm --filter simon.duhem.fr build
+        run: pnpm --filter "simon.duhem.fr..." build
 
-      - name: Build ia-postrophe
-        run: pnpm --filter ia-postrophe build
+      # The CV's PDF, /cv/simon-duhem-cv.pdf: the CV page, printed by Chromium into _site
+      - name: Install Chromium
+        run: pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
+
+      - name: Print the CV as PDF
+        run: pnpm --filter simon.duhem.fr cv:pdf
 
       - name: Build slides (HTML)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
+        uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
         with:
           args: -I apps/slides/src -o apps/slides/dist
         env:
           MARP_USER: root:root
 
       - name: Build slides (PDF)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
+        uses: docker://marpteam/marp-cli:v4.5.1@sha256:3cf660df7b9737f875e57f7169dff0b08d1d3ab604ea2d655ab761102942fa42
         with:
           args: -I apps/slides/src -o apps/slides/dist --pdf --allow-local-files
         env:
           MARP_USER: root:root
 
-      - name: Build slides (PPTX)
-        uses: docker://marpteam/marp-cli:v4.2.3@sha256:472c9e9203391568cd777a70455ee241ee8d16a123dbbc2329277a35b6c56fc8
-        with:
-          args: -I apps/slides/src -o apps/slides/dist --pptx --allow-local-files
-        env:
-          MARP_USER: root:root
-
-      - name: Build articles site
-        run: pnpm --filter articles build
-
       - name: Prepare public folder
         run: |
-          mkdir -p public/ia-postrophe
-          mkdir -p public/articles
           mkdir -p public/slides/assets
-          cp -r apps/simon.duhem.fr/dist/* public/
-          cp -r apps/ia-postrophe/dist/ia-postrophe/* public/ia-postrophe/
-          cp -r apps/articles/_site/* public/articles/
+          cp -r apps/simon.duhem.fr/_site/* public/
           cp -r apps/slides/src/assets/* public/slides/assets/
           cp -r apps/slides/dist/* public/slides/
 
+      # The slides' PDFs, printed by Marp with Chromium, completed to conform to PDF/UA-1 (packages/pdf-ua); in public/,
+      # as Marp's files belong to root
+      - name: Complete the slides' PDFs (PDF/UA-1)
+        run: node packages/pdf-ua/src/cli.js public/slides/*.pdf
+
       - name: Setup Pages
-        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: './public'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+
+      # IndexNow: notifies Bing, Yandex, Seznam, Naver and Yep of the sitemap URLs (Google does not use it).
+      # The key is not secret: the search engines check it against apps/simon.duhem.fr/public/<key>.txt.
+      # A failure here does not fail the deployment, which is already live.
+      - name: Notify search engines (IndexNow)
+        continue-on-error: true
+        env:
+          INDEXNOW_HOST: simon.duhem.fr
+          INDEXNOW_KEY: 7b7af4d4409057f56000e0c4326fdcbc
+        run: |
+          grep -o '<loc>[^<]*</loc>' public/sitemap.xml | sed -e 's/<loc>//' -e 's/<\/loc>//' \
+            | jq -R . | jq -s --arg host "$INDEXNOW_HOST" --arg key "$INDEXNOW_KEY" \
+              '{host: $host, key: $key, keyLocation: "https://\($host)/\($key).txt", urlList: .}' \
+            | tee /dev/stderr \
+            | curl --fail-with-body --silent --show-error -X POST https://api.indexnow.org/indexnow \
+                -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
+
+      # WebSub: tells the hub declared in the articles feed that the feed changed, the hub sends the new
+      # articles to the readers subscribed to it (Feedly, Inoreader...) instead of them waiting for their next read.
+      # A failure here does not fail the deployment, which is already live.
+      - name: Notify feed readers (WebSub)
+        continue-on-error: true
+        run: |
+          curl --fail-with-body --silent --show-error https://pubsubhubbub.appspot.com/ \
+            -d hub.mode=publish -d hub.url=https://simon.duhem.fr/articles/feed/feed.xml

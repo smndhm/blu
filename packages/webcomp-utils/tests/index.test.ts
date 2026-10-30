@@ -61,7 +61,7 @@ describe('webcomp-utils', () => {
 
   it('should find elements in shadow DOM', async () => {
     document.body.innerHTML = '';
-    class MyComp extends HTMLElement {
+    class ShadowComp extends HTMLElement {
       constructor() {
         super();
         const shadow = this.attachShadow({ mode: 'open' });
@@ -71,7 +71,7 @@ describe('webcomp-utils', () => {
       }
     }
     if (!customElements.get('my-comp')) {
-      customElements.define('my-comp', MyComp);
+      customElements.define('my-comp', ShadowComp);
     }
     // Manually create and append custom element using document.createElement
     const el = document.createElement('my-comp');
@@ -85,7 +85,7 @@ describe('webcomp-utils', () => {
 
   it('should find all elements deeply', async () => {
     document.body.innerHTML = '';
-    class MyComp extends HTMLElement {
+    class ShadowComp extends HTMLElement {
       constructor() {
         super();
         const shadow = this.attachShadow({ mode: 'open' });
@@ -95,7 +95,7 @@ describe('webcomp-utils', () => {
       }
     }
     if (!customElements.get('my-comp')) {
-      customElements.define('my-comp', MyComp);
+      customElements.define('my-comp', ShadowComp);
     }
     document.body.innerHTML = `<input id="main" />`;
     const el = document.createElement('my-comp');

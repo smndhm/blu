@@ -1,0 +1,43 @@
+/*
+ * <ds-banner>, in its shadow root: the tokens come before, on :host, then the button's and the banner's styles
+ * (css/components). Sizes in rem, as everywhere in the design system; banner.ts turns them into px, as the page's root
+ * font size is not ours
+ */
+:host {
+  /* All but the custom properties: the tokens stay; light or dark as the system, after it */
+  all: initial;
+  position: fixed;
+
+  /* The highest there is, the largest 32-bit integer: above the page's own sticky headers, players and dialogs */
+  z-index: 2147483647;
+  display: flex;
+  justify-content: center;
+  color-scheme: light dark;
+  inset: var(--ds-b-size-12) var(--ds-b-size-12) auto;
+  pointer-events: none;
+}
+
+.ds-c-banner {
+  pointer-events: auto;
+}
+
+/* What the base gives a page of ours, which the shadow root does not have */
+img:not([src]) {
+  display: none;
+}
+
+a {
+  border-radius: var(--ds-b-outline-radius-focus);
+  color: var(--ds-b-color-primary);
+  text-decoration-thickness: var(--ds-b-size-border-1);
+  text-underline-offset: 0.25em;
+
+  &:not([href]) {
+    display: none;
+  }
+}
+
+:focus-visible {
+  outline: var(--ds-b-outline-focus);
+  outline-offset: var(--ds-b-outline-offset-focus);
+}

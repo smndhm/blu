@@ -1,0 +1,39 @@
+/* A page: a column of readable width, its main content growing to push the footer down (`--centered`: centered) */
+
+@layer ds.layout {
+  .ds-l-page {
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+    max-inline-size: 44rem;
+    min-block-size: 100svh; /* Mobile: the viewport with the browser UI shown, never overflows */
+    padding-inline: var(--ds-b-size-16);
+
+    /* Printed: the sheet's whole width, and the page's own height, not a sheet's, which would add a blank one */
+    @media print {
+      max-inline-size: none;
+      min-block-size: auto;
+    }
+  }
+
+  .ds-l-page__main {
+    flex-grow: 1;
+    padding-block: var(--ds-b-size-32);
+
+    /* Printed: the sheet's margins are enough; the bottom padding alone could start a blank sheet */
+    @media print {
+      padding-block: 0;
+    }
+
+    /* Focused by the skip link: no ring around the whole content */
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .ds-l-page--centered .ds-l-page__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

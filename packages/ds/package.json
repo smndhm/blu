@@ -1,0 +1,53 @@
+{
+  "name": "@dume/ds",
+  "version": "0.1.0",
+  "description": "My design system: the styles shared by my projects (simon.duhem.fr, Music Bridge), design tokens, base, layouts and components",
+  "author": "Simon Duhem",
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "css-custom-properties",
+    "dark-mode"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smndhm/blu.git",
+    "directory": "packages/ds"
+  },
+  "type": "module",
+  "exports": {
+    "./styles.css": "./dist/styles.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./base.css": "./dist/base.css",
+    "./utilities.css": "./dist/utilities.css",
+    "./components/*.css": "./dist/components/*.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./fonts/*": "./dist/fonts/*",
+    "./layout/*.css": "./dist/layout/*.css",
+    "./web-components/*.js": {
+      "types": "./dist/web-components/*.d.ts",
+      "default": "./dist/web-components/*.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vp pack",
+    "test": "vp test run",
+    "prepublishOnly": "pnpm build",
+    "test:a11y": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/instrument-sans": "5.3.0",
+    "modern-normalize": "3.0.1",
+    "prismjs": "1.30.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "jsdom": "30.1.3",
+    "vite-plus": "1.4.0"
+  }
+}

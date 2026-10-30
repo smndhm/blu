@@ -1,0 +1,215 @@
+# @dume/ds
+
+My design system: the styles shared by my projects ([simon.duhem.fr](https://simon.duhem.fr), Music Bridge…), its custom properties and classes prefixed with `ds-`. Only what the projects use: tokens, components and layouts come as they repeat from one project to another.
+
+Every component is HTML and CSS first: native elements and a class, usable in any page without JavaScript. A web component, when one is needed, is that same component in a shadow root, with the behavior it adds (see [Web components](#web-components)).
+
+Every interactive element has all its states, and they are accessible: see [Interactive states](#interactive-states).
+
+While in version 0, it covers my projects' needs only, and a minor version may change what is there: use it elsewhere at your own pace, its version pinned.
+
+## Naming
+
+Custom properties are named in lowercase words:
+
+- `--ds-b-{category}-{role}-{variant}` for a base token: `--ds-b-color-text`, `--ds-b-color-text-muted`, `--ds-b-color-background-surface`, `--ds-b-outline-focus`.
+- `--ds-c-{component}-{category}-…` for a component's (`--ds-c-button-size-min-height`), `--ds-l-{layout}-{category}-…` for a layout's (`--ds-l-grid-size-gap`).
+- `--ds-` is the namespace; `b`, `c`, `l` the layer.
+- The category, from a closed list: `color`, `font`, `size`, or the CSS property a composite value goes to (`outline`).
+- The role, then the variant, from the most general to the most specific.
+- The light and dark themes change the values, never the names.
+
+Not `--ds-b-muted-color` (the category comes first), `--ds-b-color-surface` (the role, `background`, is missing), `--ds-b-focus-outline` (`focus` is no category: the CSS property is).
+
+@dume/dev-config's Stylelint configuration checks the names (`custom-property-pattern`) in any project, without depending on this package. Its tests check its tokens (`css/tokens.css`) the same way. A new category goes in this list, in the Stylelint rule and in the test.
+
+Only the tokens the projects use: a new one comes with its first use.
+
+HTML elements are styled without classes, in the base: links, headings, a heading and its tagline (`hgroup`), tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-l-page--centered`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes. A modifier only when its block or element is also used without it, or when it is a variant of its own (`.ds-c-field__control--multiline`: a select or an input is the control without it).
+
+### Web components
+
+A component is HTML and CSS first: a native element (`<a>`, `<button>`, `<dialog>`, `<details>`…) and a class. It becomes a web component only when it needs what CSS and native HTML cannot give:
+
+- a behavior of its own, in JavaScript, that the browser does not have (Music Bridge's message, closed with its button or Escape);
+- styles isolated from the page in a shadow root, when the page is not ours (Music Bridge's message, on a music platform's page).
+
+Not for a look alone (a button, a field: a class is enough), nor for what a native element already does. Its content works without JavaScript wherever it can, the web component enhancing it.
+
+A web component is built on a component of `css/components`, which works without it in a page of ours: its shadow root takes that component's stylesheet and classes, and adds only what the page's base would give (links, focus ring) and its own place on the page. `<ds-banner>` is the banner (`.ds-c-banner`) in a shadow root.
+
+Web components are named `ds-` too (`<ds-banner>`); third-party ones keep their name (`<heading-anchors>`).
+
+They live in `web-components/`, in TypeScript, each with its styles in its shadow root: its module imports them (the tokens set on `:host`, its component's stylesheet, its own), and turns their rem into px, as a page that is not ours has its own root font size.
+
+| Web component                      | Module                              | What it is                                                                                                                                                                                                                                                                                |
+| ---------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Banner](web-components/banner.js) | `@dume/ds/web-components/banner.js` | `<ds-banner>`, a message at the top of a page that is not ours, announced by screen readers, closed with its button or Escape: `showBanner(document, { text, lang, closeLabel, iconUrl, link })`, without the custom elements registry, which an extension's content script does not have |
+
+## Interactive states
+
+Every interactive element (link, button, control) has all its states, each defined by the design system, never left to the browser's defaults:
+
+| State                       | What changes                                                                                              | Selector                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Rest                        | the component's own look                                                                                  |                                              |
+| Hovered                     | the primary color, darker (light theme) or lighter (dark theme); a tinted background; a thicker underline | `:hover`, unless disabled                    |
+| Keyboard focus              | the focus ring, 3px in the primary color, 2px off the element: on everything, never removed               | `:focus-visible`                             |
+| Pressed                     | darker or lighter still, a more tinted background                                                         | `:active`, unless disabled                   |
+| Disabled                    | grey text and background, the `not-allowed` cursor, no hover                                              | `:disabled`, `[aria-disabled='true']`        |
+| Invalid (a control)         | a 2px border in the danger color, a message saying why                                                    | `[aria-invalid='true']`, `__message--danger` |
+| Current (a navigation link) | in bold, underlined 2px                                                                                   | `[aria-current]`                             |
+
+They are accessible:
+
+- A state never shows by its color alone: a link is always underlined, thicker when hovered; the current page is also in bold; an invalid control has a thicker border and a message, its text saying what is wrong.
+- Contrasts: 4.5:1 for text, 3:1 for borders and the focus ring, in every state, in both themes, on both backgrounds. The tests check them as people see them, and as the three kinds of color blindness do (protanopia, deuteranopia, tritanopia, simulated). WCAG asks nothing of a disabled element: its grey is meant to fade.
+- Disabled with `aria-disabled="true"` looks the same as with `disabled`, for a link, or a button that stays in the keyboard order to explain why it cannot be used.
+- Windows' contrast themes (`forced-colors`): a disabled element in the system's grey text color (`GrayText`); a ghost button's transparent border shows there.
+- Buttons and links have the pointer cursor, as most design systems do (GOV.UK, USWDS, Carbon, Primer, DSFR), the `not-allowed` one when disabled.
+- Targets of 24px at least (WCAG 2.5.8): a button, with its padding and line height; the banner's close button, 32px.
+
+The board of states, [`tests/states.html`](tests/states.html), shows every interactive element in each of its states at once, from the design system's own stylesheet. A page cannot hover nor press an element itself: the accessibility test forces in Chromium the state each element names in `data-state` (`hover`, `focus-visible`, `active`), as the DevTools do, so the very `:hover`, `:focus-visible` and `:active` rules apply.
+
+The accessibility test (`pnpm --filter @dume/ds test:a11y`, in the Accessibility workflow) loads it in both themes, with Playwright Test:
+
+- axe checks it, and so the contrast of every state, which it cannot do on a page nobody hovers;
+- each state must look other than the element at rest (color, background, border, outline, underline, weight or cursor);
+- the board must match its screenshots, [`tests/screenshots/light.png`](tests/screenshots/light.png) and [`dark.png`](tests/screenshots/dark.png): a color, a border, a corner or a size that changes fails the test.
+
+The board renders in the Chromium of Playwright's Docker image, the version of `@playwright/test`: the same fonts and the same rendering on every computer and in CI, so the screenshots match anywhere. Docker is needed. After a change meant to change a state, `pnpm --filter @dume/ds test:a11y --update-snapshots` takes them again: look at them in the diff. When the test fails, the screenshots taken and their differences are in `test-results/`, and among the artifacts of the workflow.
+
+The state colors are tokens (`--ds-b-color-primary-hover`, `-active`, `--ds-b-color-background-hover`, `-active`, `--ds-b-color-text-disabled`, `--ds-b-color-background-disabled`, `--ds-b-color-danger`): a component takes them, never a color of its own. A new component lists its states in the table of components.
+
+## Typography
+
+Every heading level has a size and a weight of its own, on the base 4, down to the text's size:
+
+| Level | Size | Weight     | Margins (above, below) |
+| ----- | ---- | ---------- | ---------------------- |
+| `h1`  | 40px | extra bold | 0, 16px                |
+| `h2`  | 24px | bold       | 40px, 16px             |
+| `h3`  | 20px | extra bold | 32px, 8px              |
+| `h4`  | 16px | extra bold | 24px, 8px              |
+| `h5`  | 16px | bold       | 24px, 8px              |
+| `h6`  | 16px | semibold   | 24px, 8px              |
+
+- A heading and its tagline go in a `hgroup`: it takes its heading's margins, and a tagline in small print (a `<small>` alone in its paragraph, such as a date) sits right under it. A `h1` keeps its own margin below.
+- A heading right after another has no margin above: the previous heading's below sets the room between them (a CV's company and its first position).
+- `.ds-l-stack` puts the details of an entry one under the other, 8px apart, closer than paragraphs.
+
+The board of typography, [`tests/typography.html`](tests/typography.html), shows the heading levels, each with its size, weight and margins read from its computed style, a heading and its tagline, the text's elements and the stack. The accessibility test checks it with axe, checks that each heading level looks other than the others and that the `h6` is in the text's size, and compares it with its screenshots, [`tests/screenshots/typography-light.png`](tests/screenshots/typography-light.png) and [`typography-dark.png`](tests/screenshots/typography-dark.png), as the board of states. In Playwright's Docker image, the text's `system-ui` font is one without a bold face: `<strong>` shows in the regular weight on the screenshots only, its computed weight being 700.
+
+## Units
+
+- `rem` for sizes, on the base 4: multiples of 4px, `0.25rem` (`0.5rem` is 8px, `1rem` 16px). They follow the font size the visitor chose in the browser.
+- Spacing, font sizes, radii and border widths from the tokens (`var(--ds-b-size-16)`, `var(--ds-b-size-border-1) solid`), never written in rem or px: the scale stays in one place. Stylelint (@dume/dev-config) checks both rules.
+- `em` inside a component, for what grows with its text, such as a button's padding.
+- `px` for borders and the focus ring: 1px stays 1px, and the 3px ring stays visible whatever the zoom.
+- No unit for line heights (`1.5`), `ch` for a reading width (`65ch`), `clamp()` for a size that follows the screen between a minimum and a maximum, `dvh` rather than `vh`, logical properties (`margin-inline`, `padding-block`).
+- A page's root font size stays the browser's: no `font-size: 62.5%`, which would make every `rem` 10px.
+- The exception: a component shown in a page that is not ours, such as Music Bridge's message on a music page, is in px, as that page's root font size is not ours.
+
+## Standards
+
+- Plain CSS, no preprocessor: native nesting, custom properties, `color-mix()`, `@layer`.
+- The target: [Baseline widely available](https://web.dev/baseline), what every major browser has had for 30 months.
+- Light and dark themes: each color is `light-dark(light, dark)`, which follows `color-scheme`, the system's by default; `color-scheme: dark` on a page or an element forces a theme.
+- Left-to-right and right-to-left languages alike: logical properties and values (`margin-inline-start`, `text-align: start`), which @dume/dev-config's Stylelint configuration requires.
+- Cascade layers: `ds.normalize`, `ds.base`, `ds.layout`, `ds.components`, `ds.utilities`, under any project's own CSS, which wins without a specificity fight. Their order is set in `tokens.css`, the first stylesheet to import.
+- Windows' contrast themes (`forced-colors`): components draw their edges with borders and outlines, which those themes keep, not with backgrounds alone.
+- Native controls in the primary color (`accent-color`), balanced headings and paragraphs without an orphan word (`text-wrap`).
+
+## Print
+
+A printed page is in the light theme, its text in Instrument Sans (where the page loads `fonts.css`: the same on every computer that prints, while on screen the text is in the system's font), the whole width of the sheet, without the site's header, footer and skip link; a heading stays with its content. `.ds-u-print-hidden` leaves out what only makes sense on screen, such as a download link. simon.duhem.fr prints its CV page as a PDF this way.
+
+## CSS
+
+The whole design system is one stylesheet, `@dume/ds/styles.css`, with its fonts in `fonts/` next to it: serve the package's `dist/` folder as is, and load it.
+
+```html
+<link rel="stylesheet" href="/ds/styles.css" />
+```
+
+simon.duhem.fr does so: its Eleventy configuration copies `dist/` as `/ds/`.
+
+Its parts are also stylesheets of their own, for a project that only takes some of them:
+
+| Stylesheet                  | What                                                                                                                                                                                     |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font, and Instrument Sans, the printed text's: their Latin subsets, the files in `fonts/` next to it                                                    |
+| `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
+| `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
+| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-print-hidden`: not printed                                                                                     |
+| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`), `stack.css` (`.ds-l-stack`)                                               |
+| `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                                 |
+
+```css
+@import '@dume/ds/tokens.css';
+@import '@dume/ds/base.css';
+@import '@dume/ds/components/button.css';
+```
+
+The custom properties are set on `:root`, with `color-scheme: light dark`, each color in `light-dark()`:
+
+| Custom property                    | Light       | Dark        | For                                                                       |
+| ---------------------------------- | ----------- | ----------- | ------------------------------------------------------------------------- |
+| `--ds-b-color-text`                | `#222`      | `#fafafa`   | Text                                                                      |
+| `--ds-b-color-text-muted`          | `#555`      | `#bbb`      | Secondary text                                                            |
+| `--ds-b-color-background`          | `#fafafa`   | `#222`      | The page                                                                  |
+| `--ds-b-color-background-surface`  | `#f1edf7`   | `#2e2a35`   | A box on the page                                                         |
+| `--ds-b-color-border`              | `#ccc`      | `#555`      | A separator, a decorative border                                          |
+| `--ds-b-color-border-control`      | `#8a8a8a`   | `#8a8a8a`   | The border of an input (3:1)                                              |
+| `--ds-b-color-primary`             | `#4b0195`   | `#c9a2ff`   | Links, focus, buttons                                                     |
+| `--ds-b-color-text-on-primary`     | `#fff`      | `#222`      | Text on the primary color                                                 |
+| `--ds-b-color-primary-hover`       | `#3c0177`   | `#d9beff`   | The primary color, hovered                                                |
+| `--ds-b-color-primary-active`      | `#2d0159`   | `#e9daff`   | The primary color, pressed                                                |
+| `--ds-b-color-background-hover`    | `#4b019514` | `#c9a2ff24` | A background hovered: the primary color, translucent                      |
+| `--ds-b-color-background-active`   | `#4b019529` | `#c9a2ff42` | A background pressed                                                      |
+| `--ds-b-color-text-disabled`       | `#767676`   | `#949494`   | The text of a disabled element                                            |
+| `--ds-b-color-background-disabled` | `#e8e8e8`   | `#333`      | The background of a disabled element                                      |
+| `--ds-b-color-danger`              | `#bd1541`   | `#ec7f89`   | An error, a destructive action: the primary color's chroma, turned to red |
+
+| Custom property                                                                      | Value                                                                  |
+| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| `--ds-b-font-family`, `--ds-b-font-family-heading`, `--ds-b-font-family-monospace`   | system-ui (the system's font), Bricolage Grotesque, monospace          |
+| `--ds-b-size-4`, `-8`, `-12`, `-16`, `-20`, `-24`, `-32`, `-40`, `-48`               | `0.25rem` to `3rem`, named after their px, for spacing and fonts alike |
+| `--ds-b-size-display`                                                                | `clamp(2.5rem, 8vw, 4rem)`, a home page's title                        |
+| `--ds-b-size-radius`                                                                 | `0.5rem` (8px)                                                         |
+| `--ds-b-size-border-1`, `-2`, `-4`                                                   | `1px`, `2px`, `4px`: border widths                                     |
+| `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`, `--ds-b-outline-radius-focus` | `3px solid var(--ds-b-color-primary)`, `2px`, `2px`                    |
+
+Text colors pass WCAG AA (4.5:1) on both backgrounds, in both themes, also as the three kinds of color blindness see them: the tests check them. Bricolage Grotesque is for headings only (and a site's name), not for bold text, buttons or labels. `styles.css` and `fonts.css` find its files in `fonts/`, next to them. Without it, headings fall back to the system font.
+
+## Components
+
+One stylesheet per component, after the tokens: `@import '@dume/ds/components/button.css';`. The button first: other components build on it (the banner's close button).
+
+The banner, as `<ds-banner>` shows it: the page's script closes it, and puts its text in the status region when it shows it after the page has loaded, for screen readers to announce it.
+
+```html
+<div class="ds-c-banner" lang="en">
+  <img class="ds-c-banner__icon" src="icon.svg" alt="" />
+  <p class="ds-c-banner__text"><span role="status">A message.</span> <a href="…">A link</a></p>
+  <button type="button" class="ds-c-button ds-c-button--ghost ds-c-banner__close" aria-label="Close">×</button>
+</div>
+```
+
+| Component                                 | Classes                                                                         | For                                                                                                                                                                                                                               |
+| ----------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Banner](css/components/banner.css)       | `.ds-c-banner`, `__icon`, `__text`, `__close`                                   | A message that stays until closed, `<ds-banner>`'s markup: its close button a ghost button, which the page's script closes it with                                                                                                |
+| [Button](css/components/button.css)       | `.ds-c-button`, `--outline`, `--ghost`                                          | A button, or a link that looks like one, filled; outlined for a secondary action or within the text; ghost, neither filled nor outlined, for a discreet action. Hovered, focused, pressed, disabled (`disabled`, `aria-disabled`) |
+| [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` (`--danger`) | A label, its control, a message under it whose line is kept. Hovered, focused, invalid (`aria-invalid`, its message `--danger`), disabled                                                                                         |
+| [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                               | A link to the main content, shown when focused                                                                                                                                                                                    |
+| [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                             | A site's header: its name and navigation, the current page's link (`aria-current`) in bold                                                                                                                                        |
+| [Footer](css/components/footer.css)       | `.ds-c-footer`                                                                  | A site's footer                                                                                                                                                                                                                   |
+| [Links](css/components/links.css)         | `.ds-c-links`                                                                   | A few prominent links, under a home page's introduction                                                                                                                                                                           |
+| [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`, `__description`               | A list of articles or talks, with their descriptions                                                                                                                                                                              |
+| [Post](css/components/post.css)           | `.ds-c-post`, `__header`, `__meta`                                              | An article                                                                                                                                                                                                                        |
+| [Post nav](css/components/post-nav.css)   | `.ds-c-post-nav`, `__list`, `__item` (`--next`)                                 | Links to the previous and next articles                                                                                                                                                                                           |
+| [Code](css/components/code.css)           | Prism's classes                                                                 | Code examples highlighted by Prism (Okaidia theme, contrast fixed)                                                                                                                                                                |
+
+## Development
+
+Built with [Vite+](https://viteplus.dev) (`vp pack`, its settings in `vite.config.ts`). Each file in `css/` declares its own layer (`@layer ds.components { … }`), their order set once, in `tokens.css`, which comes first; its imports are bundled into it, in their layer: modern-normalize before the base (`@import 'modern-normalize' layer(ds.normalize)`), Prism's Okaidia theme before the code component. `pnpm build` writes `dist/`: each stylesheet, `styles.css` (all of them, from `css/styles.css`), `fonts/` (Bricolage Grotesque's Latin subsets, from @fontsource-variable/bricolage-grotesque, which `css/fonts.css` declares), and `web-components/` with their types. Lightning CSS keeps the syntax as it is for the browsers aimed at (`light-dark()`, nesting). `pnpm test` (Vitest) checks the tokens' names, contrasts and sizes, and `<ds-banner>`.

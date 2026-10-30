@@ -1,0 +1,22 @@
+name: Renovate branch
+
+on:
+  push:
+    branches:
+      - 'renovate/**'
+
+jobs:
+  # Copies @dume/dev-config's files, adds the changesets, then runs the CI checks on that commit (see smndhm/dev-config)
+  renovate-branch:
+    uses: smndhm/dev-config/.github/workflows/renovate-branch.yml@cb71a9f6239ed13df381e6d1e367bd2fa20d4236 # main
+    permissions:
+      contents: write
+      statuses: write
+    with:
+      changesets: true
+      checks: |
+        pnpm lint
+        pnpm test
+        pnpm doc:check
+        pnpm --filter simon.duhem.fr exec playwright install --with-deps chromium
+        pnpm test:a11y

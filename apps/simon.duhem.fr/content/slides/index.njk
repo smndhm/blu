@@ -1,0 +1,9 @@
+---
+layout: layouts/base.njk
+title: Slides
+description: Slides des conférences de Simon Duhem sur l'accessibilité et les Web Components.
+---
+<h1>Slides</h1>
+<p>Les supports de mes conférences.</p>
+{%- set items = [] | withTalks(talks) %}
+{% include "partials/postlist.njk" %}

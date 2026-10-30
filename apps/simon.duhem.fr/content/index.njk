@@ -1,0 +1,20 @@
+---
+layout: layouts/base.njk
+bodyClass: ds-l-page--centered
+# <title> de l'accueil, plus descriptif que le seul nom (le h1 reste le nom)
+documentTitle: 'Simon Duhem, architecte front-end : accessibilité et Web Components'
+---
+<hgroup>
+	<h1>{{ metadata.title }}</h1>
+	<p>{{ metadata.intro }}</p>
+</hgroup>
+<nav aria-label="Liens">
+	<ul class="ds-c-links ds-l-cluster">
+		<li><a href="/articles/">Articles</a></li>
+		{%- for link in metadata.social %}
+		<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+		{%- endfor %}
+	</ul>
+</nav>
+
+<script type="module" src="{{ assets["/js/lcs-cnvs.js"] }}"></script>

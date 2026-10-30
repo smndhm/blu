@@ -1,0 +1,113 @@
+import { IdAttributePlugin, InputPathToUrlTransformPlugin, HtmlBasePlugin } from '@11ty/eleventy';
+import pluginRss from '@11ty/eleventy-plugin-rss';
+import pluginSyntaxHighlight from '@11ty/eleventy-plugin-syntaxhighlight';
+import { eleventyImageTransformPlugin } from '@11ty/eleventy-img';
+
+import pluginFilters from './_config/filters.js';
+
+/** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
+export default async function (eleventyConfig) {
+  // Copy the contents of the `public` folder to the output folder
+  // For example, `./public/css/` ends up in `_site/css/`
+  eleventyConfig
+    .addPassthroughCopy({
+      './public/': '/',
+    })
+    .addPassthroughCopy('./content/articles/feed/pretty-atom-feed.xsl')
+    // The design system, @dume/ds (packages/ds): styles.css, loaded by the layout, and its fonts, as /ds/
+    .addPassthroughCopy({ 'node_modules/@dume/ds/dist': 'ds' })
+    // Social sharing images, referenced by `ogImage` front matter
+    .addPassthroughCopy('./content/{articles/*,ia-postrophe}/og.{png,jpg,webp}')
+    // IApostrophe script (bookmarklet and text tester), built by apps/ia-postrophe
+    .addPassthroughCopy({
+      'node_modules/ia-postrophe/dist/ia-postrophe.js': 'js/ia-postrophe.js',
+    })
+    // The heading-anchors web component, loaded by the article layout
+    .addPassthroughCopy({
+      'node_modules/@zachleat/heading-anchors/heading-anchors.js': 'js/heading-anchors.js',
+    });
+
+  // Run Eleventy when these files change:
+  // https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
+
+  // Watch the slides front matter, used to list talks
+  eleventyConfig.addWatchTarget('../slides/src/*.md');
+  // Watch the IApostrophe script, rebuilt by `pnpm --filter ia-postrophe dev`
+  eleventyConfig.addWatchTarget('node_modules/ia-postrophe/dist/ia-postrophe.js');
+  // Watch the styles of @dume/ds, rebuilt by `pnpm --filter @dume/ds build`
+  eleventyConfig.addWatchTarget('node_modules/@dume/ds/dist/**/*.css');
+  // Watch images for the image pipeline.
+  eleventyConfig.addWatchTarget('content/**/*.{svg,webp,png,jpg,jpeg,gif}');
+
+  // Official plugins
+  eleventyConfig.addPlugin(pluginSyntaxHighlight, {
+    preAttributes: { tabindex: 0 },
+  });
+  eleventyConfig.addPlugin(HtmlBasePlugin);
+  eleventyConfig.addPlugin(InputPathToUrlTransformPlugin);
+
+  // Feed filters, the Atom feed itself is content/articles/feed/feed.njk (articles and talks)
+  eleventyConfig.addPlugin(pluginRss);
+
+  // Image optimization: https://www.11ty.dev/docs/plugins/image/#eleventy-transform
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    // Output formats for each image.
+    formats: ['avif', 'webp', 'auto'],
+
+    // widths: ["auto"],
+
+    failOnError: false,
+    htmlOptions: {
+      imgAttributes: {
+        // e.g. <img loading decoding> assigned on the HTML tag will override these values.
+        loading: 'lazy',
+        decoding: 'async',
+      },
+    },
+
+    sharpOptions: {
+      animated: true,
+    },
+  });
+
+  // Filters
+  eleventyConfig.addPlugin(pluginFilters);
+
+  eleventyConfig.addPlugin(IdAttributePlugin, {
+    // by default we use Eleventy’s built-in `slugify` filter:
+    // slugify: eleventyConfig.getFilter("slugify"),
+    // selector: "h1,h2,h3,h4,h5,h6", // default
+  });
+
+  eleventyConfig.addShortcode('currentBuildDate', () => {
+    return new Date().toISOString();
+  });
+
+  // Features to make your build faster (when you need them)
+
+  // If your passthrough copy gets heavy and cumbersome, add this line
+  // to emulate the file copy on the dev server. Learn more:
+  // https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
+
+  // eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
+}
+
+export const config = {
+  // Control which files Eleventy will process
+  // e.g.: *.md, *.njk, *.html, *.liquid
+  templateFormats: ['md', 'njk', 'html', 'liquid', '11ty.js'],
+
+  // Pre-process *.md files with: (default: `liquid`)
+  markdownTemplateEngine: 'njk',
+
+  // Pre-process *.html files with: (default: `liquid`)
+  htmlTemplateEngine: 'njk',
+
+  // These are all optional:
+  dir: {
+    input: 'content', // default: "."
+    includes: '../_includes', // default: "_includes" (`input` relative)
+    data: '../_data', // default: "_data" (`input` relative)
+    output: '_site',
+  },
+};

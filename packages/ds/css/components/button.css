@@ -1,0 +1,95 @@
+/*
+ * A button, or a link that looks like one: filled with the primary color (`--outline`: outlined with it, for a
+ * secondary action or a button within the text; `--ghost`: neither filled nor outlined, tinted on hover, for an action
+ * that stays discreet, such as closing a message)
+ */
+
+@layer ds.components {
+  .ds-c-button {
+    display: inline-block;
+    border: var(--ds-b-size-border-2) solid var(--ds-b-color-primary);
+    border-radius: var(--ds-b-size-radius);
+    background-color: var(--ds-b-color-primary);
+    color: var(--ds-b-color-text-on-primary);
+    cursor: pointer;
+    font-family: var(--ds-b-font-family);
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    padding-block: var(--ds-b-size-4);
+    padding-inline: var(--ds-b-size-12);
+    text-decoration: none;
+
+    /* Hovered and pressed, unless disabled: darker in the light theme, lighter in the dark one */
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      border-color: var(--ds-b-color-primary-hover);
+      background-color: var(--ds-b-color-primary-hover);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      border-color: var(--ds-b-color-primary-active);
+      background-color: var(--ds-b-color-primary-active);
+    }
+
+    /* Disabled, by its attribute or `aria-disabled` (a link, a button that stays focusable): grey, no hover */
+    &:disabled,
+    &[aria-disabled='true'] {
+      border-color: var(--ds-b-color-background-disabled);
+      background-color: var(--ds-b-color-background-disabled);
+      color: var(--ds-b-color-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  .ds-c-button--outline {
+    background-color: transparent;
+    color: inherit;
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      border-color: var(--ds-b-color-primary);
+      background-color: var(--ds-b-color-background-hover);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      border-color: var(--ds-b-color-primary);
+      background-color: var(--ds-b-color-background-active);
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      border-color: var(--ds-b-color-text-disabled);
+      background-color: transparent;
+    }
+  }
+
+  .ds-c-button--ghost {
+    border-color: transparent;
+    background-color: transparent;
+    color: inherit;
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      border-color: transparent;
+      background-color: var(--ds-b-color-background-hover);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      border-color: transparent;
+      background-color: var(--ds-b-color-background-active);
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      border-color: transparent;
+      background-color: transparent;
+    }
+  }
+
+  /* Windows' contrast themes: a disabled button in the system's grey text color */
+  @media (forced-colors: active) {
+    .ds-c-button:disabled,
+    .ds-c-button[aria-disabled='true'] {
+      border-color: GrayText;
+      color: GrayText;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+/*
+ * A form field (`.ds-c-field`): its label, its control (an input, a select, or an element with `contenteditable`, its placeholder in
+ * `data-placeholder`; `--multiline` for a text on several lines), and a message under it whose line is kept, so that
+ * nothing moves when it shows
+ */
+
+@layer ds.components {
+  .ds-c-field__label {
+    display: block;
+    font-weight: 700;
+    margin-block: 0 var(--ds-b-size-8);
+  }
+
+  .ds-c-field__control {
+    border: var(--ds-b-size-border-1) solid var(--ds-b-color-border-control);
+    border-radius: var(--ds-b-size-radius);
+    background-color: var(--ds-b-color-background);
+    color: var(--ds-b-color-text);
+    padding-block: var(--ds-b-size-12);
+    padding-inline: var(--ds-b-size-16);
+
+    &:empty::before {
+      color: var(--ds-b-color-text-muted);
+      content: attr(data-placeholder);
+    }
+
+    &:hover:not(:disabled) {
+      border-color: var(--ds-b-color-text);
+    }
+
+    /* Invalid: a 2px border in the danger color, its second pixel inside, so nothing moves; with a message saying why */
+    &[aria-invalid='true'] {
+      border-color: var(--ds-b-color-danger);
+      box-shadow: inset 0 0 0 var(--ds-b-size-border-1) var(--ds-b-color-danger);
+    }
+
+    &:disabled {
+      border-color: var(--ds-b-color-background-disabled);
+      background-color: var(--ds-b-color-background-disabled);
+      color: var(--ds-b-color-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  .ds-c-field__control--multiline {
+    min-block-size: 9rem;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .ds-c-field__message {
+    min-block-size: 1lh;
+  }
+
+  /* The message of an invalid control: in the danger color, its text saying what is wrong, not the color alone */
+  .ds-c-field__message--danger {
+    color: var(--ds-b-color-danger);
+  }
+
+  @media (forced-colors: active) {
+    .ds-c-field__control:disabled {
+      border-color: GrayText;
+      color: GrayText;
+    }
+  }
+}

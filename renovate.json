@@ -1,14 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices"],
-  "labels": ["dependencies"],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
+  "extends": ["local>smndhm/dev-config//renovate/default"],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "description": "vite-plugin-dts and typedoc (packages/webcomp-utils) use the JavaScript API of TypeScript, which TypeScript 7 does not have yet",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
     }
   ]
 }
