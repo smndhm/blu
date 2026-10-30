@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup environment
-        uses: smndhm/dev-config/ci/setup@4074f1550123768d54f0d9da6af48521026f0c47 # main
+        uses: smndhm/dev-config/ci/setup@c98471f274ad7f8641b899aab2fe615d055ae04a # main
 
       # Runs the `test` script of every package, after the package build
       # when its turbo.json asks for it (see packages/webcomp-utils and apps/ia-postrophe)
