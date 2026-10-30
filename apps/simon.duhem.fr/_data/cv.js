@@ -14,6 +14,7 @@ const { author } = metadata;
 const jobTitle = { fr: author.jobTitle, en: 'Front-end Architect' };
 
 // Positions grouped by company, the most recent first; a position's location only when it differs from its company's
+// In English (American), each highlight opens with an action verb: in the present for the current position, the past otherwise
 const work = [
   {
     name: 'MGDIS',
@@ -29,14 +30,14 @@ const work = [
             "Définition des bonnes pratiques de développement front-end et d'accessibilité pour une équipe de 50 développeurs.",
           ],
           en: [
-            "Designing and evolving MGDIS's design system, a Web Components library, for a consistent and accessible user experience.",
-            'Defining front-end development and accessibility best practices for a team of 50 developers.',
+            "Design and evolve MGDIS's design system, a Web Components library, for a consistent and accessible user experience.",
+            'Define front-end development and accessibility best practices for a team of 50 developers.',
           ],
         },
         keywords: ['Web Components', 'Stencil', 'TypeScript', 'Storybook', 'RGAA'],
       },
       {
-        position: { fr: 'Lead Développeur Full Stack', en: 'Full Stack Lead Developer' },
+        position: { fr: 'Lead Développeur Full Stack', en: 'Lead Full Stack Developer' },
         start: '2021-01',
         end: '2021-08',
         highlights: {
@@ -70,9 +71,9 @@ const work = [
             "Applications utilisant l'API Deezer : sites partenaires, bots Twitter, applications Facebook, widgets.",
           ],
           en: [
-            'Integrated Deezer into IFTTT, on my own initiative: every phase, from the first contact with IFTTT to the launch, through the specifications and the development.',
-            'Application and voting platform for the Victoires de la Musique, the French music awards (pop, classical and jazz).',
-            'Applications using the Deezer API: partner websites, Twitter bots, Facebook apps, widgets.',
+            'Integrated Deezer with IFTTT on my own initiative, leading every phase from the first contact with IFTTT through specifications and development to launch.',
+            'Built the application and voting platform for the Victoires de la Musique, the French music awards (pop, classical and jazz).',
+            'Built applications using the Deezer API: partner websites, Twitter bots, Facebook apps, widgets.',
           ],
         },
       },
@@ -82,7 +83,7 @@ const work = [
         end: '2012-09',
         highlights: {
           fr: ["Espaces dédiés pour des annonceurs : Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
-          en: ["Dedicated spaces for advertisers: Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
+          en: ["Built branded pages for advertisers: Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
         },
       },
     ],
@@ -100,8 +101,8 @@ const work = [
             'Applications pour les services RH : notations, avancements, entretiens de carrière, plans de mutation des officiers.',
           ],
           en: [
-            "Analysis, development, deployment and maintenance of a mobile app for the French Navy's HR system (RH@psodie), for its officers.",
-            "Applications for the HR departments: ratings, promotions, career reviews, officers' transfer plans.",
+            "Analyzed, developed, deployed and maintained a mobile app for officers, part of the French Navy's HR system (RH@psodie).",
+            "Built applications for the HR departments: performance appraisals, promotions, career reviews, officers' transfer plans.",
           ],
         },
       },
@@ -113,7 +114,7 @@ const work = [
           fr: [
             "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
           ],
-          en: ['Intranet web applications: staff directory, resource booking (meeting rooms, laptops, vehicles), stock management for a supply store.'],
+          en: ['Built intranet web applications: staff directory, resource booking (meeting rooms, laptops, vehicles), stock management for a supply store.'],
         },
       },
     ],
@@ -126,15 +127,15 @@ const cv = {
   pdf: { fr: '/cv/simon-duhem-cv.pdf', en: '/en/cv/simon-duhem-cv-en.pdf' },
   jobTitle,
   // The page's title (and the PDF's), and its meta description: 160 characters at most
-  title: { fr: `CV de ${author.name}, ${jobTitle.fr.toLowerCase()}`, en: `CV of ${author.name}, ${jobTitle.en.toLowerCase()}` },
+  title: { fr: `CV de ${author.name}, ${jobTitle.fr.toLowerCase()}`, en: `${author.name}'s CV, ${jobTitle.en.toLowerCase()}` },
   description: {
     fr: `CV de ${author.name}, ${jobTitle.fr.toLowerCase()} spécialisé en accessibilité (RGAA, WCAG) et en Web Components, qui conçoit un design system.`,
-    en: `CV of ${author.name}, ${jobTitle.en.toLowerCase()} specialized in accessibility (RGAA, WCAG) and Web Components, who builds a design system.`,
+    en: `${author.name}'s CV, ${jobTitle.en.toLowerCase()} specializing in accessibility (RGAA, WCAG) and Web Components, building a design system.`,
   },
   // The French one is the home page's introduction
   summary: {
     fr: metadata.intro,
-    en: 'Front-end architect specialized in accessibility and Web Components, I build a design system. I rely on web standards to create reusable interfaces that everyone can use.',
+    en: 'Front-end architect specializing in accessibility and Web Components, building a design system. I rely on web standards to create reusable interfaces that everyone can use.',
   },
   skills: [
     { name: 'Front-end', keywords: ['HTML', 'CSS', 'Sass', 'BEM', 'JavaScript', 'TypeScript', 'Vue.js'] },
@@ -181,7 +182,7 @@ const cv = {
   ],
   languages: [
     { language: { fr: 'Français', en: 'French' }, fluency: { fr: 'langue maternelle', en: 'native' } },
-    { language: { fr: 'Anglais', en: 'English' }, fluency: { fr: 'professionnel', en: 'professional' } },
+    { language: { fr: 'Anglais', en: 'English' }, fluency: { fr: 'professionnel', en: 'professional working proficiency' } },
   ],
   // The page's fixed texts
   labels: {
@@ -199,7 +200,7 @@ const cv = {
     // Before a list: a space before the colon in French, none in English
     colon: { fr: ' : ', en: ': ' },
     present: { fr: "aujourd'hui", en: 'present' },
-    pdf: { fr: 'Voir le CV (PDF)', en: 'View the CV (PDF)' },
+    pdf: { fr: 'Voir le CV (PDF)', en: 'View CV (PDF)' },
     // The link to this version from the other one, in this version's language
     otherVersion: { fr: 'Version française', en: 'English version' },
   },
