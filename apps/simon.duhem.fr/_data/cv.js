@@ -193,6 +193,8 @@ const cv = {
     publications: { fr: 'Conférences et articles', en: 'Talks and articles' },
     talk: { fr: 'Conférence', en: 'Talk' },
     article: { fr: 'Article', en: 'Article' },
+    // On the English version only, under the talks and articles, all in French
+    inFrench: { fr: '', en: 'All in French.' },
     technologies: { fr: 'Technologies', en: 'Technologies' },
     // Before a list: a space before the colon in French, none in English
     colon: { fr: ' : ', en: ': ' },

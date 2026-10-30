@@ -18,7 +18,8 @@
 {#- Tout le contenu vient de _data/cv.js et _data/metadata.js. Une seule colonne, des sections aux titres classiques et
     des dates à chaque poste, pour les ATS : le PDF (scripts/cv-pdf.js) est cette page imprimée. #}
 {%- set labels = version.labels %}
-{#- Les conférences et les articles sont en français : sur la version anglaise, leur titre le dit #}
+{#- Les conférences et les articles sont en français : sur la version anglaise, une phrase l'annonce et leurs liens le disent
+    (`hreflang`), leur titre aussi (`lang`), pour la voix des lecteurs d'écran #}
 {%- set sourceLang = metadata.language if version.lang != metadata.language %}
 {#- `first`: the period opens its line, its first letter in upper case #}
 {%- macro period(start, end, version, first = false) -%}
@@ -81,15 +82,18 @@
 <p>{% for language in version.languages %}{{ language.language }} ({{ language.fluency }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
 
 <h2>{{ labels.publications }}</h2>
+{%- if sourceLang %}
+<p>{{ labels.inFrench }}</p>
+{%- endif %}
 <ul>
 	{#- Les conférences, chacune dans sa dernière édition, et les articles choisis (`onCv: true` dans leur front matter),
 	    du plus récent au plus ancien ; un article mène à sa publication d'origine s'il en a une #}
 	{%- for item in collections.posts | withTalks(talks | uniqueBy("title")) %}
 	{%- if item.isTalk %}
-	<li>{{ labels.talk }} "<a href="{{ item.url }}"{% if sourceLang %} lang="{{ sourceLang }}"{% endif %}>{{ item.title }}</a>", {{ item.event }}{% if item.date %} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear(version.lang) }}</time>)</small>{% endif %}</li>
+	<li>{{ labels.talk }} "<a href="{{ item.url }}"{% if sourceLang %} hreflang="{{ sourceLang }}" lang="{{ sourceLang }}"{% endif %}>{{ item.title }}</a>", {{ item.event }}{% if item.date %} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear(version.lang) }}</time>)</small>{% endif %}</li>
 	{%- elif item.post.data.onCv %}
 	{%- set origin = item.post.data.origin %}
-	<li>{{ labels.article }} "<a href="{{ origin.href if origin else item.url }}"{% if sourceLang %} lang="{{ sourceLang }}"{% endif %}>{{ item.title }}</a>", {{ origin.title if origin else metadata.host }} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear(version.lang) }}</time>)</small></li>
+	<li>{{ labels.article }} "<a href="{{ origin.href if origin else item.url }}"{% if sourceLang %} hreflang="{{ sourceLang }}" lang="{{ sourceLang }}"{% endif %}>{{ item.title }}</a>", {{ origin.title if origin else metadata.host }} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear(version.lang) }}</time>)</small></li>
 	{%- endif %}
 	{%- endfor %}
 </ul>
