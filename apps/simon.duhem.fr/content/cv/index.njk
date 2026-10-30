@@ -31,10 +31,12 @@
 	<li><a href="{{ contact.url }}">{{ contact.text }}</a></li>
 	{%- endfor %}
 </ul>
-<ul class="ds-l-cluster ds-u-print-hidden">
-	<li><a href="{{ version.pdf }}" class="ds-c-button">{{ labels.pdf }}</a></li>
-	<li><a href="{{ version.other.url }}" hreflang="{{ version.other.lang }}" lang="{{ version.other.lang }}">{{ version.other.label }}</a></li>
-</ul>
+<div class="ds-l-stack ds-u-print-hidden">
+	<ul class="ds-l-cluster">
+		<li><a href="{{ version.pdf }}" class="ds-c-button">{{ labels.pdf }}</a></li>
+		<li><a href="{{ version.other.url }}" hreflang="{{ version.other.lang }}" lang="{{ version.other.lang }}">{{ version.other.label }}</a></li>
+	</ul>
+</div>
 
 <h2>{{ labels.summary }}</h2>
 <p>{{ version.summary }}</p>
