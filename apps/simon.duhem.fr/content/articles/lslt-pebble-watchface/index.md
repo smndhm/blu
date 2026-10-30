@@ -6,6 +6,8 @@ title: LSLT Pebble Watchface
 description: "D'une police variable dessinée avec Fontra à une watchface pour ma Pebble Time ressortie du tiroir : un side project entre typographie et SDK Pebble."
 date: 2025-12-30
 layout: 'layouts/post.njk'
+# Sur le CV, section Conférences et articles
+onCv: true
 ---
 
 ## Typographie
