@@ -6,7 +6,9 @@ import cv from './cv.js';
  * articles' author. From the site's metadata and the CV: the current position's company, the schools, the languages.
  */
 const { author } = metadata;
-const employer = cv.work.find(company => company.positions.some(position => !position.end));
+// The site is in French: the CV's French version
+const { work, languages, education } = cv.fr;
+const employer = work.find(company => company.positions.some(position => !position.end));
 
 export default {
   '@type': 'Person',
@@ -15,7 +17,7 @@ export default {
   'jobTitle': author.jobTitle,
   ...(employer && { worksFor: { '@type': 'Organization', 'name': employer.name } }),
   'knowsAbout': author.knowsAbout,
-  'knowsLanguage': cv.languages.map(({ language }) => language),
-  'alumniOf': cv.education.map(({ institution }) => ({ '@type': 'EducationalOrganization', 'name': institution })),
+  'knowsLanguage': languages.map(({ language }) => language),
+  'alumniOf': education.map(({ institution }) => ({ '@type': 'EducationalOrganization', 'name': institution })),
   'sameAs': metadata.social.map(link => link.url),
 };
