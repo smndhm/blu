@@ -7,34 +7,15 @@
  * The page is loaded at its production URL, its requests answered from `_site`: the PDF's links point to simon.duhem.fr.
  *
  * Usage: pnpm build && pnpm cv:pdf (the deployment runs it, after the build)
- * Set CHROMIUM_PATH to use an already installed Chromium instead of the Playwright one.
  */
-import { access, writeFile } from 'node:fs/promises';
-import { join, normalize } from 'node:path';
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import process from 'node:process';
-import { chromium } from 'playwright';
-import cv from '../_data/cv.js';
-import metadata from '../_data/metadata.js';
 import pdfUa from '@dume/pdf-ua';
+import cv from '../_data/cv.js';
+import { openSite, siteDir, siteUrl } from './site-browser.js';
 
-const siteDir = new URL('../_site/', import.meta.url).pathname;
-const siteUrl = new URL(metadata.url).origin;
-
-const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
-const page = await browser.newPage({ colorScheme: 'light' });
-
-// Every request to the site is answered from `_site` (`index.html` for directories), any other is aborted
-await page.route('**/*', async route => {
-  const { origin, pathname } = new URL(route.request().url());
-  if (origin !== siteUrl) return route.abort();
-  const file = join(siteDir, normalize(decodeURIComponent(pathname)), pathname.endsWith('/') ? 'index.html' : '');
-  try {
-    await access(file);
-    await route.fulfill({ path: file });
-  } catch {
-    await route.fulfill({ status: 404 });
-  }
-});
+const { browser, page } = await openSite();
 
 for (const { url, pdf } of cv.versions) {
   const response = await page.goto(siteUrl + url);

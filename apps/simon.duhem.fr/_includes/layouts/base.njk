@@ -29,8 +29,10 @@
 		<meta property="og:site_name" content="{{ metadata.title }}">
 		<meta property="og:locale" content="{{ ui.ogLocale }}">
 		{%- if ogImageUrl %}
-		{#- `ogImage` du front matter, sinon la première image de l'article (_data/eleventyComputed.js) #}
+		{#- `ogImage` du front matter, sinon la première image de l'article, sinon une carte avec le titre de la page
+		    (_data/eleventyComputed.js) ; son texte alternatif, pour les lecteurs d'écran des réseaux sociaux #}
 		<meta property="og:image" content="{{ ogImageUrl | htmlBaseUrl(metadata.url) }}">
+		<meta property="og:image:alt" content="{{ ogImageAltText }}">
 		<meta name="twitter:card" content="summary_large_image">
 		{%- else %}
 		<meta name="twitter:card" content="summary">

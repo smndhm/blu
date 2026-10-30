@@ -57,6 +57,19 @@ docker run --rm -v "$PWD/apps/simon.duhem.fr/_site:/data" verapdf/cli:v1.30.3 --
 
 Chacun doit tenir sur deux pages : après avoir modifié le CV, vérifier le nombre de pages des deux PDF.
 
+## Images de partage
+
+Chaque page, hors la 404, a son image de partage (`og:image`) et son texte alternatif (`og:image:alt`), calculés dans `_data/eleventyComputed.js` :
+
+1. l'image `ogImage` du front matter, relative à la page, avec son texte `ogImageAlt` (le titre sinon) ;
+2. sinon, pour un article, sa première image, redimensionnée à 1200 px de large, avec son texte alternatif ;
+3. sinon, une carte au titre de la page, avec le nom, le titre de poste et l'adresse du site, aux couleurs et dans les polices de @dume/ds : `content/og/cards.11ty.js` en fait une page de 1200 x 630 (`/og/<slug>.html`), dont `scripts/og-images.js` prend la capture (`/og/<slug>.png`) avant de la supprimer. Le déploiement le lance après le build. En local :
+
+```sh
+pnpm --filter "simon.duhem.fr..." build
+pnpm --filter simon.duhem.fr og:images
+```
+
 ## Structure
 
 - `content/index.njk` : page d'accueil.
