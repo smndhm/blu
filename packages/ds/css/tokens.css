@@ -73,8 +73,11 @@
 
     color-scheme: light dark;
 
-    /* Printed, the light theme: dark text on white paper, whatever the system's theme */
+    /* Printed, the light theme: dark text on white paper, whatever the system's theme; the text in Instrument Sans where
+       the page loads fonts.css, the same on every computer that prints, else the system's */
     @media print {
+      --ds-b-font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
       color-scheme: light;
     }
   }
