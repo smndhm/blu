@@ -122,7 +122,7 @@ The board of typography, [`tests/typography.html`](tests/typography.html), shows
 
 ## Print
 
-A printed page is in the light theme, the whole width of the sheet, without the site's header, footer and skip link; a heading stays with its content. `.ds-u-print-hidden` leaves out what only makes sense on screen, such as a download link. simon.duhem.fr prints its CV page as a PDF this way.
+A printed page is in the light theme, its text in Instrument Sans (where the page loads `fonts.css`: the same on every computer that prints, while on screen the text is in the system's font), the whole width of the sheet, without the site's header, footer and skip link; a heading stays with its content. `.ds-u-print-hidden` leaves out what only makes sense on screen, such as a download link. simon.duhem.fr prints its CV page as a PDF this way.
 
 ## CSS
 
@@ -138,7 +138,7 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 
 | Stylesheet                  | What                                                                                                                                                                                     |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font: its Latin subsets, the files in `fonts/` next to it                                                                                               |
+| `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font, and Instrument Sans, the printed text's: their Latin subsets, the files in `fonts/` next to it                                                    |
 | `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
 | `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
 | `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-print-hidden`: not printed                                                                                     |
