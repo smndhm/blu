@@ -1,0 +1,21 @@
+{
+  "name": "@dume/pdf-ua",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Completes the PDFs printed by Chromium to conform to PDF/UA-1, the PDF accessibility standard.",
+  "type": "module",
+  "exports": "./src/index.js",
+  "bin": {
+    "pdf-ua": "./src/cli.js"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "pdf-lib": "1.17.1"
+  },
+  "devDependencies": {
+    "vitest": "5.0.5"
+  }
+}

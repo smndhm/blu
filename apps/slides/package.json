@@ -13,7 +13,7 @@
     "copy-assets": "mkdir -p dist/assets && cp -r src/assets/* dist/assets",
     "build": "pnpm copy-assets && pnpm /^build:.*/",
     "build:html": "marp -I src -o dist",
-    "build:pdf": "pnpm build:html --pdf --allow-local-files",
+    "build:pdf": "pnpm build:html --pdf --allow-local-files && pdf-ua dist/*.pdf",
     "build:txt": "pnpm build:html --notes",
     "export-to-images": "pnpm marp -I src -o dist/img --images png --allow-local-files",
     "clean": "rm -rf dist",
@@ -21,6 +21,7 @@
     "a11y:html": "rm -rf dist/a11y && marp -I src -o dist/a11y --template bare && mkdir -p dist/a11y/assets && cp -r src/assets/* dist/a11y/assets"
   },
   "devDependencies": {
+    "@dume/pdf-ua": "workspace:*",
     "@marp-team/marp-cli": "4.5.1"
   }
 }

@@ -68,6 +68,11 @@ jobs:
           cp -r apps/slides/src/assets/* public/slides/assets/
           cp -r apps/slides/dist/* public/slides/
 
+      # The slides' PDFs, printed by Marp with Chromium, completed to conform to PDF/UA-1 (packages/pdf-ua); in public/,
+      # as Marp's files belong to root
+      - name: Complete the slides' PDFs (PDF/UA-1)
+        run: node packages/pdf-ua/src/cli.js public/slides/*.pdf
+
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
       - name: Upload artifact
