@@ -66,14 +66,14 @@ eleventyComputed:
 
 <h2>Conférences et articles</h2>
 <ul>
-	{#- Chaque conférence une fois, dans sa dernière édition #}
-	{%- for talk in talks | uniqueBy("title") %}
-	<li>Conférence "<a href="{{ talk.url }}">{{ talk.title }}</a>", {{ talk.event }}{% if talk.date %} <small>(<time datetime="{{ talk.date | isoDate }}">{{ talk.date | monthYear }}</time>)</small>{% endif %}</li>
-	{%- endfor %}
-	{#- Les articles choisis (`onCv: true` dans leur front matter), à leur publication d'origine s'ils en ont une #}
-	{%- for post in collections.posts | reverse %}
-	{%- if post.data.onCv %}
-	<li>Article "<a href="{{ post.data.origin.href if post.data.origin else post.url }}">{{ post.data.title }}</a>", {{ post.data.origin.title if post.data.origin else metadata.host }} <small>(<time datetime="{{ post.date | isoDate }}">{{ post.date | monthYear }}</time>)</small></li>
+	{#- Les conférences, chacune dans sa dernière édition, et les articles choisis (`onCv: true` dans leur front matter),
+	    du plus récent au plus ancien ; un article mène à sa publication d'origine s'il en a une #}
+	{%- for item in collections.posts | withTalks(talks | uniqueBy("title")) %}
+	{%- if item.isTalk %}
+	<li>Conférence "<a href="{{ item.url }}">{{ item.title }}</a>", {{ item.event }}{% if item.date %} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear }}</time>)</small>{% endif %}</li>
+	{%- elif item.post.data.onCv %}
+	{%- set origin = item.post.data.origin %}
+	<li>Article "<a href="{{ origin.href if origin else item.url }}">{{ item.title }}</a>", {{ origin.title if origin else metadata.host }} <small>(<time datetime="{{ item.date | isoDate }}">{{ item.date | monthYear }}</time>)</small></li>
 	{%- endif %}
 	{%- endfor %}
 </ul>
