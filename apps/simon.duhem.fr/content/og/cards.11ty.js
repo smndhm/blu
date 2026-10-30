@@ -28,7 +28,8 @@ export default class {
 <title>${escape(title)}</title>
 <link rel="stylesheet" href="${assets['/ds/styles.css']}">
 <style>
-  :root { color-scheme: light; }
+  /* No room kept for a scrollbar (@dume/ds's scrollbar-gutter): the card takes the whole width */
+  :root { color-scheme: light; scrollbar-gutter: auto; }
   body {
     background: var(--ds-b-color-background);
     block-size: 630px;
