@@ -200,7 +200,7 @@ const cv = {
     // Before a list: a space before the colon in French, none in English
     colon: { fr: ' : ', en: ': ' },
     present: { fr: "aujourd'hui", en: 'present' },
-    pdf: { fr: 'Voir le CV (PDF)', en: 'View CV (PDF)' },
+    pdf: { fr: 'Version PDF', en: 'PDF version' },
     // The link to this version from the other one, in this version's language
     otherVersion: { fr: 'Version française', en: 'English version' },
   },
