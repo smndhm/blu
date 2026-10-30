@@ -7,6 +7,8 @@ title: Ajout de l'auto-complétion sur les Web Components avec Stencil
 description: "Générer les custom data de VS Code et les web types de WebStorm depuis la documentation Stencil pour avoir l'auto-complétion des Web Components dans l'IDE."
 date: 2024-03-14
 origin: { href: https://dev.to/mgdis/ajout-de-lauto-completion-sur-les-web-components-avec-stencil-8o8, title: dev.to }
+# Sur le CV, section Conférences et articles
+onCv: true
 ogImage: og.webp
 layout: 'layouts/post.njk'
 ---

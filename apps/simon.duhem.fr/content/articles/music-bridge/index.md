@@ -6,6 +6,8 @@ title: Music Bridge
 description: "Une extension de navigateur qui ouvre n'importe quel lien de musique sur votre plateforme de streaming : Deezer, Spotify, Apple Music, YouTube Music... Un side project commencé fin 2022, enfin terminé."
 date: 2026-10-16
 layout: 'layouts/post.njk'
+# Sur le CV, section Conférences et articles
+onCv: true
 ---
 
 ## Au départ, Deezer Link
