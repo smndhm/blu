@@ -2,18 +2,20 @@
  * Prints each version of the CV (`cv.versions` in _data/cv.js), its page (`url`) as its PDF (`pdf`), which the page links to.
  *
  * In the light theme, with @dume/ds's print styles (no header nor footer, no download link): one column of text,
- * for applicant tracking systems (ATS). The PDF is tagged, for screen readers, and has an outline of the headings.
+ * for applicant tracking systems (ATS). The PDF is tagged, for screen readers, and has an outline of the headings;
+ * scripts/pdf-ua.js completes it to conform to PDF/UA-1, the accessibility standard.
  * The page is loaded at its production URL, its requests answered from `_site`: the PDF's links point to simon.duhem.fr.
  *
  * Usage: pnpm build && pnpm cv:pdf (the deployment runs it, after the build)
  * Set CHROMIUM_PATH to use an already installed Chromium instead of the Playwright one.
  */
-import { access } from 'node:fs/promises';
+import { access, writeFile } from 'node:fs/promises';
 import { join, normalize } from 'node:path';
 import process from 'node:process';
 import { chromium } from 'playwright';
 import cv from '../_data/cv.js';
 import metadata from '../_data/metadata.js';
+import pdfUa from './pdf-ua.js';
 
 const siteDir = new URL('../_site/', import.meta.url).pathname;
 const siteUrl = new URL(metadata.url).origin;
@@ -41,9 +43,16 @@ for (const { url, pdf } of cv.versions) {
     process.exit(1);
   }
   await page.evaluate(() => document.fonts.ready);
+  // Each printed link's text, by its absolute URL as in the PDF, for its alternate description: in print, the header's
+  // link to the home page is hidden and the contact one, to the same URL, gives its text
+  await page.emulateMedia({ media: 'print' });
+  const links = new Map(
+    await page.$$eval('a[href]', anchors =>
+      anchors.filter(anchor => anchor.getClientRects().length).map(anchor => [anchor.href, anchor.textContent.replaceAll(/\s+/g, ' ').trim()]),
+    ),
+  );
   const output = join(siteDir, pdf);
-  await page.pdf({
-    path: output,
+  const printed = await page.pdf({
     format: 'A4',
     margin: { top: '1.2cm', right: '1.5cm', bottom: '1.2cm', left: '1.5cm' },
     // About 9.5pt text, a CV's usual size: two pages
@@ -51,6 +60,7 @@ for (const { url, pdf } of cv.versions) {
     tagged: true,
     outline: true,
   });
+  await writeFile(output, await pdfUa(printed, links));
   console.log(`CV printed as ${output}`);
 }
 await browser.close();

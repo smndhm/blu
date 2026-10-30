@@ -31,6 +31,15 @@ jobs:
       - name: Run axe on every page, and on the design system's boards of states and typography
         run: pnpm test:a11y
 
+      # The CV's PDFs, printed from the pages just built, then checked against PDF/UA-1, the PDF accessibility standard
+      - name: Print the CV as PDF
+        run: pnpm --filter simon.duhem.fr cv:pdf
+
+      - name: Check the CV's PDFs with veraPDF (PDF/UA-1)
+        uses: docker://verapdf/cli:v1.30.3@sha256:d74b7026c18a0f171e73c153b617fe6520e1511feb24ca98a348b2bb897669fb
+        with:
+          args: --flavour ua1 --format text --verbose --loglevel 0 apps/simon.duhem.fr/_site/cv/simon-duhem-cv.pdf apps/simon.duhem.fr/_site/en/cv/simon-duhem-cv-en.pdf
+
       # When a board of the design system does not match its screenshots: the screenshots taken and their differences
       - name: Upload the differences of the boards
         if: ${{ failure() }}
