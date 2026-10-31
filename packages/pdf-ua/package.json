@@ -1,7 +1,7 @@
 {
   "name": "@dume/pdf-ua",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Completes the PDFs printed by Chromium to conform to PDF/UA-1, the PDF accessibility standard.",
   "type": "module",
   "exports": "./src/index.js",
