@@ -48,6 +48,42 @@
     white-space: pre-wrap;
   }
 
+  /* A file input, native: the keyboard, screen readers and dropping a file are the browser's. Its button as an outline button */
+  .ds-c-field__control[type='file'] {
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+
+    /* Pressed, as hovered: its button tells the two apart */
+    &:active:not(:disabled) {
+      border-color: var(--ds-b-color-text);
+    }
+
+    &::file-selector-button {
+      border: var(--ds-b-size-border-2) solid var(--ds-b-color-primary);
+      border-radius: var(--ds-b-size-radius);
+      background-color: transparent;
+      color: inherit;
+      cursor: inherit;
+      font: inherit;
+      margin-inline-end: var(--ds-b-size-12);
+      padding-block: var(--ds-b-size-4);
+      padding-inline: var(--ds-b-size-12);
+    }
+
+    &:hover:not(:disabled)::file-selector-button {
+      background-color: var(--ds-b-color-background-hover);
+    }
+
+    &:active:not(:disabled)::file-selector-button {
+      background-color: var(--ds-b-color-background-active);
+    }
+
+    &:disabled::file-selector-button {
+      border-color: var(--ds-b-color-text-disabled);
+    }
+  }
+
   .ds-c-field__message {
     min-block-size: 1lh;
   }
@@ -58,6 +94,11 @@
   }
 
   @media (forced-colors: active) {
+    .ds-c-field__control[type='file']:disabled::file-selector-button {
+      border-color: GrayText;
+      color: GrayText;
+    }
+
     .ds-c-field__control:disabled {
       border-color: GrayText;
       color: GrayText;
