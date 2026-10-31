@@ -1,6 +1,6 @@
 /*
- * <ds-banner>, in its shadow root: the tokens come before, on :host, then the button's and the banner's styles
- * (css/components). Sizes in rem, as everywhere in the design system; banner.ts turns them into px, as the page's root
+ * <ds-alert>, in its shadow root: the tokens come before, on :host, then the button's and the alert's styles
+ * (css/components). Sizes in rem, as everywhere in the design system; alert.ts turns them into px, as the page's root
  * font size is not ours
  */
 :host {
@@ -17,7 +17,7 @@
   pointer-events: none;
 }
 
-.ds-c-banner {
+.ds-c-alert {
   pointer-events: auto;
 }
 

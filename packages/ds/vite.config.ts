@@ -10,7 +10,7 @@ export default defineConfig({
   pack: {
     entry: {
       ...Object.fromEntries(stylesheets.map(file => [file.replace(/\.css$/, ''), `css/${file}`])),
-      'web-components/banner': 'web-components/banner.ts',
+      'web-components/alert': 'web-components/alert.ts',
     },
     platform: 'browser',
     dts: true,

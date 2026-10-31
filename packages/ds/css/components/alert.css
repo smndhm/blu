@@ -1,14 +1,14 @@
 /*
- * A message that stays until it is closed, by the page's own script. <ds-banner> is this component in a shadow root,
- * for a page that is not ours, with its behavior (web-components/banner.ts). After the button's styles, which its close
+ * A message, without a position: the page places it, and closes it with its own script. <ds-alert> is this component in a shadow root,
+ * for a page that is not ours, with its behavior (web-components/alert.ts). After the button's styles, which its close
  * button takes
  */
 
 @layer ds.components {
-  .ds-c-banner {
-    --ds-c-banner-size-max-inline: 42.5rem;
-    --ds-c-banner-size-icon: var(--ds-b-size-24);
-    --ds-c-banner-size-button: var(--ds-b-size-32);
+  .ds-c-alert {
+    --ds-c-alert-size-max-inline: 42.5rem;
+    --ds-c-alert-size-icon: var(--ds-b-size-24);
+    --ds-c-alert-size-button: var(--ds-b-size-32);
 
     display: flex;
     align-items: center;
@@ -23,28 +23,28 @@
     gap: var(--ds-b-size-12);
     inline-size: fit-content;
     line-height: 1.4;
-    max-inline-size: var(--ds-c-banner-size-max-inline);
+    max-inline-size: var(--ds-c-alert-size-max-inline);
   }
 
-  .ds-c-banner__icon {
+  .ds-c-alert__icon {
     flex: none;
-    block-size: var(--ds-c-banner-size-icon);
-    inline-size: var(--ds-c-banner-size-icon);
+    block-size: var(--ds-c-alert-size-icon);
+    inline-size: var(--ds-c-alert-size-icon);
   }
 
-  .ds-c-banner__text {
+  .ds-c-alert__text {
     margin: 0;
   }
 
   /* A ghost button (`.ds-c-button--ghost`), square, its symbol centered */
-  .ds-c-banner__close {
+  .ds-c-alert__close {
     display: grid;
     flex: none;
     padding: 0;
-    block-size: var(--ds-c-banner-size-button);
+    block-size: var(--ds-c-alert-size-button);
     cursor: pointer;
     font-size: var(--ds-b-size-20);
-    inline-size: var(--ds-c-banner-size-button);
+    inline-size: var(--ds-c-alert-size-button);
     line-height: 1;
     place-content: center;
   }
