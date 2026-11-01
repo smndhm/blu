@@ -36,7 +36,7 @@
   }
 
   h1 {
-    font-size: var(--ds-b-size-40);
+    font-size: var(--ds-b-size-32);
     font-weight: 800;
     margin-block: 0 var(--ds-b-size-16);
   }
@@ -77,7 +77,7 @@
     text-wrap: pretty;
   }
 
-  /* A heading and its tagline, such as a home page's: a large title, the tagline under it */
+  /* A heading and its tagline: the tagline under it, the heading in its own size */
   hgroup {
     display: flex;
     flex-direction: column;
@@ -108,11 +108,6 @@
     /* A tagline in small print, such as a date: its line as low as its text, not as the paragraph's */
     & > p:has(> small:only-child) {
       line-height: 1.2;
-    }
-
-    & h1 {
-      font-size: var(--ds-b-size-display);
-      line-height: 1;
     }
   }
 

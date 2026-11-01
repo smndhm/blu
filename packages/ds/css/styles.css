@@ -11,11 +11,13 @@
 
 /* The button first: other components build on it (the alert's close button) */
 @import './components/button.css';
+@import './components/card.css';
 @import './components/alert.css';
 @import './components/code.css';
 @import './components/field.css';
 @import './components/footer.css';
 @import './components/header.css';
+@import './components/hero.css';
 @import './components/links.css';
 @import './components/post-list.css';
 @import './components/post-nav.css';

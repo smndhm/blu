@@ -1,0 +1,18 @@
+/* A box on the page, to tell a block from what is around it: a step, an audience, a result */
+
+@layer ds.components {
+  .ds-c-card {
+    padding: var(--ds-b-size-24);
+    border: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
+    border-radius: var(--ds-b-size-radius);
+    background-color: var(--ds-b-color-background-surface);
+
+    & > :first-child {
+      margin-block-start: 0;
+    }
+
+    & > :last-child {
+      margin-block-end: 0;
+    }
+  }
+}

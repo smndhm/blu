@@ -10,4 +10,9 @@
     gap: var(--ds-b-size-8) var(--ds-b-size-24);
     list-style: none;
   }
+
+  /* Its items at each end of the line, such as the credits and the settings of a footer */
+  .ds-l-cluster--between {
+    justify-content: space-between;
+  }
 }

@@ -27,6 +27,19 @@ Only the tokens the projects use: a new one comes with its first use.
 
 HTML elements are styled without classes, in the base: links, headings, a heading and its tagline (`hgroup`), tables, quotes, code. Classes are for components (`c-`), layouts (`l-`) and utilities (`u-`), after the `.ds-` namespace, in [BEM](https://getbem.com/introduction/) (`.ds-l-page--centered`), and only where a style needs them: a block's class on its root, an element's on what its block styles, inside it. No utility-first nor framework classes. A modifier only when its block or element is also used without it, or when it is a variant of its own (`.ds-c-field__control--multiline`: a select or an input is the control without it).
 
+### Choosing what to add
+
+Before adding anything, go through these in order, and stop at the first that fits:
+
+1. **A native element does it**: style the element in the base, without a class, or use it as it is (`<progress>`, `role="status"` already in the page).
+2. **A look**, for one block: a component, `.ds-c-*` (a card, a button). Its variants are modifiers.
+3. **An arrangement** of blocks: a layout, `.ds-l-*`, or a modifier of one (`.ds-l-cluster`).
+4. **A behavior** that the browser does not have, or a page that is not ours: a web component, built on the component of step 2 (see [Web components](#web-components)).
+
+A component does not decide what its use does: its place on the page (an alert has no position: the page places it) and its role (`status`, or `alert` for what is urgent) are the page's.
+
+What belongs to one project stays in that project, built from these. Say what each step would bring: a web component that would add only JavaScript is not one.
+
 ### Web components
 
 A component is HTML and CSS first: a native element (`<a>`, `<button>`, `<dialog>`, `<details>`…) and a class. It becomes a web component only when it needs what CSS and native HTML cannot give:
@@ -88,7 +101,7 @@ Every heading level has a size and a weight of its own, on the base 4, down to t
 
 | Level | Size | Weight     | Margins (above, below) |
 | ----- | ---- | ---------- | ---------------------- |
-| `h1`  | 40px | extra bold | 0, 16px                |
+| `h1`  | 32px | extra bold | 0, 16px                |
 | `h2`  | 24px | bold       | 40px, 16px             |
 | `h3`  | 20px | extra bold | 32px, 8px              |
 | `h4`  | 16px | extra bold | 24px, 8px              |
@@ -143,7 +156,7 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 | `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
 | `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
 | `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-print-hidden`: not printed                                                                                     |
-| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`), `stack.css` (`.ds-l-stack`)                                               |
+| `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`, `--between`), `stack.css` (`.ds-l-stack`)                                  |
 | `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                                 |
 
 ```css
@@ -176,7 +189,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
 | `--ds-b-font-family`, `--ds-b-font-family-heading`, `--ds-b-font-family-monospace`   | system-ui (the system's font), Bricolage Grotesque, monospace          |
 | `--ds-b-size-4`, `-8`, `-12`, `-16`, `-20`, `-24`, `-32`, `-40`, `-48`               | `0.25rem` to `3rem`, named after their px, for spacing and fonts alike |
-| `--ds-b-size-display`                                                                | `clamp(2.5rem, 8vw, 4rem)`, a home page's title                        |
+| `--ds-b-size-display`                                                                | `clamp(2.5rem, 8vw, 4rem)`, a hero's heading                           |
 | `--ds-b-size-radius`                                                                 | `0.5rem` (8px)                                                         |
 | `--ds-b-size-border-1`, `-2`, `-4`                                                   | `1px`, `2px`, `4px`: border widths                                     |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`, `--ds-b-outline-radius-focus` | `3px solid var(--ds-b-color-primary)`, `2px`, `2px`                    |
@@ -201,9 +214,11 @@ The alert, as `<ds-alert>` shows it: the page's script closes it, and puts its t
 | ----------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Alert](css/components/alert.css)         | `.ds-c-alert`, `__icon`, `__text`, `__close`                                    | A message, in the flow of the page, which chooses its place and its role: `status`, `alert` for what is urgent, as it interrupts screen readers. Its close button, optional, a ghost button, which the page's script closes it with. `<ds-alert>`'s markup |
 | [Button](css/components/button.css)       | `.ds-c-button`, `--outline`, `--ghost`                                          | A button, or a link that looks like one, filled; outlined for a secondary action or within the text; ghost, neither filled nor outlined, for a discreet action. Hovered, focused, pressed, disabled (`disabled`, `aria-disabled`)                          |
+| [Card](css/components/card.css)           | `.ds-c-card`                                                                    | A box on the page, to tell a block from what is around it                                                                                                                                                                                                  |
 | [Field](css/components/field.css)         | `.ds-c-field`, `__label`, `__control` (`--multiline`), `__message` (`--danger`) | A label, its control, a message under it whose line is kept. Hovered, focused, invalid (`aria-invalid`, its message `--danger`), disabled. A file input has its button outlined.                                                                           |
 | [Skip link](css/components/skip-link.css) | `.ds-c-skip-link`                                                               | A link to the main content, shown when focused                                                                                                                                                                                                             |
 | [Header](css/components/header.css)       | `.ds-c-header`, `__brand`, `__link`                                             | A site's header: its name and navigation, the current page's link (`aria-current`) in bold                                                                                                                                                                 |
+| [Hero](css/components/hero.css)           | `.ds-c-hero`                                                                    | A block that catches the eye, such as at the top of a home page: everything in it a little larger, its heading whatever its level. A page's h1 is otherwise in its own size                                                                                |
 | [Footer](css/components/footer.css)       | `.ds-c-footer`                                                                  | A site's footer                                                                                                                                                                                                                                            |
 | [Links](css/components/links.css)         | `.ds-c-links`                                                                   | A few prominent links, under a home page's introduction                                                                                                                                                                                                    |
 | [Post list](css/components/post-list.css) | `.ds-c-post-list`, `__item`, `__title`, `__meta`, `__description`               | A list of articles or talks, with their descriptions                                                                                                                                                                                                       |
