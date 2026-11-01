@@ -1,5 +1,22 @@
 # simon.duhem.fr
 
+## 2.2.0
+
+### Minor Changes
+
+- fb2c2e2: The CV in English, `/en/cv/`, and its PDF, `/en/cv/simon-duhem-cv-en.pdf`, printed at deploy time as the French one. `_data/cv.js` writes each text that differs `{ fr, en }` and gives a complete version per language; `content/cv/index.njk` renders both, each linking to the other, the pages naming each other with `hreflang`. The layout speaks the page's language (`lang`): its interface texts and Open Graph locale come from `_data/i18n.js`. The English page marks the French titles of the talks and articles. Both pages are in the sitemap and llms.txt.
+- c96412f: A CV page, `/cv/`, only in the sitemap and llms.txt for now (no link on the site), from `_data/cv.js` and the home page's introduction: profile, skills, languages, positions with their dates and places, talks and articles published elsewhere, education. Its PDF, `/cv/simon-duhem-cv.pdf`, is the page printed by Chromium at deploy time (`scripts/cv-pdf.js`): one column of selectable text with plain section headings, for applicant tracking systems (ATS), tagged and with an outline, on two pages. No phone number nor postal address. The structured data's person (JSON-LD), built in `_data/person.js` and the same on the home page, the CV and as the articles' author, gets the CV's current employer, schools and languages. Templates only display: the author's contact links, written out, come from `_data/metadata.js`, the CV's title from `_data/cv.js`.
+- 76ab9b7: A social sharing card for each page without an image of its own (home, CV, articles and slides lists): the page's title, the author and the site, in @dume/ds's colors and fonts, taken as `/og/<slug>.png` at deploy time. Every sharing image gets its alternative text (`og:image:alt`): `ogImageAlt` in the front matter, the article image's own, or the card's text.
+
+### Patch Changes
+
+- 02b8af4: The stylesheet and the scripts are linked with a version made from their content (`/ds/styles.css?v=…`, `_data/assets.js`): after a deployment, a browser no longer shows a new page with the stylesheet it had cached.
+- 55e2cbf: The CV lists the articles whose front matter has `onCv: true`, instead of every article published elsewhere first: the three already there keep their place. An article published on the site only links to its page, "simon.duhem.fr" as its publication. Talks and articles make one list, the most recent first. The side projects' articles, Music Bridge and LSLT Pebble Watchface, join the CV.
+- 432402b: The CV's current position as on LinkedIn: the design system within the Core UI team, the front-end architecture and best practices for consistent, high-quality and accessible products; no team size.
+- 5244264: The CV's PDFs completed by @dume/pdf-ua, the links described from the PDF itself.
+- 5bdeb4d: Les PDF du CV sont conformes à PDF/UA-1, la norme d'accessibilité des PDF, et validés avec veraPDF à chaque PR.
+- 92d3550: The sharing cards take their whole width: no room kept for a scrollbar, so the band on top reaches the right edge.
+
 ## 2.1.1
 
 ### Patch Changes
