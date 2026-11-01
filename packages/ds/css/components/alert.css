@@ -16,7 +16,6 @@
     border: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
     border-radius: var(--ds-b-size-radius);
     background-color: var(--ds-b-color-background);
-    box-shadow: 0 var(--ds-b-size-4) var(--ds-b-size-16) #0004;
     color: var(--ds-b-color-text);
     font-family: var(--ds-b-font-family);
     font-size: var(--ds-b-size-16);

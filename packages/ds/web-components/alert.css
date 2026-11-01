@@ -17,7 +17,9 @@
   pointer-events: none;
 }
 
+/* Over the page's own content */
 .ds-c-alert {
+  box-shadow: 0 var(--ds-b-size-4) var(--ds-b-size-16) #0004;
   pointer-events: auto;
 }
 
