@@ -1,0 +1,23 @@
+/*
+ * <ds-file-field>, in its shadow root: its drop zone around the field in its slot. The field's styles are the page's
+ * (css/components/field.css), and so are the tokens, which cross the shadow root; in rem, as the page is ours
+ */
+:host {
+  display: block;
+  padding: var(--ds-b-size-16);
+  border: var(--ds-b-size-border-2) dashed var(--ds-b-color-border-control);
+  border-radius: var(--ds-b-size-radius);
+}
+
+/* A file over it: a solid border, not the color alone */
+:host([dragging]) {
+  border-style: solid;
+  border-color: var(--ds-b-color-primary);
+  background-color: var(--ds-b-color-background-hover);
+}
+
+@media (forced-colors: active) {
+  :host([dragging]) {
+    border-color: Highlight;
+  }
+}

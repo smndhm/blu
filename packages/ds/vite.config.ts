@@ -11,6 +11,7 @@ export default defineConfig({
     entry: {
       ...Object.fromEntries(stylesheets.map(file => [file.replace(/\.css$/, ''), `css/${file}`])),
       'web-components/alert': 'web-components/alert.ts',
+      'web-components/file-field': 'web-components/file-field.ts',
     },
     platform: 'browser',
     dts: true,
