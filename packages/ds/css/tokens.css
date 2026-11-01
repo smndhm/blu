@@ -4,10 +4,12 @@
  * kinds of color blindness see them (tests/tokens.test.js)
  */
 
-/* The layers' order, for every stylesheet of the design system: the tokens come first */
+/* The layers' order, for every stylesheet of the design system: the tokens come first. The tokens in a layer of their own
+   within the base: with a block of ds.base right after it, the build would split this list, and Vite move what is left
+   of it above that block, ds.base then coming last, over the components */
 @layer ds.normalize, ds.base, ds.layout, ds.components, ds.utilities;
 
-@layer ds.base {
+@layer ds.base.tokens {
   :root {
     --ds-b-color-text: light-dark(#222, #fafafa);
     --ds-b-color-text-muted: light-dark(#555, #bbb);

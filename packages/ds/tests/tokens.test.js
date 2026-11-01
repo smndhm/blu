@@ -119,6 +119,12 @@ for (const [index, name] of ['light', 'dark'].entries()) {
   }
 }
 
+test('keeps the order of the layers in one list, first: no block of a listed layer right after it, which would split it', () => {
+  const css = readFileSync(new URL('../css/tokens.css', import.meta.url), 'utf8').replaceAll(/\/\*[\s\S]*?\*\//g, '');
+  assert.match(css.trimStart(), /^@layer ds\.normalize, ds\.base, ds\.layout, ds\.components, ds\.utilities;/);
+  assert.doesNotMatch(css, /@layer ds\.(?:normalize|base|layout|components|utilities) \{/);
+});
+
 test('names every custom property after the taxonomy (see the README)', () => {
   // As @dume/dev-config's Stylelint rule: --ds-b-{category}-…, --ds-c-{component}-{category}-…, --ds-l-{layout}-{category}-…
   const names = Object.keys(tokens);
