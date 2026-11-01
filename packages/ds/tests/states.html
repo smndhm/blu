@@ -42,6 +42,10 @@
       .ds-c-field__control {
         inline-size: 10rem;
       }
+
+      .ds-c-field__control[type='file'] {
+        inline-size: 16rem;
+      }
     </style>
   </head>
   <body>
@@ -107,6 +111,15 @@
               <input class="ds-c-field__control" value="Not an e-mail" aria-label="Invalid e-mail" aria-invalid="true" aria-describedby="invalid-message" data-case="invalid" />
               <p id="invalid-message" class="ds-c-field__message ds-c-field__message--danger">An e-mail address is expected.</p>
             </td>
+          </tr>
+          <tr data-component="field-file">
+            <th scope="row">File field</th>
+            <td><input type="file" class="ds-c-field__control" aria-label="File field at rest" data-case="rest" /></td>
+            <td><input type="file" class="ds-c-field__control" aria-label="Hovered file field" data-case="hover" data-state="hover" /></td>
+            <td><input type="file" class="ds-c-field__control" aria-label="Focused file field" data-case="focus-visible" data-state="focus-visible" /></td>
+            <td><input type="file" class="ds-c-field__control" aria-label="Pressed file field" data-case="active" data-state="active" /></td>
+            <td><input type="file" class="ds-c-field__control" aria-label="Disabled file field" disabled data-case="disabled" data-state="hover" /></td>
+            <td></td>
           </tr>
           <tr data-component="header-link">
             <th scope="row">Header link</th>
