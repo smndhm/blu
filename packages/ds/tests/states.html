@@ -121,6 +121,67 @@
             <td><input type="file" class="ds-c-field__control" aria-label="Disabled file field" disabled data-case="disabled" data-state="hover" /></td>
             <td></td>
           </tr>
+          <!-- Hovered, pressed and checked are the browser's own, on the native control: the same styles, so no data-case for them -->
+          <tr data-component="checkbox-card">
+            <th scope="row">Checkbox card</th>
+            <td>
+              <div class="ds-c-checkbox-card">
+                <input class="ds-c-checkbox-card__control" type="checkbox" id="card-rest" aria-describedby="card-rest-description" data-case="rest" />
+                <label class="ds-c-checkbox-card__label" for="card-rest">Notify</label>
+                <p class="ds-c-checkbox-card__description" id="card-rest-description">By e-mail</p>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-checkbox-card">
+                <input class="ds-c-checkbox-card__control" type="checkbox" id="card-hover" aria-describedby="card-hover-description" data-state="hover" />
+                <label class="ds-c-checkbox-card__label" for="card-hover">Notify</label>
+                <p class="ds-c-checkbox-card__description" id="card-hover-description">By e-mail</p>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-checkbox-card">
+                <input
+                  class="ds-c-checkbox-card__control"
+                  type="checkbox"
+                  id="card-focus"
+                  aria-describedby="card-focus-description"
+                  data-case="focus-visible"
+                  data-state="focus-visible"
+                />
+                <label class="ds-c-checkbox-card__label" for="card-focus">Notify</label>
+                <p class="ds-c-checkbox-card__description" id="card-focus-description">By e-mail</p>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-checkbox-card">
+                <input class="ds-c-checkbox-card__control" type="checkbox" id="card-active" aria-describedby="card-active-description" data-state="active" />
+                <label class="ds-c-checkbox-card__label" for="card-active">Notify</label>
+                <p class="ds-c-checkbox-card__description" id="card-active-description">By e-mail</p>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-checkbox-card">
+                <input
+                  class="ds-c-checkbox-card__control"
+                  type="checkbox"
+                  id="card-disabled"
+                  aria-describedby="card-disabled-description"
+                  disabled
+                  data-case="disabled"
+                  data-state="hover"
+                />
+                <label class="ds-c-checkbox-card__label" for="card-disabled">Notify</label>
+                <p class="ds-c-checkbox-card__description" id="card-disabled-description">By e-mail</p>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-checkbox-card">
+                <input class="ds-c-checkbox-card__control" type="checkbox" id="card-checked" aria-describedby="card-checked-description" checked />
+                <label class="ds-c-checkbox-card__label" for="card-checked">Notify</label>
+                <p class="ds-c-checkbox-card__description" id="card-checked-description">By e-mail</p>
+              </div>
+            </td>
+          </tr>
           <tr data-component="header-link">
             <th scope="row">Header link</th>
             <td><a href="#header" class="ds-c-header__link" data-case="rest">Articles</a></td>

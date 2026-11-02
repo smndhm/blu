@@ -1,0 +1,49 @@
+/*
+ * A checkbox in a box (`.ds-c-checkbox-card`): its control, native, its label beside it and its description under the
+ * label, which the control names with `aria-describedby`. For a choice that needs explaining, such as a setting
+ */
+
+@layer ds.components {
+  .ds-c-checkbox-card {
+    display: grid;
+    align-items: center;
+    border: var(--ds-b-size-border-1) solid var(--ds-b-color-border);
+    border-radius: var(--ds-b-size-radius);
+    background-color: var(--ds-b-color-background-surface);
+    column-gap: var(--ds-b-size-12);
+    grid-template-columns: auto 1fr;
+    padding-block: var(--ds-b-size-12);
+    padding-inline: var(--ds-b-size-16);
+  }
+
+  .ds-c-checkbox-card__control {
+    margin: 0;
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    /* Disabled: its label too. Its description stays readable, as it may say why */
+    &:disabled + .ds-c-checkbox-card__label {
+      color: var(--ds-b-color-text-disabled);
+    }
+  }
+
+  .ds-c-checkbox-card__label {
+    font-weight: 500;
+  }
+
+  .ds-c-checkbox-card__description {
+    color: var(--ds-b-color-text-muted);
+    grid-column: 2;
+    margin-block: var(--ds-b-size-4) 0;
+  }
+
+  @media (forced-colors: active) {
+    .ds-c-checkbox-card__control:disabled + .ds-c-checkbox-card__label {
+      color: GrayText;
+    }
+  }
+}
