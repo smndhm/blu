@@ -1,0 +1,30 @@
+/*
+ * The steps of a process, in their order, such as how a service works: not the progress of a task. The number above the
+ * text, in the heading font. A list with its order for screen readers (role="list": Safari drops it without bullets),
+ * which say the position themselves: the number is not read a second time
+ */
+
+@layer ds.components {
+  .ds-c-process-list {
+    --ds-l-grid-size-min: 12rem;
+
+    padding: 0;
+    counter-reset: ds-c-process-list;
+    list-style: none;
+  }
+
+  .ds-c-process-list > li {
+    counter-increment: ds-c-process-list;
+
+    &::before {
+      display: block;
+      color: var(--ds-b-color-primary);
+      content: counter(ds-c-process-list) / '';
+      font-family: var(--ds-b-font-family-heading);
+      font-size: var(--ds-b-size-32);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-block-end: var(--ds-b-size-8);
+    }
+  }
+}
