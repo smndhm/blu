@@ -4,12 +4,42 @@ import { test } from 'vite-plus/test';
 
 /** The custom properties of css/tokens.css: their names, and each color in the light and dark themes */
 const tokens = Object.fromEntries(
-  [...readFileSync(new URL('../css/tokens.css', import.meta.url), 'utf8').matchAll(/(--ds-[\w-]+):\s*([^;]+);/g)].map(([, name, value]) => [name, value.trim()]),
+  [...readFileSync(new URL('../css/tokens.css', import.meta.url), 'utf8').matchAll(/(--ds-[\w-]+):\s*([^;]+);/g)].map(([, name, value]) => [
+    name,
+    value.replaceAll(/\s+/g, ' ').trim(),
+  ]),
 );
-const theme = (name, index) => {
-  const pair = /^light-dark\((#\w+),\s*(#\w+)\)$/.exec(tokens[name]);
-  return pair ? pair[index + 1] : tokens[name];
-};
+
+/** The two values of a `light-dark()`, split on its comma that no parenthesis encloses */
+function lightDark(value) {
+  if (!value.startsWith('light-dark(')) return [value, value];
+  const inner = value.slice('light-dark('.length, -1);
+  let depth = 0;
+  for (const [position, character] of [...inner].entries()) {
+    if (character === '(') depth += 1;
+    if (character === ')') depth -= 1;
+    if (character === ',' && depth === 0) return [inner.slice(0, position).trim(), inner.slice(position + 1).trim()];
+  }
+  throw new Error(`Not two colors: ${value}`);
+}
+
+const toHex = channel =>
+  Math.round(channel * 255)
+    .toString(16)
+    .padStart(2, '0');
+
+/** A color as #rrggbb or #rrggbbaa: a `color-mix(in srgb, …)` computed as the browser does, `var()` read in the same theme */
+function resolve(value, index) {
+  const mixed = /^color-mix\(in srgb, var\((--[\w-]+)\) (\d+)%, (#\w+|transparent)\)$/.exec(value);
+  if (!mixed) return value;
+  const [, name, percent, other] = mixed;
+  const { rgb } = channels(theme(name, index));
+  const part = Number(percent) / 100;
+  if (other === 'transparent') return `#${rgb.map(toHex).join('')}${toHex(part)}`;
+  const behind = channels(other).rgb;
+  return `#${rgb.map((channel, position) => toHex(channel * part + behind[position] * (1 - part))).join('')}`;
+}
+const theme = (name, index) => resolve(lightDark(tokens[name])[index], index);
 
 /** The sRGB channels, 0 to 1, of a #rgb, #rrggbb or #rrggbbaa color, and its alpha */
 function channels(hex) {
@@ -79,6 +109,18 @@ function textContrast(text, background, behind, vision) {
   const [lighter, darker] = [luminance(front, vision), luminance(back, vision)].toSorted((x, y) => y - x);
   return (lighter + 0.05) / (darker + 0.05);
 }
+
+test('the states and the surface come from the primary color, as they were written by hand', () => {
+  const expected = {
+    'primary-hover': ['#3c0177', '#d9beff'],
+    'primary-active': ['#2d0159', '#e9daff'],
+    'background-hover': ['#4b019514', '#c9a2ff24'],
+    'background-active': ['#4b019529', '#c9a2ff42'],
+  };
+  for (const [token, values] of Object.entries(expected)) {
+    for (const index of [0, 1]) assert.equal(theme(`--ds-b-color-${token}`, index), values[index], token);
+  }
+});
 
 for (const [index, name] of ['light', 'dark'].entries()) {
   const color = token => theme(`--ds-b-color-${token}`, index);

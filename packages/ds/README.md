@@ -155,7 +155,7 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 | `@dume/ds/fonts.css`        | Bricolage Grotesque, the heading font, and Instrument Sans, the printed text's: their Latin subsets, the files in `fonts/` next to it                                                    |
 | `@dume/ds/tokens.css`       | The design tokens, as custom properties                                                                                                                                                  |
 | `@dume/ds/base.css`         | [modern-normalize](https://github.com/sindresorhus/modern-normalize), then the HTML elements, without classes: text, headings, `hgroup`, links, focus ring, images, tables, quotes, code |
-| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-text-muted`: text that comes second; `.ds-u-print-hidden`: not printed                                         |
+| `@dume/ds/utilities.css`    | `.ds-u-visually-hidden`: hidden on screen, read by screen readers; `.ds-u-print-hidden`: not printed; `.ds-u-text-muted`: text that comes second                                         |
 | `@dume/ds/layout/*.css`     | One stylesheet per layout: `page.css` (`.ds-l-page`, `__main`, `--centered`), `cluster.css` (`.ds-l-cluster`, `--between`), `stack.css` (`.ds-l-stack`)                                  |
 | `@dume/ds/components/*.css` | One stylesheet per component (see below)                                                                                                                                                 |
 
@@ -165,25 +165,27 @@ Its parts are also stylesheets of their own, for a project that only takes some 
 @import '@dume/ds/components/button.css';
 ```
 
+A project with a color of its own sets `--ds-b-color-primary` on `:root`, in both themes: the states and the surface come from it. The tests check the design system's own color: check that one's contrasts too.
+
 The custom properties are set on `:root`, with `color-scheme: light dark`, each color in `light-dark()`:
 
-| Custom property                    | Light       | Dark        | For                                                                       |
-| ---------------------------------- | ----------- | ----------- | ------------------------------------------------------------------------- |
-| `--ds-b-color-text`                | `#222`      | `#fafafa`   | Text                                                                      |
-| `--ds-b-color-text-muted`          | `#555`      | `#bbb`      | Secondary text                                                            |
-| `--ds-b-color-background`          | `#fafafa`   | `#222`      | The page                                                                  |
-| `--ds-b-color-background-surface`  | `#f1edf7`   | `#2e2a35`   | A box on the page                                                         |
-| `--ds-b-color-border`              | `#ccc`      | `#555`      | A separator, a decorative border                                          |
-| `--ds-b-color-border-control`      | `#8a8a8a`   | `#8a8a8a`   | The border of an input (3:1)                                              |
-| `--ds-b-color-primary`             | `#4b0195`   | `#c9a2ff`   | Links, focus, buttons                                                     |
-| `--ds-b-color-text-on-primary`     | `#fff`      | `#222`      | Text on the primary color                                                 |
-| `--ds-b-color-primary-hover`       | `#3c0177`   | `#d9beff`   | The primary color, hovered                                                |
-| `--ds-b-color-primary-active`      | `#2d0159`   | `#e9daff`   | The primary color, pressed                                                |
-| `--ds-b-color-background-hover`    | `#4b019514` | `#c9a2ff24` | A background hovered: the primary color, translucent                      |
-| `--ds-b-color-background-active`   | `#4b019529` | `#c9a2ff42` | A background pressed                                                      |
-| `--ds-b-color-text-disabled`       | `#767676`   | `#949494`   | The text of a disabled element                                            |
-| `--ds-b-color-background-disabled` | `#e8e8e8`   | `#333`      | The background of a disabled element                                      |
-| `--ds-b-color-danger`              | `#bd1541`   | `#ec7f89`   | An error, a destructive action: the primary color's chroma, turned to red |
+| Custom property                    | Light                         | Dark                          | For                                                                       |
+| ---------------------------------- | ----------------------------- | ----------------------------- | ------------------------------------------------------------------------- |
+| `--ds-b-color-text`                | `#222`                        | `#fafafa`                     | Text                                                                      |
+| `--ds-b-color-text-muted`          | `#555`                        | `#bbb`                        | Secondary text                                                            |
+| `--ds-b-color-background`          | `#fafafa`                     | `#222`                        | The page                                                                  |
+| `--ds-b-color-background-surface`  | primary 5%, on the background | primary 6%, on the background | A box on the page                                                         |
+| `--ds-b-color-border`              | `#ccc`                        | `#555`                        | A separator, a decorative border                                          |
+| `--ds-b-color-border-control`      | `#8a8a8a`                     | `#8a8a8a`                     | The border of an input (3:1)                                              |
+| `--ds-b-color-primary`             | `#4b0195`                     | `#c9a2ff`                     | Links, focus, buttons                                                     |
+| `--ds-b-color-text-on-primary`     | `#fff`                        | `#222`                        | Text on the primary color                                                 |
+| `--ds-b-color-primary-hover`       | primary 80%, on black         | primary 70%, on white         | The primary color, hovered                                                |
+| `--ds-b-color-primary-active`      | primary 60%, on black         | primary 40%, on white         | The primary color, pressed                                                |
+| `--ds-b-color-background-hover`    | primary 8%, translucent       | primary 14%, translucent      | A background hovered: the primary color, translucent                      |
+| `--ds-b-color-background-active`   | primary 16%, translucent      | primary 26%, translucent      | A background pressed                                                      |
+| `--ds-b-color-text-disabled`       | `#767676`                     | `#949494`                     | The text of a disabled element                                            |
+| `--ds-b-color-background-disabled` | `#e8e8e8`                     | `#333`                        | The background of a disabled element                                      |
+| `--ds-b-color-danger`              | `#bd1541`                     | `#ec7f89`                     | An error, a destructive action: the primary color's chroma, turned to red |
 
 | Custom property                                                                      | Value                                                                  |
 | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |

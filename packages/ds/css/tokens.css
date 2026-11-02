@@ -15,8 +15,8 @@
     --ds-b-color-text-muted: light-dark(#555, #bbb);
     --ds-b-color-background: light-dark(#fafafa, #222);
 
-    /* A box on the background, such as a checkbox with its label and help */
-    --ds-b-color-background-surface: light-dark(#f1edf7, #2e2a35);
+    /* A box on the background, such as a checkbox with its label and help: tinted by the primary color */
+    --ds-b-color-background-surface: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 5%, #fafafa), color-mix(in srgb, var(--ds-b-color-primary) 6%, #222));
 
     /* A separator, a decorative border */
     --ds-b-color-border: light-dark(#ccc, #555);
@@ -28,12 +28,13 @@
     /* Text on the primary color, such as a button's */
     --ds-b-color-text-on-primary: light-dark(#fff, #222);
 
-    /* The interactive states (see the README): the primary color hovered and pressed, darker in the light theme, lighter
-       in the dark one; the background of an element hovered and pressed, the primary color over whatever is behind */
-    --ds-b-color-primary-hover: light-dark(#3c0177, #d9beff);
-    --ds-b-color-primary-active: light-dark(#2d0159, #e9daff);
-    --ds-b-color-background-hover: light-dark(#4b019514, #c9a2ff24);
-    --ds-b-color-background-active: light-dark(#4b019529, #c9a2ff42);
+    /* The interactive states (see the README), from the primary color, so that a project only sets that one: hovered and
+       pressed, darker in the light theme, lighter in the dark one; the background of an element hovered and pressed, the
+       primary color over whatever is behind. Set it on :root: these are computed there */
+    --ds-b-color-primary-hover: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 80%, #000), color-mix(in srgb, var(--ds-b-color-primary) 70%, #fff));
+    --ds-b-color-primary-active: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 60%, #000), color-mix(in srgb, var(--ds-b-color-primary) 40%, #fff));
+    --ds-b-color-background-hover: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 8%, transparent), color-mix(in srgb, var(--ds-b-color-primary) 14%, transparent));
+    --ds-b-color-background-active: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 16%, transparent), color-mix(in srgb, var(--ds-b-color-primary) 26%, transparent));
 
     /* A disabled element: its text and background, which WCAG does not require to contrast */
     --ds-b-color-text-disabled: light-dark(#767676, #949494);

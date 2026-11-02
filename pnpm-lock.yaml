@@ -171,10 +171,10 @@ importers:
         version: 3.0.3
       '@dume/dev-config':
         specifier: 1.4.0
-        version: 1.4.0(eslint@10.13.0(supports-color@10.2.2))(oxlint@1.90.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.4.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(@volar/typescript@2.4.30(typescript@6.0.3))(jsdom@30.1.3)(playwright@1.64.1)(typescript@6.0.3)(yaml@2.9.1)))(playwright@1.64.1)(postcss@8.5.32)(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)
+        version: 1.4.0(eslint@10.14.0(supports-color@10.2.2))(oxlint@1.90.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.4.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(@volar/typescript@2.4.30(typescript@6.0.3))(jsdom@30.1.3)(playwright@1.64.1)(typescript@6.0.3)(yaml@2.9.1)))(playwright@1.64.1)(postcss@8.5.32)(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)
       '@eslint/compat':
         specifier: 2.1.1
-        version: 2.1.1(eslint@10.13.0(supports-color@10.2.2))
+        version: 2.1.1(eslint@10.14.0(supports-color@10.2.2))
       '@manypkg/cli':
         specifier: 0.25.1
         version: 0.25.1
@@ -182,8 +182,8 @@ importers:
         specifier: 4.0.6
         version: 4.0.6(@changesets/cli@3.0.3)(supports-color@10.2.2)
       eslint:
-        specifier: 10.13.0
-        version: 10.13.0(supports-color@10.2.2)
+        specifier: 10.14.0
+        version: 10.14.0(supports-color@10.2.2)
       oxlint:
         specifier: 1.90.0
         version: 1.90.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.4.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(@volar/typescript@2.4.30(typescript@6.0.3))(jsdom@30.1.3)(playwright@1.64.1)(typescript@6.0.3)(yaml@2.9.1))
@@ -2444,8 +2444,8 @@ packages:
     resolution: {integrity: sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  eslint@10.13.0:
-    resolution: {integrity: sha512-UohDjD4zSzEwhf58M3O7vc/ycc8O1I7dNlhtD0WxE8Px8EHNJKtUwzBqrzeGhisRuv2ag4sAYswszCJRgKXYUg==}
+  eslint@10.14.0:
+    resolution: {integrity: sha512-T0pNsxkb9IKmtQjhpK3d7nWOpFv+YHuMbTJnSVMoQblF0onvXfErrtp4V1jHtsQPan7dKaGVD0q1WCXnzMF31A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     hasBin: true
     peerDependencies:
@@ -4969,7 +4969,7 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.1.7
 
-  '@dume/dev-config@1.4.0(eslint@10.13.0(supports-color@10.2.2))(oxlint@1.90.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.4.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(@volar/typescript@2.4.30(typescript@6.0.3))(jsdom@30.1.3)(playwright@1.64.1)(typescript@6.0.3)(yaml@2.9.1)))(playwright@1.64.1)(postcss@8.5.32)(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)':
+  '@dume/dev-config@1.4.0(eslint@10.14.0(supports-color@10.2.2))(oxlint@1.90.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.4.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(@volar/typescript@2.4.30(typescript@6.0.3))(jsdom@30.1.3)(playwright@1.64.1)(typescript@6.0.3)(yaml@2.9.1)))(playwright@1.64.1)(postcss@8.5.32)(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)':
     dependencies:
       '@eslint/json': 2.1.1
       '@eslint/markdown': 8.0.3(supports-color@10.2.2)
@@ -4982,7 +4982,7 @@ snapshots:
       stylelint-prettier: 5.0.3(prettier@3.9.10)(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
       stylelint-use-logical: 2.1.3(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
     optionalDependencies:
-      eslint: 10.13.0(supports-color@10.2.2)
+      eslint: 10.14.0(supports-color@10.2.2)
       oxlint: 1.90.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.4.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(@volar/typescript@2.4.30(typescript@6.0.3))(jsdom@30.1.3)(playwright@1.64.1)(typescript@6.0.3)(yaml@2.9.1))
       playwright: 1.64.1
       prettier: 3.9.10
@@ -4998,18 +4998,18 @@ snapshots:
 
   '@epic-web/invariant@1.0.0': {}
 
-  '@eslint-community/eslint-utils@4.10.1(eslint@10.13.0(supports-color@10.2.2))':
+  '@eslint-community/eslint-utils@4.10.1(eslint@10.14.0(supports-color@10.2.2))':
     dependencies:
-      eslint: 10.13.0(supports-color@10.2.2)
+      eslint: 10.14.0(supports-color@10.2.2)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.2': {}
 
-  '@eslint/compat@2.1.1(eslint@10.13.0(supports-color@10.2.2))':
+  '@eslint/compat@2.1.1(eslint@10.14.0(supports-color@10.2.2))':
     dependencies:
       '@eslint/core': 1.2.1
     optionalDependencies:
-      eslint: 10.13.0(supports-color@10.2.2)
+      eslint: 10.14.0(supports-color@10.2.2)
 
   '@eslint/config-array@0.23.5(supports-color@10.2.2)':
     dependencies:
@@ -6519,9 +6519,9 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint@10.13.0(supports-color@10.2.2):
+  eslint@10.14.0(supports-color@10.2.2):
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.13.0(supports-color@10.2.2))
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.14.0(supports-color@10.2.2))
       '@eslint-community/regexpp': 4.12.2
       '@eslint/config-array': 0.23.5(supports-color@10.2.2)
       '@eslint/config-helpers': 0.7.0
