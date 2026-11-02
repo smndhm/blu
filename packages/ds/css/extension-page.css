@@ -1,0 +1,7 @@
+/*
+ * An extension's page: Chrome gives its body a font of its own, at 75%, outside any layer. So this rule is outside any
+ * layer too, as one in `ds.base` would lose: the design system's font, from the root. Not in styles.css, for a site
+ */
+body {
+  font: inherit;
+}
