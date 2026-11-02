@@ -56,7 +56,7 @@
 {%- for job in company.positions %}
 <hgroup>
 	<h4>{{ job.position }}</h4>
-	<p class="ds-c-post__meta"><small>{{ period(job.start, job.end, version, true) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
+	<p class="ds-u-text-muted"><small>{{ period(job.start, job.end, version, true) }}{% if job.location or company.location %}, {{ job.location or company.location }}{% endif %}</small></p>
 </hgroup>
 {#- Un paragraphe par réalisation, resserrés dans une pile #}
 <div class="ds-l-stack">
@@ -74,7 +74,7 @@
 {%- for school in version.education %}
 <hgroup>
 	<h3>{{ school.studyType }}</h3>
-	<p class="ds-c-post__meta"><small>{{ school.institution }}, {{ period(school.start, school.end, version) }}</small></p>
+	<p class="ds-u-text-muted"><small>{{ school.institution }}, {{ period(school.start, school.end, version) }}</small></p>
 </hgroup>
 {%- endfor %}
 

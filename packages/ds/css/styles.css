@@ -19,7 +19,5 @@
 @import './components/header.css';
 @import './components/hero.css';
 @import './components/links.css';
-@import './components/post-list.css';
-@import './components/post-nav.css';
-@import './components/post.css';
+@import './components/pagination.css';
 @import './components/skip-link.css';

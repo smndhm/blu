@@ -20,3 +20,11 @@
     }
   }
 }
+
+/* Text that comes second, such as a date */
+
+@layer ds.utilities {
+  .ds-u-text-muted {
+    color: var(--ds-b-color-text-muted);
+  }
+}

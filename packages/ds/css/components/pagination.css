@@ -1,7 +1,7 @@
-/* Links to the previous and next articles, the next one at the end of the line */
+/* Links to the previous and next pages of a series, such as articles: the next one at the end of the line, even alone */
 
 @layer ds.components {
-  .ds-c-post-nav__list {
+  .ds-c-pagination {
     display: flex;
     justify-content: space-between;
     padding: var(--ds-b-size-24) 0 0;
@@ -11,11 +11,11 @@
     list-style: none;
   }
 
-  .ds-c-post-nav__item {
+  .ds-c-pagination__item {
     flex: 1 1 0;
   }
 
-  .ds-c-post-nav__item--next {
+  .ds-c-pagination__item--next {
     text-align: end;
   }
 }
