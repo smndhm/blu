@@ -9,6 +9,10 @@
       line-height: 1;
     }
 
+    & hgroup {
+      margin-block-end: var(--ds-b-size-24);
+    }
+
     & p {
       font-size: var(--ds-b-size-20);
     }

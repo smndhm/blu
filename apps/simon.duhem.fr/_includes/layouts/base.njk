@@ -40,9 +40,8 @@
 
 		{%- include "partials/structured-data.njk" %}
 
-		{#- The design system, @dume/ds (eleventy.config.js copies it as /ds/), then the site's own classes #}
+		{#- The design system, @dume/ds: all of the site's style (eleventy.config.js copies it as /ds/) #}
 		<link rel="stylesheet" href="{{ assets["/ds/styles.css"] }}">
-		<link rel="stylesheet" href="{{ assets["/css/site.css"] }}">
 	</head>
 	<body class="ds-l-page{% if bodyClass %} {{ bodyClass }}{% endif %}">
 		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
