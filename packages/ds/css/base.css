@@ -19,6 +19,20 @@
     navigation: auto;
   }
 
+  /* Hidden, whatever the display of its layout or component */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* The theme a project lets its visitor choose, over the system's */
+  :root[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+  }
+
   h1,
   h2,
   h3,
@@ -74,7 +88,13 @@
   }
 
   p {
+    max-inline-size: 65ch;
     text-wrap: pretty;
+
+    /* Printed: the sheet's whole width, as the page */
+    @media print {
+      max-inline-size: none;
+    }
   }
 
   /* A heading and its tagline: the tagline under it, the heading in its own size */

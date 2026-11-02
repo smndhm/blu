@@ -31,6 +31,21 @@
     }
   }
 
+  /* A product's page, with more room; its text keeps its reading width */
+  .ds-l-page--large {
+    max-inline-size: 64rem;
+  }
+
+  /* A light wash of the primary color at the top of the window, in both themes; repeated across, up to the scrollbar */
+  :root:has(.ds-l-page--tinted) {
+    background-image: linear-gradient(color-mix(in srgb, var(--ds-b-color-primary) 10%, transparent), transparent 28rem);
+    background-repeat: repeat-x;
+
+    @media print {
+      background-image: none;
+    }
+  }
+
   .ds-l-page--centered .ds-l-page__main {
     display: flex;
     flex-direction: column;

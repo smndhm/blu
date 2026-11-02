@@ -11,6 +11,11 @@
     list-style: none;
   }
 
+  /* A paragraph among its items, such as a footer's credits: lined up with them */
+  .ds-l-cluster > p {
+    margin: 0;
+  }
+
   /* Its items at each end of the line, such as the credits and the settings of a footer */
   .ds-l-cluster--between {
     justify-content: space-between;

@@ -1,0 +1,14 @@
+/* Items side by side, as many as fit, each as wide as the others: cards, steps. --ds-l-grid-size-min, the width under which an item goes to the next line */
+
+@layer ds.layout {
+  .ds-l-grid {
+    --ds-l-grid-size-min: 18rem;
+
+    display: grid;
+    padding: 0;
+    margin: 0;
+    gap: var(--ds-b-size-16);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--ds-l-grid-size-min)), 1fr));
+    list-style: none;
+  }
+}
