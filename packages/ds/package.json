@@ -21,6 +21,7 @@
     "./tokens.css": "./dist/tokens.css",
     "./base.css": "./dist/base.css",
     "./utilities.css": "./dist/utilities.css",
+    "./extension-page.css": "./dist/extension-page.css",
     "./components/*.css": "./dist/components/*.css",
     "./fonts.css": "./dist/fonts.css",
     "./fonts/*": "./dist/fonts/*",
