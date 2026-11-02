@@ -7,7 +7,7 @@ layout: layouts/base.njk
 			<h1>{{ title }}</h1>
 			<p class="ds-u-text-muted">
 				<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
-				{%- for topic in tags | topics %} · {{ topic }}{% endfor %}
+				{%- for topic in tags | topics %} - {{ topic }}{% endfor %}
 			</p>
 			{%- if origin %}
 			<p class="ds-u-text-muted">Publié initialement sur <a href="{{ origin.href }}">{{ origin.title }}</a>.</p>

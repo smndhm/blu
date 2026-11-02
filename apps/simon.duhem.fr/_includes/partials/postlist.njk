@@ -4,11 +4,11 @@
 		<hgroup>
 			<h2><a href="{{ item.url }}">{{ item.title }}</a></h2>
 			<p class="ds-u-text-muted">
-			{%- if item.date %}<time datetime="{{ item.date | isoDate }}">{{ item.date | readableDate }}</time> · {% endif %}
+			{%- if item.date %}<time datetime="{{ item.date | isoDate }}">{{ item.date | readableDate }}</time> - {% endif %}
 			{%- if item.isTalk %}
 			Conférence à {% if item.eventUrl %}<a href="{{ item.eventUrl }}">{{ item.event }}</a>{% else %}{{ item.event }}{% endif %}
 			{%- else %}
-			Article{% for topic in item.topics | topics %} · {{ topic }}{% endfor %}
+			Article{% for topic in item.topics | topics %} - {{ topic }}{% endfor %}
 			{%- endif %}
 		</p>
 		</hgroup>

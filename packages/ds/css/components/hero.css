@@ -1,12 +1,17 @@
-/* A block that catches the eye, such as at the top of a home page: everything in it a little larger, its heading whatever its level */
+/*
+ * A block that catches the eye, such as at the top of a home page: everything in it a little larger, its heading
+ * whatever its level, as much room above as below. `--media`: an image (`__media`) beside its text, which goes under it
+ * when there is no room, such as a product's logo
+ */
 
 @layer ds.components {
   .ds-c-hero {
-    padding-block: var(--ds-b-size-32) var(--ds-b-size-48);
+    padding-block: var(--ds-b-size-40);
 
     & :is(h1, h2, h3, h4, h5, h6) {
       font-size: var(--ds-b-size-display);
       line-height: 1;
+      margin-block-end: var(--ds-b-size-8);
     }
 
     & hgroup {
@@ -14,7 +19,31 @@
     }
 
     & p {
-      font-size: var(--ds-b-size-20);
+      font-size: var(--ds-b-size-24);
+      line-height: 1.3;
     }
+
+    /* Nothing under its last line, so that it is really centered in what centers it */
+    & > :last-child,
+    & > * > :last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  .ds-c-hero--media {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-b-size-32);
+
+    & > :not(.ds-c-hero__media) {
+      flex: 1 1 18rem;
+    }
+  }
+
+  .ds-c-hero__media {
+    flex: none;
+    block-size: auto;
+    inline-size: 10rem;
   }
 }

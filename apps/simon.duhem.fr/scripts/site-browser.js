@@ -6,10 +6,11 @@
 import { access } from 'node:fs/promises';
 import { join, normalize } from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import metadata from '../_data/metadata.js';
 
-export const siteDir = new URL('../_site/', import.meta.url).pathname;
+export const siteDir = fileURLToPath(new URL('../_site/', import.meta.url));
 export const siteUrl = new URL(metadata.url).origin;
 
 /** @param {import('playwright').BrowserContextOptions} [options] The page's options, such as its viewport */

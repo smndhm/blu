@@ -124,7 +124,7 @@ test('the states and the surface come from the primary color, as they were writt
 
 for (const [index, name] of ['light', 'dark'].entries()) {
   const color = token => theme(`--ds-b-color-${token}`, index);
-  const backgrounds = ['background', 'background-surface'];
+  const backgrounds = ['background', 'background-surface', 'background-tinted'];
 
   for (const vision of Object.keys(VISIONS)) {
     test(`${name}, ${vision}: text, muted text, primary and danger pass WCAG AA on both backgrounds`, () => {
