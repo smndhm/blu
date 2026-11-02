@@ -18,6 +18,9 @@
     /* A box on the background, such as a checkbox with its label and help: tinted by the primary color */
     --ds-b-color-background-surface: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 5%, #fafafa), color-mix(in srgb, var(--ds-b-color-primary) 6%, #222));
 
+    /* The strongest of a page's gradient (`.ds-l-page--tinted`): text stays readable on it */
+    --ds-b-color-background-tinted: light-dark(color-mix(in srgb, var(--ds-b-color-primary) 14%, #fafafa), color-mix(in srgb, var(--ds-b-color-primary) 14%, #222));
+
     /* A separator, a decorative border */
     --ds-b-color-border: light-dark(#ccc, #555);
 
@@ -41,7 +44,7 @@
     --ds-b-color-background-disabled: light-dark(#e8e8e8, #333);
 
     /* An error, a destructive action: the primary color's chroma, turned to red (oklch 0.515 0.196 15, 0.72 0.135 15) */
-    --ds-b-color-danger: light-dark(#bd1541, #ec7f89);
+    --ds-b-color-danger: light-dark(#a30d31, #ffabba);
 
     /* The system's font, then the names older browsers know it by, then emoji */
     --ds-b-font-family: system-ui, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
