@@ -50,6 +50,8 @@
 
   /* A file input, native: the keyboard, screen readers and dropping a file are the browser's. Its button as an outline button */
   .ds-c-field__control[type='file'] {
+    max-inline-size: 100%;
+
     &:not(:disabled) {
       cursor: pointer;
     }
