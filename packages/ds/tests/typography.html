@@ -22,6 +22,12 @@
         margin-block-start: var(--ds-b-size-40);
       }
 
+      /* Details in the muted color, as a project sets them */
+      .details {
+        color: var(--ds-b-color-text-muted);
+        margin-block: var(--ds-b-size-4) 0;
+      }
+
       [data-caption] {
         color: var(--ds-b-color-text-muted);
         font-family: var(--ds-b-font-family-monospace);
@@ -60,13 +66,13 @@
         <h2 id="taglines">A heading and its tagline</h2>
         <hgroup lang="fr">
           <h3>Architecte front-end, MGDIS</h3>
-          <p class="ds-c-post__meta"><small>Mai 2021 - aujourd'hui, Vannes</small></p>
+          <p class="details"><small>Mai 2021 - aujourd'hui, Vannes</small></p>
         </hgroup>
         <p>A tagline in small print, such as a date, right under its heading.</p>
         <h3>MGDIS</h3>
         <hgroup lang="fr">
           <h4>Architecte front-end</h4>
-          <p class="ds-c-post__meta"><small>Mai 2021 - aujourd'hui, Vannes (télétravail)</small></p>
+          <p class="details"><small>Mai 2021 - aujourd'hui, Vannes (télétravail)</small></p>
         </hgroup>
         <div class="ds-l-stack">
           <p>A heading right after another: the previous heading's margin sets the room between them.</p>
@@ -78,7 +84,7 @@
       <section aria-labelledby="text">
         <h2 id="text">Text</h2>
         <p>A paragraph with <strong>strong</strong> and <em>emphasized</em> words, <small>small print</small>, a <a href="#text">link</a> and <code>inline code</code>.</p>
-        <p class="ds-c-post__meta">Details in the muted color, such as an article's date.</p>
+        <p class="details">Details in the muted color, such as an article's date.</p>
         <ul>
           <li>A list item</li>
           <li>Another list item</li>
