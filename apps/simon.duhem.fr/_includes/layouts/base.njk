@@ -42,6 +42,8 @@
 
 		{#- The design system, @dume/ds: all of the site's style (eleventy.config.js copies it as /ds/) #}
 		<link rel="stylesheet" href="{{ assets["/ds/styles.css"] }}">
+		{#- Its variables only: the home page's introduction is long, smaller in the hero than the design system's 24px #}
+		<style>:root { --ds-c-hero-size-text: var(--ds-b-size-20); }</style>
 	</head>
 	<body class="ds-l-page{% if bodyClass %} {{ bodyClass }}{% endif %}">
 		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
