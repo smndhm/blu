@@ -11,6 +11,11 @@
     list-style: none;
   }
 
+  /* Cards among its items, boxes rather than words: as much room between its lines as between them, as in a grid */
+  .ds-l-cluster:has(> .ds-c-card) {
+    gap: var(--ds-b-size-16);
+  }
+
   /* A paragraph among its items, such as a footer's credits: lined up with them */
   .ds-l-cluster > p {
     margin: 0;
@@ -19,5 +24,22 @@
   /* Its items at each end of the line, such as the credits and the settings of a footer */
   .ds-l-cluster--between {
     justify-content: space-between;
+  }
+
+  /* Its items in the middle of the line, such as cards under a centered heading */
+  .ds-l-cluster--center {
+    justify-content: center;
+  }
+
+  /* Its items as wide as each other across the line, its images at their own size, such as two cards with an arrow between */
+  .ds-l-cluster--equal {
+    & > * {
+      flex: 1 1 0;
+      min-inline-size: 0;
+    }
+
+    & > :is(img, svg) {
+      flex: none;
+    }
   }
 }

@@ -28,3 +28,20 @@
     color: var(--ds-b-color-text-muted);
   }
 }
+
+/* Text in the primary color, to bring it out, such as the answer after a question in a heading */
+
+@layer ds.utilities {
+  .ds-u-text-primary {
+    color: var(--ds-b-color-primary);
+  }
+}
+
+/* Text centered, such as a heading over centered cards; a paragraph as wide as its container, its lines centered in it */
+
+@layer ds.utilities {
+  .ds-u-text-center {
+    max-inline-size: none;
+    text-align: center;
+  }
+}

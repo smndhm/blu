@@ -1,15 +1,17 @@
 /*
  * A block that catches the eye, such as at the top of a home page: everything in it a little larger, its heading
  * whatever its level, as much room above as below. `--media`: an image (`__media`) beside its text, which goes under it
- * when there is no room, such as a product's logo. `--ds-c-hero-size-text`: its text's size, 24px, smaller for a long one
+ * when there is no room, such as a product's logo. `--ds-c-hero-size-heading`: its heading's size, the display one, smaller
+ * for a long one; `--ds-c-hero-size-text`: its text's size, 24px, smaller for a long one
  */
 
 @layer ds.components {
   .ds-c-hero {
     padding-block: var(--ds-b-size-40);
 
+    /* Set on the hero, a page or `:root`, so not declared here, as its text's */
     & :is(h1, h2, h3, h4, h5, h6) {
-      font-size: var(--ds-b-size-display);
+      font-size: var(--ds-c-hero-size-heading, var(--ds-b-size-display));
       line-height: 1;
       margin-block-end: var(--ds-b-size-8);
     }

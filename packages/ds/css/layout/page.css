@@ -36,11 +36,12 @@
     max-inline-size: 64rem;
   }
 
-  /* A glow of the primary color from the top left of the window, in both themes; as wide as the window, up to the scrollbar */
+  /* A glow of the primary color from the top left of the window, in both themes, in proportion to the window: as wide as it,
+     up to the scrollbar, and as high */
   :root:has(.ds-l-page--tinted) {
-    background-image: radial-gradient(ellipse 70rem 36rem at 20% 0, var(--ds-b-color-background-tinted), transparent);
+    background-image: radial-gradient(ellipse 80% 75% at 20% 0, var(--ds-b-color-background-tinted), transparent);
     background-repeat: no-repeat;
-    background-size: 100vw 36rem;
+    background-size: 100vw 100svh;
 
     @media print {
       background-image: none;
