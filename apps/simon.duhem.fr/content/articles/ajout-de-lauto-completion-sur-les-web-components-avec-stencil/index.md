@@ -18,13 +18,13 @@ layout: 'layouts/post.njk'
 Chez MGDIS, nous mettons à jour nos services en passant de AngularJS, désormais obsolète, à Vue.js. Cependant, avec l'évolution rapide des frameworks et la transition de Vue 2 à Vue 3, ces changements ne sont pas sans difficultés. Pour cela, nous nous sommes tournés vers les [Web Components](https://developer.mozilla.org/docs/Web/API/Web_components), un standard indépendant de tout framework.
 
 Au sein de la Core UI, nous développons [mg-components](https://github.com/MGDIS/core-ui/tree/master/packages/mg-components), une bibliothèque de Web Components basée sur [Stencil](https://stenciljs.com/). Cette bibliothèque offre une collection de composants conçus pour faciliter le développement et garantir l'accessibilité de nos produits.
-Note: Stencil n'est pas un framework mais une librairie qui permet de générer des Web Components.
+Note : Stencil n'est pas un framework mais une librairie qui permet de générer des Web Components.
 
 Une demande fréquente des développeurs était l'auto-complétion dans leurs IDEs pour notre librairie mg-components. Cependant, les Web Components ne fournissent pas automatiquement cette fonctionnalité car cela nécessite des informations spécifiques sur les éléments et attributs personnalisés. Nous avons donc cherché une solution pour remédier à cette limitation.
 
 ## La recherche de la solution
 
-Nous avons d'abord exploré les options pour VS Code, nous avons rapidement découvert que Stencil propose l'export [VS Code Documentation](https://stenciljs.com/docs/docs-vscode), basé sur les [custom data](https://github.com/microsoft/vscode-custom-data), un format pris en charge par VS Code. Une fois le fichier généré, l'intégration est simple : il suffit d'ajouter un fichier de configuration dans le projet utilisant la librairie pour que l'auto-complétion fonctionne.
+Nous avons d'abord exploré les options pour VS Code, nous avons rapidement découvert que Stencil propose l'export [VS Code Documentation](https://stenciljs.com/docs/docs-vscode), basé sur les [custom data](https://github.com/microsoft/vscode-custom-data), un format pris en charge par VS Code. Une fois le fichier généré, l'intégration est simple : il suffit d'ajouter un fichier de configuration dans le projet utilisant la librairie pour que l'auto-complétion fonctionne.
 
 Cependant, nous avons également des développeurs qui utilisent WebStorm, pour lequel Stencil ne propose pas d'export de documentation. Pour contourner ce problème, nous avons utilisé les [web types](https://github.com/JetBrains/web-types) de JetBrains, qui sont un équivalent des custom data mais pour WebStorm.
 Avec le package [stenciljs-web-types-generator
@@ -37,7 +37,7 @@ Ces solutions permettent d'obtenir l'auto-complétion pour les principaux IDE ut
 Pour générer nos deux fichiers, nous utilisons le build [docs-custom](https://stenciljs.com/docs/docs-custom) proposé par Stencil. Cette fonctionnalité nous permet d'accéder à un JSON représentant la documentation de nos composants.
 Ce JSON est ensuite transformé pour obtenir les formats attendus pour les custom data et web types.
 
-Le générateur pour VS Code :
+Le générateur pour VS Code :
 
 ```ts
 /**
@@ -68,7 +68,7 @@ export const vsCodeGenerator = (version: string, jsonDocs: JsonDocs, storybookBa
 });
 ```
 
-Le générateur pour WebStorm :
+Le générateur pour WebStorm :
 
 ```ts
 /**
@@ -129,7 +129,7 @@ export const webTypesGenerator = (name: string, version: string, jsonDocs: JsonD
 
 Nous avons centralisé la génération des descriptions des éléments et des attributs dans les méthodes `getElementDescription` et `getAttributeDescription` pour garantir une expérience uniforme sur les deux IDEs, celles-ci seront disponibles au survol.
 
-Code mutualisé :
+Code mutualisé :
 
 ```ts
 /**
@@ -192,12 +192,12 @@ const getAttributeDescription = (prop: JsonDocsProp): string => {
 };
 ```
 
-A MGDIS nous avons deux librairies de Web Components réalisées avec Stencil : une pour le design system et l'autre pour les composants métier spécifiques à nos applications.
+A MGDIS nous avons deux librairies de Web Components réalisées avec Stencil : une pour le design system et l'autre pour les composants métier spécifiques à nos applications.
 Afin d'éviter la duplication de code, nous avons centralisé le code de ces "générateurs" dans le package [@mgdis/stencil-helpers](https://github.com/MGDIS/core-ui/tree/master/packages/mg-components-helpers) de notre monorepo Core UI.
 
 ## Intégration dans les projets
 
-La mise en place de l'auto-complétion varie selon l'IDE utilisé. Pour VS Code, il est nécessaire d'ajouter aux projets utilisant la librairie un fichier `settings.json` dans le dossier `.vscode` avec la propriété suivante :
+La mise en place de l'auto-complétion varie selon l'IDE utilisé. Pour VS Code, il est nécessaire d'ajouter aux projets utilisant la librairie un fichier `settings.json` dans le dossier `.vscode` avec la propriété suivante :
 
 ```json
 {
@@ -205,7 +205,7 @@ La mise en place de l'auto-complétion varie selon l'IDE utilisé. Pour VS Code,
 }
 ```
 
-Pour IntelliJ, le processus est plus simple. Nous avons ajouté la propriété "web-types" dans le `package.json` de la librairie avec le lien vers le fichier, ainsi tout projet qui charge la librairie profite de l'auto-complétion :
+Pour IntelliJ, le processus est plus simple. Nous avons ajouté la propriété "web-types" dans le `package.json` de la librairie avec le lien vers le fichier, ainsi tout projet qui charge la librairie profite de l'auto-complétion :
 
 ```json
 {

@@ -30,7 +30,7 @@ feed:
   {%- for item in items %}
   {%- set absoluteUrl %}{{ item.url | htmlBaseUrl(feed.base) }}{% endset %}
   <entry>
-    <title>{{ ("Conférence : " if item.isTalk) + item.title }}</title>
+    <title>{{ ("Conférence : " if item.isTalk) + item.title }}</title>
     <link href="{{ absoluteUrl }}" />
     <updated>{{ item.date | dateToRfc3339 }}</updated>
     <id>{{ absoluteUrl }}</id>

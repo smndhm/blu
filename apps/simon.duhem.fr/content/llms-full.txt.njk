@@ -17,7 +17,7 @@ eleventyExcludeFromCollections: true
 URL : {{ postUrl }}
 Date : {{ post.date | isoDate }}
 {%- if post.data.origin %}
-Publié initialement sur : {{ post.data.origin.title | safe }} ({{ post.data.origin.href }})
+Publié initialement sur : {{ post.data.origin.title | safe }} ({{ post.data.origin.href }})
 {%- endif %}
 {%- if post.data.description %}
 

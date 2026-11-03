@@ -18,7 +18,7 @@ Les icônes jouent un rôle crucial dans un design system, mais leur intégratio
 
 L'équipe Core UI de MGDIS se compose de deux développeurs frontend, deux designers et un alternant designer qui partagent leur temps entre le produit et le design system. Les designers créent les maquettes et les composants sur Figma, tandis que les développeurs travaillent sur un monorepo organisé en différents packages pour les composants, les styles, les images, etc.
 
-Pour ajouter une seule icône à la bibliothèque du design system, le designer la concevait sur Figma, l'exportait au format SVG pour l'ajouter au ticket Jira. Ensuite, l'équipe de développement devait intervenir : télécharger l'icône, la nettoyer, ajouter les attributs nécessaires et mettre à jour les tests. Cette chaîne de tâches fastidieuses nous a poussés à chercher une solution pour automatiser le processus, de la conception à l'intégration dans le design system.
+Pour ajouter une seule icône à la bibliothèque du design system, le designer la concevait sur Figma, l'exportait au format SVG pour l'ajouter au ticket Jira. Ensuite, l'équipe de développement devait intervenir : télécharger l'icône, la nettoyer, ajouter les attributs nécessaires et mettre à jour les tests. Cette chaîne de tâches fastidieuses nous a poussés à chercher une solution pour automatiser le processus, de la conception à l'intégration dans le design system.
 
 ## A la découverte de l'API de Figma
 
@@ -34,10 +34,10 @@ Dans notre cas, le seul scope dont nous avions besoin était "File content" en l
 
 La partie "Files" de l'API propose [quatre endpoints](https://www.figma.com/developers/api#files-endpoints) :
 
-- `file` : pour avoir des informations sur l'ensemble d'un fichier,
-- `file nodes` : pour avoir des informations sur des nœuds spécifiques,
-- `image` : pour avoir des rendus d'images à partir d'un fichier,
-- `image fills` : pour avoir des liens de téléchargement pour les images présentes dans le document Figma.
+- `file` : pour avoir des informations sur l'ensemble d'un fichier,
+- `file nodes` : pour avoir des informations sur des nœuds spécifiques,
+- `image` : pour avoir des rendus d'images à partir d'un fichier,
+- `image fills` : pour avoir des liens de téléchargement pour les images présentes dans le document Figma.
 
 Pour utiliser ces endpoints, l'access token doit être inclus dans l'en-tête des appels, en utilisant la clé `X-FIGMA-TOKEN`.
 
@@ -96,7 +96,7 @@ curl -H 'X-FIGMA-TOKEN: figd_blublu' 'https://api.figma.com/v1/files/blubliblobl
 }
 ```
 
-Les propriétés qui nous intéressent dans la réponse sont `components` et `componentSets`. Toutes nos icônes se trouvent sous `components` et peuvent exister en deux variantes : "pleine" (fill) ou "contour" (outline). Nous utiliserons le `componentSetId` pour retrouver le nom du fichier final avec les `componentSets`.
+Les propriétés qui nous intéressent dans la réponse sont `components` et `componentSets`. Toutes nos icônes se trouvent sous `components` et peuvent exister en deux variantes : "pleine" (fill) ou "contour" (outline). Nous utiliserons le `componentSetId` pour retrouver le nom du fichier final avec les `componentSets`.
 
 Maintenant, nous pouvons utiliser le `image` endpoint pour obtenir les liens de téléchargement de nos icônes au format SVG en fournissant `:key`, les `:ids` des composants icônes et le `format` souhaité.
 
@@ -114,17 +114,17 @@ curl -H 'X-FIGMA-TOKEN: figd_blublu' 'https://api.figma.com/v1/images/blubliblob
 }
 ```
 
-Nous sommes désormais prêts à passer à la partie code !
+Nous sommes désormais prêts à passer à la partie code !
 
 ## Script
 
-En résumé, le script doit :
+En résumé, le script doit :
 
 - Utiliser le `file` endpoint pour récupérer la liste des composants icônes.
 - Utiliser le `image` endpoint pour obtenir les liens des fichiers images.
 - Télécharger les images.
 
-Voici le premier script fonctionnel que nous avons réalisé :
+Voici le premier script fonctionnel que nous avons réalisé :
 
 ```js
 // Utilisation d'Axios pour les appels API, fs pour écrire les fichiers téléchargés.

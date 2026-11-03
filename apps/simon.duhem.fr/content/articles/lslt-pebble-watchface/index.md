@@ -14,8 +14,8 @@ onCv: true
 
 Je me suis toujours intéressé aux polices d'écriture.
 
-Il y a quelques années, j'en ai même conçue une avec [Glyphs](https://glyphsapp.com/) : LSLT Regular.  
-C'était avant tout un exercice : comprendre comment fonctionne une typographie, tester les ligatures (j'en avais créé beaucoup). Cette police ne m'a jamais vraiment servi, et elle avait d'ailleurs un petit problème de centrage... mais elle m'a énormément appris.
+Il y a quelques années, j'en ai même conçue une avec [Glyphs](https://glyphsapp.com/) : LSLT Regular.  
+C'était avant tout un exercice : comprendre comment fonctionne une typographie, tester les ligatures (j'en avais créé beaucoup). Cette police ne m'a jamais vraiment servi, et elle avait d'ailleurs un petit problème de centrage... mais elle m'a énormément appris.
 
 ![Aperçu des ligatures de la police LSLT Regular](./1.png)
 
@@ -62,8 +62,8 @@ Fontra s'est révélé très agréable à utiliser, et j'ai rapidement obtenu ex
 
 Il fallait maintenant passer au développement de cette watchface, et ça a été un peu l'aventure.
 
-Premier choix à faire : développer en C ou en JS.
-Le choix était vite fait, mais j'ai rapidement eu une mauvaise surprise : il n'est pas possible d'utiliser une police externe dans les applications JS.
+Premier choix à faire : développer en C ou en JS.
+Le choix était vite fait, mais j'ai rapidement eu une mauvaise surprise : il n'est pas possible d'utiliser une police externe dans les applications JS.
 
 On se lance donc dans le développement d'une watchface en C, accompagné de mon agent Copilot 😅
 
@@ -71,7 +71,7 @@ J'arrive rapidement à avoir une watchface qui utilise ma police, mais elle rest
 
 ![Montre utilisant la police LSLT en Regular](./4.png)
 
-Entre-temps, le concept de la watchface est trouvé : faire varier la police en fonction du temps.
+Entre-temps, le concept de la watchface est trouvé : faire varier la police en fonction du temps.
 Les minutes grossissent en fonction du nombre de secondes, et les heures en fonction des minutes. Il faut donc trouver un moyen de faire varier cette police.
 
 En contournement, je me lance dans la génération de 60 déclinaisons de la police, pour changer celle utilisée en fonction du temps.
@@ -82,8 +82,8 @@ Ce n'est pas très propre, mais ça fonctionne.
 Je me rends vite compte que les caractères ne sont pas affichés assez grand. La taille maximale semble limitée, et la watchface devient assez lourde, rien qu'à l'installation.
 Ça ne va pas vraiment avec l'esprit Pebble.
 
-C'est à ce moment-là que j'ai changé d'approche, les fichiers de Fontra sont assez proches de SVG : pour la version Regular et la Extra Bold, les formes sont les mêmes, seules leurs positions changent.
-Pourquoi ne pas reproduire ce fonctionnement, en dessinant et en faisant varier la position des rectangles de chaque caractère en fonction du temps ?
+C'est à ce moment-là que j'ai changé d'approche, les fichiers de Fontra sont assez proches de SVG : pour la version Regular et la Extra Bold, les formes sont les mêmes, seules leurs positions changent.
+Pourquoi ne pas reproduire ce fonctionnement, en dessinant et en faisant varier la position des rectangles de chaque caractère en fonction du temps ?
 
 Avec l'aide de Copilot, c'est ce que j'ai fait.
 Ça ne s'est pas fait du premier coup, et j'ai quand même dû mettre le nez dans le code C pour bien calculer les positions et les espacements. Mais au final, j'ai obtenu la watchface que j'avais en tête.
@@ -96,7 +96,7 @@ Je suis plutôt content du résultat, et même du concept.
 
 ![Montre aux couleurs de Noël](./7.png)
 
-Je l'ai publiée sur le store de Rebble. Elle est disponible pour toutes les montres Pebble, anciennes comme nouvelles, rondes comme carrées : [LSLT | Watchface](https://apps.rebble.io/fr_FR/application/69372f6797c9a200096af59e?section=watchfaces)
+Je l'ai publiée sur le store de Rebble. Elle est disponible pour toutes les montres Pebble, anciennes comme nouvelles, rondes comme carrées : [LSLT | Watchface](https://apps.rebble.io/fr_FR/application/69372f6797c9a200096af59e?section=watchfaces)
 
 N'hésitez pas à l'installer et à me dire ce que vous en pensez.
 

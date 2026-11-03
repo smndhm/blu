@@ -66,7 +66,7 @@ const work = [
         end: '2019-03',
         highlights: {
           fr: [
-            'Intégration de Deezer dans IFTTT, à mon initiative : toutes les phases, du premier contact avec IFTTT au lancement, en passant par les spécifications et le développement.',
+            'Intégration de Deezer dans IFTTT, à mon initiative : toutes les phases, du premier contact avec IFTTT au lancement, en passant par les spécifications et le développement.',
             'Plateforme de candidatures et de votes des Victoires de la Musique (variétés, classique et jazz).',
             "Applications utilisant l'API Deezer : sites partenaires, bots Twitter, applications Facebook, widgets.",
           ],
@@ -82,7 +82,7 @@ const work = [
         start: '2012-05',
         end: '2012-09',
         highlights: {
-          fr: ["Espaces dédiés pour des annonceurs : Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
+          fr: ["Espaces dédiés pour des annonceurs : Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
           en: ["Built branded pages for advertisers: Alfa Romeo, CNOSF, McDonald's, Renault, Roxy, Volkswagen..."],
         },
       },
@@ -98,7 +98,7 @@ const work = [
         highlights: {
           fr: [
             "Analyse, développement, déploiement et maintenance d'une solution mobile pour le système RH de la Marine nationale (RH@psodie), destinée aux officiers.",
-            'Applications pour les services RH : notations, avancements, entretiens de carrière, plans de mutation des officiers.',
+            'Applications pour les services RH : notations, avancements, entretiens de carrière, plans de mutation des officiers.',
           ],
           en: [
             "Analyzed, developed, deployed and maintained a mobile app for officers, part of the French Navy's HR system (RH@psodie).",
@@ -112,7 +112,7 @@ const work = [
         end: '2007-09',
         highlights: {
           fr: [
-            "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
+            "Applications web pour l'intranet : trombinoscope, réservation de ressources (salles de réunion, ordinateurs portables, véhicules), gestion des stocks d'un magasin de fournitures.",
           ],
           en: ['Built intranet web applications: staff directory, resource booking (meeting rooms, laptops, vehicles), stock management for a supply store.'],
         },
