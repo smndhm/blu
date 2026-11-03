@@ -1,7 +1,7 @@
 /*
  * A block that catches the eye, such as at the top of a home page: everything in it a little larger, its heading
  * whatever its level, as much room above as below. `--media`: an image (`__media`) beside its text, which goes under it
- * when there is no room, such as a product's logo
+ * when there is no room, such as a product's logo. `--ds-c-hero-size-text`: its text's size, 24px, smaller for a long one
  */
 
 @layer ds.components {
@@ -18,9 +18,10 @@
       margin-block-end: var(--ds-b-size-24);
     }
 
+    /* Set on a page, `:root` included, so not declared here; its lines a little further apart when it is smaller */
     & p {
-      font-size: var(--ds-b-size-24);
-      line-height: 1.3;
+      font-size: var(--ds-c-hero-size-text, var(--ds-b-size-24));
+      line-height: calc(0.3em + var(--ds-b-size-24));
     }
 
     /* Nothing under its last line, so that it is really centered in what centers it */
