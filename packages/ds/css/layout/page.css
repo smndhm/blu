@@ -1,23 +1,22 @@
-/* A page: a column of readable width, its main content growing to push the footer down (`--centered`: centered) */
+/*
+ * A page: a column of readable width, centered, with a margin on each side. `--fluid`: the whole width; `--large`: more
+ * room. `--full-height`: at least the window's height, its main content growing to push the footer down; `--centered`:
+ * its main content centered in it.
+ */
 
 @layer ds.layout {
   .ds-l-page {
-    display: flex;
-    flex-direction: column;
     margin-inline: auto;
     max-inline-size: 44rem;
-    min-block-size: 100svh; /* Mobile: the viewport with the browser UI shown, never overflows */
     padding-inline: var(--ds-b-size-16);
 
-    /* Printed: the sheet's whole width, and the page's own height, not a sheet's, which would add a blank one */
+    /* Printed: the sheet's whole width */
     @media print {
       max-inline-size: none;
-      min-block-size: auto;
     }
   }
 
   .ds-l-page__main {
-    flex-grow: 1;
     padding-block: var(--ds-b-size-32);
 
     /* Printed: the sheet's margins are enough; the bottom padding alone could start a blank sheet */
@@ -36,6 +35,34 @@
     max-inline-size: 64rem;
   }
 
+  /* The whole width of what holds it: a page shown in another's frame (an extension's options, in the browser's settings) */
+  .ds-l-page--fluid {
+    max-inline-size: none;
+  }
+
+  /* At least the window's height, its main content growing to push the footer down when the page is short; centered too */
+  .ds-l-page--full-height,
+  .ds-l-page--centered {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100svh; /* Mobile: the viewport with the browser UI shown, never overflows */
+
+    & .ds-l-page__main {
+      flex-grow: 1;
+    }
+
+    /* Printed: the page's own height, not a sheet's, which would add a blank one */
+    @media print {
+      min-block-size: auto;
+    }
+  }
+
+  .ds-l-page--centered .ds-l-page__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   /* A glow of the primary color from the top left of the window, in both themes, in proportion to the window: as wide as it,
      up to the scrollbar, and as high */
   :root:has(.ds-l-page--tinted) {
@@ -46,11 +73,5 @@
     @media print {
       background-image: none;
     }
-  }
-
-  .ds-l-page--centered .ds-l-page__main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 }
