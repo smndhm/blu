@@ -1,5 +1,12 @@
 # simon.duhem.fr
 
+## 2.2.4
+
+### Patch Changes
+
+- 4a6844e: `.ds-l-page` is now the column's width only: readable, centered, with a margin on each side. The window's height, which pushes the footer down, is `--full-height`, and `--centered` includes it. `--fluid` takes the whole width, as for an extension's options in the browser's settings. A page that wants its footer at the bottom of the window adds `ds-l-page--full-height`, as simon.duhem.fr does.
+- 73eec95: In French, a narrow no-break space between a word and `?`, `!`, `;` or `:`, and inside « », in the articles, the CV, ia-postrophe and the feed. English text and ia-postrophe's examples of characters are left as they were.
+
 ## 2.2.3
 
 ### Patch Changes
