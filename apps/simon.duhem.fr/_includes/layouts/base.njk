@@ -45,7 +45,7 @@
 		{#- Its variables only: the home page's introduction is long, smaller in the hero than the design system's 24px #}
 		<style>:root { --ds-c-hero-size-text: var(--ds-b-size-20); }</style>
 	</head>
-	<body class="ds-l-page{% if bodyClass %} {{ bodyClass }}{% endif %}">
+	<body class="ds-l-page ds-l-page--full-height{% if bodyClass %} {{ bodyClass }}{% endif %}">
 		{#- Pas d'en-tête sur l'accueil : le lien d'évitement n'y aurait rien à sauter #}
 		{%- if page.url != "/" %}
 		<a href="#main" class="ds-c-skip-link">{{ ui.skipLink }}</a>
