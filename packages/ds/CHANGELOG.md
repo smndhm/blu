@@ -1,5 +1,11 @@
 # @dume/ds
 
+## 0.7.1
+
+### Patch Changes
+
+- b04888f: Updated dependency `vite-plus` to `1.5.0`.
+
 ## 0.7.0
 
 ### Minor Changes
