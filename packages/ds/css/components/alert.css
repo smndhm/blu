@@ -1,7 +1,8 @@
 /*
  * A message, without a position: the page places it, and closes it with its own script. <ds-alert> is this component in a shadow root,
  * for a page that is not ours, with its behavior (web-components/alert.ts). After the button's styles, which its close
- * button takes
+ * button takes. `--danger`: an error, its background and border tinted by the danger color, its text saying what is wrong,
+ * not the color alone
  */
 
 @layer ds.components {
@@ -23,6 +24,11 @@
     inline-size: fit-content;
     line-height: 1.4;
     max-inline-size: var(--ds-c-alert-size-max-inline);
+  }
+
+  .ds-c-alert--danger {
+    border-color: color-mix(in srgb, var(--ds-b-color-danger) 35%, var(--ds-b-color-background));
+    background-color: color-mix(in srgb, var(--ds-b-color-danger) 16%, var(--ds-b-color-background));
   }
 
   .ds-c-alert__icon {
