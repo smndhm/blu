@@ -1,5 +1,15 @@
 # @dume/ds
 
+## 0.8.0
+
+### Minor Changes
+
+- e562bf0: `.ds-c-alert--danger`: an error message, its background and border tinted by the danger color, its text in the text color, which passes WCAG AA on it in both themes.
+
+### Patch Changes
+
+- b04888f: Updated dependency `vite-plus` to `1.5.0`.
+
 ## 0.7.0
 
 ### Minor Changes

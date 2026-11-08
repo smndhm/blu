@@ -1,5 +1,12 @@
 # @dume/webcomp-utils
 
+## 1.0.4
+
+### Patch Changes
+
+- 94c3d5d: Updated dependency `vitest` to `5.1.0`.
+  Updated dependency `@vitest/coverage-v8` to `5.1.0`.
+
 ## 1.0.3
 
 ### Patch Changes

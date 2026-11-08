@@ -1,5 +1,11 @@
 # simon.duhem.fr
 
+## 2.2.5
+
+### Patch Changes
+
+- 287e245: Updated dependency `@11ty/eleventy` to `3.1.8`.
+
 ## 2.2.4
 
 ### Patch Changes
