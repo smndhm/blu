@@ -110,6 +110,20 @@ function textContrast(text, background, behind, vision) {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
+/** The share of the danger color in the error alert's background, over the page's background (css/components/alert.css) */
+const dangerShare =
+  Number(
+    /background-color: color-mix\(in srgb, var\(--ds-b-color-danger\) (\d+)%, var\(--ds-b-color-background\)\)/.exec(
+      readFileSync(new URL('../css/components/alert.css', import.meta.url), 'utf8'),
+    )[1],
+  ) / 100;
+
+/** Two opaque colors mixed in sRGB, as `color-mix(in srgb, first share, second)` */
+const mix = (first, second, share) => {
+  const [front, back] = [channels(first).rgb, channels(second).rgb];
+  return `#${front.map((channel, index) => toHex(channel * share + back[index] * (1 - share))).join('')}`;
+};
+
 test('the states and the surface come from the primary color, as they were written by hand', () => {
   const expected = {
     'primary-hover': ['#3c0177', '#d9beff'],
@@ -149,6 +163,14 @@ for (const [index, name] of ['light', 'dark'].entries()) {
           const ratio = textContrast(color('text'), color(state), color(behind), vision);
           assert.ok(ratio >= 4.5, `text on ${state} over ${behind}: ${ratio.toFixed(2)}:1`);
         }
+      }
+    });
+
+    test(`${name}, ${vision}: text and muted text pass WCAG AA on the error alert's background`, () => {
+      const background = mix(color('danger'), color('background'), dangerShare);
+      for (const text of ['text', 'text-muted']) {
+        const ratio = contrast(color(text), background, vision);
+        assert.ok(ratio >= 4.5, `${text} on the error alert: ${ratio.toFixed(2)}:1`);
       }
     });
 
