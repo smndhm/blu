@@ -1,5 +1,12 @@
 # ia-postrophe
 
+## 1.1.2
+
+### Patch Changes
+
+- 94c3d5d: Updated dependency `vitest` to `5.1.0`.
+  Updated dependency `@vitest/coverage-v8` to `5.1.0`.
+
 ## 1.1.1
 
 ### Patch Changes
