@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup environment
-        uses: smndhm/dev-config/ci/setup@b93bfbbf762c39f4440b48da194aa6cd18945fa3 # main
+        uses: smndhm/dev-config/ci/setup@7cf97c44e010ade37c53dfebc6a15489290531df # main
 
       - name: Publish packages
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
