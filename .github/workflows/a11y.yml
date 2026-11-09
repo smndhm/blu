@@ -50,7 +50,7 @@ jobs:
         run: mkdir -p slides-pdf && cp apps/slides/dist/*.pdf slides-pdf/ && node packages/pdf-ua/src/cli.js slides-pdf/*.pdf
 
       - name: Check the CV's and the slides' PDFs with veraPDF (PDF/UA-1)
-        uses: docker://verapdf/cli:v1.30.3@sha256:d74b7026c18a0f171e73c153b617fe6520e1511feb24ca98a348b2bb897669fb
+        uses: docker://verapdf/cli:v1.30.4@sha256:82a5e28f8ac21210f6eef12a51fd96b240ee1eb0d0223574864cc4d13db3f929
         with:
           args: --flavour ua1 --format text --verbose --loglevel 0 apps/simon.duhem.fr/_site/cv/simon-duhem-cv.pdf apps/simon.duhem.fr/_site/en/cv/simon-duhem-cv-en.pdf slides-pdf
 
