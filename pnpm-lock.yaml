@@ -215,8 +215,8 @@ importers:
   apps/simon.duhem.fr:
     dependencies:
       '@zachleat/heading-anchors':
-        specifier: 1.0.5
-        version: 1.0.5
+        specifier: 1.1.0
+        version: 1.1.0
     devDependencies:
       '@11ty/eleventy':
         specifier: 3.1.8
@@ -1898,8 +1898,8 @@ packages:
   '@yuku-toolchain/types@0.19.0':
     resolution: {integrity: sha512-tFkNbsP4WXX9UMUC5syJGdK9dPMLK0PPaIuXCcCYH75sZ8MrebfBZ2XvCILRTw8AgLivSSCfDa4R67iYBDa4Kg==}
 
-  '@zachleat/heading-anchors@1.0.5':
-    resolution: {integrity: sha512-hsAljmm6py9VEf6ToKGyQJweemQJM4bI75TTTbwRYIrasCm66ajJDhWYpgZJM1B+8KSop371RDhDASYl3Q4y9g==}
+  '@zachleat/heading-anchors@1.1.0':
+    resolution: {integrity: sha512-UqG0Yk1Xs2wdlQ4Wg+nSdrwT9ssNtgcHfXs9rt2k4sc9u9L+F7Vv7b8sNTl/CVgKGBWY3bZwyho3NmnhcfQAuw==}
 
   a-sync-waterfall@1.0.1:
     resolution: {integrity: sha512-RYTOHHdWipFUliRFMCS4X2Yn2X8M87V/OpSqWzKKOGhzqyUxzyVmhHDH9sAvG+ZuQf/TAOFsLCpMw09I1ufUnA==}
@@ -5969,7 +5969,7 @@ snapshots:
 
   '@yuku-toolchain/types@0.19.0': {}
 
-  '@zachleat/heading-anchors@1.0.5': {}
+  '@zachleat/heading-anchors@1.1.0': {}
 
   a-sync-waterfall@1.0.1: {}
 
