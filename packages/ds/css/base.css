@@ -164,9 +164,10 @@
     }
   }
 
-  /* Small print: a mention that comes second, such as a link to add an event to a calendar */
+  /* Small print: a mention that comes second, such as a link to add an event to a calendar or a count beside a heading.
+     Relative to its text, three quarters of it: 12px in the text's 16px, 18px in a h2's 24px */
   small {
-    font-size: var(--ds-b-size-12);
+    font-size: 0.75em;
   }
 
   /* A group of fields, such as radio buttons: without the browser's border and padding. Its legend in bold, over them,
