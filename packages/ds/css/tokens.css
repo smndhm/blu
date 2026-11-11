@@ -67,6 +67,9 @@
     --ds-b-size-display: clamp(2.5rem, 8vw, 4rem);
     --ds-b-size-radius: 0.5rem;
 
+    /* A small block's, such as a tag */
+    --ds-b-size-radius-small: 0.25rem;
+
     /* Border widths, in px: a 1px line stays 1px whatever the zoom */
     --ds-b-size-border-1: 1px;
     --ds-b-size-border-2: 2px;

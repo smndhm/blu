@@ -195,7 +195,7 @@ The custom properties are set on `:root`, with `color-scheme: light dark`, each 
 | `--ds-b-font-family`, `--ds-b-font-family-heading`, `--ds-b-font-family-monospace`   | system-ui (the system's font), Bricolage Grotesque, monospace          |
 | `--ds-b-size-4`, `-8`, `-12`, `-16`, `-20`, `-24`, `-32`, `-40`, `-48`               | `0.25rem` to `3rem`, named after their px, for spacing and fonts alike |
 | `--ds-b-size-display`                                                                | `clamp(2.5rem, 8vw, 4rem)`, a hero's heading                           |
-| `--ds-b-size-radius`                                                                 | `0.5rem` (8px)                                                         |
+| `--ds-b-size-radius`, `--ds-b-size-radius-small`                                     | `0.5rem` (8px), `0.25rem` (4px) for a small block such as a tag        |
 | `--ds-b-size-border-1`, `-2`, `-4`                                                   | `1px`, `2px`, `4px`: border widths                                     |
 | `--ds-b-outline-focus`, `--ds-b-outline-offset-focus`, `--ds-b-outline-radius-focus` | `3px solid var(--ds-b-color-primary)`, `2px`, `2px`                    |
 

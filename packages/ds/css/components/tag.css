@@ -7,7 +7,7 @@
   .ds-c-tag {
     display: inline-block;
     padding: 0 var(--ds-b-size-4);
-    border-radius: var(--ds-b-size-radius);
+    border-radius: var(--ds-b-size-radius-small);
     background-color: var(--ds-b-color-primary);
     color: var(--ds-b-color-text-on-primary);
     font-size: var(--ds-b-size-12);
