@@ -164,6 +164,60 @@
     }
   }
 
+  /* Small print: a mention that comes second, such as a link to add an event to a calendar */
+  small {
+    font-size: var(--ds-b-size-12);
+  }
+
+  /* A group of fields, such as radio buttons: without the browser's border and padding. Its legend in bold, over them,
+     floated so that it sits in the flow and takes a margin, rather than on the fieldset's border */
+  fieldset {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    min-inline-size: 0;
+  }
+
+  /* Two questions one after the other, such as a filter's: room between them */
+  fieldset + fieldset {
+    margin-block-start: var(--ds-b-size-24);
+  }
+
+  legend {
+    padding: 0;
+    float: inline-start;
+    font-weight: 700;
+    inline-size: 100%;
+    margin-block-end: var(--ds-b-size-8);
+
+    & + * {
+      clear: both;
+    }
+  }
+
+  /* Folded content: its summary a pointer, its marker in the primary color. Hovered as a link: the primary color and an
+     underline, not the color alone; pressed: darker still */
+  summary {
+    cursor: pointer;
+    text-decoration-color: var(--ds-b-color-primary);
+    text-decoration-thickness: var(--ds-b-size-border-2);
+    text-underline-offset: 0.25em;
+
+    &::marker {
+      color: var(--ds-b-color-primary);
+    }
+
+    &:hover {
+      color: var(--ds-b-color-primary);
+      text-decoration-line: underline;
+    }
+
+    &:active {
+      color: var(--ds-b-color-primary-active);
+      text-decoration-line: underline;
+    }
+  }
+
   :focus-visible {
     border-radius: var(--ds-b-outline-radius-focus);
     outline: var(--ds-b-outline-focus);

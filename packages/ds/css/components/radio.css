@@ -1,0 +1,46 @@
+/*
+ * A radio button with its label (`.ds-c-radio`): its control, native, its label beside it, and its description under the
+ * label when it has one, which the control names with `aria-describedby`. The radio buttons of a choice in a
+ * `fieldset`, its question in its `legend`; side by side in a `.ds-l-cluster`, one under the other in a `.ds-l-stack`
+ */
+@layer ds.components {
+  /* A row: its control, then its label; its description, if any, on a line of its own, wrapped under the label */
+  .ds-c-radio {
+    --ds-c-radio-size-control: 1.25rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--ds-b-size-8);
+  }
+
+  .ds-c-radio__control {
+    flex: none;
+    margin: 0;
+    block-size: var(--ds-c-radio-size-control);
+    inline-size: var(--ds-c-radio-size-control);
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    /* Disabled: its label too. Its description stays readable, as it may say why */
+    &:disabled + .ds-c-radio__label {
+      color: var(--ds-b-color-text-disabled);
+    }
+  }
+
+  /* The whole row, set in by the control and the gap: under the label */
+  .ds-c-radio__description {
+    flex-basis: 100%;
+    color: var(--ds-b-color-text-muted);
+    margin-block: var(--ds-b-size-4) 0;
+    padding-inline-start: calc(var(--ds-c-radio-size-control) + var(--ds-b-size-8));
+  }
+
+  @media (forced-colors: active) {
+    .ds-c-radio__control:disabled + .ds-c-radio__label {
+      color: GrayText;
+    }
+  }
+}

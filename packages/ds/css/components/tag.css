@@ -1,0 +1,22 @@
+/*
+ * A tag: a word or two beside a title, such as "New", in small print, in bold, on the primary color. Not interactive: a
+ * link or a button is not a tag. Its outline is transparent: its background alone shows it, except with forced colors,
+ * which remove the background and show the outline; an outline rather than a border, which would add to its height
+ */
+@layer ds.components {
+  .ds-c-tag {
+    display: inline-block;
+    padding: 0 var(--ds-b-size-4);
+    border-radius: var(--ds-b-size-radius-small);
+    background-color: var(--ds-b-color-primary);
+    color: var(--ds-b-color-text-on-primary);
+    font-size: var(--ds-b-size-12);
+    font-weight: 700;
+
+    /* A 16px line for its 12px text, 2px of room above and below it: 16px high, on the base 4 */
+    line-height: calc(16 / 12);
+    outline: var(--ds-b-size-border-1) solid transparent;
+    outline-offset: calc(-1 * var(--ds-b-size-border-1));
+    vertical-align: middle;
+  }
+}

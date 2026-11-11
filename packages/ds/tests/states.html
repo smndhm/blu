@@ -182,6 +182,68 @@
               </div>
             </td>
           </tr>
+          <!-- Hovered, pressed and checked are the browser's own, on the native control: the same styles, so no data-case for them -->
+          <tr data-component="radio">
+            <th scope="row">Radio button</th>
+            <td>
+              <div class="ds-c-radio">
+                <input class="ds-c-radio__control" type="radio" name="radio-rest" id="radio-rest" data-case="rest" />
+                <label class="ds-c-radio__label" for="radio-rest">Daily</label>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-radio">
+                <input class="ds-c-radio__control" type="radio" name="radio-hover" id="radio-hover" data-state="hover" />
+                <label class="ds-c-radio__label" for="radio-hover">Daily</label>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-radio">
+                <input class="ds-c-radio__control" type="radio" name="radio-focus" id="radio-focus" data-case="focus-visible" data-state="focus-visible" />
+                <label class="ds-c-radio__label" for="radio-focus">Daily</label>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-radio">
+                <input class="ds-c-radio__control" type="radio" name="radio-active" id="radio-active" data-state="active" />
+                <label class="ds-c-radio__label" for="radio-active">Daily</label>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-radio">
+                <input class="ds-c-radio__control" type="radio" name="radio-disabled" id="radio-disabled" disabled data-case="disabled" data-state="hover" />
+                <label class="ds-c-radio__label" for="radio-disabled">Daily</label>
+              </div>
+            </td>
+            <td>
+              <div class="ds-c-radio">
+                <input class="ds-c-radio__control" type="radio" name="radio-checked" id="radio-checked" checked />
+                <label class="ds-c-radio__label" for="radio-checked">Daily</label>
+              </div>
+            </td>
+          </tr>
+          <tr data-component="summary">
+            <th scope="row">Summary</th>
+            <td>
+              <details><summary data-case="rest">Showtimes</summary></details>
+            </td>
+            <td>
+              <details><summary data-case="hover" data-state="hover">Showtimes</summary></details>
+            </td>
+            <td>
+              <details><summary data-case="focus-visible" data-state="focus-visible">Showtimes</summary></details>
+            </td>
+            <td>
+              <details><summary data-case="active" data-state="active">Showtimes</summary></details>
+            </td>
+            <td></td>
+            <td>
+              <details open>
+                <summary>Showtimes</summary>
+                <p>20:30</p>
+              </details>
+            </td>
+          </tr>
           <tr data-component="header-link">
             <th scope="row">Header link</th>
             <td><a href="#header" class="ds-c-header__link" data-case="rest">Articles</a></td>
