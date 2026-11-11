@@ -6,13 +6,15 @@
 @layer ds.components {
   .ds-c-tag {
     display: inline-block;
-    padding: 0 0.5em;
+    padding: 0 var(--ds-b-size-8);
     border: var(--ds-b-size-border-1) solid transparent;
     border-radius: var(--ds-b-size-radius);
     background-color: var(--ds-b-color-primary);
     color: var(--ds-b-color-text-on-primary);
     font-size: var(--ds-b-size-12);
     font-weight: 700;
+
+    /* 18px, and its borders: 20px high, on the base 4 */
     line-height: 1.5;
     vertical-align: middle;
   }
