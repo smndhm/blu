@@ -6,7 +6,7 @@
 @layer ds.components {
   .ds-c-tag {
     display: inline-block;
-    padding: 0 var(--ds-b-size-8);
+    padding: 0 var(--ds-b-size-4);
     border: var(--ds-b-size-border-1) solid transparent;
     border-radius: var(--ds-b-size-radius);
     background-color: var(--ds-b-color-primary);
