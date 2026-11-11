@@ -1,5 +1,13 @@
 # simon.duhem.fr
 
+## 2.2.6
+
+### Patch Changes
+
+- c04e4d2: Updated dependency `@zachleat/heading-anchors` to `1.1.0`.
+- b6b1d87: Updated dependency `playwright` to `1.65.0`.
+  Updated dependency `@playwright/test` to `1.65.0`.
+
 ## 2.2.5
 
 ### Patch Changes
