@@ -14,8 +14,8 @@
     font-size: var(--ds-b-size-12);
     font-weight: 700;
 
-    /* 18px, and its borders: 20px high, on the base 4 */
-    line-height: 1.5;
+    /* A 22px line for its 12px text, 2px of room above and below it, and its borders: 24px high, on the base 4 */
+    line-height: calc(22 / 12);
     vertical-align: middle;
   }
 }
