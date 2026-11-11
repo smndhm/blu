@@ -1,0 +1,40 @@
+/*
+ * A radio button with its label (`.ds-c-radio`): its control, native, its label beside it, and its description under the
+ * label when it has one, which the control names with `aria-describedby`. The radio buttons of a choice in a
+ * `fieldset`, its question in its `legend`; side by side in a `.ds-l-cluster`, one under the other in a `.ds-l-stack`
+ */
+@layer ds.components {
+  .ds-c-radio {
+    display: grid;
+    align-items: center;
+    column-gap: var(--ds-b-size-8);
+    grid-template-columns: auto 1fr;
+  }
+
+  .ds-c-radio__control {
+    margin: 0;
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    /* Disabled: its label too. Its description stays readable, as it may say why */
+    &:disabled + .ds-c-radio__label {
+      color: var(--ds-b-color-text-disabled);
+    }
+  }
+
+  .ds-c-radio__description {
+    color: var(--ds-b-color-text-muted);
+    grid-column: 2;
+    margin-block: var(--ds-b-size-4) 0;
+  }
+
+  @media (forced-colors: active) {
+    .ds-c-radio__control:disabled + .ds-c-radio__label {
+      color: GrayText;
+    }
+  }
+}

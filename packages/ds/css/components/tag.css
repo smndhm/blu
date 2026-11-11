@@ -1,0 +1,19 @@
+/*
+ * A tag: a word or two beside a title, such as "New", in small print, in bold, on the primary color. Not interactive: a
+ * link or a button is not a tag. Its border is transparent: its background alone shows it, except with forced colors,
+ * which remove the background and show the border
+ */
+@layer ds.components {
+  .ds-c-tag {
+    display: inline-block;
+    padding: 0 0.5em;
+    border: var(--ds-b-size-border-1) solid transparent;
+    border-radius: var(--ds-b-size-radius);
+    background-color: var(--ds-b-color-primary);
+    color: var(--ds-b-color-text-on-primary);
+    font-size: var(--ds-b-size-12);
+    font-weight: 700;
+    line-height: 1.5;
+    vertical-align: middle;
+  }
+}

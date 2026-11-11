@@ -99,6 +99,10 @@
         <h2 id="text">Text</h2>
         <p>A paragraph with <strong>strong</strong> and <em>emphasized</em> words, <small>small print</small>, a <a href="#text">link</a> and <code>inline code</code>.</p>
         <p class="ds-u-text-muted">Details in the muted color, such as an article's date.</p>
+        <p>A title with its tag <span class="ds-c-tag">New</span>, and a mention that comes second, in small print:</p>
+        <p>
+          <small><a href="#text">Add to the calendar</a></small>
+        </p>
         <ul>
           <li>A list item</li>
           <li>Another list item</li>
@@ -108,6 +112,37 @@
           <li>Another numbered item</li>
         </ol>
         <blockquote>A quote set apart.</blockquote>
+      </section>
+
+      <section aria-labelledby="choice">
+        <h2 id="choice">A choice</h2>
+        <fieldset>
+          <legend>Show</legend>
+          <div class="ds-l-cluster">
+            <div class="ds-c-radio">
+              <input class="ds-c-radio__control" type="radio" name="choice" id="choice-all" checked />
+              <label class="ds-c-radio__label" for="choice-all">Everything <span class="ds-u-text-muted">(12)</span></label>
+            </div>
+            <div class="ds-c-radio">
+              <input class="ds-c-radio__control" type="radio" name="choice" id="choice-films" />
+              <label class="ds-c-radio__label" for="choice-films">Films <span class="ds-u-text-muted">(5)</span></label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Notify</legend>
+          <div class="ds-l-stack">
+            <div class="ds-c-radio">
+              <input class="ds-c-radio__control" type="radio" name="notify" id="notify-mail" aria-describedby="notify-mail-description" checked />
+              <label class="ds-c-radio__label" for="notify-mail">By e-mail</label>
+              <p class="ds-c-radio__description" id="notify-mail-description">Once a week</p>
+            </div>
+            <div class="ds-c-radio">
+              <input class="ds-c-radio__control" type="radio" name="notify" id="notify-never" disabled />
+              <label class="ds-c-radio__label" for="notify-never">Never</label>
+            </div>
+          </div>
+        </fieldset>
       </section>
     </main>
     <script type="module">
