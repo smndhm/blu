@@ -34,7 +34,7 @@ jobs:
 
       # Same Node version (.nvmrc) and install as the other workflows
       - name: Setup environment
-        uses: smndhm/dev-config/ci/setup@83f1f3d0d17c95e3ead023663f40f7851b318657 # main
+        uses: smndhm/dev-config/ci/setup@08f9f66abbf9d6a71979dccf01d42cd76c0fcc04 # main
 
       # Also builds its workspace dependencies first (ia-postrophe script)
       - name: Build simon.duhem.fr
