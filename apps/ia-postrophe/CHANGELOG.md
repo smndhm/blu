@@ -1,5 +1,12 @@
 # ia-postrophe
 
+## 1.1.4
+
+### Patch Changes
+
+- 8b3d257: Updated dependency `vite` to `8.3.8`.
+- 881755c: Updated dependency `vite` to `8.3.7`.
+
 ## 1.1.3
 
 ### Patch Changes
