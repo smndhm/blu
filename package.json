@@ -32,7 +32,7 @@
     "@eslint/compat": "2.1.1",
     "@manypkg/cli": "0.25.1",
     "@scaleway/changesets-renovate": "4.0.6",
-    "eslint": "10.14.0",
+    "eslint": "10.15.0",
     "oxlint": "1.93.0",
     "prettier": "3.10.1",
     "stylelint": "17.16.0",
