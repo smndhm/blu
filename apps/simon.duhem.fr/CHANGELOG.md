@@ -1,5 +1,12 @@
 # simon.duhem.fr
 
+## 2.2.7
+
+### Patch Changes
+
+- 6bf3c7a: Updated dependency `playwright` to `1.65.1`.
+  Updated dependency `@playwright/test` to `1.65.1`.
+
 ## 2.2.6
 
 ### Patch Changes
