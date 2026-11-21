@@ -1,5 +1,12 @@
 # @dume/webcomp-utils
 
+## 1.0.6
+
+### Patch Changes
+
+- 8b3d257: Updated dependency `vite` to `8.3.8`.
+- 881755c: Updated dependency `vite` to `8.3.7`.
+
 ## 1.0.5
 
 ### Patch Changes
