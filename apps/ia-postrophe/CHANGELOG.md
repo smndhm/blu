@@ -1,5 +1,16 @@
 # ia-postrophe
 
+## 1.1.4
+
+### Patch Changes
+
+- 8b3d257: Updated dependency `vite` to `8.3.8`.
+- 3a263aa: Updated dependency `vitest` to `5.1.1`.
+  Updated dependency `@vitest/coverage-v8` to `5.1.1`.
+- 881755c: Updated dependency `vite` to `8.3.7`.
+- 5c91a77: Updated dependency `vitest` to `5.1.2`.
+  Updated dependency `@vitest/coverage-v8` to `5.1.2`.
+
 ## 1.1.3
 
 ### Patch Changes

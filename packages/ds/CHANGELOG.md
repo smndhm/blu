@@ -1,5 +1,16 @@
 # @dume/ds
 
+## 0.10.1
+
+### Patch Changes
+
+- 9b91fdb: Updated dependency `vite-plus` to `1.5.1`.
+- 46f6513: Updated dependency `vite-plus` to `1.6.0`.
+- c40b10e: Updated dependency `vite-plus` to `1.7.0`.
+- 6bf3c7a: Updated dependency `playwright` to `1.65.1`.
+  Updated dependency `@playwright/test` to `1.65.1`.
+- da9565d: Updated dependency `vite-plus` to `1.8.0`.
+
 ## 0.10.0
 
 ### Minor Changes
