@@ -1,5 +1,14 @@
 # @dume/pdf-ua
 
+## 0.1.2
+
+### Patch Changes
+
+- 3a263aa: Updated dependency `vitest` to `5.1.1`.
+  Updated dependency `@vitest/coverage-v8` to `5.1.1`.
+- 5c91a77: Updated dependency `vitest` to `5.1.2`.
+  Updated dependency `@vitest/coverage-v8` to `5.1.2`.
+
 ## 0.1.1
 
 ### Patch Changes
