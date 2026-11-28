@@ -16,6 +16,6 @@
     "pdf-lib": "1.17.1"
   },
   "devDependencies": {
-    "vitest": "5.1.1"
+    "vitest": "5.1.2"
   }
 }
